@@ -10,6 +10,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "autyzm";
+    public static final AbstractDBTable[] tables = {
+            new Lekcja(),
+            new Folder(),
+            new Film(),
+            new Modul(),
+            new Pytanie(),
+            new Odpowiedz(),
+            new User(),
+            new Dziecko(),
+            new LekcjaDziecko()
+    };
 
     public DBHelper(Context context) {
         super(context, DB_NAME, null, 1);
@@ -17,7 +28,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        for (AbstractDBTable table : tables) {
+            db.execSQL(table.create());
+        }
     }
 
     @Override

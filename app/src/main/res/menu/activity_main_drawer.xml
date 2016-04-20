@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_run_lesson"
+            android:icon="@drawable/ic_play"
+            android:title="@string/nav_run_lesson" />
+        <item
+            android:id="@+id/nav_lessons"
+            android:icon="@drawable/ic_lesssons"
+            android:title="@string/nav_lessons" />
+        <item
+            android:id="@+id/nav_children"
+            android:icon="@drawable/ic_children"
+            android:title="@string/nav_children" />
+        <item
+            android:id="@+id/nav_media"
+            android:icon="@drawable/ic_media"
+            android:title="@string/nav_media" />
+        <item
+            android:id="@+id/nav_config"
+            android:icon="@drawable/ic_config"
+            android:title="@string/nav_config" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/nav_logout" />
+    </group>
+
+</menu>

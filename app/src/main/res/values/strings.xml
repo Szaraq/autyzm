@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">autyzm</string>
+    <string name="title_activity_main">Start</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="nav_run_lesson">Uruchom lekcję</string>
+    <string name="nav_lessons">Lekcje</string>
+    <string name="nav_children">Dzieci</string>
+    <string name="nav_media">Multimedia</string>
+    <string name="nav_config">Ustawienia</string>
+    <string name="nav_logout">Wyloguj</string>
 </resources>

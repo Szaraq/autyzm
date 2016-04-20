@@ -11,7 +11,7 @@ public class Film extends AbstractDBTable {
     public static final String COLUMN_FOLDER = "folder";
 
     protected static final HashMap<String, String> colTypeMap = new HashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY");
         put(COLUMN_PATH, "TEXT");
         put(COLUMN_FOLDER, "INTEGER");
     }};

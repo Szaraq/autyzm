@@ -12,7 +12,7 @@ public class Odpowiedz extends AbstractDBTable {
     public static final String COLUMN_PYTANIE = "pytanie";
 
     protected static final HashMap<String, String> colTypeMap = new HashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY");
         put(COLUMN_DATA, "DATE");
         put(COLUMN_PUNKTY, "INTEGER");
         put(COLUMN_PYTANIE, "INTEGER");

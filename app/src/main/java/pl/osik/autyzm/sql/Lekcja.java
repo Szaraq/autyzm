@@ -12,7 +12,7 @@ public class Lekcja extends AbstractDBTable {
     public static final String COLUMN_TYTUL = "tytul";
 
     protected static final HashMap<String, String> colTypeMap = new HashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY");
         put(COLUMN_TYTUL, "TEXT");
     }};
 

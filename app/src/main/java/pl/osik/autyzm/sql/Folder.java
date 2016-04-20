@@ -10,7 +10,7 @@ public class Folder extends AbstractDBTable {
     public static final String COLUMN_NAZWA = "nazwa";
 
     protected static final HashMap<String, String> colTypeMap = new HashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY");
         put(COLUMN_NAZWA, "TEXT");
     }};
 

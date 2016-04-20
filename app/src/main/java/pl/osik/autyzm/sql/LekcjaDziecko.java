@@ -11,7 +11,7 @@ public class LekcjaDziecko extends AbstractDBTable {
     public static final String COLUMN_DZIECKO = "dziecko";
 
     protected static final HashMap<String, String> colTypeMap = new HashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY");
         put(COLUMN_LEKCJA, "INTEGER");
         put(COLUMN_DZIECKO, "INTEGER");
     }};

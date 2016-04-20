@@ -11,7 +11,7 @@ public class User extends AbstractDBTable {
     public static final String COLUMN_PASS = "password";
 
     protected static final HashMap<String, String> colTypeMap = new HashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY");
         put(COLUMN_LOGIN, "TEXT");
         put(COLUMN_PASS, "TEXT");
     }};

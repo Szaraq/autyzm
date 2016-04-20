@@ -12,7 +12,7 @@ public class Modul extends AbstractDBTable {
     public static final String COLUMN_LEKCJA = "lekcja";
 
     protected static final HashMap<String, String> colTypeMap = new HashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY");
         put(COLUMN_NAZWA, "TEXT");
         put(COLUMN_FILM, "INTEGER");
         put(COLUMN_LEKCJA, "INTEGER");

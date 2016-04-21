@@ -41,10 +41,16 @@ public class DzieciFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ButterKnife.bind(this.getActivity());
+        View view = inflater.inflate(R.layout.fragment_dzieci, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         dzieciAdapter = new DzieciAdapter(getLayoutInflater(savedInstanceState));
-        dzieciList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        dzieciList.setLayoutManager(new LinearLayoutManager(getActivity()));
         dzieciList.setAdapter(dzieciAdapter);
-        return inflater.inflate(R.layout.fragment_dzieci, container, false);
     }
 }

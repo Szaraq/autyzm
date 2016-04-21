@@ -55,7 +55,7 @@ public class Dziecko extends AbstractDBTable {
         ArrayList<HashMap<String, String>>  out = new ArrayList<>();
         DBHelper helper = new DBHelper();
         SQLiteDatabase db = helper.getDBRead();
-        Cursor resultSet = db.rawQuery("SELECT * FROM ? ORDER BY ?", new String[]{TABLE_NAME, COLUMN_NAZWISKO});
+        Cursor resultSet = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_NAZWISKO, null);
         int count = 0;
         while (resultSet.moveToNext()) {
             HashMap<String, String> temp = new HashMap<>();
@@ -64,7 +64,6 @@ public class Dziecko extends AbstractDBTable {
             temp.put(COLUMN_PHOTO, resultSet.getString(resultSet.getColumnIndex(COLUMN_PHOTO)));
             out.add(temp);
         }
-
         return out;
     }
 }

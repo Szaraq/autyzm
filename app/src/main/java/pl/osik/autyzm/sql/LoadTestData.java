@@ -17,20 +17,20 @@ public class LoadTestData {
     public static void load() {
         if(!added) {
             loadUser();
-            //loadDziecko();
+            loadDziecko();
             added = true;
         }
     }
 
     private static void loadUser() {
-        String query = "INSERT INTO " + User.TABLE_NAME + " VALUES (1, 'admin', 'pass');";
-        /*for(String s : db.rawQuery("SELECT * FROM User", null).getColumnNames())
-            Log.d("tag", s);*/
-        db.execSQL("INSERT INTO " + User.TABLE_NAME + " VALUES ('pass', 1, 'admin');");
+        db.execSQL("DELETE FROM " + User.TABLE_NAME);
+        db.execSQL("INSERT INTO " + User.TABLE_NAME + " VALUES (1, 'admin', 'pass');");
 
     }
 
     private static void loadDziecko() {
-        db.execSQL("INSERT INTO " + Dziecko.TABLE_NAME + " VALUES(1, 'Jan', 'Kowalski', '2007-01-01 10:00:00', '2007-01-01 10:00:00', 'notsy', 'Janusz', 'Kowalski', '500111222', 'Janina', 'Kowalska', '500222333', '1')");
+        db.execSQL("DELETE FROM " + Dziecko.TABLE_NAME);
+        db.execSQL("INSERT INTO " + Dziecko.TABLE_NAME + " VALUES(1, 'Jan', 'Kowalski', '2007-01-01 10:00:00', '2007-01-01 10:00:00', 'notsy', 'Janusz', 'Kowalski', '500111222', 'Janina', 'Kowalska', '500222333', '1', 'null')");
+        db.execSQL("INSERT INTO " + Dziecko.TABLE_NAME + " VALUES(2, 'Jan', 'Mirecki', '2007-01-01 10:00:00', '2007-01-01 10:00:00', 'notsy', 'Janusz', 'Kowalski', '500111222', 'Janina', 'Kowalska', '500222333', '1', 'null')");
     }
 }

@@ -25,7 +25,7 @@ public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
 
     @Override
     public DzieciViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
         return new DzieciViewHolder(view);
     }
 

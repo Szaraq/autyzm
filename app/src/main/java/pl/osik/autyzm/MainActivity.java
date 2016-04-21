@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         LoadTestData.load();
+
+        gotoFragment(new StartFragment());
     }
 
     @Override

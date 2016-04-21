@@ -1,6 +1,12 @@
 package pl.osik.autyzm.sql;
 
+import android.app.Application;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by m.osik2 on 2016-04-20.
@@ -19,8 +25,9 @@ public class Dziecko extends AbstractDBTable {
     public static final String COLUMN_MATKANAZWISKO = "nazwisko_matki";
     public static final String COLUMN_MATKATELEFON = "telefon_matki";
     public static final String COLUMN_USER = "user";
+    public static final String COLUMN_PHOTO = "photo";
 
-    protected static final HashMap<String, String> colTypeMap = new HashMap<String, String>() {{
+    protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY");
         put(COLUMN_IMIE, "TEXT");
         put(COLUMN_NAZWISKO, "TEXT");
@@ -34,10 +41,30 @@ public class Dziecko extends AbstractDBTable {
         put(COLUMN_MATKANAZWISKO, "TEXT");
         put(COLUMN_MATKATELEFON, "TEXT");
         put(COLUMN_USER, "INTEGER");
+        put(COLUMN_PHOTO, "TEXT");
     }};
 
     @Override
     protected String create() {
-        return getCreateStart() + createArgumentQuery() + createForeignKey(COLUMN_USER, User.TABLE_NAME) + ")";
+        colTypeMapParent = colTypeMap;
+        TABLE_NAME_PARENT = TABLE_NAME;
+        return getCreateStart() + createForeignKey(COLUMN_USER, User.TABLE_NAME) + ")";
+    }
+
+    public static ArrayList<HashMap<String, String>> getDzieciList() {
+        ArrayList<HashMap<String, String>>  out = new ArrayList<>();
+        DBHelper helper = new DBHelper();
+        SQLiteDatabase db = helper.getDBRead();
+        Cursor resultSet = db.rawQuery("SELECT * FROM ? ORDER BY ?", new String[]{TABLE_NAME, COLUMN_NAZWISKO});
+        int count = 0;
+        while (resultSet.moveToNext()) {
+            HashMap<String, String> temp = new HashMap<>();
+            temp.put(COLUMN_NAZWISKO, resultSet.getString(resultSet.getColumnIndex(COLUMN_NAZWISKO)));
+            temp.put(COLUMN_IMIE, resultSet.getString(resultSet.getColumnIndex(COLUMN_IMIE)));
+            temp.put(COLUMN_PHOTO, resultSet.getString(resultSet.getColumnIndex(COLUMN_PHOTO)));
+            out.add(temp);
+        }
+
+        return out;
     }
 }

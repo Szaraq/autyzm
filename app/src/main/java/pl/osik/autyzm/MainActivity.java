@@ -3,6 +3,8 @@ package pl.osik.autyzm;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import pl.osik.autyzm.sql.LoadTestData;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +44,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        LoadTestData.load();
     }
 
     @Override
@@ -80,22 +86,34 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_start) {
 
-        } else if (id == R.id.nav_slideshow) {
+            gotoFragment(new StartFragment());
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_run_lesson) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_lessons) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_children) {
+
+            gotoFragment(new DzieciFragment());
+
+        } else if (id == R.id.nav_media) {
+
+        } else if (id == R.id.nav_config) {
+
+        } else if (id == R.id.nav_logout) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void gotoFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.containerLayout, fragment);
+        fragmentTransaction.commit();
     }
 }

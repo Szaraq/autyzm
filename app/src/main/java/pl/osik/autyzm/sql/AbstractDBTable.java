@@ -1,22 +1,25 @@
 package pl.osik.autyzm.sql;
 
+import android.util.Log;
+
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * Created by m.osik2 on 2016-04-20.
  */
 public abstract class AbstractDBTable {
-    public static final String TABLE_NAME = "";
+    protected static String TABLE_NAME_PARENT = "";
     public static final String COLUMN_ID = "id";
 
-    protected static final HashMap<String, String> colTypeMap = null;
+    protected static LinkedHashMap<String, String> colTypeMapParent = new LinkedHashMap<>();
 
     protected abstract String create();
 
     protected String createArgumentQuery() {
         StringBuilder out = new StringBuilder();
-        for(Map.Entry<String, String> entry : colTypeMap.entrySet()) {
+        for(Map.Entry<String, String> entry : colTypeMapParent.entrySet()) {
             out.append(entry.getKey());
             out.append(" ");
             out.append(entry.getValue());
@@ -31,7 +34,7 @@ public abstract class AbstractDBTable {
     }
 
     protected String getCreateStart() {
-        return "create table " + TABLE_NAME + " (" + createArgumentQuery();
+        return "create table " + TABLE_NAME_PARENT + " (" + createArgumentQuery();
     }
 
 }

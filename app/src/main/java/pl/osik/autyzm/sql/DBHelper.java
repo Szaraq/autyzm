@@ -22,6 +22,10 @@ public class DBHelper extends SQLiteOpenHelper {
             new LekcjaDziecko()
     };
 
+    public DBHelper() {
+        super(MyApp.getContext(), DB_NAME, null, 1);
+    }
+
     public DBHelper(Context context) {
         super(context, DB_NAME, null, 1);
     }
@@ -36,5 +40,13 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    protected SQLiteDatabase getDBRead() {
+        return getReadableDatabase();
+    }
+
+    protected SQLiteDatabase getDBWrite() {
+        return getWritableDatabase();
     }
 }

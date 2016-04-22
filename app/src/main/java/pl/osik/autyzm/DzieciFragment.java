@@ -3,12 +3,17 @@ package pl.osik.autyzm;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,6 +24,8 @@ public class DzieciFragment extends Fragment {
 
     @Bind(R.id.dzieci_list)
     RecyclerView dzieciList;
+    @Bind(R.id.dzieci_fab)
+    FloatingActionButton fab;
 
     private DzieciAdapter dzieciAdapter;
 
@@ -49,8 +56,14 @@ public class DzieciFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dzieciAdapter = new DzieciAdapter(getLayoutInflater(savedInstanceState));
-        dzieciList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        dzieciAdapter = new DzieciAdapter(getLayoutInflater(savedInstanceState), this);
+        dzieciList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         dzieciList.setAdapter(dzieciAdapter);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Add a new child", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

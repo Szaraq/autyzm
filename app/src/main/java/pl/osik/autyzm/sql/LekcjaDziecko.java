@@ -12,18 +12,25 @@ public class LekcjaDziecko extends AbstractDBTable {
     public static final String COLUMN_DZIECKO = "dziecko";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER PRIMARY KEY");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_LEKCJA, "INTEGER");
         put(COLUMN_DZIECKO, "INTEGER");
     }};
 
     @Override
     protected String create() {
-        colTypeMapParent = colTypeMap;
-        TABLE_NAME_PARENT = TABLE_NAME;
         return getCreateStart()
                 + createForeignKey(COLUMN_LEKCJA, Lekcja.TABLE_NAME)
                 + createForeignKey(COLUMN_DZIECKO, Dziecko.TABLE_NAME)
                 + ")";
+    }
+
+    @Override
+    protected LinkedHashMap<String, String> getMap() {
+        return colTypeMap;
+    }
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

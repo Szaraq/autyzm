@@ -28,7 +28,7 @@ public class Dziecko extends AbstractDBTable {
     public static final String COLUMN_PHOTO = "photo";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER PRIMARY KEY");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_IMIE, "TEXT");
         put(COLUMN_NAZWISKO, "TEXT");
         put(COLUMN_DATAURODZENIA, "DATE");
@@ -44,25 +44,50 @@ public class Dziecko extends AbstractDBTable {
         put(COLUMN_PHOTO, "TEXT");
     }};
 
+    static DBHelper helper = new DBHelper();
+    static SQLiteDatabase db = helper.getDBRead();
+
     @Override
     protected String create() {
-        colTypeMapParent = colTypeMap;
-        TABLE_NAME_PARENT = TABLE_NAME;
         return getCreateStart() + createForeignKey(COLUMN_USER, User.TABLE_NAME) + ")";
     }
 
-    public static ArrayList<HashMap<String, String>> getDzieciList() {
-        ArrayList<HashMap<String, String>>  out = new ArrayList<>();
-        DBHelper helper = new DBHelper();
-        SQLiteDatabase db = helper.getDBRead();
+    @Override
+    protected LinkedHashMap<String, String> getMap() {
+        return colTypeMap;
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
+
+    public static ArrayList<HashMap<String, Object>> getDzieciList() {
+        ArrayList<HashMap<String, Object>>  out = new ArrayList<>();
         Cursor resultSet = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_NAZWISKO, null);
         int count = 0;
         while (resultSet.moveToNext()) {
-            HashMap<String, String> temp = new HashMap<>();
+            HashMap<String, Object> temp = new HashMap<>();
             temp.put(COLUMN_NAZWISKO, resultSet.getString(resultSet.getColumnIndex(COLUMN_NAZWISKO)));
             temp.put(COLUMN_IMIE, resultSet.getString(resultSet.getColumnIndex(COLUMN_IMIE)));
             temp.put(COLUMN_PHOTO, resultSet.getString(resultSet.getColumnIndex(COLUMN_PHOTO)));
+            temp.put(COLUMN_ID, resultSet.getInt(resultSet.getColumnIndex(COLUMN_ID)));
             out.add(temp);
+        }
+        return out;
+    }
+
+    public static HashMap<String, String> getDzieckoById(int id) {
+        //TODO zmienić na <String, Object>
+
+        Dziecko d = new Dziecko();
+        HashMap<String, String> out = new HashMap<>();
+        Cursor resultSet = db.rawQuery("SELECT * FROM " + d.getTableName() + " WHERE id = ?", new String[] { String.valueOf(id) });
+        resultSet.moveToNext();
+        String[] cols = d.getColumns();
+        for (String c: cols) {
+            String input = resultSet.getString(resultSet.getColumnIndex(c));
+            out.put(c, input);
         }
         return out;
     }

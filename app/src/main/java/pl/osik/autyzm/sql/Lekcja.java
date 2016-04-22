@@ -13,15 +13,22 @@ public class Lekcja extends AbstractDBTable {
     public static final String COLUMN_TYTUL = "tytul";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER PRIMARY KEY");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_TYTUL, "TEXT");
     }};
 
     @Override
     protected String create() {
-        colTypeMapParent = colTypeMap;
-        TABLE_NAME_PARENT = TABLE_NAME;
         return getCreateStart() + ")";
+    }
+
+    @Override
+    protected LinkedHashMap<String, String> getMap() {
+        return colTypeMap;
+    }
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 
 }

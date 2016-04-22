@@ -12,17 +12,24 @@ public class Film extends AbstractDBTable {
     public static final String COLUMN_FOLDER = "folder";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
-        put(COLUMN_ID, "INTEGER PRIMARY KEY");
+        put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_PATH, "TEXT");
         put(COLUMN_FOLDER, "INTEGER");
     }};
 
     @Override
     protected String create() {
-        colTypeMapParent = colTypeMap;
-        TABLE_NAME_PARENT = TABLE_NAME;
         return getCreateStart()
                 + createForeignKey(COLUMN_FOLDER, Folder.TABLE_NAME)
                 + ")";
+    }
+
+    @Override
+    protected LinkedHashMap<String, String> getMap() {
+        return colTypeMap;
+    }
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

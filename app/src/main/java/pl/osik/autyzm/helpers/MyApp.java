@@ -1,4 +1,4 @@
-package pl.osik.autyzm.sql;
+package pl.osik.autyzm.helpers;
 
 import android.app.Application;
 import android.content.Context;

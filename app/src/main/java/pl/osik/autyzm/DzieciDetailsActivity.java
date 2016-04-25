@@ -43,8 +43,8 @@ public class DzieciDetailsActivity extends AppCompatActivity {
     @Bind(R.id.button)
     Button button;
 
-    @Bind(R.id.dzieci_details_text)
-    TextView dzieciDetailsText;
+    /*@Bind(R.id.dzieci_details_text)
+    TextView dzieciDetailsText;*/
 
     private HashMap<String, String> dziecko;
 
@@ -80,7 +80,8 @@ public class DzieciDetailsActivity extends AppCompatActivity {
             show.append("\n");
         }
 
-        dzieciDetailsText.setText(show.toString());
+        //dzieciDetailsText.setText(show.toString());
+        populate();
     }
 
     private void populate() {

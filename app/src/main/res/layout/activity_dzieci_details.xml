@@ -1,192 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pl.osik.autyzm.DzieciDetailsActivity">
-<!--
-    <TextView
-        android:id="@+id/dzieci_details_text"
+
+    <RelativeLayout
+        android:id="@+id/layout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/dzieci_details_wiek"
-        android:layout_toLeftOf="@id/dzieci_details_imie"
-        android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
--->
-    <!--
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/dzieci_details_imie"
-        android:layout_alignLeft="@+id/dzieci_details_imie"/>
-        -->
-<!--
-    <EditText
-        android:id="@+id/dzieci_details_imie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/dzieci_details_imie" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dzieci_details_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/wiek"
+            android:layout_toLeftOf="@id/imie"
+            android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+
+        <!--
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/dzieci_details_imie"
+            android:layout_alignLeft="@+id/dzieci_details_imie"/>
+            -->
+        <EditText
+            android:id="@+id/imie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:hint="@string/dzieci_details_imie"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/nazwisko"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imie"
+            android:layout_alignStart="@+id/imie"
+            android:layout_below="@+id/imie"
+            android:ems="10"
+            android:hint="@string/dzieci_details_nazwisko"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/data_urodzenia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/dzieci_details_text"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/dzieci_details_text"
+            android:layout_below="@+id/nazwisko"
+            android:hint="@string/dzieci_details_data_urodzenia" />
+
+        <EditText
+            android:id="@+id/rozpoczecie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/nazwisko"
+            android:layout_alignRight="@+id/nazwisko"
+            android:layout_below="@+id/nazwisko"
+            android:layout_toRightOf="@+id/dzieci_details_text"
+            android:hint="@string/dzieci_details_rozpoczecie" />
+    </RelativeLayout>
 
     <EditText
-        android:id="@+id/dzieci_details_nazwisko"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/dzieci_details_imie"
-        android:layout_alignStart="@+id/dzieci_details_imie"
-        android:layout_below="@+id/dzieci_details_imie"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/dzieci_details_nazwisko" />
-
-    <EditText
-        android:id="@+id/dzieci_details_wiek"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/dzieci_details_text"
+        android:id="@+id/notatki"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_above="@id/layout2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/dzieci_details_text"
-        android:layout_below="@+id/dzieci_details_nazwisko"
-        android:text="@string/dzieci_details_wiek" />
--->
-        <!--android:layout_alignEnd="@+id/dzieci_details_nazwisko"
-        android:layout_alignRight="@+id/dzieci_details_nazwisko"
-        android:layout_below="@+id/dzieci_details_nazwisko"
-        android:layout_toRightOf="@+id/dzieci_details_text"-->
-    <EditText
-        android:id="@+id/dzieci_details_rozpoczecie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dzieci_details_rozpoczecie" />
-
-    <EditText
-        android:id="@+id/dzieci_details_notatki"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/dzieci_details_rozpoczecie"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/dzieci_details_rozpoczecie"
-        android:layout_below="@id/dzieci_details_rozpoczecie"
-        android:layout_above="@id/dzieci_details_dane_rodzicow_text"
-        android:lines="10"
+        android:layout_below="@id/layout1"
+        android:layout_weight="1"
         android:ems="10"
         android:gravity="top"
         android:inputType="textMultiLine"
-        android:text="@string/dzieci_details_notatki" />
+        android:lines="10"
+        android:hint="@string/dzieci_details_notatki" />
 
-    <TextView
-        android:id="@+id/dzieci_details_dane_rodzicow_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:paddingBottom="7dp"
-        android:paddingTop="15dp"
-        android:text="@string/dzieci_details_dane_rodzicow"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <View
-        android:id="@+id/dzieci_details_divider"
-        style="@style/DividerLine"
-        android:layout_below="@id/dzieci_details_dane_rodzicow_text" />
-<!--
-    <LinearLayout
-        android:id="@+id/dzieci_details_dane_rodzicow"
+    <RelativeLayout
+        android:id="@+id/layout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/dzieci_details_divider"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dane_rodzicow_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingBottom="7dp"
+            android:paddingTop="15dp"
+            android:text="@string/dzieci_details_dane_rodzicow"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <View
+            android:id="@+id/divider"
+            style="@style/DividerLine"
+            android:layout_below="@id/dane_rodzicow_text" />
 
         <LinearLayout
-            android:id="@+id/dzieci_details_dane_ojca"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:orientation="vertical">
+            android:id="@+id/dane_rodzicow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/divider"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:id="@+id/dane_ojca"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/dzieci_details_imie_ojca"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/dzieci_details_imie_ojca" />
+                <EditText
+                    android:id="@+id/imie_ojca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:hint="@string/dzieci_details_imie_ojca" />
 
-            <EditText
-                android:id="@+id/dzieci_details_nazwisko_ojca"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/dzieci_details_nazwisko_ojca" />
+                <EditText
+                    android:id="@+id/nazwisko_ojca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:hint="@string/dzieci_details_nazwisko_ojca" />
 
-            <EditText
-                android:id="@+id/dzieci_details_telefon_ojca"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="phone"
-                android:text="@string/dzieci_details_telefon_ojca" />
+                <EditText
+                    android:id="@+id/telefon_ojca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:hint="@string/dzieci_details_telefon_ojca" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dane_matki"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/imie_matki"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:hint="@string/dzieci_details_imie_matki" />
+
+                <EditText
+                    android:id="@+id/nazwisko_matki"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:hint="@string/dzieci_details_nazwisko_matki" />
+
+                <EditText
+                    android:id="@+id/telefon_matki"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:hint="@string/dzieci_details_telefon_matki" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"></LinearLayout>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dane_rodzicow"
+            android:background="@color/colorPrimary"
+            android:text="@string/dzieci_details_button"
+            android:textColor="@color/colorAppBackground" />
 
-        <LinearLayout
-            android:id="@+id/dzieci_details_dane_matki"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:orientation="vertical">
+    </RelativeLayout>
 
-            <EditText
-                android:id="@+id/dzieci_details_imie_matki"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/dzieci_details_imie_matki" />
-
-            <EditText
-                android:id="@+id/dzieci_details_nazwisko_matki"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/dzieci_details_nazwisko_matki" />
-
-            <EditText
-                android:id="@+id/dzieci_details_telefon_matki"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="phone"
-                android:text="@string/dzieci_details_telefon_matki" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/dzieci_details_dane_rodzicow"
-        android:text="New Button" />
--->
-</RelativeLayout>
+</LinearLayout>

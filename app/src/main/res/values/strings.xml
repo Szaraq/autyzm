@@ -23,7 +23,7 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="dzieci_details_imie">Imię</string>
     <string name="dzieci_details_nazwisko">Nazwisko</string>
-    <string name="dzieci_details_wiek">Wiek</string>
+    <string name="dzieci_details_data_urodzenia">Data urodzenia</string>
     <string name="dzieci_details_rozpoczecie">Rozpoczęcie nauki</string>
     <string name="dzieci_details_notatki">Notatki</string>
     <string name="dzieci_details_dane_rodzicow">Dane kontaktowe rodziców</string>
@@ -33,4 +33,5 @@
     <string name="dzieci_details_imie_matki">Imię matki</string>
     <string name="dzieci_details_telefon_matki">Telefon matki</string>
     <string name="dzieci_details_nazwisko_matki">Nazwisko matki</string>
+    <string name="dzieci_details_button">Statystyki</string>
 </resources>

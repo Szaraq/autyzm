@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DzieciDetailsActivity"></activity>
+        <activity android:name=".dzieci.DzieciDetailsActivity" />
+        <activity android:name=".dzieci.DzieciStatisticsActivity"></activity>
     </application>
 
 </manifest>

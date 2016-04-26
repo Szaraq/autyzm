@@ -33,5 +33,11 @@
     <string name="dzieci_details_imie_matki">Imię matki</string>
     <string name="dzieci_details_telefon_matki">Telefon matki</string>
     <string name="dzieci_details_nazwisko_matki">Nazwisko matki</string>
-    <string name="dzieci_details_button">Statystyki</string>
+    <string name="dzieci_details_button_statystyki">Statystyki</string>
+    <string name="dzieci_details_button_zapisz">Zapisz</string>
+    <string name="message_dziecko_edytowane">Dziecko zostało poprawnie edytowane</string>
+    <string name="message_dziecko_dodane">Dziecko zostało poprawnie dodane</string>
+    <string name="dziecko_dodaj_title">Dodaj dziecko</string>
+    <string name="message_dziecko_usunięte">Czy na pewno chcesz usunąć</string>
+    <string name="dziecko_statistics_postepy">Postępy dziecka</string>
 </resources>

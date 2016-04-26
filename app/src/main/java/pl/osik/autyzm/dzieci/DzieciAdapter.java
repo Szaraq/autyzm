@@ -1,5 +1,7 @@
-package pl.osik.autyzm.adapters;
+package pl.osik.autyzm.dzieci;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -11,16 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import pl.osik.autyzm.DzieciDetailsActivity;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.sql.Dziecko;
 
 /**
@@ -28,6 +29,7 @@ import pl.osik.autyzm.sql.Dziecko;
  */
 public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
 
+    public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
     private Fragment fragment;
     ArrayList<HashMap<String, Object>> dzieciList = Dziecko.getDzieciList();
     private final LayoutInflater layoutInflater;
@@ -83,9 +85,18 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         dzieciName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(dzieciContextMenu.getContext(), "Kliknięcie wprost na " + name, Toast.LENGTH_LONG).show();
+                gotoDetails(OperationsEnum.SHOW);
             }
         });
+    }
+
+    protected void gotoDetails(OperationsEnum operacja) {
+        Intent intent = new Intent(fragment.getActivity(), DzieciDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Dziecko.COLUMN_ID, id);
+        bundle.putSerializable(DzieciAdapter.BUNDLE_SWITCH_OPERACJA, operacja);
+        intent.putExtras(bundle);
+        fragment.startActivity(intent);
     }
 
     public void setPhoto(String photo) {
@@ -123,13 +134,20 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if(item.getItemId() == R.id.dzieci_edit) {
-            Intent intent = new Intent(fragment.getActivity(), DzieciDetailsActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt(Dziecko.COLUMN_ID, id);
-            intent.putExtras(bundle);
-            fragment.startActivity(intent);
+            gotoDetails(OperationsEnum.EDYCJA);
         } else {
-            Toast.makeText(dzieciContextMenu.getContext(), item.getTitle() + " " + name, Toast.LENGTH_LONG).show();
+            AlertDialog.Builder dialog = new AlertDialog.Builder(dzieciContextMenu.getContext());
+            dialog.setMessage(R.string.message_dziecko_usunięte + dzieciName.getText().toString() + "?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Dziecko d = new Dziecko();
+                            d.delete(id);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert);
+            dialog.show();
         }
         return true;
     }

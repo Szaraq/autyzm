@@ -1,6 +1,7 @@
 package pl.osik.autyzm.sql;
 
 import android.app.Application;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 

@@ -56,7 +56,7 @@ public class LoadTestData {
             put(Dziecko.COLUMN_PHOTO, null);
         }};
         db.execSQL("DELETE FROM " + Dziecko.TABLE_NAME);
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 2; i++) {
             //db.execSQL("INSERT INTO " + Dziecko.TABLE_NAME + "(" + d.getColumnsToInsertQuery() + ") VALUES('Jan', 'Kowalski', '2007-01-01 10:00:00', '2007-01-01 10:00:00', 'notsy', 'Janusz', 'Kowalski', '500111222', 'Janina', 'Kowalska', '500222333', '1', 'null')");
             d.insert(params);
         }

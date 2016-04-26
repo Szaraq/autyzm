@@ -1,5 +1,6 @@
 package pl.osik.autyzm.sql;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -81,6 +82,23 @@ public abstract class AbstractDBTable {
         }
         out.setLength(out.length() - 1);
         return out.toString();
+    }
+
+
+
+    public boolean edit(int id, ContentValues data) {
+        db.update(getTableName(), data, COLUMN_ID + "= ?", new String[] { String.valueOf(id) });
+        return true;
+    }
+
+    public boolean insert(ContentValues data) {
+        db.insert(getTableName(), null, data);
+        return true;
+    }
+
+    public boolean delete(int id) {
+        db.delete(getTableName(), COLUMN_ID + " = ?", new String[] { String.valueOf(id) });
+        return true;
     }
 
 }

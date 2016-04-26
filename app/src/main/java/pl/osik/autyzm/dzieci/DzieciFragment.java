@@ -1,23 +1,21 @@
-package pl.osik.autyzm;
+package pl.osik.autyzm.dzieci;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import pl.osik.autyzm.adapters.DzieciAdapter;
+import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.OperationsEnum;
 
 
 public class DzieciFragment extends Fragment {
@@ -62,8 +60,22 @@ public class DzieciFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Add a new child", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(v.getContext(), DzieciDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(DzieciAdapter.BUNDLE_SWITCH_OPERACJA, OperationsEnum.DODAWANIE);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        dzieciAdapter.notifyItemInserted(2);
+        dzieciAdapter.notifyItemRangeChanged(2, 3);
+        //TODO now
+        dzieciAdapter.notifyDataSetChanged();
+        Toast.makeText(DzieciFragment.this.getContext(), "aaa", Toast.LENGTH_SHORT).show();
     }
 }

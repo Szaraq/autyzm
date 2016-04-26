@@ -15,74 +15,78 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="pl.osik.autyzm.DzieciDetailsActivity">
+        tools:context=".dzieci.DzieciDetailsActivity">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/layout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
-            <EditText
-                android:id="@+id/imie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:ems="10"
-                android:hint="@string/dzieci_details_imie"
-                android:inputType="textPersonName" />
 
-            <!--
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/photo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/dzieci_details_imie"
-                android:layout_alignLeft="@+id/dzieci_details_imie"/>
-                -->
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:src="@drawable/ic_no_photo"/>
 
-            <EditText
-                android:id="@+id/nazwisko"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/imie"
-                android:layout_alignStart="@+id/imie"
-                android:layout_below="@+id/imie"
-                android:ems="10"
-                android:hint="@string/dzieci_details_nazwisko"
-                android:inputType="textPersonName" />
+                <!--
+                <TextView
+                    android:id="@+id/dzieci_details_text"
+                    android:layout_height="0dip"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+-->
+                <EditText
+                    android:id="@+id/data_urodzenia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/dzieci_details_data_urodzenia" />
 
-            <EditText
-                android:id="@+id/data_urodzenia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/dzieci_details_text"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/dzieci_details_text"
-                android:layout_below="@+id/nazwisko"
-                android:hint="@string/dzieci_details_data_urodzenia" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/dzieci_details_text"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:layout_above="@id/data_urodzenia"
-                android:layout_toLeftOf="@id/imie"
-                android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/imie"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:ems="10"
+                    android:hint="@string/dzieci_details_imie"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/nazwisko"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:paddingTop="15dp"
+                    android:hint="@string/dzieci_details_nazwisko"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/rozpoczecie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp"
+                    android:hint="@string/dzieci_details_rozpoczecie" />
+
+            </LinearLayout>
 
 
-            <EditText
-                android:id="@+id/rozpoczecie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/nazwisko"
-                android:layout_alignRight="@+id/nazwisko"
-                android:layout_below="@+id/nazwisko"
-                android:layout_toRightOf="@+id/dzieci_details_text"
-                android:hint="@string/dzieci_details_rozpoczecie" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <EditText
             android:id="@+id/notatki"
@@ -202,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dane_rodzicow"
                 android:background="@color/colorPrimary"
-                android:text="@string/dzieci_details_button"
+                android:text="@string/dzieci_details_button_zapisz"
                 android:textColor="@color/colorAppBackground" />
 
         </RelativeLayout>

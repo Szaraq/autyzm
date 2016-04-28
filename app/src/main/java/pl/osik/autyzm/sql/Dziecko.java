@@ -46,9 +46,6 @@ public class Dziecko extends AbstractDBTable {
         put(COLUMN_PHOTO, "TEXT");
     }};
 
-    static DBHelper helper = new DBHelper();
-    static SQLiteDatabase db = helper.getDBRead();
-
     @Override
     protected String create() {
         return getCreateStart() + createForeignKey(COLUMN_USER, User.TABLE_NAME) + ")";

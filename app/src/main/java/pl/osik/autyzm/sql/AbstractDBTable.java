@@ -12,8 +12,8 @@ import java.util.Map;
  * Created by m.osik2 on 2016-04-20.
  */
 public abstract class AbstractDBTable {
-    private static DBHelper helper = new DBHelper();
-    private static SQLiteDatabase db = helper.getDBRead();
+    protected static DBHelper helper = new DBHelper();
+    protected static SQLiteDatabase db = helper.getDBRead();
 
     public static final String COLUMN_ID = "id";
 

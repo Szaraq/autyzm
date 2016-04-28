@@ -42,6 +42,7 @@ public class StartFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
         ButterKnife.bind(this, view);
+        getActivity().setTitle("Start");
         startLastUsedList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         return view;

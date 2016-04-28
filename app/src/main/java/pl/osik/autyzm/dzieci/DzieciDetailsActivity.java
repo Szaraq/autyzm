@@ -165,5 +165,6 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 onBackPressed();
             }
         }
+        //TODO walidacja, przede wszystkim NotNull
     }
 }

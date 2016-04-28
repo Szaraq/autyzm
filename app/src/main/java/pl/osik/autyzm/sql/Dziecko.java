@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +91,35 @@ public class Dziecko extends AbstractDBTable {
             String input = resultSet.getString(resultSet.getColumnIndex(c));
             out.put(c, input);
         }
+        return out;
+    }
+
+    public static String getImieINazwiskoByID(int id) {
+        Dziecko d = new Dziecko();
+        String out;
+        Cursor resultSet = db.rawQuery("SELECT " + COLUMN_NAZWISKO + ", " + COLUMN_IMIE + " FROM " + d.getTableName() + " WHERE id = ?", new String[] { String.valueOf(id) });
+        resultSet.moveToNext();
+        out = resultSet.getString(resultSet.getColumnIndex(COLUMN_IMIE)) + " " + resultSet.getString(resultSet.getColumnIndex(COLUMN_NAZWISKO));
+        return out;
+    }
+
+    public static LinkedHashMap<String, Float> getStatistics(int idDziecka) {
+        LinkedHashMap<String, Float> out = new LinkedHashMap<>();
+        String query = "SELECT " + Odpowiedz.COLUMN_DATA + ", AVG("+ Odpowiedz.COLUMN_PUNKTY + ") AS " + Odpowiedz.COLUMN_PUNKTY + " FROM " + Odpowiedz.TABLE_NAME
+                + createJoin(new Pytanie(), Odpowiedz.TABLE_NAME, Odpowiedz.COLUMN_PYTANIE)
+                + createJoin(new Modul(), Pytanie.TABLE_NAME, Pytanie.COLUMN_MODUL)
+                + createJoin(new Lekcja(), Modul.TABLE_NAME, Modul.COLUMN_LEKCJA)
+                + " JOIN " + LekcjaDziecko.TABLE_NAME + " ON " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID) + " = " + tableAndColumn(LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_LEKCJA)
+                + createJoin(new Dziecko(), LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_DZIECKO)
+                + " WHERE " + tableAndColumn(Dziecko.TABLE_NAME, Dziecko.COLUMN_ID) + " = ?"
+                + " GROUP BY " + Odpowiedz.COLUMN_DATA
+                + " ORDER BY " + tableAndColumn(Odpowiedz.TABLE_NAME, Odpowiedz.COLUMN_DATA);
+        Cursor resultSet = db.rawQuery(query, new String[] { String.valueOf(idDziecka) });
+        while (resultSet.moveToNext()) {
+            out.put(resultSet.getString(resultSet.getColumnIndex(Odpowiedz.COLUMN_DATA)),
+                    resultSet.getFloat(resultSet.getColumnIndex(Odpowiedz.COLUMN_PUNKTY)));
+        }
+
         return out;
     }
 }

@@ -72,10 +72,6 @@ public class DzieciFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        dzieciAdapter.notifyItemInserted(2);
-        dzieciAdapter.notifyItemRangeChanged(2, 3);
-        //TODO now
-        dzieciAdapter.notifyDataSetChanged();
-        Toast.makeText(DzieciFragment.this.getContext(), "aaa", Toast.LENGTH_SHORT).show();
+        dzieciAdapter.refresh();
     }
 }

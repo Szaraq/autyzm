@@ -87,7 +87,7 @@ public abstract class AbstractDBTable {
 
 
     public boolean edit(int id, ContentValues data) {
-        db.update(getTableName(), data, COLUMN_ID + "= ?", new String[] { String.valueOf(id) });
+        db.update(getTableName(), data, COLUMN_ID + "= ?", new String[]{String.valueOf(id)});
         return true;
     }
 
@@ -97,8 +97,16 @@ public abstract class AbstractDBTable {
     }
 
     public boolean delete(int id) {
-        db.delete(getTableName(), COLUMN_ID + " = ?", new String[] { String.valueOf(id) });
+        db.delete(getTableName(), COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         return true;
+    }
+
+    protected static String tableAndColumn(String table, String column) {
+        return table + "." + column;
+    }
+
+    protected static String createJoin(AbstractDBTable joinedTableClass, String thisTable, String thisKey) {
+        return " JOIN " + joinedTableClass.getTableName() + " ON " + tableAndColumn(thisTable, thisKey) + " = " + tableAndColumn(joinedTableClass.getTableName(), joinedTableClass.COLUMN_ID);
     }
 
 }

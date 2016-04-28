@@ -63,9 +63,6 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     @Bind(R.id.scrollView)
     ScrollView scrollView;
 
-    /*@Bind(R.id.dzieci_details_text)
-    TextView dzieciDetailsText;*/
-
     private HashMap<String, String> dziecko;
 
     @Override
@@ -155,10 +152,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 data.put(entry.getKey(), entry.getValue().getText().toString());
             }
             if(d.edit(id, data)) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage(R.string.message_dziecko_edytowane)
-                        .setPositiveButton(android.R.string.ok, null);
-                dialog.show();
+                Toast.makeText(this, R.string.message_dziecko_edytowane, Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         } else if(operacja == OperationsEnum.DODAWANIE) {
             ContentValues data = new ContentValues();
@@ -166,30 +161,9 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 data.put(entry.getKey(), entry.getValue().getText().toString());
             }
             if(d.insert(data)) {
-                /*AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage(R.string.message_dziecko_dodane)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                onBackPressed();
-                            }
-                        });
-                dialog.show();*/
-                //Toast.makeText(this, R.string.message_dziecko_dodane, Toast.LENGTH_SHORT).show();
-                /*MainActivity main = MainActivity.instance;
-                main.gotoFragment(new DzieciFragment());*/
+                Toast.makeText(this, R.string.message_dziecko_dodane, Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
         }
     }
 }
-/*
-class DzieciDetailsOnClickListener implements DialogInterface.OnClickListener {
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        Intent refresh = new Intent(dialog, MainActivity.class);
-        startActivity(refresh);
-        this.finish();
-    }
-}*/

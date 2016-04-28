@@ -16,6 +16,9 @@ public class LoadTestData {
     private static boolean added = false;
 
     public static void load() {
+        for (AbstractDBTable table : DBHelper.tables) {
+            db.execSQL("DELETE FROM " + table.getTableName());
+        }
         if(!added) {
             loadUser();
             loadDziecko();
@@ -25,6 +28,7 @@ public class LoadTestData {
             loadFilm();
             loadModul();
             loadPytanie();
+            loadOdpowiedz();
             added = true;
         }
     }
@@ -55,9 +59,7 @@ public class LoadTestData {
             put(Dziecko.COLUMN_USER, 1);
             put(Dziecko.COLUMN_PHOTO, null);
         }};
-        db.execSQL("DELETE FROM " + Dziecko.TABLE_NAME);
         for (int i = 0; i < 2; i++) {
-            //db.execSQL("INSERT INTO " + Dziecko.TABLE_NAME + "(" + d.getColumnsToInsertQuery() + ") VALUES('Jan', 'Kowalski', '2007-01-01 10:00:00', '2007-01-01 10:00:00', 'notsy', 'Janusz', 'Kowalski', '500111222', 'Janina', 'Kowalska', '500222333', '1', 'null')");
             d.insert(params);
         }
     }
@@ -116,5 +118,20 @@ public class LoadTestData {
         params.put(Odpowiedz.COLUMN_PUNKTY, 1);
         params.put(Odpowiedz.COLUMN_PYTANIE, 1);
         o.insert(params);
+        params.put(Odpowiedz.COLUMN_DATA, "2015-01-01");
+        params.put(Odpowiedz.COLUMN_PUNKTY, 1);
+        params.put(Odpowiedz.COLUMN_PYTANIE, 1);
+        o.insert(params);
+        params.put(Odpowiedz.COLUMN_DATA, "2015-01-01");
+        params.put(Odpowiedz.COLUMN_PUNKTY, 0);
+        params.put(Odpowiedz.COLUMN_PYTANIE, 1);
+        o.insert(params);
+
+        for(int i = 1; i < 9; i++) {
+            params.put(Odpowiedz.COLUMN_DATA, "2015-01-0" + i);
+            params.put(Odpowiedz.COLUMN_PUNKTY, 1);
+            params.put(Odpowiedz.COLUMN_PYTANIE, 1);
+            o.insert(params);
+        }
     }
 }

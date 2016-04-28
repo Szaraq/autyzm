@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.sql.Dziecko;
 
@@ -42,7 +44,9 @@ public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
     @Override
     public DzieciViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_dzieci, parent, false);
-        return new DzieciViewHolder(view);
+        DzieciViewHolder holder = new DzieciViewHolder(view);
+        holder.setAdapter(this);
+        return holder;
     }
 
     @Override
@@ -57,6 +61,11 @@ public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
         holder.setId(id);
     }
 
+    public void refresh() {
+        dzieciList = Dziecko.getDzieciList();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return dzieciList.size();
@@ -69,6 +78,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     private String name;
     private String photo;
     private Fragment fragment;
+    private DzieciAdapter adapter;
 
     @Bind(R.id.dzieci_name)
     TextView dzieciName;
@@ -137,12 +147,15 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
             gotoDetails(OperationsEnum.EDYCJA);
         } else {
             AlertDialog.Builder dialog = new AlertDialog.Builder(dzieciContextMenu.getContext());
-            dialog.setMessage(R.string.message_dziecko_usunięte + dzieciName.getText().toString() + "?")
+            dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + name + "?")
+                    .setTitle("Uwaga!")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Dziecko d = new Dziecko();
                             d.delete(id);
+                            adapter.refresh();
+                            Toast.makeText(dzieciContextMenu.getContext(), R.string.message_dziecko_do_usunięcia, Toast.LENGTH_SHORT).show();
                         }
                     })
                     .setNegativeButton(android.R.string.no, null)
@@ -162,5 +175,9 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     public void setFragment(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    protected void setAdapter(DzieciAdapter adapter) {
+        this.adapter = adapter;
     }
 }

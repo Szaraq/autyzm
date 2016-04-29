@@ -44,4 +44,9 @@
     <string name="dzieci_statistics_postep_w_nauce">Postęp w nauce</string>
     <string name="dzieci_statistics_liczba_punktow">Liczba punktów</string>
     <string name="dzieci_statistics_brak_lekcji">Dziecko nie przeszło jeszcze żadnej lekcji</string>
+    <string name="login_zaloguj">Zaloguj</string>
+    <string name="login_login">Login</string>
+    <string name="login_haslo">Hasło</string>
+    <string name="login_error">Błędny login lub hasło</string>
+    <string name="dzieci_details_wybierz_zdjecie">Wybierz zdjęcie</string>
 </resources>

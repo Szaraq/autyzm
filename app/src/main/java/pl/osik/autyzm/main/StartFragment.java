@@ -1,7 +1,5 @@
-package pl.osik.autyzm;
+package pl.osik.autyzm.main;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +10,7 @@ import android.view.ViewGroup;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import pl.osik.autyzm.R;
 
 
 public class StartFragment extends Fragment {

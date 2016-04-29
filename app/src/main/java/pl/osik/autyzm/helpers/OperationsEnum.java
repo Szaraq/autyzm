@@ -6,5 +6,6 @@ package pl.osik.autyzm.helpers;
 public enum OperationsEnum {
     DODAWANIE,
     EDYCJA,
-    SHOW
+    SHOW;
+
 }

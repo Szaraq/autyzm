@@ -1,6 +1,6 @@
-package pl.osik.autyzm;
+package pl.osik.autyzm.main;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,11 +10,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 
+import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciFragment;
+import pl.osik.autyzm.login.LoginActivity;
+import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.LoadTestData;
+import pl.osik.autyzm.sql.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,6 +29,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        try {
+            LoadTestData.load();
+        } catch(ExceptionInInitializerError exc) {
+            Log.d("LoadTest", exc.getCause().toString());
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -37,8 +46,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         instance = this;
-
-        LoadTestData.load();
 
         gotoFragment(new StartFragment());
     }
@@ -86,7 +93,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_config) {
 
         } else if (id == R.id.nav_logout) {
-
+            User.logout();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -63,7 +63,11 @@ public class Dziecko extends AbstractDBTable {
 
     public static ArrayList<HashMap<String, Object>> getDzieciList() {
         ArrayList<HashMap<String, Object>>  out = new ArrayList<>();
-        Cursor resultSet = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_NAZWISKO, null);
+        String query = "SELECT " + TABLE_NAME + ".*" + " FROM " + TABLE_NAME
+                + createJoin(new User(), TABLE_NAME, COLUMN_USER)
+                + " WHERE " + tableAndColumn(User.TABLE_NAME, COLUMN_ID) + " = ?"
+                + " ORDER BY " + COLUMN_NAZWISKO;
+        Cursor resultSet = db.rawQuery(query, new String[] { String.valueOf(User.getCurrentId()) });
         int count = 0;
         while (resultSet.moveToNext()) {
             HashMap<String, Object> temp = new HashMap<>();
@@ -79,6 +83,7 @@ public class Dziecko extends AbstractDBTable {
     public static HashMap<String, String> getDzieckoById(int id) {
         //TODO zmienić na <String, Object>
 
+        if(!checkDzieckoForCurrentUser(id)) return null;
         Dziecko d = new Dziecko();
         HashMap<String, String> out = new HashMap<>();
         Cursor resultSet = db.rawQuery("SELECT * FROM " + d.getTableName() + " WHERE id = ?", new String[] { String.valueOf(id) });
@@ -92,15 +97,17 @@ public class Dziecko extends AbstractDBTable {
     }
 
     public static String getImieINazwiskoByID(int id) {
+        if(!checkDzieckoForCurrentUser(id)) return null;
         Dziecko d = new Dziecko();
         String out;
-        Cursor resultSet = db.rawQuery("SELECT " + COLUMN_NAZWISKO + ", " + COLUMN_IMIE + " FROM " + d.getTableName() + " WHERE id = ?", new String[] { String.valueOf(id) });
+        Cursor resultSet = db.rawQuery("SELECT " + COLUMN_NAZWISKO + ", " + COLUMN_IMIE + " FROM " + d.getTableName() + " WHERE id = ?", new String[]{String.valueOf(id)});
         resultSet.moveToNext();
         out = resultSet.getString(resultSet.getColumnIndex(COLUMN_IMIE)) + " " + resultSet.getString(resultSet.getColumnIndex(COLUMN_NAZWISKO));
         return out;
     }
 
     public static LinkedHashMap<String, Float> getStatistics(int idDziecka) {
+        if(!checkDzieckoForCurrentUser(idDziecka)) return null;
         LinkedHashMap<String, Float> out = new LinkedHashMap<>();
         String query = "SELECT " + Odpowiedz.COLUMN_DATA + ", AVG("+ Odpowiedz.COLUMN_PUNKTY + ") AS " + Odpowiedz.COLUMN_PUNKTY + " FROM " + Odpowiedz.TABLE_NAME
                 + createJoin(new Pytanie(), Odpowiedz.TABLE_NAME, Odpowiedz.COLUMN_PYTANIE)
@@ -118,5 +125,21 @@ public class Dziecko extends AbstractDBTable {
         }
 
         return out;
+    }
+
+    public static boolean checkDzieckoForCurrentUser(int idDziecko) {
+        String query = "SELECT * FROM " + TABLE_NAME
+                + createJoin(new User(), TABLE_NAME, COLUMN_USER)
+                + " WHERE " + tableAndColumn(TABLE_NAME, COLUMN_ID) + " = ?"
+                + " AND " + tableAndColumn(User.TABLE_NAME, User.COLUMN_ID) + " = ?";
+        Cursor resultSet = db.rawQuery(query, new String[]{String.valueOf(idDziecko), String.valueOf(User.getCurrentId()) });
+
+        if(resultSet.getCount() == 0) {
+            Cursor resultSet2 = db.rawQuery("SELECT " + COLUMN_USER + " FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[]{String.valueOf(idDziecko) });
+            resultSet2.moveToNext();
+            Log.d("checkDziecko", "Dziecko: " + idDziecko + " User: " + resultSet2.getInt(0));
+            return false;
+        }
+        return true;
     }
 }

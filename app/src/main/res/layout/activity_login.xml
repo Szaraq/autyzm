@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pl.osik.autyzm.login.LoginActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        app:layout_heightPercent="50%"
+        app:layout_widthPercent="50%">
+
+
+        <EditText
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/login_login" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/login_haslo"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/button"
+            style="@style/buttonStyle"
+            android:text="@string/login_zaloguj" />
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_error"
+            android:textAlignment="center"
+            android:textColor="@color/colorError"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+</android.support.percent.PercentRelativeLayout>

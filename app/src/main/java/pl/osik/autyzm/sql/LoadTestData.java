@@ -16,10 +16,10 @@ public class LoadTestData {
     private static boolean added = false;
 
     public static void load() {
-        for (AbstractDBTable table : DBHelper.tables) {
-            db.execSQL("DELETE FROM " + table.getTableName());
-        }
         if(!added) {
+            for (AbstractDBTable table : DBHelper.tables) {
+                db.execSQL("DELETE FROM " + table.getTableName());
+            }
             loadUser();
             loadDziecko();
             loadLekcja();
@@ -35,10 +35,12 @@ public class LoadTestData {
 
     private static void loadUser() {
         LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+        User u = new User();
         params.put(User.COLUMN_LOGIN, "admin");
         params.put(User.COLUMN_PASS, "pass");
-        User u = new User();
-        db.execSQL("DELETE FROM " + User.TABLE_NAME);
+        u.insert(params);
+        params.put(User.COLUMN_LOGIN, "admin2");
+        params.put(User.COLUMN_PASS, "pass");
         u.insert(params);
     }
 
@@ -62,6 +64,9 @@ public class LoadTestData {
         for (int i = 0; i < 2; i++) {
             d.insert(params);
         }
+        params.put(Dziecko.COLUMN_IMIE, "Mateusz");
+        params.put(Dziecko.COLUMN_USER, 2);
+        d.insert(params);
     }
 
     private static void loadLekcja() {

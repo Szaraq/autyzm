@@ -202,12 +202,9 @@
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/buttonStyle"
                 android:layout_below="@id/dane_rodzicow"
-                android:background="@color/colorPrimary"
-                android:text="@string/dzieci_details_button_zapisz"
-                android:textColor="@color/colorAppBackground" />
+                android:text="@string/dzieci_details_button_zapisz" />
 
         </RelativeLayout>
 

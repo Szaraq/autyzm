@@ -6,4 +6,5 @@
     <color name="colorHeader">#457AC0</color>
     <color name="colorAppBackground">#FFF</color>
     <color name="colorDividerLine">@android:color/darker_gray</color>
+    <color name="colorError">#e60000</color>
 </resources>

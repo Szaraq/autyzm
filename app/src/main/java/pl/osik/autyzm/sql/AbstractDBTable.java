@@ -57,7 +57,7 @@ public abstract class AbstractDBTable {
         return out;
     }
 
-    public void insert(Map<String, Object> data) {
+    public boolean insert(Map<String, Object> data) {
         String[] cols = new String[data.size()];
         Object[] params = new Object[data.size()];
         String[] questMarks = new String[data.size()];
@@ -71,6 +71,7 @@ public abstract class AbstractDBTable {
         String colsQuery = addCommas(cols);
         String valQuery = addCommas(questMarks);
         db.execSQL("INSERT INTO " + getTableName() + "(" + colsQuery + ") VALUES (" + valQuery + ");", params);
+        return true;
     }
 
     private String addCommas(String[] in) {

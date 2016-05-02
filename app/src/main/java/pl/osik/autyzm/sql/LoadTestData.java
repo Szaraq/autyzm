@@ -1,11 +1,8 @@
 package pl.osik.autyzm.sql;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by m.osik2 on 2016-04-21.
@@ -18,7 +15,7 @@ public class LoadTestData {
             DBHelper helper = DBHelper.getInstance();
             SQLiteDatabase db = helper.getDBWrite();
             for (AbstractDBTable table : DBHelper.tables) {
-                db.execSQL("DROP TABLE " + table.getTableName());
+                db.execSQL("DROP TABLE IF EXISTS " + table.getTableName());
             }
             helper.onCreate(db);
             loadUser();
@@ -26,7 +23,7 @@ public class LoadTestData {
             loadLekcja();
             loadLekcjaDziecko();
             loadFolder();
-            loadFilm();
+            loadPlik();
             loadModul();
             loadPytanie();
             loadOdpowiedz();
@@ -93,12 +90,13 @@ public class LoadTestData {
         f.insert(params);
     }
 
-    private static void loadFilm() {
-        Film f = new Film();
+    private static void loadPlik() {
+        //"content://media/external/images/media/12"
+        Plik p = new Plik();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put(Film.COLUMN_PATH, "path/to/film");
-        params.put(Film.COLUMN_FOLDER, "Folder_filmu");
-        f.insert(params);
+        params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
+        params.put(Plik.COLUMN_FOLDER, "1");
+        p.insert(params);
     }
 
     private static void loadModul() {

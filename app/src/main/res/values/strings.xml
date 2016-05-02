@@ -49,4 +49,8 @@
     <string name="login_haslo">Hasło</string>
     <string name="login_error">Błędny login lub hasło</string>
     <string name="dzieci_details_wybierz_zdjecie">Wybierz zdjęcie</string>
+    <string name="media_foldery">Foldery</string>
+    <string name="media_pliki">Pliki</string>
+    <string name="dzieci_title">Dzieci</string>
+    <string name="multimedia_title">Multimedia</string>
 </resources>

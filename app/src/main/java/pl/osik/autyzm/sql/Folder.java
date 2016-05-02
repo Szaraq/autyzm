@@ -1,5 +1,10 @@
 package pl.osik.autyzm.sql;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -27,5 +32,18 @@ public class Folder extends AbstractDBTable {
     @Override
     public String getTableName() {
         return TABLE_NAME;
+    }
+
+    public ArrayList<String> getPlikiInFolder(int idFolderu) {
+        ArrayList<String> out = new ArrayList<>();
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        String query = "SELECT * FROM " + Plik.TABLE_NAME + " WHERE " + Plik.COLUMN_FOLDER + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idFolderu) });
+        while(cursor.moveToNext()) {
+            out.add(cursor.getString(cursor.getColumnIndex(Plik.COLUMN_PATH)));
+        }
+
+        return out;
     }
 }

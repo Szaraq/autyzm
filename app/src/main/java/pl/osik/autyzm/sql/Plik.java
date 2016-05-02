@@ -6,8 +6,8 @@ import java.util.LinkedHashMap;
 /**
  * Created by m.osik2 on 2016-04-20.
  */
-public class Film extends AbstractDBTable {
-    public static final String TABLE_NAME = "Film";
+public class Plik extends AbstractDBTable {
+    public static final String TABLE_NAME = "Plik";
     public static final String COLUMN_PATH = "path";
     public static final String COLUMN_FOLDER = "folder";
 
@@ -32,4 +32,6 @@ public class Film extends AbstractDBTable {
     public String getTableName() {
         return TABLE_NAME;
     }
+
+
 }

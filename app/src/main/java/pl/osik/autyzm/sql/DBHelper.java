@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final AbstractDBTable[] tables = {
             new Lekcja(),
             new Folder(),
-            new Film(),
+            new Plik(),
             new Modul(),
             new Pytanie(),
             new Odpowiedz(),

@@ -1,0 +1,42 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".main.StartFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/foldery_header"
+            android:text="@string/media_foldery"
+            style="@style/TextListHeader" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/foldery_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:text="@string/media_pliki"
+            style="@style/TextListHeader" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/pliki_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/PaddingForFAB"/>
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/folder_fab"
+        style="@style/myFAB"
+        />
+
+</FrameLayout>

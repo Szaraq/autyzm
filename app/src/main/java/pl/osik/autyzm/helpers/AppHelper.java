@@ -29,7 +29,7 @@ import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 public class AppHelper {
 
     private final static String SALT = "A%2LmD47";
-    public static int PICK_IMAGE = 1;
+    public static final int PICK_IMAGE = 93518;
 
     public static void setForceIconInPopupMenu(PopupMenu popupMenu) {
         try {

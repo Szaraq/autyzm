@@ -1,6 +1,5 @@
 package pl.osik.autyzm.sql;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -22,7 +21,7 @@ public class Modul extends AbstractDBTable {
     @Override
     protected String create() {
         return getCreateStart()
-                + createForeignKey(COLUMN_FILM, Film.TABLE_NAME)
+                + createForeignKey(COLUMN_FILM, Plik.TABLE_NAME)
                 + createForeignKey(COLUMN_LEKCJA, Lekcja.TABLE_NAME)
                 + ")";
     }

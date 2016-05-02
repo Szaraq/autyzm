@@ -19,6 +19,7 @@ import android.widget.TextView;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciFragment;
 import pl.osik.autyzm.login.LoginActivity;
+import pl.osik.autyzm.multimedia.MultimediaFragment;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.LoadTestData;
 import pl.osik.autyzm.sql.User;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         TextView user = (TextView) headerView.findViewById(R.id.user);
-        //user.setText(User.getCurrentUser());
+        user.setText(User.getCurrentUser());
         ImageView userPhoto = (ImageView) headerView.findViewById(R.id.userPhoto);
         //TODO userPhoto -> fotka usera
 
@@ -92,6 +93,8 @@ public class MainActivity extends AppCompatActivity
             gotoFragment(new DzieciFragment());
 
         } else if (id == R.id.nav_media) {
+
+            gotoFragment(new MultimediaFragment());
 
         } else if (id == R.id.nav_config) {
 

@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:id="@+id/scrollView">
 
-    <!-- TODO zamienić RelativeLayout na GridLayout -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,14 +36,6 @@
                 android:layout_weight="1"
                 android:src="@drawable/ic_no_photo"/>
 
-                <!--
-                <TextView
-                    android:id="@+id/dzieci_details_text"
-                    android:layout_height="0dip"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
--->
                 <EditText
                     android:id="@+id/data_urodzenia"
                     android:layout_width="match_parent"

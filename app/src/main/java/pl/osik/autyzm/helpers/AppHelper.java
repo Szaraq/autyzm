@@ -1,15 +1,27 @@
 package pl.osik.autyzm.helpers;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 
 /**
  * Created by m.osik2 on 2016-04-22.
@@ -17,6 +29,7 @@ import java.security.NoSuchAlgorithmException;
 public class AppHelper {
 
     private final static String SALT = "A%2LmD47";
+    public static int PICK_IMAGE = 1;
 
     public static void setForceIconInPopupMenu(PopupMenu popupMenu) {
         try {
@@ -53,26 +66,36 @@ public class AppHelper {
         }
     }
 
-    /**
-     * helper to retrieve the path of an image URI
-     */
-    public static String getPath(Uri uri, Activity activity) {
-        // just some safety built in
-        if( uri == null ) {
-            // TODO perform some logging or show user feedback
-            return null;
-        }
-        // try to retrieve the image from the media store first
-        // this will only work for images selected from gallery
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = activity.managedQuery(uri, projection, null, null, null);
-        if( cursor != null ){
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        }
-        // this is our fallback here
-        return uri.getPath();
+    public static String pickPhoto(Activity activity) {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        activity.startActivityForResult(intent, PICK_IMAGE);
+        return intent.getData().toString();
+    }
+
+    public static void placePhoto(Activity activity, ImageView imgView, String path) {
+        Uri selectedImage = Uri.parse(path);
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+        Cursor cursor = activity.getContentResolver().query(selectedImage,
+                filePathColumn, null, null, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String imgDecodableString = cursor.getString(columnIndex);
+        cursor.close();
+        imgView.setImageBitmap(BitmapFactory
+                .decodeFile(imgDecodableString));
+    }
+
+    public static void changeListItemHeight(LinearLayout listItem) {
+        final int NUMBER_OF_ON_THE_SCREEN = 15;
+        final int MIN_SIZE = 50;
+
+        DisplayMetrics displayMetrics = listItem.getContext().getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        int newDpHeight = (int) dpHeight / NUMBER_OF_ON_THE_SCREEN;
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newDpHeight < MIN_SIZE ? MIN_SIZE : newDpHeight, listItem.getResources().getDisplayMetrics());
+        listItem.getLayoutParams().height = height;
     }
 }

@@ -62,6 +62,8 @@ public class Dziecko extends AbstractDBTable {
     }
 
     public static ArrayList<HashMap<String, Object>> getDzieciList() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         ArrayList<HashMap<String, Object>>  out = new ArrayList<>();
         String query = "SELECT " + TABLE_NAME + ".*" + " FROM " + TABLE_NAME
                 + createJoin(new User(), TABLE_NAME, COLUMN_USER)
@@ -77,10 +79,14 @@ public class Dziecko extends AbstractDBTable {
             temp.put(COLUMN_ID, resultSet.getInt(resultSet.getColumnIndex(COLUMN_ID)));
             out.add(temp);
         }
+        resultSet.close();
+        helper.close();
         return out;
     }
 
     public static HashMap<String, String> getDzieckoById(int id) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         //TODO zmienić na <String, Object>
 
         if(!checkDzieckoForCurrentUser(id)) return null;
@@ -93,20 +99,28 @@ public class Dziecko extends AbstractDBTable {
             String input = resultSet.getString(resultSet.getColumnIndex(c));
             out.put(c, input);
         }
+        resultSet.close();
+        helper.close();
         return out;
     }
 
     public static String getImieINazwiskoByID(int id) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         if(!checkDzieckoForCurrentUser(id)) return null;
         Dziecko d = new Dziecko();
         String out;
         Cursor resultSet = db.rawQuery("SELECT " + COLUMN_NAZWISKO + ", " + COLUMN_IMIE + " FROM " + d.getTableName() + " WHERE id = ?", new String[]{String.valueOf(id)});
         resultSet.moveToNext();
         out = resultSet.getString(resultSet.getColumnIndex(COLUMN_IMIE)) + " " + resultSet.getString(resultSet.getColumnIndex(COLUMN_NAZWISKO));
+        resultSet.close();
+        helper.close();
         return out;
     }
 
     public static LinkedHashMap<String, Float> getStatistics(int idDziecka) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         if(!checkDzieckoForCurrentUser(idDziecka)) return null;
         LinkedHashMap<String, Float> out = new LinkedHashMap<>();
         String query = "SELECT " + Odpowiedz.COLUMN_DATA + ", AVG("+ Odpowiedz.COLUMN_PUNKTY + ") AS " + Odpowiedz.COLUMN_PUNKTY + " FROM " + Odpowiedz.TABLE_NAME
@@ -123,11 +137,14 @@ public class Dziecko extends AbstractDBTable {
             out.put(resultSet.getString(resultSet.getColumnIndex(Odpowiedz.COLUMN_DATA)),
                     resultSet.getFloat(resultSet.getColumnIndex(Odpowiedz.COLUMN_PUNKTY)));
         }
-
+        resultSet.close();
+        helper.close();
         return out;
     }
 
     public static boolean checkDzieckoForCurrentUser(int idDziecko) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         String query = "SELECT * FROM " + TABLE_NAME
                 + createJoin(new User(), TABLE_NAME, COLUMN_USER)
                 + " WHERE " + tableAndColumn(TABLE_NAME, COLUMN_ID) + " = ?"
@@ -138,8 +155,21 @@ public class Dziecko extends AbstractDBTable {
             Cursor resultSet2 = db.rawQuery("SELECT " + COLUMN_USER + " FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[]{String.valueOf(idDziecko) });
             resultSet2.moveToNext();
             Log.d("checkDziecko", "Dziecko: " + idDziecko + " User: " + resultSet2.getInt(0));
+            resultSet.close();
+            resultSet2.close();
             return false;
         }
+        resultSet.close();
+        helper.close();
         return true;
+    }
+
+    public static void changePhoto(int id, String path) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        Dziecko d = new Dziecko();
+        ContentValues data = new ContentValues();
+        data.put(COLUMN_PHOTO, path);
+        d.edit(id, data);
     }
 }

@@ -54,7 +54,6 @@ public class DzieciFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Dzieci");
         dzieciAdapter = new DzieciAdapter(getLayoutInflater(savedInstanceState), this);
         dzieciList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         dzieciList.setAdapter(dzieciAdapter);

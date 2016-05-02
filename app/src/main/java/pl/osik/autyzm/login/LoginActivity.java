@@ -13,6 +13,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.main.MainActivity;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.sql.DBHelper;
 import pl.osik.autyzm.sql.LoadTestData;
 import pl.osik.autyzm.sql.User;
 

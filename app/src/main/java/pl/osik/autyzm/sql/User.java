@@ -2,6 +2,7 @@ package pl.osik.autyzm.sql;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.security.MessageDigest;
@@ -52,21 +53,29 @@ public class User extends AbstractDBTable {
 
     @Override
     public boolean insert(Map<String, Object> map) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         ContentValues data = new ContentValues();
         data.put(COLUMN_LOGIN, (String) map.get(COLUMN_LOGIN));
         data.put(COLUMN_PASS, AppHelper.hash((String) map.get(COLUMN_PASS)));
         db.insert(getTableName(), null, data);
+        helper.close();
         return true;
     }
 
     @Override
     public boolean insert(ContentValues data) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         data.put(COLUMN_PASS, AppHelper.hash((String) data.get(COLUMN_PASS)));
         db.insert(getTableName(), null, data);
+        helper.close();
         return true;
     }
 
     public static boolean authenticate(String user, String pass) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         String hash = AppHelper.hash(pass);
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_LOGIN + " = ? AND " + COLUMN_PASS + " = ?", new String[] { user, hash });
 
@@ -79,6 +88,8 @@ public class User extends AbstractDBTable {
         if(cursor.getCount() == 0) return false;
         cursor.moveToNext();
         currentId = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+        cursor.close();
+        helper.close();
         return true;
     }
 
@@ -87,8 +98,24 @@ public class User extends AbstractDBTable {
     }
 
     public static boolean isFirstLogin() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, new String[] { });
-        if(cursor.getCount() == 0) return true;
+        int count = cursor.getCount();
+        cursor.close();
+        helper.close();
+        if(count == 0) return true;
         return false;
+    }
+
+    public static String getCurrentUser() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[] { String.valueOf(getCurrentId()) });
+        cursor.moveToNext();
+        String out = cursor.getString(cursor.getColumnIndex(COLUMN_LOGIN));
+        cursor.close();
+        helper.close();
+        return out;
     }
 }

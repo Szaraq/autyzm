@@ -5,14 +5,17 @@
     android:orientation="horizontal"
     android:elevation="2dp"
     android:outlineProvider="bounds"
-    android:clipToPadding="false">
+    android:clipToPadding="false"
+    android:id="@+id/lista_dzieci">
 
 
     <ImageView
         android:id="@+id/dzieci_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_test_child_photo"
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/dzieci_name"
@@ -20,8 +23,8 @@
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:gravity="center_vertical|left"/>
@@ -29,7 +32,7 @@
     <ImageView
         android:id="@+id/dzieci_context_menu"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:src="@drawable/ic_context_menu"
         android:paddingRight="16dp"
         android:background="@null"

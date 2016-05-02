@@ -3,6 +3,7 @@ package pl.osik.autyzm.dzieci;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,6 +88,8 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     ImageView dzieciPhoto;
     @Bind(R.id.dzieci_context_menu)
     ImageView dzieciContextMenu;
+    @Bind(R.id.lista_dzieci)
+    LinearLayout listaDzieci;
 
     public DzieciViewHolder(View itemView) {
         super(itemView);
@@ -98,6 +102,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                 gotoDetails(OperationsEnum.SHOW);
             }
         });
+        AppHelper.changeListItemHeight(listaDzieci);
     }
 
     protected void gotoDetails(OperationsEnum operacja) {
@@ -111,7 +116,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     public void setPhoto(String photo) {
         this.photo = photo;
-        dzieciPhoto.setImageResource(R.drawable.ic_test_child_photo);
+        if(photo != null) AppHelper.placePhoto(fragment.getActivity(), dzieciPhoto, photo);
         /*Glide.with(dzieciPhoto.getContext())
                 .load(R.drawable.ic_test_child_photo)
                 .into(dzieciPhoto);*/

@@ -11,15 +11,16 @@ import java.util.Objects;
  * Created by m.osik2 on 2016-04-21.
  */
 public class LoadTestData {
-    static DBHelper helper = new DBHelper();
-    static SQLiteDatabase db = helper.getDBRead();
     private static boolean added = false;
 
     public static void load() {
         if(!added) {
+            DBHelper helper = DBHelper.getInstance();
+            SQLiteDatabase db = helper.getDBWrite();
             for (AbstractDBTable table : DBHelper.tables) {
-                db.execSQL("DELETE FROM " + table.getTableName());
+                db.execSQL("DROP TABLE " + table.getTableName());
             }
+            helper.onCreate(db);
             loadUser();
             loadDziecko();
             loadLekcja();
@@ -30,6 +31,7 @@ public class LoadTestData {
             loadPytanie();
             loadOdpowiedz();
             added = true;
+            helper.close();
         }
     }
 
@@ -61,7 +63,7 @@ public class LoadTestData {
             put(Dziecko.COLUMN_USER, 1);
             put(Dziecko.COLUMN_PHOTO, null);
         }};
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 20; i++) {
             d.insert(params);
         }
         params.put(Dziecko.COLUMN_IMIE, "Mateusz");

@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +36,6 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     HashMap<String, EditText> all;
     int id;
     OperationsEnum operacja;
-    private int PICK_IMAGE = 1;
 
     @Bind(R.id.imie)
     EditText imie;
@@ -90,8 +92,6 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 
         operacja = (OperationsEnum) bundle.getSerializable(DzieciAdapter.BUNDLE_SWITCH_OPERACJA);
 
-        //TODO podstawianie zdjęcia dziecka
-
         if(operacja != OperationsEnum.DODAWANIE) {
             //Chowanie klawiatury
             scrollView.requestFocus();
@@ -110,12 +110,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             photo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(DzieciDetailsActivity.this, "Photo clicked", Toast.LENGTH_SHORT).show();
-                    Log.d("Photo", "Photo clicked");
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, getString(R.string.dzieci_details_wybierz_zdjecie)), DzieciDetailsActivity.this.PICK_IMAGE);
+                    String path = AppHelper.pickPhoto(DzieciDetailsActivity.this);
+                    Dziecko.changePhoto(id, path);
                 }
             });
         }
@@ -130,13 +126,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
         button.setOnClickListener(this);
 
-        if(dziecko.get("photo") != null) setImage(dziecko.get(Dziecko.COLUMN_PHOTO));
-    }
-
-    private void setImage(String path) {
-        File file = new File(path);
-        Uri uri = Uri.fromFile(file);
-        photo.setImageURI(uri);
+        if(dziecko.get(Dziecko.COLUMN_PHOTO) != null) AppHelper.placePhoto(this, photo, dziecko.get(Dziecko.COLUMN_PHOTO));
     }
 
     private void populate() {
@@ -196,18 +186,13 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         //TODO walidacja, przede wszystkim NotNull
     }
 
+    String imgDecodableString;
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == PICK_IMAGE) {
-                Uri selectedImageUri = data.getData();
-                String selectedImagePath = AppHelper.getPath(selectedImageUri, this);
-                Dziecko d = new Dziecko();
-                ContentValues values = new ContentValues();
-                values.put(Dziecko.COLUMN_PHOTO, selectedImagePath);
-                if(d.edit(id, values)){
-                    setImage(selectedImagePath);
-                }
+            if (requestCode == AppHelper.PICK_IMAGE) {
+                AppHelper.placePhoto(this, photo, data.getData().toString());
             }
         }
     }

@@ -12,8 +12,6 @@ import java.util.Map;
  * Created by m.osik2 on 2016-04-20.
  */
 public abstract class AbstractDBTable {
-    protected static DBHelper helper = new DBHelper();
-    protected static SQLiteDatabase db = helper.getDBRead();
 
     public static final String COLUMN_ID = "id";
 
@@ -57,7 +55,14 @@ public abstract class AbstractDBTable {
         return out;
     }
 
+    protected SQLiteDatabase getDB() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        return db;
+    }
+
     public boolean insert(Map<String, Object> data) {
+        SQLiteDatabase db = getDB();
         String[] cols = new String[data.size()];
         Object[] params = new Object[data.size()];
         String[] questMarks = new String[data.size()];
@@ -71,6 +76,7 @@ public abstract class AbstractDBTable {
         String colsQuery = addCommas(cols);
         String valQuery = addCommas(questMarks);
         db.execSQL("INSERT INTO " + getTableName() + "(" + colsQuery + ") VALUES (" + valQuery + ");", params);
+        db.close();
         return true;
     }
 
@@ -88,17 +94,23 @@ public abstract class AbstractDBTable {
 
 
     public boolean edit(int id, ContentValues data) {
+        SQLiteDatabase db = getDB();
         db.update(getTableName(), data, COLUMN_ID + "= ?", new String[]{String.valueOf(id)});
+        db.close();
         return true;
     }
 
     public boolean insert(ContentValues data) {
+        SQLiteDatabase db = getDB();
         db.insert(getTableName(), null, data);
+        db.close();
         return true;
     }
 
     public boolean delete(int id) {
+        SQLiteDatabase db = getDB();
         db.delete(getTableName(), COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
         return true;
     }
 

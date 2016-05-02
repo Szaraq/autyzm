@@ -23,12 +23,23 @@ public class DBHelper extends SQLiteOpenHelper {
             new Dziecko(),
             new LekcjaDziecko()
     };
+    private static DBHelper instance = null;
 
-    public DBHelper() {
+    public static DBHelper getInstance() {
+        if(instance == null) return new DBHelper();
+        return instance;
+    }
+
+    public static DBHelper getInstance(Context context) {
+        if(instance == null) return new DBHelper(context);
+        return instance;
+    }
+
+    private DBHelper() {
         super(MyApp.getContext(), DB_NAME, null, 1);
     }
 
-    public DBHelper(Context context) {
+    private DBHelper(Context context) {
         super(context, DB_NAME, null, 1);
     }
 

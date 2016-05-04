@@ -35,8 +35,8 @@ public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
 
     public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
     private Fragment fragment;
-    ArrayList<HashMap<String, Object>> dzieciList = Dziecko.getDzieciList();
     private final LayoutInflater layoutInflater;
+    ArrayList<HashMap<String, Object>> dzieciList = Dziecko.getDzieciList();
 
     public DzieciAdapter(LayoutInflater layoutInflater, Fragment fragment) {
         this.layoutInflater = layoutInflater;

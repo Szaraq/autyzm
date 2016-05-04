@@ -1,5 +1,8 @@
 package pl.osik.autyzm.sql;
 
+import android.graphics.Path;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -33,5 +36,8 @@ public class Plik extends AbstractDBTable {
         return TABLE_NAME;
     }
 
-
+    public static String getName(String path) {
+        File f = new File(path);
+        return f.getName();
+    }
 }

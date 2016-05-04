@@ -86,7 +86,14 @@ public class LoadTestData {
     private static void loadFolder() {
         Folder f = new Folder();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put(Folder.COLUMN_NAZWA, "Testowy folder");
+        for (int i = 0; i < 9; i++) {
+            params.put(Folder.COLUMN_NAZWA, "Testowy folder " + i);
+            params.put(Folder.COLUMN_FOLDER, Folder.ROOT_ID);
+            f.insert(params);
+        }
+
+        params.put(Folder.COLUMN_NAZWA, "Testowy podfolder");
+        params.put(Folder.COLUMN_FOLDER, 1);
         f.insert(params);
     }
 

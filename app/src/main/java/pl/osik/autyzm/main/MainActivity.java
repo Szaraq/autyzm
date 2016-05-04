@@ -57,8 +57,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.containerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if(fragment instanceof MultimediaFragment) {
+            ((MultimediaFragment) fragment).onBackPressed();
         } else {
             //super.onBackPressed();
         }

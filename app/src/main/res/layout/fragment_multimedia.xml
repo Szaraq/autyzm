@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAppBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".main.StartFragment">
 
@@ -34,9 +36,40 @@
 
     </LinearLayout>
 
+    <!--
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/folder_fab"
+        android:id="@+id/multimedia_fab"
         style="@style/myFAB"
-        />
+        />-->
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        fab:menu_backgroundColor="#ccffffff"
+        fab:menu_colorNormal="@color/colorPrimary"
+        fab:menu_colorPressed="@color/colorPrimaryDark"
+        fab:menu_colorRipple="@color/colorPrimary" >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/multimedia_fab_folder"
+            style="@style/innerFAB"
+            android:src="@drawable/ic_folder_bg"
+            fab:fab_label="@string/multi_fab_folder" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/multimedia_fab_plik"
+            style="@style/innerFAB"
+            android:src="@drawable/ic_plik_bg"
+            fab:fab_label="@string/multi_fab_plik" />
+
+    </com.github.clans.fab.FloatingActionMenu>
 
 </FrameLayout>

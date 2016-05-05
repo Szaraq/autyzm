@@ -111,6 +111,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 @Override
                 public void onClick(View v) {
                     String path = AppHelper.pickPhoto(DzieciDetailsActivity.this);
+                    Log.d("DzieciDetails", path);
                     Dziecko.changePhoto(id, path);
                 }
             });

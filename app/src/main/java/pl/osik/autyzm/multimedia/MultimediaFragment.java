@@ -1,17 +1,28 @@
 package pl.osik.autyzm.multimedia;
 
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -20,26 +31,37 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciAdapter;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.sql.Folder;
+import pl.osik.autyzm.sql.Plik;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MultimediaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MultimediaFragment extends Fragment {
+public class MultimediaFragment extends Fragment implements View.OnClickListener {
+
+    //TODO Filtrowanie po użytkowniku
+    //TODO Sposób na usuwanie plików i folderów (przytrzymanie lub menu kontekstowe - do dziewczyn)
+    //TODO RecyclerView wspólny dla folderów i plików
 
     int folderId;
     String folderName;
 
-    @Bind(R.id.folder_fab)
-    FloatingActionButton fab;
+    @Bind(R.id.fab_menu)
+    FloatingActionMenu fabMenu;
+    @Bind(R.id.multimedia_fab_folder)
+    FloatingActionButton fabFolder;
+    @Bind(R.id.multimedia_fab_plik)
+    FloatingActionButton fabPlik;
     @Bind(R.id.foldery_list)
     RecyclerView folderyList;
     @Bind(R.id.pliki_list)
     RecyclerView plikiList;
 
     private FolderyAdapter folderyAdapter;
+    private PlikiAdapter plikiAdapter;
 
     public MultimediaFragment() {
         // Required empty public constructor
@@ -80,6 +102,14 @@ public class MultimediaFragment extends Fragment {
         folderyAdapter = new FolderyAdapter(getLayoutInflater(savedInstanceState), this, folderId);
         folderyList.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
         folderyList.setAdapter(folderyAdapter);
+
+        plikiAdapter = new PlikiAdapter(getLayoutInflater(savedInstanceState), this, folderId);
+        plikiList.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
+        plikiList.setAdapter(plikiAdapter);
+
+        fabPlik.setOnClickListener(this);
+        fabFolder.setOnClickListener(this);
+        fabPlik.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
     }
 
     private boolean isRoot() {
@@ -103,4 +133,61 @@ public class MultimediaFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
+    /* FAB OnClick */
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == fabFolder.getId()) {
+            askForFolderName();
+        } else if(v.getId() == fabPlik.getId()) {
+            String path = AppHelper.pickPhoto(this.getActivity());
+            Log.d("Multimedia", path);
+            addNewPlik(path);
+        }
+        fabMenu.close(true);
+    }
+
+    private String inputTxt;
+
+    private void askForFolderName() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        builder.setTitle(R.string.multi_nowy_folder);
+        final EditText input = new EditText(this.getContext());
+        input.setPadding(100, 0, 100, 0);
+        input.setHint(R.string.muti_nowy_folder_placeholder);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setPositiveButton(getActivity().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                inputTxt = input.getText().toString();
+                addNewFolder();
+            }
+        });
+
+        builder.setNegativeButton(getActivity().getString(R.string.button_anuluj), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void addNewFolder() {
+        Folder f = new Folder();
+        ContentValues data = new ContentValues();
+        data.put(Folder.COLUMN_NAZWA, inputTxt);
+        data.put(Folder.COLUMN_FOLDER, folderId);
+        f.insert(data);
+        folderyAdapter.refresh();
+    }
+
+    private void addNewPlik(String path) {
+        Plik p = new Plik();
+        ContentValues data = new ContentValues();
+        data.put(Plik.COLUMN_PATH, path);
+        data.put(Plik.COLUMN_FOLDER, folderId);
+        p.insert(data);
+        plikiAdapter.refresh();
+    }
 }

@@ -22,6 +22,7 @@ import pl.osik.autyzm.login.LoginActivity;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.LoadTestData;
+import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.sql.User;
 
 public class MainActivity extends AppCompatActivity
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity
         instance = this;
 
         gotoFragment(new StartFragment());
+
+        //TODO Uncomment
+        //Plik.cleanDeletedFiles();
     }
 
     @Override
@@ -77,7 +81,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

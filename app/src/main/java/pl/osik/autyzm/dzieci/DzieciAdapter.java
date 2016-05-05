@@ -11,11 +11,16 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.shadowviewhelper.ShadowProperty;
+import com.wangjie.shadowviewhelper.ShadowViewHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +43,9 @@ public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
     private final LayoutInflater layoutInflater;
     ArrayList<HashMap<String, Object>> dzieciList = Dziecko.getDzieciList();
 
+    @Bind(R.id.lista_dzieci)
+    LinearLayout listaDzieci;
+
     public DzieciAdapter(LayoutInflater layoutInflater, Fragment fragment) {
         this.layoutInflater = layoutInflater;
         this.fragment = fragment;
@@ -46,8 +54,10 @@ public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
     @Override
     public DzieciViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_dzieci, parent, false);
+        ButterKnife.bind(this, view);
         DzieciViewHolder holder = new DzieciViewHolder(view);
         holder.setAdapter(this);
+        AppHelper.addShadow(fragment.getContext(), listaDzieci, 0.5f);
         return holder;
     }
 

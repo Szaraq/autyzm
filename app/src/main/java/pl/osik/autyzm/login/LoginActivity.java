@@ -7,10 +7,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.main.MainActivity;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.sql.DBHelper;
@@ -21,6 +23,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //TODO First Login
 
+    @Bind(R.id.linearLayout)
+    LinearLayout linearLayout;
     @Bind(R.id.login)
     EditText loginControl;
     @Bind(R.id.password)

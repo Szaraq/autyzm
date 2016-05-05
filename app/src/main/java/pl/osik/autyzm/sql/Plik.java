@@ -1,8 +1,18 @@
 package pl.osik.autyzm.sql;
 
+import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Path;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -39,5 +49,35 @@ public class Plik extends AbstractDBTable {
     public static String getName(String path) {
         File f = new File(path);
         return f.getName();
+    }
+
+    public static Bitmap getThumbnail(Activity activity, String path) {
+        try {
+            ExifInterface exif = new ExifInterface(path);
+            byte[] imageData = exif.getThumbnail();
+            return BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+        } catch (IOException e) {
+            Log.d("getThumbnail", e.getMessage());
+            return null;
+        } catch (NullPointerException e) {
+            Log.d("getThumbnail", e.getMessage());
+            return null;
+        }
+    }
+
+    public static void cleanDeletedFiles() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        Plik p = new Plik();
+        String query = "SELECT * FROM " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        while(cursor.moveToNext()) {
+            String path = cursor.getString(cursor.getColumnIndex(COLUMN_PATH));
+            File file = new File(path);
+            if(!file.exists()) {
+                p.delete(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
+                //TODO Po dodaniu PlikInstance wyrzucić jeszcze z tej tabeli
+            }
+        }
     }
 }

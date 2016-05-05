@@ -53,13 +53,29 @@
         <item name="android:layout_margin">@dimen/fab_margin</item>
         <item name="android:src">@drawable/ic_add</item>
         <item name="android:tint">@color/colorAppBackground</item>
-        <item name="backgroundTint">@color/colorHeader</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="innerFAB">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fab_size">mini</item>
+        <item name="fab_colorNormal">@color/colorPrimary</item>
+        <item name="fab_colorPressed">@color/colorPrimaryDark</item>
+        <item name="fab_colorRipple">@color/colorPrimaryRipple</item>
     </style>
 
     <!-- List -->
     <style name="PaddingForFAB">
         <item name="android:paddingBottom">100dp</item>
         <item name="android:clipToPadding">false</item>
+    </style>
+    <style name="multimediaItem">
+        <item name="android:gravity">center|left</item>
+        <item name="android:textColor">@color/colorAppBackground</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:tint">@color/colorAppBackground</item>
     </style>
 
 </resources>

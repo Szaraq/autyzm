@@ -2,19 +2,15 @@ package pl.osik.autyzm.sql;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import pl.osik.autyzm.helpers.MySortedMap;
+import pl.osik.autyzm.helpers.orm.PlikORM;
 
 /**
  * Created by m.osik2 on 2016-04-20.
@@ -47,17 +43,20 @@ public class Folder extends AbstractDBTable {
         return TABLE_NAME;
     }
 
-    public static MySortedMap getPlikiInFolder(int idFolderu) {
-        MySortedMap out = new MySortedMap();
+    public static ArrayList<PlikORM> getPlikiInFolder(int idFolderu) {
+        ArrayList<PlikORM> out = new ArrayList<>();
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         String query = "SELECT * FROM " + Plik.TABLE_NAME + " WHERE " + Plik.COLUMN_FOLDER + " = ?";
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idFolderu) });
         while(cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndex(Plik.COLUMN_ID));
+            int folder  = cursor.getInt(cursor.getColumnIndex(Plik.COLUMN_FOLDER));
             String path = cursor.getString(cursor.getColumnIndex(Plik.COLUMN_PATH));
-            String name = Plik.getName(path);
-            out.put(name, cursor.getInt(cursor.getColumnIndex(Plik.COLUMN_ID)));
+            PlikORM temp = new PlikORM(id, folder, path);
+            out.add(temp);
         }
+        Collections.sort(out);
 
         return out;
     }

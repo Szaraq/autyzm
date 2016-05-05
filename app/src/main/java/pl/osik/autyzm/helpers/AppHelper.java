@@ -1,6 +1,7 @@
 package pl.osik.autyzm.helpers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -14,6 +15,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.shadowviewhelper.ShadowProperty;
+import com.wangjie.shadowviewhelper.ShadowViewHelper;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -29,7 +34,7 @@ import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 public class AppHelper {
 
     private final static String SALT = "A%2LmD47";
-    public static final int PICK_IMAGE = 93518;
+    public static final int PICK_IMAGE = 9351;
 
     public static void setForceIconInPopupMenu(PopupMenu popupMenu) {
         try {
@@ -97,5 +102,13 @@ public class AppHelper {
         int newDpHeight = (int) dpHeight / NUMBER_OF_ON_THE_SCREEN;
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newDpHeight < MIN_SIZE ? MIN_SIZE : newDpHeight, listItem.getResources().getDisplayMetrics());
         listItem.getLayoutParams().height = height;
+    }
+
+    public static void addShadow(Context context, View view, float dy) {
+        ShadowProperty shadowProperty = new ShadowProperty();
+        shadowProperty.setShadowColor(0x77000000)
+                .setShadowDy(ABTextUtil.dip2px(context, dy))
+                .setShadowRadius(1);
+        ShadowViewHelper.bindShadowHelper(shadowProperty, view);
     }
 }

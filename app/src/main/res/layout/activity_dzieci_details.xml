@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAppBackground"
     android:id="@+id/scrollView">
 
 
@@ -84,7 +85,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
-            android:ems="10"
             android:gravity="top"
             android:inputType="textMultiLine"
             android:lines="10"

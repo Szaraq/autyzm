@@ -25,6 +25,7 @@
         android:paddingBottom="@dimen/nav_header_vertical_spacing"
         android:paddingLeft="16dp"
         android:text="[User]"
+        android:textColor="@color/colorAppBackground"
         android:textAppearance="@style/TextMenu" />
 
 </LinearLayout>

@@ -101,8 +101,21 @@ public class LoadTestData {
         //"content://media/external/images/media/12"
         Plik p = new Plik();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+        for (int i = 0; i < 10; i++) {
+            params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
+            params.put(Plik.COLUMN_FOLDER, Folder.ROOT_ID);
+            p.insert(params);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
+            params.put(Plik.COLUMN_FOLDER, "1");
+            p.insert(params);
+        }
+
         params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
-        params.put(Plik.COLUMN_FOLDER, "1");
+        params.put(Plik.COLUMN_FOLDER, "10");
         p.insert(params);
     }
 

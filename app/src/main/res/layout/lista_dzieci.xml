@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lista_dzieci"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="horizontal">
+
+    <!--
     android:elevation="2dp"
-    android:outlineProvider="bounds"
     android:clipToPadding="false"
-    android:id="@+id/lista_dzieci">
+    android:outlineProvider="bounds"
+    -->
 
 
     <ImageView
@@ -14,29 +17,28 @@
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:src="@drawable/ic_test_child_photo"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:src="@drawable/ic_test_child_photo" />
 
     <TextView
         android:id="@+id/dzieci_name"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="5"
+        android:gravity="center_vertical|left"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
         android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:gravity="center_vertical|left"/>
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ImageView
         android:id="@+id/dzieci_context_menu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_context_menu"
-        android:paddingRight="16dp"
-        android:background="@null"
         android:layout_gravity="center_vertical|right"
-        />
+        android:background="@null"
+        android:paddingRight="16dp"
+        android:src="@drawable/ic_context_menu" />
 
 </LinearLayout>

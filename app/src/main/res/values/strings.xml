@@ -52,4 +52,10 @@
     <string name="media_pliki">Pliki</string>
     <string name="dzieci_title">Dzieci</string>
     <string name="multimedia_title">Multimedia</string>
+    <string name="multi_fab_folder">Folder</string>
+    <string name="multi_fab_plik">Plik</string>
+    <string name="multi_nowy_folder">Nowy folder</string>
+    <string name="button_ok">OK</string>
+    <string name="button_anuluj">Anuluj</string>
+    <string name="muti_nowy_folder_placeholder">Podaj nazwę nowego folderu</string>
 </resources>

@@ -12,16 +12,21 @@
         android:id="@+id/lista_folderow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
         android:orientation="horizontal">
+
+        <ImageView
+            style="@style/multimediaItem"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_folder" />
 
         <TextView
             android:id="@+id/folder_name"
+            style="@style/multimediaItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center|left"
-            android:textColor="@color/colorAppBackground"
-            android:layout_marginLeft="2dp"/>
+            android:paddingLeft="4dp"
+            android:text="AAA"/>
 
     </LinearLayout>
 

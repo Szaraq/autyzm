@@ -100,11 +100,11 @@ public abstract class AbstractDBTable {
         return true;
     }
 
-    public boolean insert(ContentValues data) {
+    public long insert(ContentValues data) {
         SQLiteDatabase db = getDB();
-        db.insert(getTableName(), null, data);
+        long out = db.insert(getTableName(), null, data);
         db.close();
-        return true;
+        return out;
     }
 
     public boolean delete(int id) {

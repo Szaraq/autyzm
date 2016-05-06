@@ -30,8 +30,11 @@ import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.sql.Dziecko;
+import pl.osik.autyzm.sql.User;
 
 public class DzieciDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+
+    //TODO DatePicker: http://www.tutorialspoint.com/android/android_datepicker_control.htm
 
     HashMap<String, EditText> all;
     int id;
@@ -104,6 +107,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             dziecko = Dziecko.getDzieckoById(id);
             getSupportActionBar().setTitle(dziecko.get(Dziecko.COLUMN_IMIE) + " " + dziecko.get(Dziecko.COLUMN_NAZWISKO));
             populate();
+            if(dziecko.get(Dziecko.COLUMN_PHOTO) != null) AppHelper.placePhoto(this, photo, dziecko.get(Dziecko.COLUMN_PHOTO));
         }
 
         if(operacja != OperationsEnum.SHOW) {
@@ -127,7 +131,6 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
         button.setOnClickListener(this);
 
-        if(dziecko.get(Dziecko.COLUMN_PHOTO) != null) AppHelper.placePhoto(this, photo, dziecko.get(Dziecko.COLUMN_PHOTO));
     }
 
     private void populate() {
@@ -179,12 +182,11 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             for(Map.Entry<String, EditText> entry : all.entrySet()) {
                 data.put(entry.getKey(), entry.getValue().getText().toString());
             }
-            if(d.insert(data)) {
-                Toast.makeText(this, R.string.message_dziecko_dodane, Toast.LENGTH_SHORT).show();
-                onBackPressed();
-            }
+            data.put(Dziecko.COLUMN_USER, User.getCurrentId());
+            d.insert(data);
+            Toast.makeText(this, R.string.message_dziecko_dodane, Toast.LENGTH_SHORT).show();
+            onBackPressed();
         }
-        //TODO walidacja, przede wszystkim NotNull
     }
 
     String imgDecodableString;

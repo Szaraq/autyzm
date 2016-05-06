@@ -76,7 +76,7 @@ public class Plik extends AbstractDBTable {
             File file = new File(path);
             if(!file.exists()) {
                 p.delete(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-                //TODO Po dodaniu PlikInstance wyrzucić jeszcze z tej tabeli
+                //TODO zastanowić się co po usunięciu pliku - usuwanie modułów, ale tak żeby statystyki zostały
             }
         }
     }

@@ -1,6 +1,9 @@
 package pl.osik.autyzm.login;
 
+import android.app.Fragment;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -21,18 +24,18 @@ import pl.osik.autyzm.sql.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener {
 
-    //TODO First Login
+    private final String UserDetailsFragmentTag = "UserDetailsFragment";
 
-    @Bind(R.id.linearLayout)
-    LinearLayout linearLayout;
     @Bind(R.id.login)
     EditText loginControl;
     @Bind(R.id.password)
     EditText passControl;
     @Bind(R.id.button)
-    Button button;
+    Button zaloguj;
     @Bind(R.id.error)
     TextView error;
+    @Bind(R.id.noweKonto)
+    TextView noweKonto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +43,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        LoadTestData.load();
+        //LoadTestData.load();
 
         if(User.isFirstLogin()) {
-            Intent intent = new Intent(this, UserDetailsActivity.class);
-            startActivity(intent);
+            zalozKonto();
         }
 
         getSupportActionBar().hide();
-        button.setOnClickListener(this);
+        zaloguj.setOnClickListener(this);
+        noweKonto.setOnClickListener(this);
         loginControl.setOnKeyListener(this);
         passControl.setOnKeyListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        if(v.getId() == zaloguj.getId()) {
+            logowanie();
+        } else if(v.getId() == noweKonto.getId()) {
+            zalozKonto();
+        }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        error.setVisibility(View.INVISIBLE);
+        return false;
+    }
+
+    private void logowanie() {
         String login = loginControl.getText().toString();
         String pass = passControl.getText().toString();
         if(User.authenticate(login, pass)) {
@@ -65,9 +82,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private void zalozKonto() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(UserDetailsFragment.NEW_ACCOUNT, true);
+        android.support.v4.app.Fragment fragment = new UserDetailsFragment();
+        fragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.containerLayout, fragment, UserDetailsFragmentTag);
+        fragmentTransaction.commit();
+    }
+
     @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        error.setVisibility(View.INVISIBLE);
-        return false;
+    public void onBackPressed() {
+        FragmentManager manager = getSupportFragmentManager();
+        android.support.v4.app.Fragment fragment = (UserDetailsFragment) manager.findFragmentByTag(UserDetailsFragmentTag);
+        if(fragment != null && fragment.isVisible()) {
+            manager.beginTransaction()
+                    .remove(fragment)
+                    .commit();
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 }

@@ -35,11 +35,17 @@ public class LoadTestData {
     private static void loadUser() {
         LinkedHashMap<String, Object> params = new LinkedHashMap<>();
         User u = new User();
-        params.put(User.COLUMN_LOGIN, "admin");
-        params.put(User.COLUMN_PASS, "pass");
+        params.put(User.COLUMN_IMIE, "Adam");
+        params.put(User.COLUMN_NAZWISKO, "Adminowski");
+        params.put(User.COLUMN_LOGIN, "a");
+        params.put(User.COLUMN_PASS, "p");
+        params.put(User.COLUMN_PHOTO, null);
         u.insert(params);
-        params.put(User.COLUMN_LOGIN, "admin2");
-        params.put(User.COLUMN_PASS, "pass");
+        params.put(User.COLUMN_IMIE, "Bartosz");
+        params.put(User.COLUMN_NAZWISKO, "Adminowicz");
+        params.put(User.COLUMN_LOGIN, "a2");
+        params.put(User.COLUMN_PASS, "p");
+        params.put(User.COLUMN_PHOTO, "content://media/external/images/media/12");
         u.insert(params);
     }
 
@@ -72,6 +78,7 @@ public class LoadTestData {
         Lekcja l = new Lekcja();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
         params.put(Lekcja.COLUMN_TYTUL, "Testowa lekcja");
+        params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-01");
         l.insert(params);
     }
 
@@ -86,14 +93,32 @@ public class LoadTestData {
     private static void loadFolder() {
         Folder f = new Folder();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
+
+        params.put(Folder.COLUMN_NAZWA, Folder.ROOT_NAME);
+        params.put(Folder.COLUMN_FOLDER, Folder.NO_PARENT_FOLDER);
+        params.put(Folder.COLUMN_USER, 1);
+        f.insert(params);
+
+        params.put(Folder.COLUMN_NAZWA, Folder.ROOT_NAME);
+        params.put(Folder.COLUMN_FOLDER, Folder.NO_PARENT_FOLDER);
+        params.put(Folder.COLUMN_USER, 2);
+        f.insert(params);
+
         for (int i = 0; i < 9; i++) {
             params.put(Folder.COLUMN_NAZWA, "Testowy folder " + i);
-            params.put(Folder.COLUMN_FOLDER, Folder.ROOT_ID);
+            params.put(Folder.COLUMN_FOLDER, 1);
+            params.put(Folder.COLUMN_USER, 1);
             f.insert(params);
         }
 
         params.put(Folder.COLUMN_NAZWA, "Testowy podfolder");
-        params.put(Folder.COLUMN_FOLDER, 1);
+        params.put(Folder.COLUMN_FOLDER, 4);
+        params.put(Folder.COLUMN_USER, 1);
+        f.insert(params);
+
+        params.put(Folder.COLUMN_NAZWA, "Testowy folder Usera2");
+        params.put(Folder.COLUMN_FOLDER, 2);
+        params.put(Folder.COLUMN_USER, 2);
         f.insert(params);
     }
 

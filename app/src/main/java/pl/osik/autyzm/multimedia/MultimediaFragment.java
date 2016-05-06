@@ -42,7 +42,6 @@ import pl.osik.autyzm.sql.Plik;
  */
 public class MultimediaFragment extends Fragment implements View.OnClickListener {
 
-    //TODO Filtrowanie po użytkowniku
     //TODO Sposób na usuwanie plików i folderów (przytrzymanie lub menu kontekstowe - do dziewczyn)
     //TODO RecyclerView wspólny dla folderów i plików
 

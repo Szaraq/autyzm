@@ -18,15 +18,21 @@ import pl.osik.autyzm.helpers.AppHelper;
  */
 public class User extends AbstractDBTable {
     public static final String TABLE_NAME = "User";
+    public static final String COLUMN_IMIE = "imie";
+    public static final String COLUMN_NAZWISKO = "nazwisko";
     public static final String COLUMN_LOGIN = "login";
     public static final String COLUMN_PASS = "password";
+    public static final String COLUMN_PHOTO = "photo";
     private static final int NO_USER = -1;
     private static int currentId = NO_USER;
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
+        put(COLUMN_IMIE, "TEXT");
+        put(COLUMN_NAZWISKO, "TEXT");
         put(COLUMN_LOGIN, "TEXT");
         put(COLUMN_PASS, "TEXT");
+        put(COLUMN_PHOTO, "TEXT");
     }};
 
     public static int getCurrentId() {
@@ -56,6 +62,21 @@ public class User extends AbstractDBTable {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         ContentValues data = new ContentValues();
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if(entry.getValue() instanceof String) {
+                data.put(entry.getKey(), (String) entry.getValue());
+            } else if(entry.getValue() instanceof Integer) {
+                data.put(entry.getKey(), (Integer) entry.getValue());
+            } else if(entry.getValue() == null) {
+                //nie rób nic
+            } else {
+                try {
+                    throw new Exception("Niewłaściwy typ danych " + entry.getValue());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         data.put(COLUMN_LOGIN, (String) map.get(COLUMN_LOGIN));
         data.put(COLUMN_PASS, AppHelper.hash((String) map.get(COLUMN_PASS)));
         db.insert(getTableName(), null, data);
@@ -64,12 +85,22 @@ public class User extends AbstractDBTable {
     }
 
     @Override
-    public boolean insert(ContentValues data) {
+    public long insert(ContentValues data) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         data.put(COLUMN_PASS, AppHelper.hash((String) data.get(COLUMN_PASS)));
-        db.insert(getTableName(), null, data);
+        long out = db.insert(getTableName(), null, data);
         helper.close();
+        Folder.insertRoot((int) out);
+        return out;
+    }
+
+    @Override
+    public boolean edit(int id, ContentValues data) {
+        SQLiteDatabase db = getDB();
+        data.put(COLUMN_PASS, AppHelper.hash((String) data.get(COLUMN_PASS)));
+        db.update(getTableName(), data, COLUMN_ID + "= ?", new String[]{String.valueOf(id)});
+        db.close();
         return true;
     }
 
@@ -90,6 +121,7 @@ public class User extends AbstractDBTable {
         currentId = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
         cursor.close();
         helper.close();
+        Folder.setRoot();
         return true;
     }
 
@@ -108,12 +140,37 @@ public class User extends AbstractDBTable {
         return false;
     }
 
-    public static String getCurrentUser() {
+    public static String getCurrentName() {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[] { String.valueOf(getCurrentId()) });
         cursor.moveToNext();
-        String out = cursor.getString(cursor.getColumnIndex(COLUMN_LOGIN));
+        String out = cursor.getString(cursor.getColumnIndex(COLUMN_IMIE)) + " " + cursor.getString(cursor.getColumnIndex(COLUMN_NAZWISKO));
+        cursor.close();
+        helper.close();
+        return out;
+    }
+
+    public static String getCurrentPhotoPath() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[] { String.valueOf(getCurrentId()) });
+        cursor.moveToNext();
+        String out = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO));
+        cursor.close();
+        helper.close();
+        return out;
+    }
+    
+    public static HashMap<String, String> getCurrentData() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        HashMap<String, String> out = new HashMap<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[]{String.valueOf(getCurrentId())});
+        cursor.moveToFirst();
+        for (Map.Entry<String, String> entry : colTypeMap.entrySet()) {
+            out.put(entry.getKey(), cursor.getString(cursor.getColumnIndex(entry.getKey())));
+        }
         cursor.close();
         helper.close();
         return out;

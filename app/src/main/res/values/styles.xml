@@ -30,6 +30,20 @@
         <item name="android:textColor">@color/colorHeader</item>
     </style>
 
+    <style name="TextHint" parent="Base.TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <!-- EditText -->
+    <style name="EditTextGrid">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+    <style name="EditTextGrid.Left" parent="EditTextGrid">
+        <item name="android:layout_marginRight">15dp</item>
+    </style>
+
     <!-- View -->
     <style name="DividerLine">
         <item name="android:layout_width">match_parent</item>

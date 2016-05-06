@@ -53,6 +53,7 @@
 
                 <EditText
                     android:id="@+id/imie"
+                    android:capitalize="words"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:ems="10"
@@ -61,6 +62,7 @@
 
                 <EditText
                     android:id="@+id/nazwisko"
+                    android:capitalize="words"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -86,6 +88,7 @@
             android:layout_height="0dip"
             android:layout_weight="1"
             android:gravity="top"
+            android:capitalize="sentences"
             android:inputType="textMultiLine"
             android:lines="10"
             android:hint="@string/dzieci_details_notatki" />
@@ -132,6 +135,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:capitalize="words"
                         android:inputType="textPersonName"
                         android:hint="@string/dzieci_details_imie_ojca" />
 
@@ -140,6 +144,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:capitalize="words"
                         android:inputType="textPersonName"
                         android:hint="@string/dzieci_details_nazwisko_ojca" />
 
@@ -170,6 +175,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:capitalize="words"
                         android:inputType="textPersonName"
                         android:hint="@string/dzieci_details_imie_matki" />
 
@@ -178,6 +184,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:capitalize="words"
                         android:inputType="textPersonName"
                         android:hint="@string/dzieci_details_nazwisko_matki" />
 

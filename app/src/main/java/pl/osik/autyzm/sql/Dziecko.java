@@ -87,7 +87,6 @@ public class Dziecko extends AbstractDBTable {
     public static HashMap<String, String> getDzieckoById(int id) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
-        //TODO zmienić na <String, Object>
 
         if(!checkDzieckoForCurrentUser(id)) return null;
         Dziecko d = new Dziecko();

@@ -3,6 +3,7 @@
     package="pl.osik.autyzm">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:name=".helpers.MyApp"
         android:allowBackup="true"
@@ -23,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.UserDetailsActivity"></activity>
     </application>
 
 </manifest>

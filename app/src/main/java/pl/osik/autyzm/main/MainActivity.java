@@ -16,9 +16,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciFragment;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.login.LoginActivity;
+import pl.osik.autyzm.login.UserDetailsFragment;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.LoadTestData;
@@ -28,7 +32,14 @@ import pl.osik.autyzm.sql.User;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //TODO walidacja, przede wszystkim NotNull i ExistsInDatabase
+    //TODO możliwość dzwonienia po kliknięciu w telefon (zaproponować dziewczynom)
+    //TODO dodać final tam gdzie można
+
     public static MainActivity instance;
+    private TextView user;
+    private ImageView userPhoto;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +53,10 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        TextView user = (TextView) headerView.findViewById(R.id.user);
-        user.setText(User.getCurrentUser());
-        ImageView userPhoto = (ImageView) headerView.findViewById(R.id.userPhoto);
-        //TODO userPhoto -> fotka usera
+
+        setUserInDrawerMenu();
 
         instance = this;
 
@@ -67,7 +75,8 @@ public class MainActivity extends AppCompatActivity
         } else if(fragment instanceof MultimediaFragment) {
             ((MultimediaFragment) fragment).onBackPressed();
         } else {
-            //super.onBackPressed();
+            finish();
+            System.exit(0);
         }
     }
 
@@ -102,7 +111,15 @@ public class MainActivity extends AppCompatActivity
 
             gotoFragment(new MultimediaFragment());
 
-        } else if (id == R.id.nav_config) {
+        } else if (id == R.id.nav_user) {
+
+            Fragment fragment = new UserDetailsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(UserDetailsFragment.NEW_ACCOUNT, false);
+            fragment.setArguments(bundle);
+            gotoFragment(fragment);
+
+        } else if (id == R.id.nav_help) {
 
         } else if (id == R.id.nav_logout) {
             User.logout();
@@ -119,5 +136,16 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.containerLayout, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void setUserInDrawerMenu() {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        user = (TextView) headerView.findViewById(R.id.user);
+        userPhoto = (ImageView) headerView.findViewById(R.id.userPhoto);
+
+        user.setText(User.getCurrentName());
+        String photoPath = User.getCurrentPhotoPath();
+        if(photoPath != null) AppHelper.placePhoto(this, userPhoto, photoPath);
     }
 }

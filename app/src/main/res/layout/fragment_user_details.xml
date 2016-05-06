@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorAppBackground"
+    tools:context="pl.osik.autyzm.login.UserDetailsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAppBackground"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/userPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:minHeight="100dp"
+            android:minWidth="100dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_user"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="0,1"
+            android:columnCount="2">
+
+            <TableRow>
+                <EditText
+                    android:id="@+id/imie"
+                    android:capitalize="words"
+                    style="@style/EditTextGrid.Left"
+                    android:hint="@string/user_details_imie"/>
+
+                <EditText
+                    android:id="@+id/nazwisko"
+                    android:capitalize="words"
+                    style="@style/EditTextGrid"
+                    android:hint="@string/user_details_nazwisko"/>
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/user"
+                    style="@style/EditTextGrid.Left"
+                    android:hint="@string/user_details_login"/>
+
+                <EditText
+                    android:id="@+id/haslo"
+                    style="@style/EditTextGrid"
+                    android:inputType="textPassword"
+                    android:hint="@string/user_details_haslo"/>
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextHint"
+            android:text="@string/user_details_hint"/>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_marginTop="20dp"
+            style="@style/buttonStyle"
+            android:text="@string/dzieci_details_button_zapisz" />
+
+    </LinearLayout>
+
+</LinearLayout>

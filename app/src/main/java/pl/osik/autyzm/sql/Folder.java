@@ -1,5 +1,6 @@
 package pl.osik.autyzm.sql;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -19,15 +20,18 @@ public class Folder extends AbstractDBTable {
     public static final String TABLE_NAME = "Folder";
     public static final String COLUMN_NAZWA = "nazwa";
     public static final String COLUMN_FOLDER = "folder";        //jeżeli folder jest w Root, to = ROOT_ID
+    public static final String COLUMN_USER = "user";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_NAZWA, "TEXT");
         put(COLUMN_FOLDER, "INTEGER");
+        put(COLUMN_USER, "INTEGER");
     }};
 
-    public static final int ROOT_ID = -1;
     public static final String ROOT_NAME = "ROOT";
+    public static final int NO_PARENT_FOLDER = -1;
+    public static int ROOT_ID;
 
     @Override
     protected String create() {
@@ -57,6 +61,8 @@ public class Folder extends AbstractDBTable {
             out.add(temp);
         }
         Collections.sort(out);
+        helper.close();
+        cursor.close();
 
         return out;
     }
@@ -70,6 +76,8 @@ public class Folder extends AbstractDBTable {
         while(cursor.moveToNext()) {
             out.put(cursor.getString(cursor.getColumnIndex(Folder.COLUMN_NAZWA)), cursor.getInt(cursor.getColumnIndex(Folder.COLUMN_ID)));
         }
+        helper.close();
+        cursor.close();
 
         return out;
     }
@@ -94,7 +102,28 @@ public class Folder extends AbstractDBTable {
             out.put(COLUMN_ID, cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
             out.put(COLUMN_NAZWA, cursor.getString(cursor.getColumnIndex(COLUMN_NAZWA)));
         }
+        cursor.close();
+        helper.close();
 
         return out;
+    }
+
+    public static void insertRoot(int idUser) {
+        Folder f = new Folder();
+        ContentValues data = new ContentValues();
+        data.put(Folder.COLUMN_NAZWA, ROOT_NAME);
+        data.put(Folder.COLUMN_USER, idUser);
+        data.put(Folder.COLUMN_FOLDER, NO_PARENT_FOLDER);
+        f.insert(data);
+    }
+
+    public static int setRoot() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_USER + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(User.getCurrentId()) });
+        cursor.moveToFirst();
+        ROOT_ID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+        return ROOT_ID;
     }
 }

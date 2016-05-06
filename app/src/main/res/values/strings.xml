@@ -10,7 +10,8 @@
     <string name="nav_lessons">Lekcje</string>
     <string name="nav_children">Dzieci</string>
     <string name="nav_media">Multimedia</string>
-    <string name="nav_config">Ustawienia</string>
+    <string name="nav_user">Użytkownik</string>
+    <string name="nav_help">Pomoc</string>
     <string name="nav_logout">Wyloguj</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -58,4 +59,11 @@
     <string name="button_ok">OK</string>
     <string name="button_anuluj">Anuluj</string>
     <string name="muti_nowy_folder_placeholder">Podaj nazwę nowego folderu</string>
+    <string name="login_nowe_konto"><u>Załóż nowe konto</u></string>
+    <string name="userDetails_title">Dane użytkownika</string>
+    <string name="user_details_imie">Imię</string>
+    <string name="user_details_nazwisko">Nazwisko</string>
+    <string name="user_details_login">Login</string>
+    <string name="user_details_haslo">Hasło*</string>
+    <string name="user_details_hint"><i>* Wypełnij tylko jeśli chcesz zmienić</i></string>
 </resources>

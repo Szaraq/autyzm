@@ -1,7 +1,10 @@
 package pl.osik.autyzm.login;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 import android.content.Intent;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +22,7 @@ import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.main.MainActivity;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.sql.DBHelper;
+import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.sql.LoadTestData;
 import pl.osik.autyzm.sql.User;
 
@@ -26,6 +30,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private final String UserDetailsFragmentTag = "UserDetailsFragment";
 
+    @Bind(R.id.linearLayout)
+    PercentRelativeLayout container;
     @Bind(R.id.login)
     EditText loginControl;
     @Bind(R.id.password)
@@ -43,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        //LoadTestData.load();
+        LoadTestData.load();
 
         if(User.isFirstLogin()) {
             zalozKonto();
@@ -77,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(User.authenticate(login, pass)) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
         } else {
             error.setVisibility(View.VISIBLE);
         }

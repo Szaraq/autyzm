@@ -57,7 +57,6 @@ public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
         ButterKnife.bind(this, view);
         DzieciViewHolder holder = new DzieciViewHolder(view);
         holder.setAdapter(this);
-        AppHelper.addShadow(fragment.getContext(), listaDzieci, 0.5f);
         return holder;
     }
 
@@ -170,7 +169,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                             Dziecko d = new Dziecko();
                             d.delete(id);
                             adapter.refresh();
-                            Toast.makeText(dzieciContextMenu.getContext(), R.string.message_dziecko_do_usunięcia, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(dzieciContextMenu.getContext(), R.string.message_dziecko_usunięte, Toast.LENGTH_SHORT).show();
                         }
                     })
                     .setNegativeButton(android.R.string.no, null)

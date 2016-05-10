@@ -55,14 +55,9 @@ public abstract class AbstractDBTable {
         return out;
     }
 
-    protected SQLiteDatabase getDB() {
+    public boolean insert(Map<String, Object> data) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
-        return db;
-    }
-
-    public boolean insert(Map<String, Object> data) {
-        SQLiteDatabase db = getDB();
         String[] cols = new String[data.size()];
         Object[] params = new Object[data.size()];
         String[] questMarks = new String[data.size()];
@@ -91,26 +86,27 @@ public abstract class AbstractDBTable {
         return out.toString();
     }
 
-
-
     public boolean edit(int id, ContentValues data) {
-        SQLiteDatabase db = getDB();
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         db.update(getTableName(), data, COLUMN_ID + "= ?", new String[]{String.valueOf(id)});
-        db.close();
+        helper.close();
         return true;
     }
 
     public long insert(ContentValues data) {
-        SQLiteDatabase db = getDB();
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         long out = db.insert(getTableName(), null, data);
-        db.close();
+        helper.close();
         return out;
     }
 
     public boolean delete(int id) {
-        SQLiteDatabase db = getDB();
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
         db.delete(getTableName(), COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
-        db.close();
+        helper.close();
         return true;
     }
 

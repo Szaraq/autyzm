@@ -2,10 +2,10 @@
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorAppBackground"
+    android:id="@+id/containerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/containerLayout"
+    android:background="@color/colorAppBackground"
     tools:context="pl.osik.autyzm.login.LoginActivity">
 
     <android.support.percent.PercentRelativeLayout
@@ -18,61 +18,61 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            android:background="@color/colorAppBackground"
             android:elevation="10dp"
             android:orientation="vertical"
             android:padding="20dp"
-            android:background="@color/colorAppBackground"
-            android:layout_centerHorizontal="true"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
             app:layout_widthPercent="60%">
 
 
-        <EditText
-            android:id="@+id/login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/login_login" />
+            <EditText
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/login_login" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/login_haslo"
-            android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="@string/login_haslo"
+                android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/button"
-            style="@style/buttonStyle"
-            android:text="@string/login_zaloguj" />
+            <Button
+                android:id="@+id/button"
+                style="@style/buttonStyle"
+                android:text="@string/login_zaloguj" />
 
-        <!-- android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:background="@color/colorAppBackground"
-            android:textColor="@color/colorPrimary"
-            -->
+            <!-- android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@color/colorAppBackground"
+                android:textColor="@color/colorPrimary"
+                -->
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/noweKonto"
-            android:layout_below="@id/linearLayout2"
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout2"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
             android:text="@string/login_nowe_konto"
-            android:textAlignment="center"
             android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/error"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/noweKonto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/noweKonto"
+            android:layout_marginTop="5dp"
             android:text="@string/login_error"
             android:textAlignment="center"
             android:textColor="@color/colorError"

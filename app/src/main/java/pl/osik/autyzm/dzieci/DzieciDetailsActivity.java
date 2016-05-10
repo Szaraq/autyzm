@@ -1,6 +1,8 @@
 package pl.osik.autyzm.dzieci;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,14 +36,28 @@ import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.User;
+import pl.osik.autyzm.validate.ValidateCommand;
+import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class DzieciDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //TODO DatePicker: http://www.tutorialspoint.com/android/android_datepicker_control.htm
+    private static final int DATE_PICKER_CODE = 1178;
 
     HashMap<String, EditText> all;
     int id;
     OperationsEnum operacja;
+    ValidateCommand validate = new ValidateCommand();
+
+    private DatePicker datePicker;
+    private Calendar calendar = Calendar.getInstance();
+    private EditText dateChosenFor;
+    private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener(){
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            putDate(year, monthOfYear, dayOfMonth);
+        }
+    };
 
     @Bind(R.id.imie)
     EditText imie;
@@ -95,6 +114,9 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 
         operacja = (OperationsEnum) bundle.getSerializable(DzieciAdapter.BUNDLE_SWITCH_OPERACJA);
 
+        /** Switch operacji begin **/
+
+        /* Edycja + Show */
         if(operacja != OperationsEnum.DODAWANIE) {
             //Chowanie klawiatury
             scrollView.requestFocus();
@@ -110,6 +132,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             if(dziecko.get(Dziecko.COLUMN_PHOTO) != null) AppHelper.placePhoto(this, photo, dziecko.get(Dziecko.COLUMN_PHOTO));
         }
 
+        /* Dodawanie + Edycja */
         if(operacja != OperationsEnum.SHOW) {
             photo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,8 +142,10 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                     Dziecko.changePhoto(id, path);
                 }
             });
+            addValidations();
         }
 
+        /* Pojedyncze operacje */
         if(operacja == OperationsEnum.EDYCJA) {
             //nic nowego?
         } else if(operacja == OperationsEnum.SHOW) {
@@ -128,9 +153,20 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             blockEditTexts();
         } else if(operacja == OperationsEnum.DODAWANIE) {
             getSupportActionBar().setTitle(R.string.dziecko_dodaj_title);
+
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            rozpoczecie.setText(sdf.format(cal.getTime()));
         }
+
+        /** END **/
+
         button.setOnClickListener(this);
 
+    }
+
+    private void addValidations() {
+        validate.addValidate(new View[] { imie, nazwisko }, new ValidateNotNull());
     }
 
     private void populate() {
@@ -169,23 +205,27 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             intent.putExtras(bundle);
             startActivity(intent);
         } else if(operacja == OperationsEnum.EDYCJA) {
-            ContentValues data = new ContentValues();
-            for(Map.Entry<String, EditText> entry : all.entrySet()) {
-                data.put(entry.getKey(), entry.getValue().getText().toString());
-            }
-            if(d.edit(id, data)) {
-                Toast.makeText(this, R.string.message_dziecko_edytowane, Toast.LENGTH_SHORT).show();
-                onBackPressed();
+            if(validate.doValidateAll()) {
+                ContentValues data = new ContentValues();
+                for(Map.Entry<String, EditText> entry : all.entrySet()) {
+                    data.put(entry.getKey(), entry.getValue().getText().toString());
+                }
+                if(d.edit(id, data)) {
+                    Toast.makeText(this, R.string.message_dziecko_edytowane, Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }
             }
         } else if(operacja == OperationsEnum.DODAWANIE) {
-            ContentValues data = new ContentValues();
-            for(Map.Entry<String, EditText> entry : all.entrySet()) {
-                data.put(entry.getKey(), entry.getValue().getText().toString());
+            if(validate.doValidateAll()) {
+                ContentValues data = new ContentValues();
+                for(Map.Entry<String, EditText> entry : all.entrySet()) {
+                    data.put(entry.getKey(), entry.getValue().getText().toString());
+                }
+                data.put(Dziecko.COLUMN_USER, User.getCurrentId());
+                d.insert(data);
+                Toast.makeText(this, R.string.message_dziecko_dodane, Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
-            data.put(Dziecko.COLUMN_USER, User.getCurrentId());
-            d.insert(data);
-            Toast.makeText(this, R.string.message_dziecko_dodane, Toast.LENGTH_SHORT).show();
-            onBackPressed();
         }
     }
 
@@ -198,5 +238,30 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 AppHelper.placePhoto(this, photo, data.getData().toString());
             }
         }
+    }
+
+    public void setDate(View view) {
+        dateChosenFor = (EditText) view;
+        showDialog(DATE_PICKER_CODE);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if(id == DATE_PICKER_CODE) {
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1;
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            return new DatePickerDialog(this, dateListener, year, month, day);
+        }
+        return null;
+    }
+
+    private void putDate(int year, int monthOfYear, int dayOfMonth) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, monthOfYear, dayOfMonth);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String put = sdf.format(cal.getTime());
+        dateChosenFor.setText(put);
     }
 }

@@ -20,6 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciFragment;
+import pl.osik.autyzm.help.HelpFragment;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.login.LoginActivity;
 import pl.osik.autyzm.login.UserDetailsFragment;
@@ -34,12 +35,14 @@ public class MainActivity extends AppCompatActivity
 
     //TODO walidacja, przede wszystkim NotNull i ExistsInDatabase
     //TODO możliwość dzwonienia po kliknięciu w telefon (zaproponować dziewczynom)
-    //TODO dodać final tam gdzie można
+    //TODO FINALLY dodać final tam gdzie można
+    //TODO FINALLY wyrzucić debuggable z manifest i build.gradle
 
     public static MainActivity instance;
     private TextView user;
     private ImageView userPhoto;
     private NavigationView navigationView;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity
 
         gotoFragment(new StartFragment());
 
-        //TODO Uncomment
+        //TODO FINALLY Uncomment
         //Plik.cleanDeletedFiles();
     }
 
@@ -121,10 +124,14 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_help) {
 
+            gotoFragment(new HelpFragment());
+
         } else if (id == R.id.nav_logout) {
+            drawer.closeDrawers();
             User.logout();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.zoom_enter, R.anim.hold);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -3,42 +3,53 @@
     android:id="@+id/lista_dzieci"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <!--
-    android:elevation="2dp"
-    android:clipToPadding="false"
-    android:outlineProvider="bounds"
-    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--
+        android:elevation="2dp"
+        android:clipToPadding="false"
+        android:outlineProvider="bounds"
+        -->
 
 
-    <ImageView
-        android:id="@+id/dzieci_photo"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:src="@drawable/ic_test_child_photo" />
+        <ImageView
+            android:id="@+id/dzieci_photo"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@drawable/ic_test_child_photo" />
 
-    <TextView
-        android:id="@+id/dzieci_name"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:gravity="center_vertical|left"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:text="Small Text"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/dzieci_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center_vertical|left"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <ImageView
-        android:id="@+id/dzieci_context_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical|right"
-        android:background="@null"
-        android:paddingRight="16dp"
-        android:src="@drawable/ic_context_menu" />
+        <ImageView
+            android:id="@+id/dzieci_context_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|right"
+            android:background="@null"
+            android:paddingRight="16dp"
+            android:src="@drawable/ic_context_menu" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        style="@style/DividerLine.RecyclerView"/>
 
 </LinearLayout>

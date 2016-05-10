@@ -97,10 +97,12 @@ public class User extends AbstractDBTable {
 
     @Override
     public boolean edit(int id, ContentValues data) {
-        SQLiteDatabase db = getDB();
-        data.put(COLUMN_PASS, AppHelper.hash((String) data.get(COLUMN_PASS)));
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        String newHaslo = (String) data.get(COLUMN_PASS);
+        if(newHaslo != null) data.put(COLUMN_PASS, AppHelper.hash(newHaslo));
         db.update(getTableName(), data, COLUMN_ID + "= ?", new String[]{String.valueOf(id)});
-        db.close();
+        helper.close();
         return true;
     }
 

@@ -34,6 +34,8 @@ import pl.osik.autyzm.dzieci.DzieciAdapter;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.sql.Folder;
 import pl.osik.autyzm.sql.Plik;
+import pl.osik.autyzm.validate.ValidateCommand;
+import pl.osik.autyzm.validate.ValidateNotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +49,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
 
     int folderId;
     String folderName;
+    ValidateCommand validate = new ValidateCommand();
 
     @Bind(R.id.fab_menu)
     FloatingActionMenu fabMenu;
@@ -148,27 +151,35 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     private String inputTxt;
 
     private void askForFolderName() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-        builder.setTitle(R.string.multi_nowy_folder);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         final EditText input = new EditText(this.getContext());
-        input.setPadding(100, 0, 100, 0);
+        input.setPadding(10, 0, 10, 0);
         input.setHint(R.string.muti_nowy_folder_placeholder);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-        builder.setPositiveButton(getActivity().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                inputTxt = input.getText().toString();
-                addNewFolder();
-            }
-        });
-
-        builder.setNegativeButton(getActivity().getString(R.string.button_anuluj), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setTitle(R.string.multi_nowy_folder);
+        //TODO Formatowanie EditText
+        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        final ValidateNotNull validateNotNull = new ValidateNotNull();
+        validate.addValidate(input, validateNotNull);
+        builder.setView(input)
+                .setPositiveButton(getActivity().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String error = validateNotNull.getErrorMsg();
+                        if (validate.doValidateAll()) {
+                            inputTxt = input.getText().toString();
+                            addNewFolder();
+                        } else {
+                            Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                            //TODO Test
+                        }
+                    }
+                })
+                .setNegativeButton(getActivity().getString(R.string.button_anuluj), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
         builder.show();
     }
 

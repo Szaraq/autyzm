@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:popupMenuStyle">@style/popupMenuStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -51,6 +52,11 @@
         <item name="android:background">@color/colorDividerLine</item>
         <item name="android:layout_marginBottom">20dp</item>
     </style>
+    <style name="DividerLine.RecyclerView" parent="DividerLine">
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
 
     <!-- Button -->
     <style name="buttonStyle">
@@ -90,6 +96,11 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:paddingLeft">2dp</item>
         <item name="android:tint">@color/colorAppBackground</item>
+    </style>
+
+    <!-- Popup menu -->
+    <style name="popupMenuStyle" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/colorAppBackground</item>
     </style>
 
 </resources>

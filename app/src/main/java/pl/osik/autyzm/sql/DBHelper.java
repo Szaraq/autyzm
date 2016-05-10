@@ -55,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    protected SQLiteDatabase getDBRead() {
+    public SQLiteDatabase getDBRead() {
         return getReadableDatabase();
     }
 

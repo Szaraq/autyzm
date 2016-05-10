@@ -17,8 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,12 +30,17 @@ import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.main.MainActivity;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.User;
+import pl.osik.autyzm.validate.ValidateCommand;
+import pl.osik.autyzm.validate.ValidateExistsInDatabase;
+import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class UserDetailsFragment extends Fragment implements View.OnClickListener {
 
     public static final String NEW_ACCOUNT = "newAccount";
     private HashMap<String, EditText> editTextHashMap;
     private String photoPath = null;
+    private ValidateCommand validate = new ValidateCommand();
+    HashMap<String, String> userData;
 
     private static boolean newAccount;
 
@@ -85,16 +88,27 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
         if(!newAccount) populate();
         button.setOnClickListener(this);
         userPhoto.setOnClickListener(this);
+        addValidations();
 
         return view;
     }
 
+    private void addValidations() {
+        validate.addValidate(new EditText[]{imie, nazwisko, user}, new ValidateNotNull());
+        if(newAccount) {
+            validate.addValidate(user, new ValidateExistsInDatabase(new User(), User.COLUMN_LOGIN))
+                    .addValidate(haslo, new ValidateNotNull());
+        } else {
+            validate.addValidate(user, new ValidateExistsInDatabase(new User(), User.COLUMN_LOGIN, userData.get(User.COLUMN_LOGIN)));
+        }
+    }
+
     private void populate() {
-        HashMap<String, String> data = User.getCurrentData();
-        if(data.get(User.COLUMN_PHOTO) != null)
-            AppHelper.placePhoto(this.getActivity(), userPhoto, data.get(User.COLUMN_PHOTO));
+        userData = User.getCurrentData();
+        if(userData.get(User.COLUMN_PHOTO) != null)
+            AppHelper.placePhoto(this.getActivity(), userPhoto, userData.get(User.COLUMN_PHOTO));
         for (Map.Entry<String, EditText> entry : editTextHashMap.entrySet()) {
-            entry.getValue().setText(data.get(entry.getKey()));
+            entry.getValue().setText(userData.get(entry.getKey()));
         }
     }
 
@@ -113,21 +127,24 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     }
 
     private void saveData() {
-        ContentValues data = new ContentValues();
-        for (Map.Entry<String, EditText> entry : editTextHashMap.entrySet()) {
-            data.put(entry.getKey(), entry.getValue().getText().toString());
+        if(validate.doValidateAll()) {
+            ContentValues data = new ContentValues();
+            for (Map.Entry<String, EditText> entry : editTextHashMap.entrySet()) {
+                data.put(entry.getKey(), entry.getValue().getText().toString());
+            }
+            String newHaslo = haslo.getText().toString();
+            if(newHaslo.length() > 0) data.put(User.COLUMN_PASS, newHaslo);
+            data.put(User.COLUMN_PHOTO, photoPath);
+            User u = new User();
+            if(newAccount) {
+                u.insert(data);
+                User.authenticate(data.getAsString(User.COLUMN_LOGIN), haslo.getText().toString());
+            } else {
+                u.edit(User.getCurrentId(), data);
+                //((MainActivity) getActivity()).setUserInDrawerMenu();
+            }
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
         }
-        data.put(User.COLUMN_PASS, haslo.getText().toString());
-        data.put(User.COLUMN_PHOTO, photoPath);
-        User u = new User();
-        if(newAccount) {
-            u.insert(data);
-            User.authenticate(data.getAsString(User.COLUMN_LOGIN), haslo.getText().toString());
-        } else {
-            u.edit(User.getCurrentId(), data);
-            //((MainActivity) getActivity()).setUserInDrawerMenu();
-        }
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
     }
 }

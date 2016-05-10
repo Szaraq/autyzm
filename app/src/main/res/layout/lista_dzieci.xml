@@ -27,15 +27,7 @@
 
         <TextView
             android:id="@+id/dzieci_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:gravity="center_vertical|left"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            style="@style/itemList" />
 
         <ImageView
             android:id="@+id/dzieci_context_menu"

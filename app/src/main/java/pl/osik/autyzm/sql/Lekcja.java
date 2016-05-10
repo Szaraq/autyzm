@@ -17,11 +17,13 @@ public class Lekcja extends AbstractDBTable {
     public static final String TABLE_NAME = "Lekcja";
     public static final String COLUMN_TYTUL = "tytul";
     public static final String COLUMN_DATA_OSTATNIEGO_UZYCIA = "data_ostatniego_uzycia";
+    public static final String COLUMN_FAVOURITE = "is_favourite";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_TYTUL, "TEXT");
         put(COLUMN_DATA_OSTATNIEGO_UZYCIA, "DATE");
+        put(COLUMN_FAVOURITE, "BOOLEAN");
     }};
 
     @Override

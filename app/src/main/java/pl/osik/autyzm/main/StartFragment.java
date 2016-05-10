@@ -1,7 +1,9 @@
 package pl.osik.autyzm.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +13,15 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.dzieci.DzieciAdapter;
+import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
+import pl.osik.autyzm.helpers.OperationsEnum;
 
 
 public class StartFragment extends Fragment {
+
+    private StartLastAdapter startLastAdapter;
+
 
     @Bind(R.id.start_lastUsedList)
     RecyclerView startLastUsedList;
@@ -45,6 +53,14 @@ public class StartFragment extends Fragment {
         startLastUsedList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        startLastAdapter = new StartLastAdapter(getLayoutInflater(savedInstanceState), this);
+        startLastUsedList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        startLastUsedList.setAdapter(startLastAdapter);
     }
 
     @Override

@@ -26,6 +26,10 @@
         android:text="@string/start_favourites"
         style="@style/TextListHeader" />
 
+    <View
+        android:layout_width="match_parent"
+        style="@style/DividerLine.RecyclerView"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/start_favouritesList"
         android:layout_width="match_parent"

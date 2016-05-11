@@ -79,6 +79,12 @@ public class LoadTestData {
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
         params.put(Lekcja.COLUMN_TYTUL, "Testowa lekcja");
         params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-01");
+        params.put(Lekcja.COLUMN_FAVOURITE, false);
+        l.insert(params);
+
+        params.put(Lekcja.COLUMN_TYTUL, "Testowa ulubiona lekcja");
+        params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-02");
+        params.put(Lekcja.COLUMN_FAVOURITE, true);
         l.insert(params);
     }
 
@@ -87,6 +93,10 @@ public class LoadTestData {
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
         params.put(LekcjaDziecko.COLUMN_DZIECKO, 1);
         params.put(LekcjaDziecko.COLUMN_LEKCJA, 1);
+        l.insert(params);
+
+        params.put(LekcjaDziecko.COLUMN_DZIECKO, 1);
+        params.put(LekcjaDziecko.COLUMN_LEKCJA, 2);
         l.insert(params);
     }
 

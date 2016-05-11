@@ -30,12 +30,19 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/photo"
+                <LinearLayout
+                    android:id="@+id/photoContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="0dip"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_no_photo"/>
+                    android:layout_height="0dip">
+
+                    <ImageView
+                        android:id="@+id/photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_no_photo"/>
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/data_urodzenia"

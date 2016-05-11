@@ -21,7 +21,7 @@ import pl.osik.autyzm.helpers.OperationsEnum;
 public class StartFragment extends Fragment {
 
     private StartLastAdapter startLastAdapter;
-
+    private StartFavouritesAdapter startFavouritesAdapter;
 
     @Bind(R.id.start_lastUsedList)
     RecyclerView startLastUsedList;
@@ -51,6 +51,7 @@ public class StartFragment extends Fragment {
         ButterKnife.bind(this, view);
         getActivity().setTitle("Start");
         startLastUsedList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        startFavouritesList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         return view;
     }
@@ -61,6 +62,10 @@ public class StartFragment extends Fragment {
         startLastAdapter = new StartLastAdapter(getLayoutInflater(savedInstanceState), this);
         startLastUsedList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         startLastUsedList.setAdapter(startLastAdapter);
+
+        startFavouritesAdapter = new StartFavouritesAdapter(getLayoutInflater(savedInstanceState), this);
+        startFavouritesList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        startFavouritesList.setAdapter(startFavouritesAdapter);
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +31,7 @@ import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.MyApp;
+import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.sql.Dziecko;
 
@@ -125,10 +127,10 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     public void setPhoto(String photo) {
         this.photo = photo;
-        if(photo != null) AppHelper.placePhoto(fragment.getActivity(), dzieciPhoto, photo);
-        /*Glide.with(dzieciPhoto.getContext())
-                .load(R.drawable.ic_test_child_photo)
-                .into(dzieciPhoto);*/
+        //if(photo != null) AppHelper.placePhoto(fragment.getActivity(), dzieciPhoto, photo);
+
+        ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();
+        vto.addOnPreDrawListener(new MyPreDrawListener(dzieciPhoto, photo, fragment.getActivity()));
     }
 
     public String getPhoto() {

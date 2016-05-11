@@ -12,14 +12,17 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -28,11 +31,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.jar.Attributes;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.User;
@@ -83,6 +88,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     EditText telefonMatki;
     @Bind(R.id.button)
     Button button;
+    @Bind(R.id.photoContainer)
+    LinearLayout photoContainer;
     @Bind(R.id.photo)
     ImageView photo;
     @Bind(R.id.scrollView)
@@ -118,18 +125,12 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 
         /* Edycja + Show */
         if(operacja != OperationsEnum.DODAWANIE) {
-            //Chowanie klawiatury
-            scrollView.requestFocus();
-            try {
-                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            } catch(NullPointerException exc) { Log.d("keyboardHide", "Klawiatura się nie pojawiła"); }       //Jeżeli klawiatura się nie pojawi to idziemy dalej
-
             id = bundle.getInt(Dziecko.COLUMN_ID);
             dziecko = Dziecko.getDzieckoById(id);
             getSupportActionBar().setTitle(dziecko.get(Dziecko.COLUMN_IMIE) + " " + dziecko.get(Dziecko.COLUMN_NAZWISKO));
             populate();
-            if(dziecko.get(Dziecko.COLUMN_PHOTO) != null) AppHelper.placePhoto(this, photo, dziecko.get(Dziecko.COLUMN_PHOTO));
+            ViewTreeObserver vto = photo.getViewTreeObserver();
+            vto.addOnPreDrawListener(new MyPreDrawListener(photo, dziecko.get(Dziecko.COLUMN_PHOTO), this));
         }
 
         /* Dodawanie + Edycja */
@@ -158,11 +159,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             rozpoczecie.setText(sdf.format(cal.getTime()));
         }
-
         /** END **/
-
         button.setOnClickListener(this);
-
     }
 
     private void addValidations() {
@@ -179,6 +177,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         for(Map.Entry<String, EditText> entry : all.entrySet()) {
             entry.getValue().setEnabled(false);
         }
+        hideKeyboard();
     }
 
     @Override
@@ -263,5 +262,17 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String put = sdf.format(cal.getTime());
         dateChosenFor.setText(put);
+    }
+
+    private void hideKeyboard() {
+        if(operacja == OperationsEnum.SHOW) {
+            //scrollView.requestFocus();
+            try {
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            } catch (NullPointerException exc) {
+                Log.d("keyboardHide", "Klawiatura się nie pojawiła");
+            }       //Jeżeli klawiatura się nie pojawi to idziemy dalej
+        }
     }
 }

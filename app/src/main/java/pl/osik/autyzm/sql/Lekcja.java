@@ -56,7 +56,7 @@ public class Lekcja extends AbstractDBTable {
     }
 
     private static String checkUser() {
-        return " JOIN " + LekcjaDziecko.TABLE_NAME + " ON " + tableAndColumn(LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_DZIECKO) + " = " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID)
+        return " JOIN " + LekcjaDziecko.TABLE_NAME + " ON " + tableAndColumn(LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_LEKCJA) + " = " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID)
                 + createJoin(new Dziecko(), LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_DZIECKO)
                 + createJoin(new User(), Dziecko.TABLE_NAME, Dziecko.COLUMN_USER)
                 + " WHERE " + tableAndColumn(User.TABLE_NAME, COLUMN_ID) + " = ?";
@@ -85,6 +85,21 @@ public class Lekcja extends AbstractDBTable {
             LekcjaORM temp = new LekcjaORM(id, name, lastUsed);
             out.add(temp);
         }
+        return out;
+    }
+
+    public static ArrayList<LekcjaORM> getFavourites() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        ArrayList<LekcjaORM> out = new ArrayList<>();
+        String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
+                + checkUser()
+                + " AND " + COLUMN_FAVOURITE
+                + " ORDER BY " + COLUMN_TYTUL;
+        Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(User.getCurrentId())});
+        out = fillTheList(cursor);
+        cursor.close();
+        helper.close();
         return out;
     }
 }

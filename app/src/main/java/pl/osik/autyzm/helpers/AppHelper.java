@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 
+import com.bumptech.glide.Glide;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.shadowviewhelper.ShadowProperty;
 import com.wangjie.shadowviewhelper.ShadowViewHelper;
@@ -26,6 +28,7 @@ import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 
 /**
@@ -79,6 +82,14 @@ public class AppHelper {
     }
 
     public static void placePhoto(Activity activity, ImageView imgView, String path) {
+        placePhoto(activity, imgView, path, imgView);
+    }
+
+    public static void placePhoto(Activity activity, ImageView imgView, String path, View resizeTo) {
+        placePhoto(activity, imgView, path, resizeTo.getHeight());
+    }
+
+    public static void placePhoto(Activity activity, ImageView imgView, String path, int resizeHeight) {
         Uri selectedImage = Uri.parse(path);
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
@@ -89,8 +100,15 @@ public class AppHelper {
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         String imgDecodableString = cursor.getString(columnIndex);
         cursor.close();
-        imgView.setImageBitmap(BitmapFactory
-                .decodeFile(imgDecodableString));
+        Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString);
+
+        int resizeWidth = (int) (((double) resizeHeight / (double) bitmap.getHeight()) * (double) bitmap.getWidth());
+        bitmap = Bitmap.createScaledBitmap(bitmap, resizeWidth, resizeHeight, true);
+        //imgView.setImageBitmap(bitmap);
+        Glide.with(imgView.getContext())
+                .load("")
+                .placeholder(new BitmapDrawable(bitmap))
+                .into(imgView);
     }
 
     public static void changeListItemHeight(LinearLayout listItem) {

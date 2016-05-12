@@ -200,7 +200,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         if(operacja == OperationsEnum.SHOW) {
             Intent intent = new Intent(this, DzieciStatisticsActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putInt(Dziecko.COLUMN_ID, id);
+            bundle.putSerializable(Dziecko.TABLE_NAME, dziecko);
             intent.putExtras(bundle);
             startActivity(intent);
         } else if(operacja == OperationsEnum.EDYCJA) {

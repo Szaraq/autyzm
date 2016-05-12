@@ -81,4 +81,7 @@
         klaudia.kucharuk@gmail.com
     </string>
     <string name="help_title">Pomoc</string>
+    <string name="dzieci_statistics_pdf_title">Raport postepu w nauce</string>
+    <string name="dzieci_statistics_pdf_save_ok">"Plik został zachowany w dokumentach jako: "</string>
+    <string name="dzieci_statistics_pdf_save_error">Nie udało się zapisać pliku :(</string>
 </resources>

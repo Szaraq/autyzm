@@ -1,0 +1,53 @@
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorAppBackground"
+    tools:context="pl.osik.autyzm.lekcje.LekcjeFragment">
+
+    <RelativeLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        app:layout_heightPercent="30%">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/progressBar"
+            android:progress="33" />
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/progress_bar"
+            android:gravity="center"
+            android:text="@string/lekcje_title_header"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/tytul"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_container"
+        android:hint="@string/lekcja_hint_tytul" />
+
+    <!-- TODO Button Elevation -->
+    <Button
+        android:id="@+id/button"
+        style="@style/buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tytul"
+        android:layout_below="@id/tytul"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:elevation="40dp"
+        android:text="@string/button_next" />
+
+</android.support.percent.PercentRelativeLayout>

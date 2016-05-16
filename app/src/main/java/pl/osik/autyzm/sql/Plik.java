@@ -79,5 +79,7 @@ public class Plik extends AbstractDBTable {
                 //TODO zastanowić się co po usunięciu pliku - usuwanie modułów, ale tak żeby statystyki zostały
             }
         }
+        helper.close();
+        cursor.close();
     }
 }

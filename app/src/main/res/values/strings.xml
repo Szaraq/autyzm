@@ -84,4 +84,15 @@
     <string name="dzieci_statistics_pdf_title">Raport postepu w nauce</string>
     <string name="dzieci_statistics_pdf_save_ok">"Plik został zachowany w dokumentach jako: "</string>
     <string name="dzieci_statistics_pdf_save_error">Nie udało się zapisać pliku :(</string>
+    <string name="dzieci_statistics_popup_title">Zapisywanie pliku</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lekcje_main_header">Wybierz lekcję do edycji\nlub stwórz nową</string>
+    <string name="lekcje_title">Lekcje</string>
+    <string name="message_lekcja_usunięta">Lekcja została poprawnie usunięta</string>
+    <string name="popup_uwaga">Uwaga!</string>
+    <string name="lekcje_title_header">1. Wpisz tytuł lekcji</string>
+    <string name="lekcja_hint_tytul">Tytuł lekcji</string>
+    <string name="button_next">Dalej</string>
 </resources>

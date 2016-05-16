@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 import android.content.Intent;
+import android.inputmethodservice.Keyboard;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -74,6 +75,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         error.setVisibility(View.INVISIBLE);
+        if(v.getId() == passControl.getId() && keyCode == KeyEvent.KEYCODE_ENTER)
+            zaloguj.callOnClick();
         return false;
     }
 

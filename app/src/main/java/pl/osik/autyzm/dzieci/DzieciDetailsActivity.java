@@ -39,6 +39,7 @@ import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.OperationsEnum;
+import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.validate.ValidateCommand;
@@ -154,7 +155,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             blockEditTexts();
         } else if(operacja == OperationsEnum.DODAWANIE) {
             getSupportActionBar().setTitle(R.string.dziecko_dodaj_title);
-
+            imie.requestFocus();
+            telefonOjca.setOnKeyListener(new MyOnKeyEnterListener(imieMatki));
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             rozpoczecie.setText(sdf.format(cal.getTime()));

@@ -41,6 +41,7 @@ import pl.osik.autyzm.sql.Dziecko;
 public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
 
     public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
+
     private Fragment fragment;
     private final LayoutInflater layoutInflater;
     ArrayList<HashMap<String, Object>> dzieciList = Dziecko.getDzieciList();
@@ -164,7 +165,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         } else {
             AlertDialog.Builder dialog = new AlertDialog.Builder(dzieciContextMenu.getContext());
             dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + name + "?")
-                    .setTitle("Uwaga!")
+                    .setTitle(R.string.popup_uwaga)
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -175,7 +176,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                         }
                     })
                     .setNegativeButton(android.R.string.no, null)
-                    .setIcon(android.R.drawable.ic_dialog_alert);
+                    .setIcon(R.drawable.ic_uwaga);
             dialog.show();
         }
         return true;

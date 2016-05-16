@@ -22,6 +22,7 @@ import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciFragment;
 import pl.osik.autyzm.help.HelpFragment;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.lekcje.LekcjeFragment;
 import pl.osik.autyzm.login.LoginActivity;
 import pl.osik.autyzm.login.UserDetailsFragment;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_run_lesson) {
 
         } else if (id == R.id.nav_lessons) {
+
+            gotoFragment(new LekcjeFragment());
 
         } else if (id == R.id.nav_children) {
 

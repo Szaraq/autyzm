@@ -1,0 +1,45 @@
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="pl.osik.autyzm.lekcje.LekcjeFragment">
+
+    <FrameLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        app:layout_heightPercent="30%">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/lekcje_main_header"
+            android:gravity="center"
+            />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/divider"
+        style="@style/DividerLine"
+        android:layout_marginBottom="0dp"
+        android:layout_below="@id/title_container" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lekcje_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/PaddingForFAB"
+        android:layout_below="@id/divider" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/lekcje_fab"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        style="@style/myFAB"
+        />
+
+</android.support.percent.PercentRelativeLayout>

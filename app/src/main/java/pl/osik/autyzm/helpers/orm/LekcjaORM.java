@@ -1,5 +1,6 @@
 package pl.osik.autyzm.helpers.orm;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,7 +9,7 @@ import java.util.Locale;
 /**
  * Created by m.osik2 on 2016-05-06.
  */
-public class LekcjaORM {
+public class LekcjaORM implements Serializable {
 
     int id;
     String tytul;

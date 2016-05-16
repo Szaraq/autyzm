@@ -74,6 +74,8 @@ public class User extends AbstractDBTable {
                     throw new Exception("Niewłaściwy typ danych " + entry.getValue());
                 } catch (Exception e) {
                     e.printStackTrace();
+                } finally {
+                    helper.close();
                 }
             }
         }

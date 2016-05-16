@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAppBackground"
-    android:id="@+id/scrollView">
+    android:background="@color/colorAppBackground">
 
 
     <LinearLayout
@@ -21,26 +21,26 @@
             android:id="@+id/layout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="0dip"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/photoContainer"
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="0dip">
+                    android:layout_height="0dip"
+                    android:layout_weight="1">
 
                     <ImageView
                         android:id="@+id/photo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_no_photo"/>
+                        android:src="@drawable/ic_no_photo" />
 
                 </LinearLayout>
 
@@ -48,9 +48,9 @@
                     android:id="@+id/data_urodzenia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="setDate"
                     android:focusable="false"
-                    android:hint="@string/dzieci_details_data_urodzenia" />
+                    android:hint="@string/dzieci_details_data_urodzenia"
+                    android:onClick="setDate" />
 
             </LinearLayout>
 
@@ -62,31 +62,33 @@
 
                 <EditText
                     android:id="@+id/imie"
-                    android:capitalize="words"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:capitalize="words"
                     android:ems="10"
                     android:hint="@string/dzieci_details_imie"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:singleLine="true" />
 
                 <EditText
                     android:id="@+id/nazwisko"
-                    android:capitalize="words"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:capitalize="words"
                     android:ems="10"
-                    android:paddingTop="15dp"
                     android:hint="@string/dzieci_details_nazwisko"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:paddingTop="15dp"
+                    android:singleLine="true" />
 
                 <EditText
                     android:id="@+id/rozpoczecie"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="15dp"
-                    android:onClick="setDate"
                     android:focusable="false"
-                    android:hint="@string/dzieci_details_rozpoczecie" />
+                    android:hint="@string/dzieci_details_rozpoczecie"
+                    android:onClick="setDate"
+                    android:paddingTop="15dp" />
 
             </LinearLayout>
 
@@ -98,11 +100,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
-            android:gravity="top"
             android:capitalize="sentences"
+            android:gravity="top"
+            android:hint="@string/dzieci_details_notatki"
             android:inputType="textMultiLine"
-            android:lines="10"
-            android:hint="@string/dzieci_details_notatki" />
+            android:lines="10" />
 
         <RelativeLayout
             android:id="@+id/layout2"
@@ -145,27 +147,30 @@
                         android:id="@+id/imie_ojca"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
                         android:capitalize="words"
+                        android:ems="10"
+                        android:hint="@string/dzieci_details_imie_ojca"
                         android:inputType="textPersonName"
-                        android:hint="@string/dzieci_details_imie_ojca" />
+                        android:singleLine="true" />
 
                     <EditText
                         android:id="@+id/nazwisko_ojca"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
                         android:capitalize="words"
+                        android:ems="10"
+                        android:hint="@string/dzieci_details_nazwisko_ojca"
                         android:inputType="textPersonName"
-                        android:hint="@string/dzieci_details_nazwisko_ojca" />
+                        android:singleLine="true" />
 
                     <EditText
                         android:id="@+id/telefon_ojca"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:hint="@string/dzieci_details_telefon_ojca"
                         android:inputType="phone"
-                        android:hint="@string/dzieci_details_telefon_ojca" />
+                        android:singleLine="true" />
 
                 </LinearLayout>
 
@@ -185,27 +190,30 @@
                         android:id="@+id/imie_matki"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
                         android:capitalize="words"
+                        android:ems="10"
+                        android:hint="@string/dzieci_details_imie_matki"
                         android:inputType="textPersonName"
-                        android:hint="@string/dzieci_details_imie_matki" />
+                        android:singleLine="true" />
 
                     <EditText
                         android:id="@+id/nazwisko_matki"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
                         android:capitalize="words"
+                        android:ems="10"
+                        android:hint="@string/dzieci_details_nazwisko_matki"
                         android:inputType="textPersonName"
-                        android:hint="@string/dzieci_details_nazwisko_matki" />
+                        android:singleLine="true" />
 
                     <EditText
                         android:id="@+id/telefon_matki"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
+                        android:hint="@string/dzieci_details_telefon_matki"
                         android:inputType="phone"
-                        android:hint="@string/dzieci_details_telefon_matki" />
+                        android:singleLine="true" />
                 </LinearLayout>
             </LinearLayout>
 

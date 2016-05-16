@@ -71,7 +71,7 @@ public abstract class AbstractDBTable {
         String colsQuery = addCommas(cols);
         String valQuery = addCommas(questMarks);
         db.execSQL("INSERT INTO " + getTableName() + "(" + colsQuery + ") VALUES (" + valQuery + ");", params);
-        db.close();
+        helper.close();
         return true;
     }
 

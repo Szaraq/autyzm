@@ -124,6 +124,8 @@ public class Folder extends AbstractDBTable {
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(User.getCurrentId()) });
         cursor.moveToFirst();
         ROOT_ID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+        helper.close();
+        cursor.close();
         return ROOT_ID;
     }
 }

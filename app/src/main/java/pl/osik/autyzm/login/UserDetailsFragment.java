@@ -1,15 +1,10 @@
 package pl.osik.autyzm.login;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.PhoneNumberUtils;
-import android.text.InputFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
-import pl.osik.autyzm.filters.WithCapitalLetter;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.main.MainActivity;
-import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateExistsInDatabase;
@@ -37,7 +30,7 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 public class UserDetailsFragment extends Fragment implements View.OnClickListener {
 
     public static final String NEW_ACCOUNT = "newAccount";
-    private HashMap<String, EditText> editTextHashMap;
+    private LinkedHashMap<String, EditText> editTextHashMap;
     private String photoPath = null;
     private ValidateCommand validate = new ValidateCommand();
     HashMap<String, String> userData;
@@ -79,7 +72,7 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.userDetails_title);
         Bundle args = getArguments();
         newAccount = args.getBoolean(NEW_ACCOUNT);
-        editTextHashMap = new HashMap<String, EditText>() {{
+        editTextHashMap = new LinkedHashMap<String, EditText>() {{
             put(User.COLUMN_IMIE, imie);
             put(User.COLUMN_NAZWISKO, nazwisko);
             put(User.COLUMN_LOGIN, user);
@@ -89,8 +82,16 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
         button.setOnClickListener(this);
         userPhoto.setOnClickListener(this);
         addValidations();
+        setEditTextsEnterOrder();
 
         return view;
+    }
+
+    private void setEditTextsEnterOrder() {
+        imie.setOnKeyListener(new MyOnKeyEnterListener(nazwisko));
+        nazwisko.setOnKeyListener(new MyOnKeyEnterListener(user));
+        user.setOnKeyListener(new MyOnKeyEnterListener(haslo));
+        haslo.setOnKeyListener(new MyOnKeyEnterListener(button));
     }
 
     private void addValidations() {

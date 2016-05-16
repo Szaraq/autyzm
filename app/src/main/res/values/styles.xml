@@ -41,6 +41,7 @@
     <style name="EditTextGrid">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginTop">10dp</item>
+        <item name="android:singleLine">true</item>
     </style>
     <style name="EditTextGrid.Left" parent="EditTextGrid">
         <item name="android:layout_marginRight">15dp</item>
@@ -65,6 +66,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorAppBackground</item>
+        <item name="android:radius">2dp</item>
     </style>
 
     <style name="myFAB">
@@ -114,6 +116,14 @@
     <!-- Popup menu -->
     <style name="popupMenuStyle" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@color/colorAppBackground</item>
+    </style>
+
+    <!-- Progress Bar -->
+    <style name="progressBar" parent="android:Widget.DeviceDefault.Light.ProgressBar.Horizontal">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:progressTint">@color/colorPrimary</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

@@ -1,21 +1,28 @@
 package pl.osik.autyzm.dzieci;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Environment;
 import android.print.pdf.PrintedPdfDocument;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -24,12 +31,14 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnDrawListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
@@ -78,16 +87,15 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
     private final int RESIZE_WIDTH = 100;
     private final int RESIZE_HEIGHT = 100;
     private final int MARGIN_TOP = 50;
-    private LineChart chartPdf = new LineChart(this);
 
+    @Bind(R.id.chart_container)
+    FrameLayout chartContainer;
     @Bind(R.id.container)
     LinearLayout container;
     @Bind(R.id.save)
     FloatingActionButton saveButton;
     @Bind(R.id.wykres)
     LineChart chart;
-    @Bind(R.id.wykres_invisible)
-    LineChart chart2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,11 +108,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         imieINazwisko = dziecko.get(Dziecko.COLUMN_NAZWISKO) + " " + dziecko.get(Dziecko.COLUMN_IMIE);
         getSupportActionBar().setTitle(imieINazwisko);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            chart2.setVisibility(View.GONE);
-        //TODO drugi wykres
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         FILE_NAME = getString(R.string.dzieci_statistics_pdf_title) + ".pdf";
         //FINALLY Uncomment
@@ -113,8 +117,8 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.NORMAL, new BaseColor(getResources().getColor(R.color.colorPrimary)));
 
         createChart(chart);
-        createChart(chartPdf);
         saveButton.setOnClickListener(this);
+        resizeChart();
     }
 
     private void createChart(LineChart chart) {
@@ -153,13 +157,8 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
             chart.setPinchZoom(true);
             chart.animateX(1500, Easing.EasingOption.EaseInOutQuart);
         }
-
-        if(chart.getId() == chartPdf.getId()) {
-            chart.setMinimumHeight(2500);
-        }
         chart.setNoDataText(getString(R.string.dzieci_statistics_brak_lekcji));
         chart.invalidate();
-
 
     }
 
@@ -192,11 +191,10 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
 
     private void addContent() throws DocumentException {
         Paragraph main = new Paragraph();
-        main.add(new Paragraph(getString(R.string.dzieci_statistics_pdf_title), titleFont));
+        main.add(new Paragraph(getString(R.string.dzieci_statistics_pdf_title) + " (" + imieINazwisko + ")", titleFont));
         addEmptyLine(main, 1);
 
         /* Add chart */
-        LineChart chart = chartPdf;
         Bitmap bitmap = chart.getChartBitmap();
         ByteArrayOutputStream bitmapStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bitmapStream);
@@ -248,30 +246,43 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
     /* FAB Onclick */
     @Override
     public void onClick(View v) {
-        TextView popupText = new TextView(this);
-        Button insidePopupButton = new Button(this);
-        LinearLayout layoutOfPopup = new LinearLayout(this);
-        insidePopupButton.setText(getString(R.string.button_ok));
-        popupText.setPadding(0, 0, 0, 20);
-        layoutOfPopup.setOrientation(LinearLayout.VERTICAL);
-        layoutOfPopup.addView(popupText);
-        layoutOfPopup.addView(insidePopupButton);
-        final PopupWindow popupMessage = new PopupWindow(layoutOfPopup, ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupMessage.setContentView(layoutOfPopup);
-        insidePopupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupMessage.dismiss();
-            }
-        });
+        String popupText = "";
 
         if(saveAsPdf()) {
-            popupText.setText(getString(R.string.dzieci_statistics_pdf_save_ok) + FILE_NAME);
+            popupText = getString(R.string.dzieci_statistics_pdf_save_ok) + FILE_NAME;
         } else {
-            popupText.setText(getString(R.string.dzieci_statistics_pdf_save_error) + FILE_NAME);
+            popupText = getString(R.string.dzieci_statistics_pdf_save_error) + FILE_NAME;
         }
 
-        popupMessage.showAtLocation(container, Gravity.CENTER, 0, 0);
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.dzieci_statistics_popup_title))
+                .setMessage(popupText)
+                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    private void resizeChart() {
+        final int MARGIN_WIDTH = 150;
+        final int MARGIN_HEIGHT = 300;
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        ViewGroup.LayoutParams params = chartContainer.getLayoutParams();
+
+        if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            params.height = size.y - MARGIN_HEIGHT;
+            params.width = (int) (params.height * 1.5);
+        } else {
+            params.width = size.x - MARGIN_WIDTH;
+            params.height = (int) (params.width / 1.5);
+        }
+        chartContainer.setLayoutParams(params);
+        container.invalidate();
+        chartContainer.invalidate();
+        chart.invalidate();
     }
 }

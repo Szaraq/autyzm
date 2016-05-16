@@ -170,5 +170,6 @@ public class Dziecko extends AbstractDBTable {
         ContentValues data = new ContentValues();
         data.put(COLUMN_PHOTO, path);
         d.edit(id, data);
+        helper.close();
     }
 }

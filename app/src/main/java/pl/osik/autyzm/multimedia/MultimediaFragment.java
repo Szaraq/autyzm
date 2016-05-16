@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
@@ -25,13 +24,12 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciAdapter;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.sql.Folder;
 import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.validate.ValidateCommand;
@@ -153,10 +151,10 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     private void askForFolderName() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
         final EditText input = new EditText(this.getContext());
-        input.setPadding(10, 0, 10, 0);
+        input.setPadding(30, 30, 30, 30);
+        input.setSingleLine(true);
         input.setHint(R.string.muti_nowy_folder_placeholder);
         builder.setTitle(R.string.multi_nowy_folder);
-        //TODO Formatowanie EditText
         input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         final ValidateNotNull validateNotNull = new ValidateNotNull();
         validate.addValidate(input, validateNotNull);
@@ -170,7 +168,6 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
                             addNewFolder();
                         } else {
                             Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-                            //TODO Test
                         }
                     }
                 })
@@ -180,7 +177,9 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
                         dialog.cancel();
                     }
                 });
-        builder.show();
+        AlertDialog alert = builder.create();
+        alert.show();
+        input.setOnKeyListener(new MyOnKeyEnterListener(alert.getButton(AlertDialog.BUTTON_POSITIVE)));
     }
 
     private void addNewFolder() {

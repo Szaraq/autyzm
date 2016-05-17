@@ -45,7 +45,7 @@ public class LoadTestData {
         params.put(User.COLUMN_NAZWISKO, "Adminowicz");
         params.put(User.COLUMN_LOGIN, "a2");
         params.put(User.COLUMN_PASS, "p");
-        params.put(User.COLUMN_PHOTO, "content://media/external/images/media/12");
+        //params.put(User.COLUMN_PHOTO, "content://media/external/images/media/12");
         u.insert(params);
     }
 

@@ -8,9 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,8 +24,12 @@ import pl.osik.autyzm.helpers.OperationsEnum;
 
 public class LekcjeFragment extends Fragment {
 
+    //TODO Pomysł na karty do dziewczyn
+
     LekcjeAdapter lekcjeAdapter;
 
+    @Bind(R.id.lista_lekcji_container)
+    FrameLayout listaLekcjiContainer;
     @Bind(R.id.lekcje_list)
     RecyclerView lekcjeList;
     @Bind(R.id.lekcje_fab)
@@ -49,6 +56,7 @@ public class LekcjeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lekcje, container, false);
         ButterKnife.bind(this, view);
+        LekcjeHelper.clearAll();
         return view;
     }
 
@@ -59,16 +67,24 @@ public class LekcjeFragment extends Fragment {
         lekcjeAdapter = new LekcjeAdapter(getLayoutInflater(savedInstanceState), this);
         lekcjeList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         lekcjeList.setAdapter(lekcjeAdapter);
+        if(lekcjeAdapter.isEmpty())
+            dodajBrakModulowInfo();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), LekcjeTytulActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(DzieciAdapter.BUNDLE_SWITCH_OPERACJA, OperationsEnum.DODAWANIE);
-                intent.putExtras(bundle);
+                LekcjeHelper.setOperacja(OperationsEnum.DODAWANIE);
                 startActivity(intent);
             }
         });
+    }
+
+    private void dodajBrakModulowInfo() {
+        final TextView text = new TextView(this.getContext());
+        text.setText(R.string.lekcje_modul_noLessons);
+        text.setTextColor(getResources().getColor(R.color.colorError));
+        text.setGravity(Gravity.CENTER);
+        listaLekcjiContainer.addView(text);
     }
 
 }

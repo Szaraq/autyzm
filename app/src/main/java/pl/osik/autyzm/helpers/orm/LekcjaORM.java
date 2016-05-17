@@ -21,6 +21,8 @@ public class LekcjaORM implements Serializable {
         setLastUsed(lastUsed);
     }
 
+    public LekcjaORM() { }
+
     public Calendar getLastUsed() {
         return lastUsed;
     }

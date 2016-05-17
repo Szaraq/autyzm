@@ -1,0 +1,86 @@
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAppBackground"
+    android:orientation="vertical"
+    tools:context="pl.osik.autyzm.lekcje.LekcjeFragment">
+
+    <RelativeLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        app:layout_heightPercent="30%">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/progressBar"
+            android:progress="66" />
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/progress_bar"
+            android:gravity="center"
+            android:text="@string/lekcje_module_header"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider"
+        style="@style/DividerLine"
+        android:layout_below="@id/title_container"
+        android:layout_marginBottom="0dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/divider"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/lista_modulow_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/lista_modulow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/title_container" />
+
+        </FrameLayout>
+
+        <View
+            android:id="@+id/divider2"
+            style="@style/DividerLine"
+            android:layout_below="@id/lista_modulow"
+            android:layout_marginBottom="0dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/buttonAddModule"
+                style="@style/buttonInPanel"
+                android:layout_toLeftOf="@+id/buttonNext"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/lekcje_module_button_addModule" />
+
+            <Button
+                android:id="@+id/buttonNext"
+                style="@style/buttonInPanel"
+                android:layout_alignParentRight="true"
+                android:text="@string/button_next" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.percent.PercentRelativeLayout>

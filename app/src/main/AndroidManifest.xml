@@ -16,7 +16,7 @@
         <activity
             android:name=".main.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".dzieci.DzieciDetailsActivity" />
         <activity android:name=".dzieci.DzieciStatisticsActivity" />
         <activity android:name=".login.LoginActivity">
@@ -26,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".lekcje.LekcjeTytulActivity"></activity>
+        <activity android:name=".lekcje.LekcjeTytulActivity" />
+        <activity android:name=".lekcje.LekcjeModulActivity"></activity>
     </application>
 
 </manifest>

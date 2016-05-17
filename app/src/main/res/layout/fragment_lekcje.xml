@@ -28,12 +28,19 @@
         android:layout_marginBottom="0dp"
         android:layout_below="@id/title_container" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lekcje_list"
+    <FrameLayout
+        android:id="@+id/lista_lekcji_container"
+        android:layout_below="@id/divider"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        style="@style/PaddingForFAB"
-        android:layout_below="@id/divider" />
+        android:layout_height="match_parent" >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lekcje_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/PaddingForFAB" />
+
+    </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/lekcje_fab"

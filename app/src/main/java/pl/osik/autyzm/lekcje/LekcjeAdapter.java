@@ -71,6 +71,10 @@ public class LekcjeAdapter extends RecyclerView.Adapter<LekcjeViewHolder> {
         lekcje = Lekcja.getLekcjaList();
         notifyDataSetChanged();
     }
+
+    public boolean isEmpty() {
+        return lekcje.size() == 0;
+    }
 }
 
 class LekcjeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
@@ -149,10 +153,8 @@ class LekcjeViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     protected void gotoDetails(OperationsEnum operacja) {
         Intent intent = new Intent(fragment.getActivity(), LekcjeTytulActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Lekcja.TABLE_NAME, lekcja);
-        bundle.putSerializable(LekcjeAdapter.BUNDLE_SWITCH_OPERACJA, operacja);
-        intent.putExtras(bundle);
+        LekcjeHelper.setLekcja(lekcja);
+        LekcjeHelper.setOperacja(operacja);
         fragment.startActivity(intent);
     }
 }

@@ -48,7 +48,7 @@ public class Modul extends AbstractDBTable {
         SQLiteDatabase db = helper.getDBRead();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + createJoin(new Lekcja(), TABLE_NAME, COLUMN_LEKCJA)
-                + " WHERE " + tableAndColumn(Lekcja.TABLE_NAME, COLUMN_ID) + " = ?"
+                + " WHERE " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID) + " = ?"
                 + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_NAZWA);
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(lekcjaId) });
         while(cursor.moveToNext()) {

@@ -1,5 +1,9 @@
 package pl.osik.autyzm.helpers.orm;
 
+import android.content.ContentValues;
+
+import pl.osik.autyzm.sql.Modul;
+
 /**
  * Created by m.osik2 on 2016-05-17.
  */
@@ -16,6 +20,10 @@ public class ModulORM {
         this.plik = plik;
         this.lekcja = lekcja;
         this.name = name;
+    }
+
+    public ModulORM() {
+
     }
 
     public int getId() {
@@ -48,5 +56,14 @@ public class ModulORM {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ContentValues getContentValues() {
+        ContentValues out = new ContentValues();
+        out.put(Modul.COLUMN_ID, id);
+        out.put(Modul.COLUMN_NAZWA, name);
+        out.put(Modul.COLUMN_FILM, plik);
+        out.put(Modul.COLUMN_LEKCJA, lekcja);
+        return out;
     }
 }

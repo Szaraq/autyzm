@@ -56,6 +56,7 @@ public class LekcjeTytulActivity extends AppCompatActivity implements View.OnCli
             Intent intent = new Intent(v.getContext(), LekcjeModulActivity.class);
             lekcja.setTytul(tytul.getText().toString());
             LekcjeHelper.setLekcja(lekcja);
+            LekcjeHelper.setLekcjeTytulActivity(this);
             startActivity(intent);
         }
     }

@@ -27,7 +27,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".lekcje.LekcjeTytulActivity" />
-        <activity android:name=".lekcje.LekcjeModulActivity"></activity>
+        <activity android:name=".lekcje.LekcjeModulActivity" />
+        <activity android:name=".lekcje.nowy_modul.PlikActivity" />
+        <activity android:name=".lekcje.nowy_modul.PytaniaActivity"></activity>
     </application>
 
 </manifest>

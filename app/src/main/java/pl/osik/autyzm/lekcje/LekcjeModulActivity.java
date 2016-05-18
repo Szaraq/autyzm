@@ -14,12 +14,16 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import butterknife.Bind;
 import butterknife.BindDimen;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciAdapter;
 import pl.osik.autyzm.helpers.OperationsEnum;
+import pl.osik.autyzm.helpers.orm.ModulORM;
+import pl.osik.autyzm.lekcje.nowy_modul.PlikActivity;
 
 public class LekcjeModulActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,6 +33,8 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
     Button buttonNext;
     @Bind(R.id.lista_modulow_container)
     FrameLayout listaModulowContainer;
+    @Bind(R.id.brak_modulow)
+    TextView brakModulow;
     @Bind(R.id.lista_modulow)
     RecyclerView listaModulow;
 
@@ -46,23 +52,23 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
         buttonNext.setOnClickListener(this);
 
         if(LekcjeHelper.hasModules()) {
+            createList();
+        } else {
             buttonNext.setClickable(false);
             buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryRipple));
-            listaModulow.setVisibility(View.GONE);
             dodajBrakModulowInfo();
-        } else {
-            modulyAdapter = new ModulyAdapter(getLayoutInflater(), this, LekcjeHelper.getLekcja().getId());
-            listaModulow.setLayoutManager(new LinearLayoutManager(this));
-            listaModulow.setAdapter(modulyAdapter);
         }
     }
 
+    private void createList() {
+        modulyAdapter = new ModulyAdapter(getLayoutInflater(), this, LekcjeHelper.getLekcja().getId());
+        listaModulow.setLayoutManager(new LinearLayoutManager(this));
+        listaModulow.setAdapter(modulyAdapter);
+    }
+
     private void dodajBrakModulowInfo() {
-        final TextView text = new TextView(this);
-        text.setText(R.string.lekcje_modul_noModules);
-        text.setTextColor(getResources().getColor(R.color.colorError));
-        text.setGravity(Gravity.CENTER);
-        listaModulowContainer.addView(text);
+        brakModulow.setVisibility(View.VISIBLE);
+        listaModulow.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -75,12 +81,14 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
 
     private void przejdzDalej() {
         //TODO przejdzDalej
-        Toast.makeText(this, "przejdzDalej", Toast.LENGTH_SHORT).show();
+        LekcjeHelper.finishLekcjeTytulActivity();
+        finish();
     }
 
     private void dodajModul() {
-        //TODO dodajModul
-        Toast.makeText(this, "dodajModul", Toast.LENGTH_SHORT).show();
+        LekcjeHelper.setModul(new ModulORM());
+        Intent intent = new Intent(this, PlikActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -92,6 +100,19 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(LekcjeHelper.hasModules()) {
+            createList();
+            modulyAdapter.refresh();
+            brakModulow.setVisibility(View.INVISIBLE);
+            listaModulow.setVisibility(View.VISIBLE);
+            buttonNext.setClickable(true);
+            buttonNext.setTextColor(getResources().getColor(R.color.colorPrimary));
         }
     }
 }

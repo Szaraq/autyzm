@@ -47,6 +47,15 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
+            <TextView
+                android:text="@string/lekcje_modul_noModules"
+                android:visibility="invisible"
+                android:textColor="@color/colorError"
+                android:gravity="center"
+                android:id="@+id/brak_modulow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/lista_modulow"
                 android:layout_width="match_parent"
@@ -71,7 +80,7 @@
                 android:layout_toLeftOf="@+id/buttonNext"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="@string/lekcje_module_button_addModule" />
+                android:text="@string/button_add" />
 
             <Button
                 android:id="@+id/buttonNext"

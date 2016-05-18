@@ -221,7 +221,7 @@
                 android:id="@+id/button"
                 style="@style/buttonStyle"
                 android:layout_below="@id/dane_rodzicow"
-                android:text="@string/dzieci_details_button_zapisz" />
+                android:text="@string/button_zapisz" />
 
         </RelativeLayout>
 

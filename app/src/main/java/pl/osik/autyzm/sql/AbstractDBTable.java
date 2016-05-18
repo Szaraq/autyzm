@@ -75,6 +75,14 @@ public abstract class AbstractDBTable {
         return true;
     }
 
+    public long insert(ContentValues data) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        long out = db.insert(getTableName(), null, data);
+        helper.close();
+        return out;
+    }
+
     private String addCommas(String[] in) {
         StringBuilder out = new StringBuilder();
         for(String col : in) {
@@ -92,14 +100,6 @@ public abstract class AbstractDBTable {
         db.update(getTableName(), data, COLUMN_ID + "= ?", new String[]{String.valueOf(id)});
         helper.close();
         return true;
-    }
-
-    public long insert(ContentValues data) {
-        DBHelper helper = DBHelper.getInstance();
-        SQLiteDatabase db = helper.getDBRead();
-        long out = db.insert(getTableName(), null, data);
-        helper.close();
-        return out;
     }
 
     public boolean delete(int id) {

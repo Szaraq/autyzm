@@ -87,4 +87,10 @@ public class LekcjeFragment extends Fragment {
         listaLekcjiContainer.addView(text);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //TODO Jak się wraca z zapisywania lekcji, to żeby refreshowało (też trzeba zmienić info o braku modułów itd., tak jak w LekcjeModulActivity)
+    }
+
 }

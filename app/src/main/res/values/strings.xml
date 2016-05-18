@@ -33,7 +33,7 @@
     <string name="dzieci_details_telefon_matki">Telefon matki</string>
     <string name="dzieci_details_nazwisko_matki">Nazwisko matki</string>
     <string name="dzieci_details_button_statystyki">Statystyki</string>
-    <string name="dzieci_details_button_zapisz">Zapisz</string>
+    <string name="button_zapisz">Zapisz</string>
     <string name="message_dziecko_edytowane">Dziecko zostało poprawnie edytowane</string>
     <string name="message_dziecko_dodane">Dziecko zostało poprawnie dodane</string>
     <string name="dziecko_dodaj_title">Dodaj dziecko</string>
@@ -86,7 +86,6 @@
     <string name="dzieci_statistics_pdf_save_error">Nie udało się zapisać pliku :(</string>
     <string name="dzieci_statistics_popup_title">Zapisywanie pliku</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lekcje_main_header">Wybierz lekcję do edycji\nlub stwórz nową</string>
     <string name="lekcje_title">Lekcje</string>
@@ -100,4 +99,12 @@
     <string name="lekcje_moduly_title">"Lekcja: "</string>
     <string name="lekcje_modul_noModules">Nie dodałeś jeszcze żadnego modułu</string>
     <string name="lekcje_modul_noLessons">Nie dodałeś jeszcze żadnej lekcji</string>
+    <string name="lekcje_modul_plik_title">1. Dodaj plik</string>
+    <string name="button_add">Dodaj</string>
+    <string name="button_edit">Zmień</string>
+    <string name="lekcje_modul_pytania_title">2. Dodaj lub usuń pytania</string>
+    <string name="lekcje_modul_pytania_subtitle">(skala: 1-odpowiedź niepoprawna do 5-odpowiedź poprawna)</string>
+    <string name="lekcje_modul_pytania_hint">Tu wpisz pytanie</string>
+    <string name="lekcje_modul_pytania_row_header">Pytanie</string>
+    <string name="message_pytanie_do_usunięcia">Czy na pewno chcesz usunąć</string>
 </resources>

@@ -18,12 +18,14 @@ public class Lekcja extends AbstractDBTable {
     public static final String COLUMN_TYTUL = "tytul";
     public static final String COLUMN_DATA_OSTATNIEGO_UZYCIA = "data_ostatniego_uzycia";
     public static final String COLUMN_FAVOURITE = "is_favourite";
+    public static final String COLUMN_USER = "user";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_TYTUL, "TEXT");
         put(COLUMN_DATA_OSTATNIEGO_UZYCIA, "DATE");
         put(COLUMN_FAVOURITE, "BOOLEAN");
+        put(COLUMN_USER, "INTEGER");
     }};
 
     @Override
@@ -56,10 +58,12 @@ public class Lekcja extends AbstractDBTable {
     }
 
     private static String checkUser() {
-        return " JOIN " + LekcjaDziecko.TABLE_NAME + " ON " + tableAndColumn(LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_LEKCJA) + " = " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID)
+        /*return " JOIN " + LekcjaDziecko.TABLE_NAME + " ON " + tableAndColumn(LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_LEKCJA) + " = " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID)
                 + createJoin(new Dziecko(), LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_DZIECKO)
                 + createJoin(new User(), Dziecko.TABLE_NAME, Dziecko.COLUMN_USER)
-                + " WHERE " + tableAndColumn(User.TABLE_NAME, COLUMN_ID) + " = ?";
+                + " WHERE " + tableAndColumn(User.TABLE_NAME, COLUMN_ID) + " = ?";*/
+
+        return " WHERE " + tableAndColumn(TABLE_NAME, COLUMN_USER) + " = ?";
     }
 
     public static ArrayList<LekcjaORM> getLekcjaList() {

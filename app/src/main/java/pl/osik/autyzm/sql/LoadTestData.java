@@ -78,11 +78,13 @@ public class LoadTestData {
         Lekcja l = new Lekcja();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
         params.put(Lekcja.COLUMN_TYTUL, "Testowa lekcja");
+        params.put(Lekcja.COLUMN_USER, 1);
         params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-01");
         params.put(Lekcja.COLUMN_FAVOURITE, false);
         l.insert(params);
 
         params.put(Lekcja.COLUMN_TYTUL, "Testowa ulubiona lekcja");
+        params.put(Lekcja.COLUMN_USER, 1);
         params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-02");
         params.put(Lekcja.COLUMN_FAVOURITE, true);
         l.insert(params);

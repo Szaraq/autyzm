@@ -51,13 +51,4 @@ public class PytaniaActivity extends AppCompatActivity implements View.OnClickLi
             finish();
         }
     }
-
-    private void savePytania() {
-        String out = "";
-        for (PytanieORM pyt :
-                LekcjeHelper.getPytaniaList()){
-            out += pyt.getTresc() + " ";
-        }
-        Log.d("save", out);
-    }
 }

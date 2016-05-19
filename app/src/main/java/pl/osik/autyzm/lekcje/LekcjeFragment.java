@@ -30,6 +30,8 @@ public class LekcjeFragment extends Fragment {
 
     @Bind(R.id.lista_lekcji_container)
     FrameLayout listaLekcjiContainer;
+    @Bind(R.id.brak_lekcji)
+    TextView brakLekcji;
     @Bind(R.id.lekcje_list)
     RecyclerView lekcjeList;
     @Bind(R.id.lekcje_fab)
@@ -80,17 +82,20 @@ public class LekcjeFragment extends Fragment {
     }
 
     private void dodajBrakModulowInfo() {
-        final TextView text = new TextView(this.getContext());
-        text.setText(R.string.lekcje_modul_noLessons);
-        text.setTextColor(getResources().getColor(R.color.colorError));
-        text.setGravity(Gravity.CENTER);
-        listaLekcjiContainer.addView(text);
+        lekcjeList.setVisibility(View.INVISIBLE);
+        brakLekcji.setVisibility(View.VISIBLE);
+    }
+
+    private void showList() {
+        lekcjeList.setVisibility(View.VISIBLE);
+        brakLekcji.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //TODO Jak się wraca z zapisywania lekcji, to żeby refreshowało (też trzeba zmienić info o braku modułów itd., tak jak w LekcjeModulActivity)
+        showList();
+        lekcjeAdapter.refresh();
     }
 
 }

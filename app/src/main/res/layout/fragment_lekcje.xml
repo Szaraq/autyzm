@@ -34,6 +34,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
+        <TextView
+            android:id="@+id/brak_lekcji"
+            android:text="@string/lekcje_modul_noLessons"
+            android:visibility="invisible"
+            android:textColor="@color/colorError"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/lekcje_list"
             android:layout_width="match_parent"

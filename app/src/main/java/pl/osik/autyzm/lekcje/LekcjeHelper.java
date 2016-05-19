@@ -126,6 +126,7 @@ public class LekcjeHelper {
         /* Pytania */
         Pytanie p = new Pytanie();
         for (PytanieORM pyt : pytaniaList) {
+            if(pyt.getTresc().length() == 0) continue;
             pyt.setModul(modul.getId());
             data = pyt.getContentValues();
             if(pyt.isNew()) {

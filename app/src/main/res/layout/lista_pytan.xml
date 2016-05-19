@@ -21,6 +21,7 @@
 
         <EditText
             android:id="@+id/row_pytanie"
+            android:capitalize="sentences"
             android:hint="@string/lekcje_modul_pytania_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

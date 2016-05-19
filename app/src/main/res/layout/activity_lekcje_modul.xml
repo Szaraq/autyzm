@@ -48,13 +48,13 @@
             android:layout_weight="1">
 
             <TextView
-                android:text="@string/lekcje_modul_noModules"
-                android:visibility="invisible"
-                android:textColor="@color/colorError"
-                android:gravity="center"
                 android:id="@+id/brak_modulow"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/lekcje_modul_noModules"
+                android:textColor="@color/colorError"
+                android:visibility="invisible" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/lista_modulow"

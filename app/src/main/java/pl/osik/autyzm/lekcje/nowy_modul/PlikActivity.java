@@ -31,7 +31,13 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plik);
         ButterKnife.bind(this);
-        if(LekcjeHelper.getOperacja() == OperationsEnum.DODAWANIE) changeViewToAdd();
+        getSupportActionBar().setTitle(R.string.lekcje_nowy_modul_title);
+        if(LekcjeHelper.getModul().getPlik() == 0) {
+            changeViewToAdd();
+        } else {
+            //TODO wyświetlanie istniejącego pliku
+            plikView.setImageResource(R.drawable.ic_play);
+        }
         buttonAdd.setOnClickListener(this);
         buttonNext.setOnClickListener(this);
     }

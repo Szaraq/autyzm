@@ -21,10 +21,11 @@ public class LekcjaORM implements Serializable {
     boolean favourite;
     private Calendar lastUsed = Calendar.getInstance();
 
-    public LekcjaORM(int id, String tytul, String lastUsed) {
+    public LekcjaORM(int id, String tytul, String lastUsed, boolean favourite) {
         this();
         this.id = id;
         this.tytul = tytul;
+        this.favourite = favourite;
         setLastUsed(lastUsed);
     }
 
@@ -82,5 +83,9 @@ public class LekcjaORM implements Serializable {
 
     public void setUser(int user) {
         this.user = user;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
     }
 }

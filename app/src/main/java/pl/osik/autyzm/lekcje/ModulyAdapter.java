@@ -26,6 +26,7 @@ import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.helpers.orm.ModulORM;
+import pl.osik.autyzm.lekcje.nowy_modul.PlikActivity;
 import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.sql.Modul;
 
@@ -74,7 +75,7 @@ public class ModulyAdapter extends RecyclerView.Adapter<ModulyViewHolder> {
     }
 }
 
-class ModulyViewHolder extends RecyclerView.ViewHolder {
+class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private LekcjeModulActivity activity;
     private ModulyAdapter adapter;
@@ -82,10 +83,13 @@ class ModulyViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.modul_name)
     TextView modulName;
+    @Bind(R.id.modul_context_menu)
+    ImageView modulContextMenu;
 
     public ModulyViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        modulContextMenu.setOnClickListener(this);
     }
 
     public void setActivity(LekcjeModulActivity activity) {
@@ -99,5 +103,42 @@ class ModulyViewHolder extends RecyclerView.ViewHolder {
     public void setModul(ModulORM modul) {
         this.modul = modul;
         modulName.setText(modul.getName());
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == modulContextMenu) {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+            AppHelper.setForceIconInPopupMenu(popupMenu);
+            popupMenu.inflate(R.menu.dzieci_context_menu);
+            popupMenu.setOnMenuItemClickListener(this);
+            popupMenu.show();
+        }
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if(item.getItemId() == R.id.dzieci_edit) {
+            LekcjeHelper.setModul(modul);
+            Intent intent = new Intent(activity, PlikActivity.class);
+            activity.startActivity(intent);
+        } else {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(modulContextMenu.getContext());
+            dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + modul.getName() + "?")
+                    .setTitle(R.string.popup_uwaga)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Modul m = new Modul();
+                            m.delete(modul.getId());
+                            adapter.refresh();
+                            Toast.makeText(modulContextMenu.getContext(), R.string.message_modul_usunięty, Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(R.drawable.ic_uwaga);
+            dialog.show();
+        }
+        return true;
     }
 }

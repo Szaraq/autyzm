@@ -121,17 +121,23 @@ class LekcjeViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         if(v == lekcjaContextMenu) {
             PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
             AppHelper.setForceIconInPopupMenu(popupMenu);
-            popupMenu.inflate(R.menu.dzieci_context_menu);
+            popupMenu.inflate(R.menu.lekcje_context_menu);
             popupMenu.setOnMenuItemClickListener(this);
+            if(lekcja.isFavourite()) {
+                MenuItem fav = popupMenu.getMenu().findItem(R.id.lekcje_favourite);
+                fav.setTitle(R.string.favourite_remove)
+                        .setIcon(R.drawable.ic_favourite_remove);
+            }
+
             popupMenu.show();
         }
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        if(item.getItemId() == R.id.dzieci_edit) {
+        if(item.getItemId() == R.id.lekcje_edit) {
             gotoDetails(OperationsEnum.EDYCJA);
-        } else {
+        } else if(item.getItemId() == R.id.lekcje_delete) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(lekcjaContextMenu.getContext());
             dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + lekcja.getTytul() + "?")
                     .setTitle(R.string.popup_uwaga)
@@ -147,6 +153,9 @@ class LekcjeViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                     .setNegativeButton(android.R.string.no, null)
                     .setIcon(R.drawable.ic_uwaga);
             dialog.show();
+        } else if(item.getItemId() == R.id.lekcje_favourite) {
+            Lekcja.setFavourite(lekcja.getId(), !lekcja.isFavourite());
+            adapter.refresh();
         }
         return true;
     }

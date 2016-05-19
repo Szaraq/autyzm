@@ -80,7 +80,6 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void przejdzDalej() {
-        //TODO przejdzDalej
         LekcjeHelper.finishLekcjeTytulActivity();
         finish();
     }

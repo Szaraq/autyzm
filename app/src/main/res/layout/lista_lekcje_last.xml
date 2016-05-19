@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tytul"
-        style="@style/itemList" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/listItemIcon"
+            android:src="@drawable/ic_lekcja" />
+
+        <TextView
+            android:id="@+id/tytul"
+            style="@style/itemList" />
+
+    </LinearLayout>
 
     <View
-        android:layout_width="match_parent"
-        style="@style/DividerLine.RecyclerView"/>
+        style="@style/DividerLine.RecyclerView"
+        android:layout_width="match_parent" />
 
 </LinearLayout>

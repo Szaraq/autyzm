@@ -107,4 +107,8 @@
     <string name="lekcje_modul_pytania_hint">Tu wpisz pytanie</string>
     <string name="lekcje_modul_pytania_row_header">Pytanie</string>
     <string name="message_pytanie_do_usunięcia">Czy na pewno chcesz usunąć</string>
+    <string name="message_modul_usunięty">Moduł został poprawnie usunięty</string>
+    <string name="lekcje_nowy_modul_title">Nowy moduł</string>
+    <string name="favourite_add">Dodaj do ulubionych</string>
+    <string name="favourite_remove">Usuń z ulubionych</string>
 </resources>

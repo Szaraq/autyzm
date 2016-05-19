@@ -1,5 +1,6 @@
 package pl.osik.autyzm.sql;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -86,7 +87,8 @@ public class Lekcja extends AbstractDBTable {
             int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
             String name = cursor.getString(cursor.getColumnIndex(COLUMN_TYTUL));
             String lastUsed = cursor.getString(cursor.getColumnIndex(COLUMN_DATA_OSTATNIEGO_UZYCIA));
-            LekcjaORM temp = new LekcjaORM(id, name, lastUsed);
+            boolean favourite = cursor.getInt(cursor.getColumnIndex(COLUMN_FAVOURITE)) == 1;
+            LekcjaORM temp = new LekcjaORM(id, name, lastUsed, favourite);
             out.add(temp);
         }
         return out;
@@ -105,5 +107,12 @@ public class Lekcja extends AbstractDBTable {
         cursor.close();
         helper.close();
         return out;
+    }
+
+    public static void setFavourite(int lekcjaId, boolean fav) {
+        Lekcja l = new Lekcja();
+        ContentValues data = new ContentValues();
+        data.put(COLUMN_FAVOURITE, fav);
+        l.edit(lekcjaId, data);
     }
 }

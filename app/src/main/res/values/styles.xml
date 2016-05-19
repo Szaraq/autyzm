@@ -22,7 +22,6 @@
     <style name="TextMenu" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">#000</item>
     </style>
-
     <style name="TextListHeader" parent="Base.TextAppearance.AppCompat.Medium">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingTop">16dp</item>
@@ -31,7 +30,6 @@
         <item name="android:textColor">@color/colorHeader</item>
         <item name="android:layout_marginBottom">16dp</item>
     </style>
-
     <style name="TextHint" parent="Base.TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_marginTop">20dp</item>
@@ -73,7 +71,6 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
-
     <style name="myFAB">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -83,7 +80,6 @@
         <item name="android:tint">@color/colorAppBackground</item>
         <item name="backgroundTint">@color/colorPrimary</item>
     </style>
-
     <style name="innerFAB">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -129,6 +125,14 @@
         <item name="android:progressTint">@color/colorPrimary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- ImageView -->
+    <style name="listItemIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
 </resources>

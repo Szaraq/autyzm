@@ -49,6 +49,7 @@ public class PytaniaActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         if(v.getId() == buttonAdd.getId()) {
             LekcjeHelper.addPytanie("");
+            pytaniaAdapter.pytanieAdded = true;
             pytaniaAdapter.refresh();
         } else if(v.getId() == buttonNext.getId()) {
             LekcjeHelper.commitAll();

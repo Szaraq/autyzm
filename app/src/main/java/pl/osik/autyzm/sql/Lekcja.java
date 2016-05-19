@@ -49,9 +49,10 @@ public class Lekcja extends AbstractDBTable {
         ArrayList<LekcjaORM> out = new ArrayList<>();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + checkUser()
+                + " AND " + tableAndColumn(TABLE_NAME, COLUMN_DATA_OSTATNIEGO_UZYCIA) + " <> ?"
                 + " ORDER BY " + COLUMN_DATA_OSTATNIEGO_UZYCIA + " DESC"
                 + " LIMIT " + liczbaLekcji;
-        Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(User.getCurrentId())});
+        Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(User.getCurrentId()), LekcjaORM.NEVER_USED_IN_DB});
         out = fillTheList(cursor);
         cursor.close();
         helper.close();

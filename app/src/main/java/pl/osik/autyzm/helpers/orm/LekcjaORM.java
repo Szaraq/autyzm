@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import pl.osik.autyzm.sql.Lekcja;
@@ -16,13 +17,27 @@ import pl.osik.autyzm.sql.User;
  */
 public class LekcjaORM implements Serializable {
 
+    public static final long NEVER_USED = Long.MIN_VALUE;
+    public static final String NEVER_USED_IN_DB = setNeverUsedConstant();
+
+    private static String setNeverUsedConstant() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date(NEVER_USED));
+        return sdf.format(cal.getTime());
+    }
+
     int id, user;
     String tytul;
     boolean favourite;
     private Calendar lastUsed = Calendar.getInstance();
 
+    private void init() {
+        user = User.getCurrentId();
+    }
+
     public LekcjaORM(int id, String tytul, String lastUsed, boolean favourite) {
-        this();
+        init();
         this.id = id;
         this.tytul = tytul;
         this.favourite = favourite;
@@ -30,7 +45,8 @@ public class LekcjaORM implements Serializable {
     }
 
     public LekcjaORM() {
-        user = User.getCurrentId();
+        init();
+        setLastUsedAsNever();
     }
 
     public String getLastUsedAsString() {
@@ -49,6 +65,20 @@ public class LekcjaORM implements Serializable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setLastUsed(Calendar lastUsed) {
+        this.lastUsed = lastUsed;
+    }
+
+    public void setLastUsedAsNever() {
+        lastUsed.setTime(new Date(NEVER_USED));
+    }
+
+    public boolean isNeverUsed() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date(NEVER_USED));
+        return lastUsed.equals(cal);
     }
 
     public String getTytul() {

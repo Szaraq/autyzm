@@ -37,6 +37,7 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
     public ArrayList<PytanieORM> pytania = LekcjeHelper.getPytaniaList();
     private PytaniaActivity activity;
     private final LayoutInflater layoutInflater;
+    protected boolean pytanieAdded = false;
 
     public PytaniaAdapter(LayoutInflater layoutInflater, PytaniaActivity activity) {
         this.layoutInflater = layoutInflater;
@@ -128,6 +129,10 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
         public void setPosition(int position) {
             this.position = position;
             pytanieHeader.setText(activity.getString(R.string.lekcje_modul_pytania_row_header) + " " + (position + 1));
+            if(adapter.pytanieAdded && adapter.pytania.size() == (position + 1)) {
+                adapter.pytanieAdded = false;
+                pytanieText.requestFocus();
+            }
         }
 
         public void setPytanie(PytanieORM pytanie) {

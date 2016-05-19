@@ -105,7 +105,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         Intent intent = getIntent();
         dziecko = (HashMap) intent.getSerializableExtra(Dziecko.TABLE_NAME);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        imieINazwisko = dziecko.get(Dziecko.COLUMN_NAZWISKO) + " " + dziecko.get(Dziecko.COLUMN_IMIE);
+        imieINazwisko = dziecko.get(Dziecko.COLUMN_IMIE) + " " + dziecko.get(Dziecko.COLUMN_NAZWISKO);
         getSupportActionBar().setTitle(imieINazwisko);
 
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -119,6 +119,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         createChart(chart);
         saveButton.setOnClickListener(this);
         resizeChart();
+        if(chart.isEmpty()) saveButton.setVisibility(View.GONE);
     }
 
     private void createChart(LineChart chart) {

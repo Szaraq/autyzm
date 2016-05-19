@@ -144,7 +144,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
             int count = 1;
             for (Map.Entry<String, Float> entry : statistics.entrySet()) {
                 xVals.add(entry.getKey());
-                Entry e = new Entry(entry.getValue(), count++);
+                Entry e = new Entry(rescale(entry.getValue()), count++);
                 linia.add(e);
             }
             xVals.add("");
@@ -161,6 +161,11 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         chart.setNoDataText(getString(R.string.dzieci_statistics_brak_lekcji));
         chart.invalidate();
 
+    }
+
+    /* Trzeba przeskalować wynik na % */
+    private float rescale(float points) {
+        return points / 5;
     }
 
     /* Creating PDF */

@@ -21,7 +21,7 @@ public class LoadTestData {
             loadUser();
             loadDziecko();
             loadLekcja();
-            loadLekcjaDziecko();
+            //loadLekcjaDziecko();
             loadFolder();
             loadPlik();
             loadModul();
@@ -179,20 +179,24 @@ public class LoadTestData {
         params.put(Odpowiedz.COLUMN_DATA, "2015-01-02");
         params.put(Odpowiedz.COLUMN_PUNKTY, 1);
         params.put(Odpowiedz.COLUMN_PYTANIE, 1);
+        params.put(Odpowiedz.COLUMN_DZIECKO, 1);
         o.insert(params);
         params.put(Odpowiedz.COLUMN_DATA, "2015-01-01");
         params.put(Odpowiedz.COLUMN_PUNKTY, 1);
         params.put(Odpowiedz.COLUMN_PYTANIE, 1);
+        params.put(Odpowiedz.COLUMN_DZIECKO, 1);
         o.insert(params);
         params.put(Odpowiedz.COLUMN_DATA, "2015-01-01");
         params.put(Odpowiedz.COLUMN_PUNKTY, 0);
         params.put(Odpowiedz.COLUMN_PYTANIE, 1);
+        params.put(Odpowiedz.COLUMN_DZIECKO, 1);
         o.insert(params);
 
         for(int i = 1; i < 9; i++) {
             params.put(Odpowiedz.COLUMN_DATA, "2015-01-0" + i);
-            params.put(Odpowiedz.COLUMN_PUNKTY, 1);
+            params.put(Odpowiedz.COLUMN_PUNKTY, (int) (Math.random() * 5));
             params.put(Odpowiedz.COLUMN_PYTANIE, 1);
+            params.put(Odpowiedz.COLUMN_DZIECKO, 1);
             o.insert(params);
         }
     }

@@ -103,7 +103,7 @@
     <string name="button_add">Dodaj</string>
     <string name="button_edit">Zmień</string>
     <string name="lekcje_modul_pytania_title">2. Dodaj lub usuń pytania</string>
-    <string name="lekcje_modul_pytania_subtitle">(skala: 1-odpowiedź niepoprawna do 5-odpowiedź poprawna)</string>
+    <string name="lekcje_modul_pytania_subtitle">(skala: 0-odpowiedź niepoprawna do 5-odpowiedź poprawna)</string>
     <string name="lekcje_modul_pytania_hint">Tu wpisz pytanie</string>
     <string name="lekcje_modul_pytania_row_header">Pytanie</string>
     <string name="message_pytanie_do_usunięcia">Czy na pewno chcesz usunąć</string>

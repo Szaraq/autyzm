@@ -11,12 +11,14 @@ public class Odpowiedz extends AbstractDBTable {
     public static final String COLUMN_DATA = "data";
     public static final String COLUMN_PUNKTY = "punkty";
     public static final String COLUMN_PYTANIE = "pytanie";
+    public static final String COLUMN_DZIECKO = "dziecko";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_DATA, "DATE");
         put(COLUMN_PUNKTY, "INTEGER");
         put(COLUMN_PYTANIE, "INTEGER");
+        put(COLUMN_DZIECKO, "INTEGER");
     }};
 
     @Override

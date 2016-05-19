@@ -122,13 +122,17 @@ public class Dziecko extends AbstractDBTable {
         SQLiteDatabase db = helper.getDBRead();
         if(!checkDzieckoForCurrentUser(idDziecka)) return null;
         LinkedHashMap<String, Float> out = new LinkedHashMap<>();
-        String query = "SELECT " + Odpowiedz.COLUMN_DATA + ", AVG("+ Odpowiedz.COLUMN_PUNKTY + ") AS " + Odpowiedz.COLUMN_PUNKTY + " FROM " + Odpowiedz.TABLE_NAME
+        /*String query = "SELECT " + Odpowiedz.COLUMN_DATA + ", AVG("+ Odpowiedz.COLUMN_PUNKTY + ") AS " + Odpowiedz.COLUMN_PUNKTY + " FROM " + Odpowiedz.TABLE_NAME
                 + createJoin(new Pytanie(), Odpowiedz.TABLE_NAME, Odpowiedz.COLUMN_PYTANIE)
                 + createJoin(new Modul(), Pytanie.TABLE_NAME, Pytanie.COLUMN_MODUL)
                 + createJoin(new Lekcja(), Modul.TABLE_NAME, Modul.COLUMN_LEKCJA)
                 + " JOIN " + LekcjaDziecko.TABLE_NAME + " ON " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID) + " = " + tableAndColumn(LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_LEKCJA)
                 + createJoin(new Dziecko(), LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_DZIECKO)
                 + " WHERE " + tableAndColumn(Dziecko.TABLE_NAME, Dziecko.COLUMN_ID) + " = ?"
+                + " GROUP BY " + Odpowiedz.COLUMN_DATA
+                + " ORDER BY " + tableAndColumn(Odpowiedz.TABLE_NAME, Odpowiedz.COLUMN_DATA);*/
+        String query = "SELECT " + Odpowiedz.COLUMN_DATA + ", AVG("+ Odpowiedz.COLUMN_PUNKTY + ") AS " + Odpowiedz.COLUMN_PUNKTY + " FROM " + Odpowiedz.TABLE_NAME
+                + " WHERE " + Odpowiedz.COLUMN_DZIECKO + " = ?"
                 + " GROUP BY " + Odpowiedz.COLUMN_DATA
                 + " ORDER BY " + tableAndColumn(Odpowiedz.TABLE_NAME, Odpowiedz.COLUMN_DATA);
         Cursor resultSet = db.rawQuery(query, new String[] { String.valueOf(idDziecka) });

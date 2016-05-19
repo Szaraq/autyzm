@@ -20,8 +20,8 @@ public class DBHelper extends SQLiteOpenHelper {
             new Pytanie(),
             new Odpowiedz(),
             new User(),
-            new Dziecko(),
-            new LekcjaDziecko()
+            new Dziecko()
+            //,new LekcjaDziecko()
     };
     private static DBHelper instance = null;
 

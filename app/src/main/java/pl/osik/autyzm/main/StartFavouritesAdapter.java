@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.sql.Lekcja;
+import pl.osik.autyzm.uruchom.UruchomController;
 
 /**
  * Created by m.osik2 on 2016-05-11.
@@ -40,8 +41,7 @@ public class StartFavouritesAdapter extends RecyclerView.Adapter<StartFavourites
     @Override
     public void onBindViewHolder(StartFavouritesViewHolder holder, int position) {
         holder.setFragment(fragment);
-        String name = lekcjaList.get(position).getTytul();
-        holder.setName(name);
+        holder.setLekcja(lekcjaList.get(position));
     }
 
     @Override
@@ -55,11 +55,11 @@ public class StartFavouritesAdapter extends RecyclerView.Adapter<StartFavourites
     }
 }
 
-class StartFavouritesViewHolder extends RecyclerView.ViewHolder {
+class StartFavouritesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private StartFavouritesAdapter adapter;
     private StartFragment fragment;
-    private String name;
+    private LekcjaORM lekcja;
 
     @Bind(R.id.tytul)
     TextView tytul;
@@ -67,6 +67,7 @@ class StartFavouritesViewHolder extends RecyclerView.ViewHolder {
     public StartFavouritesViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        tytul.setOnClickListener(this);
     }
 
     public void setAdapter(StartFavouritesAdapter adapter) {
@@ -77,8 +78,13 @@ class StartFavouritesViewHolder extends RecyclerView.ViewHolder {
         this.fragment = fragment;
     }
 
-    public void setName(String name) {
-        this.name = name;
-        tytul.setText(name);
+    public void setLekcja(LekcjaORM lekcja) {
+        this.lekcja = lekcja;
+        tytul.setText(lekcja.getTytul());
+    }
+
+    @Override
+    public void onClick(View v) {
+        UruchomController.runLekcja(fragment, lekcja);
     }
 }

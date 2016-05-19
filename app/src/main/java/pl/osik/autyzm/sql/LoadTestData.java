@@ -88,6 +88,12 @@ public class LoadTestData {
         params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-02");
         params.put(Lekcja.COLUMN_FAVOURITE, true);
         l.insert(params);
+
+        params.put(Lekcja.COLUMN_TYTUL, "Lekcja drugiego usera");
+        params.put(Lekcja.COLUMN_USER, 2);
+        params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-02");
+        params.put(Lekcja.COLUMN_FAVOURITE, true);
+        l.insert(params);
     }
 
     private static void loadLekcjaDziecko() {
@@ -162,6 +168,11 @@ public class LoadTestData {
         params.put(Modul.COLUMN_NAZWA, "Testowy moduł");
         params.put(Modul.COLUMN_FILM, 1);
         params.put(Modul.COLUMN_LEKCJA, 1);
+        m.insert(params);
+
+        params.put(Modul.COLUMN_NAZWA, "Testowy moduł do ulubionej");
+        params.put(Modul.COLUMN_FILM, 1);
+        params.put(Modul.COLUMN_LEKCJA, 2);
         m.insert(params);
     }
 

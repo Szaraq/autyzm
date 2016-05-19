@@ -5,9 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 
@@ -114,6 +117,15 @@ public class Lekcja extends AbstractDBTable {
         Lekcja l = new Lekcja();
         ContentValues data = new ContentValues();
         data.put(COLUMN_FAVOURITE, fav);
+        l.edit(lekcjaId, data);
+    }
+
+    public static void todayUsed(int lekcjaId) {
+        Lekcja l = new Lekcja();
+        ContentValues data = new ContentValues();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
+        String out = sdf.format(Calendar.getInstance().getTime());
+        data.put(COLUMN_DATA_OSTATNIEGO_UZYCIA, out);
         l.edit(lekcjaId, data);
     }
 }

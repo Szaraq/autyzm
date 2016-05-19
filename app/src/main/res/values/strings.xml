@@ -111,4 +111,5 @@
     <string name="lekcje_nowy_modul_title">Nowy moduł</string>
     <string name="favourite_add">Dodaj do ulubionych</string>
     <string name="favourite_remove">Usuń z ulubionych</string>
+    <string name="uruchom_title">Uruchom lekcję</string>
 </resources>

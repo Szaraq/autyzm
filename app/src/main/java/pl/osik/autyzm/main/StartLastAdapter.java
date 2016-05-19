@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.sql.Lekcja;
+import pl.osik.autyzm.uruchom.UruchomController;
 
 /**
  * Created by m.osik2 on 2016-05-10.
@@ -41,8 +42,8 @@ public class StartLastAdapter extends RecyclerView.Adapter<StartLastViewHolder> 
     @Override
     public void onBindViewHolder(StartLastViewHolder holder, int position) {
         holder.setFragment(fragment);
-        String name = lekcjaList.get(position).getTytul();
-        holder.setName(name);
+        LekcjaORM lekcja = lekcjaList.get(position);
+        holder.setLekcja(lekcja);
     }
 
     @Override
@@ -56,18 +57,21 @@ public class StartLastAdapter extends RecyclerView.Adapter<StartLastViewHolder> 
     }
 }
 
-class StartLastViewHolder extends RecyclerView.ViewHolder {
+class StartLastViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private StartLastAdapter adapter;
     private StartFragment fragment;
-    private String name;
+    private LekcjaORM lekcja;
 
     @Bind(R.id.tytul)
     TextView tytul;
+    @Bind(R.id.data)
+    TextView data;
 
     public StartLastViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        tytul.setOnClickListener(this);
     }
 
     public void setAdapter(StartLastAdapter adapter) {
@@ -78,8 +82,18 @@ class StartLastViewHolder extends RecyclerView.ViewHolder {
         this.fragment = fragment;
     }
 
-    public void setName(String name) {
-        this.name = name;
-        tytul.setText(name);
+    public void setData(String dataToSet) {
+        data.setText(dataToSet);
+    }
+
+    public void setLekcja(LekcjaORM lekcja) {
+        this.lekcja = lekcja;
+        tytul.setText(lekcja.getTytul());
+        setData(lekcja.getLastUsedAsString());
+    }
+
+    @Override
+    public void onClick(View v) {
+        UruchomController.runLekcja(fragment, lekcja);
     }
 }

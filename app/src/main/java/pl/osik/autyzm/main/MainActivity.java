@@ -30,6 +30,7 @@ import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.LoadTestData;
 import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.sql.User;
+import pl.osik.autyzm.uruchom.UruchomFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -104,6 +105,8 @@ public class MainActivity extends AppCompatActivity
             gotoFragment(new StartFragment());
 
         } else if (id == R.id.nav_run_lesson) {
+
+            gotoFragment(new UruchomFragment());
 
         } else if (id == R.id.nav_lessons) {
 

@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,6 +19,7 @@ import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciAdapter;
 import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 import pl.osik.autyzm.helpers.OperationsEnum;
+import pl.osik.autyzm.uruchom.UruchomController;
 
 
 public class StartFragment extends Fragment {
@@ -68,9 +72,17 @@ public class StartFragment extends Fragment {
         startFavouritesList.setAdapter(startFavouritesAdapter);
     }
 
+
+    //TODO we wszystkich fragmentach onDestroyView() { ButterKnife.unbind(this); } ?
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        UruchomController.clearAll();
     }
 }

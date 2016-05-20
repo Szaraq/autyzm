@@ -27,6 +27,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
@@ -38,6 +40,7 @@ public class AppHelper {
 
     private final static String SALT = "A%2LmD47";
     public static final int PICK_IMAGE = 9351;
+    private static String today = "";
 
     public static void setForceIconInPopupMenu(PopupMenu popupMenu) {
         try {
@@ -128,5 +131,14 @@ public class AppHelper {
                 .setShadowDy(ABTextUtil.dip2px(context, dy))
                 .setShadowRadius(1);
         ShadowViewHelper.bindShadowHelper(shadowProperty, view);
+    }
+
+    public static String getToday() {
+        if(today.length() == 0) {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            today = sdf.format(cal.getTime());
+        }
+        return today;
     }
 }

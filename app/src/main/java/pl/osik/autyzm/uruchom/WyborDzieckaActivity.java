@@ -1,37 +1,34 @@
-package pl.osik.autyzm.uruchom.modul;
+package pl.osik.autyzm.uruchom;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.uruchom.UruchomController;
+import pl.osik.autyzm.dzieci.DzieciAdapter;
 
-public class ModulMediaActivity extends AppCompatActivity implements View.OnClickListener {
+public class WyborDzieckaActivity extends AppCompatActivity {
 
-    @Bind(R.id.player)
-    ImageView player;
-    @Bind(R.id.buttonNext)
-    Button buttonNext;
+    WyborDzieckaAdapter wyborAdapter;
+
+    @Bind(R.id.dzieci_list)
+    RecyclerView dzieciList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modul_media);
+        setContentView(R.layout.activity_wybor_dziecka);
         ButterKnife.bind(this);
         getSupportActionBar().setTitle(UruchomController.getLekcja().getTytul());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        buttonNext.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        UruchomController.gotoNextActivity(this);
+        wyborAdapter = new WyborDzieckaAdapter(getLayoutInflater(), this);
+        dzieciList.setLayoutManager(new LinearLayoutManager(this));
+        dzieciList.setAdapter(wyborAdapter);
     }
 
     @Override

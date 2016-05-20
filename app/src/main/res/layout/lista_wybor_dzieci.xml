@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lista_dzieci"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--
+        android:elevation="2dp"
+        android:clipToPadding="false"
+        android:outlineProvider="bounds"
+        -->
+
+
+        <ImageView
+            android:id="@+id/dzieci_photo"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/ic_test_child_photo" />
+
+        <TextView
+            android:id="@+id/dzieci_name"
+            style="@style/itemList" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        style="@style/DividerLine.RecyclerView"/>
+
+</LinearLayout>

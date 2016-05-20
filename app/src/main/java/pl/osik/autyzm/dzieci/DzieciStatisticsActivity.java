@@ -70,6 +70,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.sql.Dziecko;
+import pl.osik.autyzm.sql.Odpowiedz;
 import pl.osik.autyzm.sql.User;
 
 public class DzieciStatisticsActivity extends AppCompatActivity implements YAxisValueFormatter, ValueFormatter, View.OnClickListener {
@@ -165,7 +166,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
 
     /* Trzeba przeskalować wynik na % */
     private float rescale(float points) {
-        return points / 5;
+        return points / Odpowiedz.MAX_VAL;
     }
 
     /* Creating PDF */

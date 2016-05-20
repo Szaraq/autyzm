@@ -7,6 +7,9 @@ import java.util.LinkedHashMap;
  * Created by m.osik2 on 2016-04-20.
  */
 public class Odpowiedz extends AbstractDBTable {
+    public static final int MIN_VAL = 0;
+    public static final int MAX_VAL = 5;
+
     public static final String TABLE_NAME = "Odpowiedz";
     public static final String COLUMN_DATA = "data";
     public static final String COLUMN_PUNKTY = "punkty";

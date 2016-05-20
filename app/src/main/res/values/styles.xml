@@ -66,6 +66,12 @@
         <item name="android:textColor">@color/colorAppBackground</item>
         <item name="android:radius">2dp</item>
     </style>
+    <style name="buttonStyle.buttonNext" parent="buttonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:text">@string/button_next</item>
+    </style>
     <style name="buttonInPanel" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>

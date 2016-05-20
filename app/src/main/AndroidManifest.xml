@@ -30,8 +30,12 @@
         <activity android:name=".lekcje.LekcjeModulActivity" />
         <activity android:name=".lekcje.nowy_modul.PlikActivity" />
         <activity android:name=".lekcje.nowy_modul.PytaniaActivity" />
-        <activity android:name=".uruchom.modul.ModulMediaActivity" android:parentActivityName=".main.MainActivity" />
-        <activity android:name=".uruchom.modul.ModulPytaniaActivity"></activity>
+        <activity
+            android:name=".uruchom.modul.ModulMediaActivity"
+            android:parentActivityName=".main.MainActivity" />
+        <activity android:name=".uruchom.modul.ModulPytaniaActivity" />
+        <activity android:name=".uruchom.modul.PodsumowanieActivity" />
+        <activity android:name=".uruchom.WyborDzieckaActivity"></activity>
     </application>
 
 </manifest>

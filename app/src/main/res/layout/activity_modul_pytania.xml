@@ -7,6 +7,24 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorAppBackground"
     tools:context="pl.osik.autyzm.uruchom.modul.ModulPytaniaActivity">
+
+    <TextView
+        android:id="@+id/pytanie"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:id="@+id/odpowiedzi"
+        android:orientation="vertical"
+        android:layout_below="@id/pytanie"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RadioGroup>
 
 </RelativeLayout>

@@ -49,7 +49,7 @@ public class Modul extends AbstractDBTable {
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + createJoin(new Lekcja(), TABLE_NAME, COLUMN_LEKCJA)
                 + " WHERE " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID) + " = ?"
-                + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_NAZWA);
+                + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_ID);
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(lekcjaId) });
         while(cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));

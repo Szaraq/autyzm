@@ -15,6 +15,7 @@ import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.helpers.orm.ModulORM;
 import pl.osik.autyzm.helpers.orm.PytanieORM;
 import pl.osik.autyzm.main.MainActivity;
+import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.sql.Modul;
 import pl.osik.autyzm.sql.Odpowiedz;
 import pl.osik.autyzm.sql.Pytanie;
@@ -48,6 +49,7 @@ public class UruchomController {
 
     public static void runLekcja(Fragment fragment, LekcjaORM lekcjaToRun) {
         lekcja = lekcjaToRun;
+        Lekcja.todayUsed(lekcja.getId());
         for (ModulORM m : Modul.getModulyForLekcja(lekcja.getId())) {
             moduly.add(m);
         }

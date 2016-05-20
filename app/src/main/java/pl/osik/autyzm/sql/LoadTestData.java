@@ -185,6 +185,10 @@ public class LoadTestData {
         params.put(Pytanie.COLUMN_TRESC, "Przykładowe pytanie 2");
         params.put(Pytanie.COLUMN_MODUL, 1);
         p.insert(params);
+
+        params.put(Pytanie.COLUMN_TRESC, "Przykładowe pytanie do modułu 2");
+        params.put(Pytanie.COLUMN_MODUL, 2);
+        p.insert(params);
     }
 
     private static void loadOdpowiedz() {

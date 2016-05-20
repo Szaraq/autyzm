@@ -83,6 +83,7 @@ public class StartFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        startLastAdapter.refresh();
         UruchomController.clearAll();
     }
 }

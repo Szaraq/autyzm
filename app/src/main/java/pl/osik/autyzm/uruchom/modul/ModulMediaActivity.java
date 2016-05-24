@@ -45,4 +45,10 @@ public class ModulMediaActivity extends AppCompatActivity implements View.OnClic
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        UruchomController.setCurrentIsPytania(false);
+    }
 }

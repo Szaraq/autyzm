@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import pl.osik.autyzm.uruchom.modul.PodsumowanieActivity;
  */
 public class UruchomController {
     private static int idDziecka;
+    private static boolean currentIsPytania;
 
     private static LekcjaORM lekcja;
     private static HashMap<PytanieORM, Integer> punkty = new HashMap<>();
@@ -35,7 +37,6 @@ public class UruchomController {
 
     private static ModulORM modul;                                          //OBECNY moduł
     private static LinkedList<PytanieORM> pytania = new LinkedList<>();     //pytania w ramach OBECNEGO modułu
-    private static PytanieORM pytanie;                                      //OBECNE pytanie
 
     private static LinkedList<Activity> listaActivity = new LinkedList<>();     //wszystkie Activity w OBECNYM module
 
@@ -63,7 +64,7 @@ public class UruchomController {
 
         if(thisActivity instanceof MainActivity) {
             nextActivity = new WyborDzieckaActivity();
-        } else if(pytania.size() == 0) {
+        } else if(currentIsPytania || thisActivity instanceof WyborDzieckaActivity) {
             closeModul();
             getNextModul();
             if(modul == null) {
@@ -71,7 +72,6 @@ public class UruchomController {
                 nextActivity = new PodsumowanieActivity();
             } else nextActivity = new ModulMediaActivity();
         } else {
-            getNextPytanie();
             nextActivity = new ModulPytaniaActivity();
         }
         Intent intent = new Intent(thisActivity, nextActivity.getClass());
@@ -99,18 +99,10 @@ public class UruchomController {
         return modul;
     }
 
-    private static PytanieORM getNextPytanie() {
-        pytanie = pytania.pop();
-        return pytanie;
+    public static void addOdpowiedzi(LinkedHashMap<PytanieORM, Integer> odpowiedzi) {
+        punkty.putAll(odpowiedzi);
     }
 
-    public static void addOdpowiedz(int liczbaPunktow) {
-        punkty.put(pytanie, liczbaPunktow);
-    }
-
-    public static PytanieORM getPytanie() {
-        return pytanie;
-    }
 
     public static void clearAll() {
         lekcja = null;
@@ -118,15 +110,16 @@ public class UruchomController {
         moduly.clear();
         modul = null;
         pytania.clear();
-        pytanie = null;
         listaActivity.clear();
         idDziecka = 0;
+        currentIsPytania = false;
     }
 
     /**
-     * Zamyka wszystkie Activity w ramach tego modułu
+     * Zamyka wszystkie Activity w ramach tego modułu i czyści listę pytań
      */
     public static void closeModul() {
+        pytania.clear();
         int end = listaActivity.size();
         for (int i = 0; i < end; i++)
             listaActivity.pollLast().finish();
@@ -134,5 +127,13 @@ public class UruchomController {
 
     public static void setIdDziecka(int idDziecka) {
         UruchomController.idDziecka = idDziecka;
+    }
+
+    public static LinkedList<PytanieORM> getPytania() {
+        return pytania;
+    }
+
+    public static void setCurrentIsPytania(boolean currentIsPytania) {
+        UruchomController.currentIsPytania = currentIsPytania;
     }
 }

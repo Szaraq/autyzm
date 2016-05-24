@@ -12,6 +12,8 @@ import pl.osik.autyzm.uruchom.UruchomController;
 
 public class PodsumowanieActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //TODO Wzmocnienie
+
     @Bind(R.id.buttonNext)
     Button buttonNext;
 
@@ -27,5 +29,11 @@ public class PodsumowanieActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        UruchomController.setCurrentIsPytania(false);
     }
 }

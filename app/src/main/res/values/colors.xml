@@ -7,7 +7,8 @@
     <color name="colorAppBackground">#FFF</color>
     <color name="colorDividerLine">@android:color/darker_gray</color>
     <color name="colorError">#e60000</color>
-    <color name="colorPrimaryRipple">#d9ddf2</color>
+    <color name="colorPrimaryRipple">#8f9bd6</color>
+    <color name="colorPrimaryDisabled">#d9ddf2</color>
     <color name="colorTransparent">#00FFFFFF</color>
-    <color name="colorPrimaryLight">#8f99d6</color>
+    <color name="colorCardBackground">#CCC</color>
 </resources>

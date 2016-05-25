@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciFragment;
 import pl.osik.autyzm.help.HelpFragment;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.lekcje.LekcjeFragment;
 import pl.osik.autyzm.login.LoginActivity;
 import pl.osik.autyzm.login.UserDetailsFragment;
@@ -159,6 +161,9 @@ public class MainActivity extends AppCompatActivity
 
         user.setText(User.getCurrentName());
         String photoPath = User.getCurrentPhotoPath();
-        if(photoPath != null) AppHelper.placePhoto(this, userPhoto, photoPath);
+
+        ViewTreeObserver vto = userPhoto.getViewTreeObserver();
+        //vto.addOnPreDrawListener(new MyPreDrawListener(userPhoto, photoPath, this));
+        if(photoPath != null) AppHelper.placePhoto(this, userPhoto, photoPath, 400);
     }
 }

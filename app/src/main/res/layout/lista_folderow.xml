@@ -23,9 +23,16 @@
         <TextView
             android:id="@+id/folder_name"
             style="@style/multimediaItem"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="5"
             android:paddingLeft="4dp"/>
+
+        <ImageView
+            android:id="@+id/foldery_context_menu"
+            style="@style/contextMenu"
+            android:tint="@color/colorAppBackground"
+            android:background="@color/colorPrimary" />
 
     </LinearLayout>
 

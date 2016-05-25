@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,8 +29,10 @@ import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
+import pl.osik.autyzm.helpers.orm.ModulORM;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.Lekcja;
+import pl.osik.autyzm.sql.Modul;
 import pl.osik.autyzm.uruchom.UruchomFragment;
 
 /**
@@ -83,14 +86,21 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     private UruchomFragment fragment;
     private UruchomAdapter adapter;
     private LekcjaORM lekcja;
+    private ArrayList<ModulORM> moduly;
 
+    @Bind(R.id.containerLayout)
+    CardView containerLayout;
     @Bind(R.id.lekcja_name)
     TextView lekcjaName;
+    @Bind(R.id.moduly_lewy)
+    TextView modulyLewy;
+    @Bind(R.id.moduly_prawy)
+    TextView modulyPrawy;
 
     public UruchomViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        lekcjaName.setOnClickListener(this);
+        containerLayout.setOnClickListener(this);
     }
 
     public void setFragment(UruchomFragment fragment) {
@@ -104,10 +114,24 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     public void setLekcja(LekcjaORM lekcja) {
         this.lekcja = lekcja;
         lekcjaName.setText(lekcja.getTytul());
+        setModuly(Modul.getModulyForLekcja(lekcja.getId()));
+    }
+
+    private void setModuly(ArrayList<ModulORM> moduly) {
+        this.moduly = moduly;
+        boolean nextLewy = true;
+        TextView nextTextView;
+        for (ModulORM modul : moduly) {
+            nextTextView = nextLewy ? modulyLewy : modulyPrawy;
+            nextTextView.setText(modul.getName());
+            nextLewy = !nextLewy;
+        }
     }
 
     @Override
     public void onClick(View v) {
         UruchomController.runLekcja(fragment, lekcja);
     }
+
+    //TODO dodawanie thumbnaili, na razie prototypowo
 }

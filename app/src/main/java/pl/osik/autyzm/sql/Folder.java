@@ -128,4 +128,21 @@ public class Folder extends AbstractDBTable {
         cursor.close();
         return ROOT_ID;
     }
+
+    @Override
+    public boolean delete(int id) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        db.delete(getTableName(), COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+
+        /* Usuwanie plików */
+        ArrayList<PlikORM> plikList = getPlikiInFolder(id);
+        Plik p = new Plik();
+        for (PlikORM plik : plikList) {
+            p.delete(plik.getId());
+        }
+
+        helper.close();
+        return true;
+    }
 }

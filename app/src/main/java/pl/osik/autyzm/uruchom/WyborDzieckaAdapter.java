@@ -105,9 +105,12 @@ class WyborDzieckaViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public void setPhoto(String photo) {
         this.photo = photo;
         //if(photo != null) AppHelper.placePhoto(fragment.getActivity(), dzieciPhoto, photo);
-
-        ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();
-        vto.addOnPreDrawListener(new MyPreDrawListener(dzieciPhoto, photo, activity));
+        if(photo == null) {
+            dzieciPhoto.setImageResource(R.drawable.ic_test_child_photo);
+        } else {
+            ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();
+            vto.addOnPreDrawListener(new MyPreDrawListener(dzieciPhoto, photo, activity));
+        }
     }
 
     public String getPhoto() {

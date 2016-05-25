@@ -62,20 +62,24 @@
     <style name="buttonStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@drawable/button</item>
         <item name="android:textColor">@color/colorAppBackground</item>
         <item name="android:radius">2dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:elevation">5dp</item>
     </style>
     <style name="buttonStyle.buttonNext" parent="buttonStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:text">@string/button_next</item>
+        <item name="android:layout_height">36dp</item>
     </style>
     <style name="buttonInPanel" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:elevation">0dp</item>
     </style>
     <style name="myFAB">
         <item name="android:layout_width">wrap_content</item>
@@ -139,6 +143,14 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="contextMenu">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center_vertical|right</item>
+        <item name="android:background">@null</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:src">@drawable/ic_context_menu</item>
     </style>
 
 </resources>

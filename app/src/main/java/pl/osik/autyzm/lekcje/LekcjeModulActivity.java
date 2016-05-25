@@ -55,7 +55,7 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
             createList();
         } else {
             buttonNext.setClickable(false);
-            buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryRipple));
+            buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryDisabled));
             dodajBrakModulowInfo();
         }
     }

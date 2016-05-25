@@ -106,6 +106,7 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
             params.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, SPACING, getResources().getDisplayMetrics());
             if(i != Odpowiedz.MIN_VAL) params.leftMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 5, getResources().getDisplayMetrics());
             b.setLayoutParams(params);
+            b.setElevation((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 5, getResources().getDisplayMetrics()));
             out.add(b);
             buttonContainer.addView(b);
         }
@@ -126,10 +127,9 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
 
     private void createButtonNext() {
         buttonNext = (Button) getLayoutInflater().inflate(R.layout.button_next, null);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, getResources().getDisplayMetrics()));
         params.addRule(RelativeLayout.BELOW, currViewId);
         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
-        //params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
         params.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, SPACING_NEXT_BUTTON, getResources().getDisplayMetrics());
         buttonNext.setLayoutParams(params);
         buttonNext.setOnClickListener(this);
@@ -185,7 +185,7 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
         }
 
         private void setPressed(Button b) {
-            b.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryLight));
+            b.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryRipple));
             activity.pytaniaOdpowiedzi.put(currPytanie, punkty);
         }
 

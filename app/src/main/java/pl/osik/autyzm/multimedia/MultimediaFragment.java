@@ -42,7 +42,6 @@ import pl.osik.autyzm.validate.ValidateNotNull;
  */
 public class MultimediaFragment extends Fragment implements View.OnClickListener {
 
-    //TODO Sposób na usuwanie plików i folderów (przytrzymanie lub menu kontekstowe - do dziewczyn)
     //TODO RecyclerView wspólny dla folderów i plików
 
     int folderId;
@@ -155,7 +154,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         input.setSingleLine(true);
         input.setHint(R.string.muti_nowy_folder_placeholder);
         builder.setTitle(R.string.multi_nowy_folder);
-        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        input.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         final ValidateNotNull validateNotNull = new ValidateNotNull();
         validate.addValidate(input, validateNotNull);
         builder.setView(input)

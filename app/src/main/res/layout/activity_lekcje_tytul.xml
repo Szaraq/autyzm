@@ -43,17 +43,13 @@
         android:hint="@string/lekcja_hint_tytul"
         android:singleLine="true" />
 
-    <!-- TODO Button Elevation -->
     <Button
         android:id="@+id/button"
-        style="@style/buttonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/buttonStyle.buttonNext"
+        android:layout_alignParentBottom="false"
         android:layout_alignRight="@+id/tytul"
         android:layout_below="@id/tytul"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:elevation="40dp"
-        android:text="@string/button_next" />
+        android:layout_marginTop="10dp" />
 
 </android.support.percent.PercentRelativeLayout>

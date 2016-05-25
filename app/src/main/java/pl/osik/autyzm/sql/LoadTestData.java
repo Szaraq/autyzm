@@ -1,8 +1,22 @@
 package pl.osik.autyzm.sql;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+import android.util.Log;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.LinkedHashMap;
+
+import pl.osik.autyzm.helpers.MyApp;
 
 /**
  * Created by m.osik2 on 2016-04-21.
@@ -30,6 +44,37 @@ public class LoadTestData {
             added = true;
             helper.close();
         }
+
+        saveTestFile();
+    }
+
+    private static void saveTestFile() {
+        //TODO zaimplementować do AppHelper
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "Testowa nazwa");
+        File file2 = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS) + "/text.txt");
+        try {
+            PrintWriter writer = new PrintWriter("/storage/sdcard/Download/text.txt");
+            writer.println("aaa");
+            writer.close();
+
+            BufferedReader reader = new BufferedReader(new FileReader(file2));
+            Log.d("Load reader", reader.readLine());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (!file.mkdirs()) {
+            Log.e("Load", "Directory not created");
+        }
+        file2.delete();
+        Log.d("Load", file2.getAbsolutePath());
+        Log.d("Load", file2.exists() ? "tak" : "nie");
+
+        //return file;
+
     }
 
     private static void loadUser() {
@@ -65,6 +110,7 @@ public class LoadTestData {
             put(Dziecko.COLUMN_MATKATELEFON, "500222333");
             put(Dziecko.COLUMN_USER, 1);
             put(Dziecko.COLUMN_PHOTO, null);
+            //put(Dziecko.COLUMN_PHOTO, "file:/storage/sdcard/Download/images.jpg");
         }};
         for (int i = 0; i < 20; i++) {
             d.insert(params);

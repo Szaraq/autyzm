@@ -23,12 +23,15 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.FilePlacingInterface;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.sql.Folder;
 import pl.osik.autyzm.sql.Plik;
@@ -40,13 +43,16 @@ import pl.osik.autyzm.validate.ValidateNotNull;
  * Use the {@link MultimediaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MultimediaFragment extends Fragment implements View.OnClickListener {
+public class MultimediaFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
     //TODO RecyclerView wspólny dla folderów i plików
 
     int folderId;
     String folderName;
     ValidateCommand validate = new ValidateCommand();
+    boolean chooser = false;
+
+    public final static String CHOOSER = "chooser";
 
     @Bind(R.id.fab_menu)
     FloatingActionMenu fabMenu;
@@ -60,7 +66,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     RecyclerView plikiList;
 
     private FolderyAdapter folderyAdapter;
-    private PlikiAdapter plikiAdapter;
+    public PlikiAdapter plikiAdapter;
 
     public MultimediaFragment() {
         // Required empty public constructor
@@ -90,19 +96,23 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
+
         if(bundle == null) {
             folderId = Folder.ROOT_ID;
             folderName = Folder.ROOT_NAME;
+            chooser = false;
         } else {
-            folderId = bundle.getInt(Folder.COLUMN_ID);
-            folderName = bundle.getString(Folder.COLUMN_NAZWA);
+            folderId = bundle.getInt(Folder.COLUMN_ID, Folder.ROOT_ID);
+            folderName = bundle.getString(Folder.COLUMN_NAZWA, Folder.ROOT_NAME);
+            chooser = bundle.getBoolean(CHOOSER, chooser);
         }
+
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(isRoot() ? getString(R.string.multimedia_title) : folderName);
         folderyAdapter = new FolderyAdapter(getLayoutInflater(savedInstanceState), this, folderId);
         folderyList.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
         folderyList.setAdapter(folderyAdapter);
 
-        plikiAdapter = new PlikiAdapter(getLayoutInflater(savedInstanceState), this, folderId);
+        plikiAdapter = new PlikiAdapter(getLayoutInflater(savedInstanceState), this, folderId, chooser);
         plikiList.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
         plikiList.setAdapter(plikiAdapter);
 
@@ -138,9 +148,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         if(v.getId() == fabFolder.getId()) {
             askForFolderName();
         } else if(v.getId() == fabPlik.getId()) {
-            String path = AppHelper.pickPhoto(this.getActivity());
-            Log.d("Multimedia", path);
-            addNewPlik(path);
+            AppHelper.FileManager.pickPhoto(this.getActivity(), ArrayUtils.addAll(AppHelper.FileManager.EXTENSION_ARRAY_PHOTO, AppHelper.FileManager.EXTENSION_ARRAY_VIDEO));
         }
         fabMenu.close(true);
     }
@@ -197,5 +205,11 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         data.put(Plik.COLUMN_FOLDER, folderId);
         p.insert(data);
         plikiAdapter.refresh();
+    }
+
+    @Override
+    public void placeFile(String path) {
+        Log.d("Multimedia", path);
+        addNewPlik(path);
     }
 }

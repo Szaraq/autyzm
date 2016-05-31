@@ -22,12 +22,17 @@ import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.shadowviewhelper.ShadowProperty;
 import com.wangjie.shadowviewhelper.ShadowViewHelper;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -40,7 +45,6 @@ import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 public class AppHelper {
 
     private final static String SALT = "A%2LmD47";
-    public static final int PICK_IMAGE = 9351;
     private static String today = "";
 
     public static void setForceIconInPopupMenu(PopupMenu popupMenu) {
@@ -78,43 +82,6 @@ public class AppHelper {
         }
     }
 
-    public static String pickPhoto(Activity activity) {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        activity.startActivityForResult(intent, PICK_IMAGE);
-        return intent.getData().toString();
-    }
-
-    public static void placePhoto(Activity activity, ImageView imgView, String path) {
-        placePhoto(activity, imgView, path, imgView);
-    }
-
-    public static void placePhoto(Activity activity, ImageView imgView, String path, View resizeTo) {
-        placePhoto(activity, imgView, path, resizeTo.getHeight());
-    }
-
-    public static void placePhoto(Activity activity, ImageView imgView, String path, int resizeHeight) {
-        Uri selectedImage = Uri.parse(path);
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-        Cursor cursor = activity.getContentResolver().query(selectedImage,
-                filePathColumn, null, null, null);
-        cursor.moveToFirst();
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String imgDecodableString = cursor.getString(columnIndex);
-        cursor.close();
-        Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString);
-
-        int resizeWidth = (int) (((double) resizeHeight / (double) bitmap.getHeight()) * (double) bitmap.getWidth());
-        bitmap = Bitmap.createScaledBitmap(bitmap, resizeWidth, resizeHeight, true);
-        //imgView.setImageBitmap(bitmap);
-        Glide.with(imgView.getContext())
-                .load("")
-                .placeholder(new BitmapDrawable(bitmap))
-                .into(imgView);
-    }
-
     public static void changeListItemHeight(LinearLayout listItem) {
         final int NUMBER_OF_ON_THE_SCREEN = 15;
         final int MIN_SIZE = 50;
@@ -146,6 +113,7 @@ public class AppHelper {
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
     /**
      * This value will not collide with ID values generated at build time by aapt for R.id.
+     * Źródło: Android API >= 21
      *
      * @return a generated ID value
      */
@@ -160,4 +128,40 @@ public class AppHelper {
             }
         }
     }
+
+    public static class FileManager {
+
+        public static final int PICK_IMAGE = 9351;
+        public static final String[] EXTENSION_ARRAY_PHOTO = new String[] {"bmp", "jpg", "jpeg", "gif", "tif", "tiff", "png"};
+        public static final String[] EXTENSION_ARRAY_VIDEO = new String[] {"avi", "mpg", "mpeg", "3gp", "mov"};
+
+        public static void pickPhoto(Activity activity, String[] extensions) {
+            Intent intent = new Intent(activity, FilePickerActivity.class);
+            if(extensions.length > 0) {
+                ArrayList<String> extList = new ArrayList<String>(Arrays.asList(extensions));
+                intent.putExtra(FilePickerActivity.EXTRA_ACCEPTED_FILE_EXTENSIONS, extList);
+            }
+            activity.startActivityForResult(intent, PICK_IMAGE);
+        }
+
+        public static void placePhoto(Activity activity, ImageView imgView, String path) {
+            placePhoto(activity, imgView, path, imgView);
+        }
+
+        public static void placePhoto(Activity activity, ImageView imgView, String path, View resizeTo) {
+            placePhoto(activity, imgView, path, resizeTo.getHeight());
+        }
+
+        public static void placePhoto(Activity activity, ImageView imgView, String path, int resizeHeight) {
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+
+            int resizeWidth = (int) (((double) resizeHeight / (double) bitmap.getHeight()) * (double) bitmap.getWidth());
+            bitmap = Bitmap.createScaledBitmap(bitmap, resizeWidth, resizeHeight, true);
+            Glide.with(imgView.getContext())
+                    .load("")
+                    .placeholder(new BitmapDrawable(bitmap))
+                    .into(imgView);
+        }
+    }
 }
+

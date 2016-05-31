@@ -1,6 +1,8 @@
 package pl.osik.autyzm.sql;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
@@ -45,7 +47,7 @@ public class LoadTestData {
             helper.close();
         }
 
-        saveTestFile();
+        //saveTestFile();
     }
 
     private static void saveTestFile() {
@@ -53,7 +55,7 @@ public class LoadTestData {
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "Testowa nazwa");
         File file2 = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS) + "/text.txt");
+                Environment.DIRECTORY_DOWNLOADS) + "/Miranda_de_Miranda.jpg");
         try {
             PrintWriter writer = new PrintWriter("/storage/sdcard/Download/text.txt");
             writer.println("aaa");
@@ -61,6 +63,8 @@ public class LoadTestData {
 
             BufferedReader reader = new BufferedReader(new FileReader(file2));
             Log.d("Load reader", reader.readLine());
+            Bitmap bm = BitmapFactory.decodeFile(file2.getPath());
+            Log.d("Load reader", bm.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -69,7 +73,6 @@ public class LoadTestData {
         if (!file.mkdirs()) {
             Log.e("Load", "Directory not created");
         }
-        file2.delete();
         Log.d("Load", file2.getAbsolutePath());
         Log.d("Load", file2.exists() ? "tak" : "nie");
 
@@ -109,12 +112,18 @@ public class LoadTestData {
             put(Dziecko.COLUMN_MATKANAZWISKO, "Kowalska");
             put(Dziecko.COLUMN_MATKATELEFON, "500222333");
             put(Dziecko.COLUMN_USER, 1);
-            put(Dziecko.COLUMN_PHOTO, null);
-            //put(Dziecko.COLUMN_PHOTO, "file:/storage/sdcard/Download/images.jpg");
+            //put(Dziecko.COLUMN_PHOTO, null);
+            put(Dziecko.COLUMN_PHOTO, "/storage/sdcard/Download/Miranda_de_Miranda.jpg");
         }};
         for (int i = 0; i < 20; i++) {
             d.insert(params);
         }
+        params.put(Dziecko.COLUMN_IMIE, "Mateusz");
+        params.put(Dziecko.COLUMN_NAZWISKO, "Azdjęciowy");
+        params.put(Dziecko.COLUMN_USER, 1);
+        params.put(Dziecko.COLUMN_PHOTO, "/storage/sdcard/Download/Miranda_de_Miranda.jpg");
+        d.insert(params);
+
         params.put(Dziecko.COLUMN_IMIE, "Mateusz");
         params.put(Dziecko.COLUMN_USER, 2);
         d.insert(params);

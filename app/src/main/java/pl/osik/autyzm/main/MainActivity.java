@@ -23,6 +23,8 @@ import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciFragment;
 import pl.osik.autyzm.help.HelpFragment;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.FilePickerActivity;
+import pl.osik.autyzm.helpers.FilePlacingInterface;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.lekcje.LekcjeFragment;
 import pl.osik.autyzm.login.LoginActivity;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView userPhoto;
     private NavigationView navigationView;
     private DrawerLayout drawer;
+    private Fragment currFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +151,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void gotoFragment(Fragment fragment) {
+        currFragment = fragment;
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.containerLayout, fragment);
         fragmentTransaction.commit();
@@ -164,6 +168,16 @@ public class MainActivity extends AppCompatActivity
 
         ViewTreeObserver vto = userPhoto.getViewTreeObserver();
         //vto.addOnPreDrawListener(new MyPreDrawListener(userPhoto, photoPath, this));
-        if(photoPath != null) AppHelper.placePhoto(this, userPhoto, photoPath, 400);
+        if(photoPath != null) AppHelper.FileManager.placePhoto(this, userPhoto, photoPath, 400);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == AppHelper.FileManager.PICK_IMAGE) {
+                String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                ((FilePlacingInterface) currFragment).placeFile(path);
+            }
+        }
     }
 }

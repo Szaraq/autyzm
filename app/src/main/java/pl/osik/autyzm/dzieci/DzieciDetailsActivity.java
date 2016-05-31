@@ -37,6 +37,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
@@ -139,9 +140,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             photo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String path = AppHelper.pickPhoto(DzieciDetailsActivity.this);
-                    Log.d("DzieciDetails", path);
-                    Dziecko.changePhoto(id, path);
+                    AppHelper.FileManager.pickPhoto(DzieciDetailsActivity.this, AppHelper.FileManager.EXTENSION_ARRAY_PHOTO);
                 }
             });
             addValidations();
@@ -230,13 +229,13 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    String imgDecodableString;
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == AppHelper.PICK_IMAGE) {
-                AppHelper.placePhoto(this, photo, data.getData().toString());
+            if (requestCode == AppHelper.FileManager.PICK_IMAGE) {
+                String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                Dziecko.changePhoto(id, path);
+                AppHelper.FileManager.placePhoto(this, photo, path);
             }
         }
     }

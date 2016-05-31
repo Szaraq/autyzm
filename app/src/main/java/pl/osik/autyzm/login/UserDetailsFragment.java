@@ -20,6 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.FilePlacingInterface;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.main.MainActivity;
 import pl.osik.autyzm.sql.User;
@@ -27,7 +28,7 @@ import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateExistsInDatabase;
 import pl.osik.autyzm.validate.ValidateNotNull;
 
-public class UserDetailsFragment extends Fragment implements View.OnClickListener {
+public class UserDetailsFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
     public static final String NEW_ACCOUNT = "newAccount";
     private LinkedHashMap<String, EditText> editTextHashMap;
@@ -107,7 +108,7 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     private void populate() {
         userData = User.getCurrentData();
         if(userData.get(User.COLUMN_PHOTO) != null)
-            AppHelper.placePhoto(this.getActivity(), userPhoto, userData.get(User.COLUMN_PHOTO));
+            AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, userData.get(User.COLUMN_PHOTO));
         for (Map.Entry<String, EditText> entry : editTextHashMap.entrySet()) {
             entry.getValue().setText(userData.get(entry.getKey()));
         }
@@ -123,8 +124,7 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     }
 
     private void editPhoto() {
-        photoPath = AppHelper.pickPhoto(this.getActivity());
-        AppHelper.placePhoto(this.getActivity(), userPhoto, photoPath);
+        AppHelper.FileManager.pickPhoto(this.getActivity(), AppHelper.FileManager.EXTENSION_ARRAY_PHOTO);
     }
 
     private void saveData() {
@@ -147,5 +147,11 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void placeFile(String path) {
+        photoPath = path;
+        AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, photoPath);
     }
 }

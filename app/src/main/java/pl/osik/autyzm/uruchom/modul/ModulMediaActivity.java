@@ -1,5 +1,8 @@
 package pl.osik.autyzm.uruchom.modul;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -7,9 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.lekcje.LekcjeHelper;
+import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.uruchom.UruchomController;
 
 public class ModulMediaActivity extends AppCompatActivity implements View.OnClickListener {
@@ -27,6 +35,14 @@ public class ModulMediaActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setTitle(UruchomController.getLekcja().getTytul());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         buttonNext.setOnClickListener(this);
+        showMedia();
+    }
+
+    private void showMedia() {
+        String path = Plik.getById(LekcjeHelper.getModul().getPlik()).getPath();
+        AppHelper.FileManager.placePhoto(this, player, path, 200);
+        //TODO Przetestować na urządzeniu bez rescale:
+        //player.setImageBitmap(BitmapFactory.decodeFile(path));
     }
 
     @Override

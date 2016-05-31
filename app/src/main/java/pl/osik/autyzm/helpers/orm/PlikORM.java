@@ -6,6 +6,8 @@ import pl.osik.autyzm.sql.Plik;
  * Created by m.osik2 on 2016-05-05.
  */
 public class PlikORM implements Comparable<PlikORM> {
+    public final static String EXTRA_PLIK_ID = "plik_id";
+
     private int id, folder;
     private String path, name;
 

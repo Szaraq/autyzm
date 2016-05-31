@@ -117,4 +117,5 @@
     <string name="folder_usuniety">Folder został poprawnie usunięty</string>
     <string name="multi_change_name_for">"Zmień nazwę folderu: "</string>
     <string name="muti_edit_folder_placeholder">Podaj nową nazwę dla folderu</string>
+    <string name="filepicker_no_data">Brak plików i katalogów</string>
 </resources>

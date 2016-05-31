@@ -43,4 +43,5 @@ dependencies {
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
     compile 'com.github.wangjiegulu:AndroidBucket:1.0.4'
     compile files('libs/combo-seekbar.jar')
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
 }

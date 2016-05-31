@@ -3,6 +3,7 @@ package pl.osik.autyzm.uruchom;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -30,9 +31,11 @@ import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.helpers.orm.ModulORM;
+import pl.osik.autyzm.helpers.orm.PlikORM;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.sql.Modul;
+import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.uruchom.UruchomFragment;
 
 /**
@@ -64,6 +67,7 @@ public class UruchomAdapter extends RecyclerView.Adapter<UruchomViewHolder> {
     public void onBindViewHolder(UruchomViewHolder holder, int position) {
         holder.setFragment(fragment);
         holder.setLekcja(lekcje.get(position));
+        holder.createThumbnails();
     }
 
     @Override
@@ -90,6 +94,8 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     @Bind(R.id.containerLayout)
     CardView containerLayout;
+    @Bind(R.id.thumbnailsContainer)
+    LinearLayout thumbnailsContainer;
     @Bind(R.id.lekcja_name)
     TextView lekcjaName;
     @Bind(R.id.moduly_lewy)
@@ -131,6 +137,18 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     @Override
     public void onClick(View v) {
         UruchomController.runLekcja(fragment, lekcja);
+    }
+
+    protected void createThumbnails() {
+        for (ModulORM modul : moduly) {
+            PlikORM plik = Plik.getById(modul.getPlik());
+            ImageView thumb = new ImageView(fragment.getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            thumb.setLayoutParams(params);
+            Bitmap bitmap = Plik.getThumbnail(plik.getPath());
+            thumb.setImageBitmap(bitmap);
+            thumbnailsContainer.addView(thumb);
+        }
     }
 
     //TODO dodawanie thumbnaili, na razie prototypowo

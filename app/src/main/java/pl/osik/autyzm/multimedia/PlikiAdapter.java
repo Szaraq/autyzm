@@ -1,6 +1,9 @@
 package pl.osik.autyzm.multimedia;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.orm.PlikORM;
 import pl.osik.autyzm.sql.Folder;
 import pl.osik.autyzm.sql.Plik;
@@ -30,9 +34,11 @@ public class PlikiAdapter extends RecyclerView.Adapter<PlikiViewHolder> {
     private MultimediaFragment fragment;
     private int idFolder;
     private ArrayList<PlikORM> plikiList;
+    private boolean chooser;
 
-    public PlikiAdapter(LayoutInflater layoutInflater, Fragment fragment, int idFolder) {
+    public PlikiAdapter(LayoutInflater layoutInflater, Fragment fragment, int idFolder, boolean chooser) {
         this.layoutInflater = layoutInflater;
+        this.chooser = chooser;
         this.fragment = (MultimediaFragment) fragment;
         this.idFolder = idFolder;
         this.plikiList = Folder.getPlikiInFolder(idFolder);
@@ -41,7 +47,7 @@ public class PlikiAdapter extends RecyclerView.Adapter<PlikiViewHolder> {
     @Override
     public PlikiViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_plikow, parent, false);
-        PlikiViewHolder holder = new PlikiViewHolder(view);
+        PlikiViewHolder holder = new PlikiViewHolder(view, chooser);
         holder.setAdapter(this);
         return holder;
     }
@@ -68,6 +74,7 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
     private PlikiAdapter adapter;
     private PlikORM plik;
     private MultimediaFragment fragment;
+    private boolean chooser;
 
     @Bind(R.id.plik_name)
     TextView plikName;
@@ -76,9 +83,10 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
     @Bind(R.id.lista_plikow)
     LinearLayout listaPlikow;
 
-    public PlikiViewHolder(View itemView) {
+    public PlikiViewHolder(View itemView, boolean chooser) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        this.chooser = chooser;
         listaPlikow.setOnClickListener(this);
     }
 
@@ -89,8 +97,7 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
     public void setPlik(PlikORM plik) {
         this.plik = plik;
         plikName.setText(plik.getName());
-        //TODO naprawić Thumbnail
-        Bitmap thumbnail = Plik.getThumbnail(fragment.getActivity(), plik.getPath());
+        Bitmap thumbnail = Plik.getThumbnail(plik.getPath());
         if(thumbnail == null) {
             Glide.with(plikImage.getContext())
                     .load("")
@@ -98,7 +105,8 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
                     .into(plikImage);
         } else {
             Glide.with(plikImage.getContext())
-                    .load(thumbnail)
+                    .load("")
+                    .placeholder(new BitmapDrawable(thumbnail))
                     .into(plikImage);
         }
     }
@@ -109,7 +117,15 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        //TODO onClickListener
+        if(chooser) {
+            Intent extra = new Intent();
+            extra.putExtra(FilePickerActivity.EXTRA_FILE_PATH, plik.getPath());
+            extra.putExtra(PlikORM.EXTRA_PLIK_ID, plik.getId());
+            fragment.getActivity().setResult(FilePickerActivity.RESULT_OK, extra);
+            fragment.getActivity().finish();
+        } else {
+            //TODO onClickListener
+        }
     }
 
 }

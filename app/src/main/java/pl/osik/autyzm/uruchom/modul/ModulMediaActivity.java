@@ -39,7 +39,7 @@ public class ModulMediaActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void showMedia() {
-        String path = Plik.getById(LekcjeHelper.getModul().getPlik()).getPath();
+        String path = Plik.getById(UruchomController.getModul().getPlik()).getPath();
         AppHelper.FileManager.placePhoto(this, player, path, 200);
         //TODO Przetestować na urządzeniu bez rescale:
         //player.setImageBitmap(BitmapFactory.decodeFile(path));

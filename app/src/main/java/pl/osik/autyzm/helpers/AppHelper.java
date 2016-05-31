@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -38,6 +41,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
+import pl.osik.autyzm.sql.Plik;
 
 /**
  * Created by m.osik2 on 2016-04-22.
@@ -129,9 +133,26 @@ public class AppHelper {
         }
     }
 
+    /**
+     *
+     * @return int[0] -> width<br>
+     *     int[1] -> height
+     */
+    public static int[] getScreenSize() {
+        WindowManager wm = (WindowManager) MyApp.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int[] out = new int[2];
+        out[0] = size.x;
+        out[1] = size.y;
+        return out;
+    }
+
     public static class FileManager {
 
         public static final int PICK_IMAGE = 9351;
+        public static final int RESIZE_TO_SCREEN = -1;
         public static final String[] EXTENSION_ARRAY_PHOTO = new String[] {"bmp", "jpg", "jpeg", "gif", "tif", "tiff", "png"};
         public static final String[] EXTENSION_ARRAY_VIDEO = new String[] {"avi", "mpg", "mpeg", "3gp", "mov"};
 
@@ -153,10 +174,17 @@ public class AppHelper {
         }
 
         public static void placePhoto(Activity activity, ImageView imgView, String path, int resizeHeight) {
-            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            //Bitmap bitmap = BitmapFactory.decodeFile(path);
 
-            int resizeWidth = (int) (((double) resizeHeight / (double) bitmap.getHeight()) * (double) bitmap.getWidth());
-            bitmap = Bitmap.createScaledBitmap(bitmap, resizeWidth, resizeHeight, true);
+            /*int resizeWidth = (int) (((double) resizeHeight / (double) bitmap.getHeight()) * (double) bitmap.getWidth());
+            bitmap = Bitmap.createScaledBitmap(bitmap, resizeWidth, resizeHeight, true);*/
+            Bitmap bitmap;
+            if(resizeHeight == RESIZE_TO_SCREEN) {
+                int[] size = AppHelper.getScreenSize();
+                bitmap = Plik.rescaleBitmap(path, size[0], size[1]);
+            } else {
+                bitmap = Plik.rescaleBitmap(path, 0, resizeHeight);
+            }
             Glide.with(imgView.getContext())
                     .load("")
                     .placeholder(new BitmapDrawable(bitmap))

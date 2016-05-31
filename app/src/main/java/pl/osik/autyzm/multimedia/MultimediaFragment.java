@@ -46,6 +46,8 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 public class MultimediaFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
     //TODO RecyclerView wspólny dla folderów i plików
+    //TODO Walidacja - czy istnieje już plik o takim path w bazie
+    //TODO Nawigacja i dodawanie plików w trakcie wybierania pliku
 
     int folderId;
     String folderName;

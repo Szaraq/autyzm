@@ -70,7 +70,6 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getId() == buttonAdd.getId()) {
-            //TODO Add file onclicklistener
             Intent intent = new Intent(this, PickerActivity.class);
             startActivityForResult(intent, AppHelper.FileManager.PICK_IMAGE);
         } else if(v.getId() == buttonNext.getId()) {

@@ -136,4 +136,8 @@ public class UruchomController {
     public static void setCurrentIsPytania(boolean currentIsPytania) {
         UruchomController.currentIsPytania = currentIsPytania;
     }
+
+    public static ModulORM getModul() {
+        return modul;
+    }
 }

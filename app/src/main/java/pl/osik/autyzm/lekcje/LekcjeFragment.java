@@ -24,8 +24,6 @@ import pl.osik.autyzm.helpers.OperationsEnum;
 
 public class LekcjeFragment extends Fragment {
 
-    //TODO Pomysł na karty do dziewczyn
-
     LekcjeAdapter lekcjeAdapter;
 
     @Bind(R.id.lista_lekcji_container)

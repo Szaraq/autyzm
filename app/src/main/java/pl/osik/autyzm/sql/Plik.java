@@ -55,6 +55,10 @@ public class Plik extends AbstractDBTable {
     }
 
     public static Bitmap getThumbnail(String path) {
+        return rescaleBitmap(path, 48, 66);
+    }
+
+    public static Bitmap rescaleBitmap(String path, int reqWidth, int reqHeight) {
         try {
             /*ExifInterface exif = new ExifInterface(path);
             byte[] imageData = exif.getThumbnail();
@@ -62,7 +66,7 @@ public class Plik extends AbstractDBTable {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(path, options);
-            options.inSampleSize = calculateInSampleSize(options, 48, 66);
+            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
             options.inJustDecodeBounds = false;
             Bitmap bitmap = BitmapFactory.decodeFile(path, options);
             return bitmap;

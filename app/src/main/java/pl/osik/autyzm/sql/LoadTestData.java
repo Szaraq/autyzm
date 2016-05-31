@@ -200,7 +200,11 @@ public class LoadTestData {
         Plik p = new Plik();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
-        for (int i = 0; i < 10; i++) {
+        params.put(Plik.COLUMN_PATH, "/storage/sdcard/Download/Miranda_de_Miranda.jpg");
+        params.put(Plik.COLUMN_FOLDER, "1");
+        p.insert(params);
+
+        /*for (int i = 0; i < 10; i++) {
             params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
             params.put(Plik.COLUMN_FOLDER, Folder.ROOT_ID);
             p.insert(params);
@@ -214,18 +218,18 @@ public class LoadTestData {
 
         params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
         params.put(Plik.COLUMN_FOLDER, "10");
-        p.insert(params);
+        p.insert(params);*/
     }
 
     private static void loadModul() {
         Modul m = new Modul();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put(Modul.COLUMN_NAZWA, "Testowy moduł");
+        params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda.jpg");
         params.put(Modul.COLUMN_FILM, 1);
         params.put(Modul.COLUMN_LEKCJA, 1);
         m.insert(params);
 
-        params.put(Modul.COLUMN_NAZWA, "Testowy moduł do ulubionej");
+        params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda.jpg");
         params.put(Modul.COLUMN_FILM, 1);
         params.put(Modul.COLUMN_LEKCJA, 2);
         m.insert(params);

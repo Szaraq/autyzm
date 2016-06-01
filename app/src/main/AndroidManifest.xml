@@ -37,7 +37,8 @@
         <activity android:name=".uruchom.modul.PodsumowanieActivity" />
         <activity android:name=".uruchom.WyborDzieckaActivity" />
         <activity android:name=".helpers.FilePickerActivity" />
-        <activity android:name=".multimedia.PickerActivity"></activity>
+        <activity android:name=".multimedia.PickerActivity" />
+        <activity android:name=".multimedia.ShowMediaActivity"></activity>
     </application>
 
 </manifest>

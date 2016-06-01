@@ -13,7 +13,7 @@
             android:title="@string/nav_run_lesson" />
         <item
             android:id="@+id/nav_lessons"
-            android:icon="@drawable/ic_lesssons"
+            android:icon="@drawable/ic_lekcja"
             android:title="@string/nav_lessons" />
         <item
             android:id="@+id/nav_children"

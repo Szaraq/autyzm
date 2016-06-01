@@ -67,6 +67,7 @@
     <string name="user_details_hint"><i>* Wypełnij tylko jeśli chcesz zmienić</i></string>
     <string name="validate_error_notNull">Pole nie może być puste.</string>
     <string name="validate_error_existsInDB">Istnieje już taki wpis.</string>
+    <string name="validate_error_existsInDB_plik">Istnieje już taki plik w bibliotece</string>
     <string name="validate_error_allOdpowiedziSelected">Nie zostały wybrane odpowiedzi na wszystkie pytania.</string>
     <string name="help_text">W razie problemów z aplikacją,\n
         skontaktuj się z:\n

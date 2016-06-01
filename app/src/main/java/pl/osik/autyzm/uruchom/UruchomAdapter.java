@@ -4,10 +4,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -102,6 +104,8 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     TextView modulyLewy;
     @Bind(R.id.moduly_prawy)
     TextView modulyPrawy;
+    @Bind(R.id.favourite)
+    ImageView favourite;
 
     public UruchomViewHolder(View itemView) {
         super(itemView);
@@ -117,10 +121,18 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.adapter = adapter;
     }
 
-    public void setLekcja(LekcjaORM lekcja) {
+    public void setLekcja(final LekcjaORM lekcja) {
         this.lekcja = lekcja;
         lekcjaName.setText(lekcja.getTytul());
         setModuly(Modul.getModulyForLekcja(lekcja.getId()));
+
+        favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Lekcja.setFavourite(lekcja.getId(), !lekcja.isFavourite(), favourite);
+            }
+        });
+        Lekcja.changeFavouriteIcon(favourite, lekcja.isFavourite());
     }
 
     private void setModuly(ArrayList<ModulORM> moduly) {
@@ -142,14 +154,13 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     protected void createThumbnails() {
         for (ModulORM modul : moduly) {
             PlikORM plik = Plik.getById(modul.getPlik());
+            Bitmap bitmap = Plik.rescaleBitmap(plik.getPath(), Plik.RESCALE_PROPORTIONALLY, thumbnailsContainer.getLayoutParams().height);
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() * thumbnailsContainer.getLayoutParams().height / bitmap.getHeight(), thumbnailsContainer.getLayoutParams().height, false);
             ImageView thumb = new ImageView(fragment.getContext());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(bitmap.getWidth(), ViewGroup.LayoutParams.MATCH_PARENT);
             thumb.setLayoutParams(params);
-            Bitmap bitmap = Plik.getThumbnail(plik.getPath());
             thumb.setImageBitmap(bitmap);
             thumbnailsContainer.addView(thumb);
         }
     }
-
-    //TODO dodawanie thumbnaili, na razie prototypowo
 }

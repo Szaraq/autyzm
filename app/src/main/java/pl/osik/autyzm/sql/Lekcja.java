@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 
+import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 
 /**
@@ -113,11 +115,23 @@ public class Lekcja extends AbstractDBTable {
         return out;
     }
 
+    public static void setFavourite(int lekcjaId, boolean fav, ImageView icon) {
+        setFavourite(lekcjaId, fav);
+        changeFavouriteIcon(icon, fav);
+    }
+
     public static void setFavourite(int lekcjaId, boolean fav) {
         Lekcja l = new Lekcja();
         ContentValues data = new ContentValues();
         data.put(COLUMN_FAVOURITE, fav);
         l.edit(lekcjaId, data);
+    }
+
+    public static void changeFavouriteIcon(ImageView icon, boolean newFavourite) {
+        if(newFavourite)
+            icon.setImageResource(R.drawable.ic_favourite_remove);
+        else
+            icon.setImageResource(R.drawable.ic_favourite_add);
     }
 
     public static void todayUsed(int lekcjaId) {

@@ -27,6 +27,8 @@ import pl.osik.autyzm.lekcje.nowy_modul.PlikActivity;
 
 public class LekcjeModulActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //TODO Zmiana kolejności modułów
+
     @Bind(R.id.buttonAddModule)
     Button buttonAdd;
     @Bind(R.id.buttonNext)

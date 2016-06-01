@@ -48,6 +48,8 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class DzieciDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //TODO Usuwanie zdjęć dzieci - X w prawym górnym rogu przy edycji
+
     private static final int DATE_PICKER_CODE = 1178;
 
     HashMap<String, EditText> all;

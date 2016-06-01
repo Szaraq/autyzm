@@ -38,12 +38,16 @@ public class ValidateExistsInDatabase implements Validate {
 
     @Override
     public boolean validate(View view) {
+        String textFromView = ((TextView) view).getText().toString();
+        return validate(textFromView);
+    }
+
+    public boolean validate(String text) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
-        String textFromView = ((TextView) view).getText().toString();
-        if(exceptMe != null && textFromView.equals(exceptMe)) return true;
+        if(exceptMe != null && text.equals(exceptMe)) return true;
         String query = "SELECT * FROM " + table.getTableName() + " WHERE " + column + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{textFromView});
+        Cursor cursor = db.rawQuery(query, new String[]{text});
         int countRows = cursor.getCount();
         cursor.close();
         helper.close();

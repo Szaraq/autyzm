@@ -36,6 +36,7 @@ import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.sql.Folder;
 import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.validate.ValidateCommand;
+import pl.osik.autyzm.validate.ValidateExistsInDatabase;
 import pl.osik.autyzm.validate.ValidateNotNull;
 
 /**
@@ -45,9 +46,10 @@ import pl.osik.autyzm.validate.ValidateNotNull;
  */
 public class MultimediaFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
-    //TODO RecyclerView wspólny dla folderów i plików
-    //TODO Walidacja - czy istnieje już plik o takim path w bazie
+    //TODO RecyclerView wspólny dla folderów i plików - subheader
     //TODO Nawigacja i dodawanie plików w trakcie wybierania pliku
+    //TODO Przenoszenie plików do folderów
+    //TODO Skrócone nazwy plików
 
     int folderId;
     String folderName;
@@ -201,17 +203,22 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     }
 
     private void addNewPlik(String path) {
-        Plik p = new Plik();
-        ContentValues data = new ContentValues();
-        data.put(Plik.COLUMN_PATH, path);
-        data.put(Plik.COLUMN_FOLDER, folderId);
-        p.insert(data);
-        plikiAdapter.refresh();
+        ValidateExistsInDatabase validateExistsInDatabase = new ValidateExistsInDatabase(new Plik(), Plik.COLUMN_PATH);
+        boolean aa = validateExistsInDatabase.validate(path);
+        if(validateExistsInDatabase.validate(path)) {
+            Plik p = new Plik();
+            ContentValues data = new ContentValues();
+            data.put(Plik.COLUMN_PATH, path);
+            data.put(Plik.COLUMN_FOLDER, folderId);
+            p.insert(data);
+            plikiAdapter.refresh();
+        } else {
+            Toast.makeText(getContext(), R.string.validate_error_existsInDB_plik, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void placeFile(String path) {
-        Log.d("Multimedia", path);
         addNewPlik(path);
     }
 }

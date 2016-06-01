@@ -58,6 +58,8 @@ public class Plik extends AbstractDBTable {
         return rescaleBitmap(path, 48, 66);
     }
 
+    public final static int RESCALE_PROPORTIONALLY = -1;
+
     public static Bitmap rescaleBitmap(String path, int reqWidth, int reqHeight) {
         try {
             /*ExifInterface exif = new ExifInterface(path);

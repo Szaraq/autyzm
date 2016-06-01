@@ -51,7 +51,6 @@ public class LoadTestData {
     }
 
     private static void saveTestFile() {
-        //TODO zaimplementować do AppHelper
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "Testowa nazwa");
         File file2 = new File(Environment.getExternalStoragePublicDirectory(

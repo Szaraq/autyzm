@@ -124,7 +124,9 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
             fragment.getActivity().setResult(FilePickerActivity.RESULT_OK, extra);
             fragment.getActivity().finish();
         } else {
-            //TODO onClickListener
+            Intent intent = new Intent(fragment.getActivity(), ShowMediaActivity.class);
+            intent.putExtra(ShowMediaActivity.EXTRA_PLIK, plik);
+            fragment.getActivity().startActivity(intent);
         }
     }
 

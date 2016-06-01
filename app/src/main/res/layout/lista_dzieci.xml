@@ -24,6 +24,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
             android:src="@drawable/ic_test_child_photo" />
 
         <TextView

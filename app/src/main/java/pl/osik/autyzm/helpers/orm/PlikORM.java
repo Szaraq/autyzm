@@ -9,6 +9,7 @@ import pl.osik.autyzm.sql.Plik;
  */
 public class PlikORM implements Comparable<PlikORM>, Serializable {
     public final static String EXTRA_PLIK_ID = "plik_id";
+    public final static int SHORT_NAME_MAX_LENGTH = 30;
 
     private int id, folder;
     private String path, name;
@@ -46,6 +47,11 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getShortName() {
+        if(name.length() <= SHORT_NAME_MAX_LENGTH) return name;
+        return name.substring(0, SHORT_NAME_MAX_LENGTH - 3) + "...";
     }
 
     @Override

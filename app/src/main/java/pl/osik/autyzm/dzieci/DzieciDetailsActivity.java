@@ -5,7 +5,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -24,20 +26,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.security.Permission;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FilePickerActivity;
+import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
@@ -84,12 +90,16 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     EditText nazwiskoOjca;
     @Bind(R.id.telefon_ojca)
     EditText telefonOjca;
+    @Bind(R.id.telefon_ojca_view)
+    TextView telefonOjcaView;
     @Bind(R.id.imie_matki)
     EditText imieMatki;
     @Bind(R.id.nazwisko_matki)
     EditText nazwiskoMatki;
     @Bind(R.id.telefon_matki)
     EditText telefonMatki;
+    @Bind(R.id.telefon_matki_view)
+    TextView telefonMatkiView;
     @Bind(R.id.button)
     Button button;
     @Bind(R.id.photoContainer)
@@ -154,6 +164,12 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         } else if(operacja == OperationsEnum.SHOW) {
             button.setText(R.string.dzieci_details_button_statystyki);
             blockEditTexts();
+            if(AppHelper.canDeviceMakeCall()) {
+                Log.d("DzieciDetails", "Ustawiam listener");
+                PhoneCallOnClickListener phoneCallOnClickListener = new PhoneCallOnClickListener(this);
+                telefonOjcaView.setOnClickListener(phoneCallOnClickListener);
+                telefonMatkiView.setOnClickListener(phoneCallOnClickListener);
+            }
         } else if(operacja == OperationsEnum.DODAWANIE) {
             getSupportActionBar().setTitle(R.string.dziecko_dodaj_title);
             imie.requestFocus();
@@ -174,6 +190,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         for(Map.Entry<String, EditText> entry : all.entrySet()) {
             entry.getValue().setText(dziecko.get(entry.getKey()));
         }
+        telefonMatkiView.setText(dziecko.get(Dziecko.COLUMN_MATKATELEFON));
+        telefonOjcaView.setText(dziecko.get(Dziecko.COLUMN_OJCIECTELEFON));
     }
 
     private void blockEditTexts() {
@@ -181,6 +199,10 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             entry.getValue().setEnabled(false);
         }
         hideKeyboard();
+        telefonMatki.setVisibility(View.GONE);
+        telefonMatkiView.setVisibility(View.VISIBLE);
+        telefonOjca.setVisibility(View.GONE);
+        telefonOjcaView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -195,7 +217,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-
+    /* Zapisz lub Statystyki */
     @Override
     public void onClick(View v) {
         Button button = (Button) v;
@@ -276,6 +298,27 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             } catch (NullPointerException exc) {
                 Log.d("keyboardHide", "Klawiatura się nie pojawiła");
             }       //Jeżeli klawiatura się nie pojawi to idziemy dalej
+        }
+    }
+}
+
+class PhoneCallOnClickListener implements View.OnClickListener {
+
+    Activity activity;
+
+    public PhoneCallOnClickListener(Activity activity) {
+        this.activity = activity;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(activity.checkCallingOrSelfPermission(android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            String number = "tel:" + ((TextView) v).getText().toString().trim();
+            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+            activity.startActivity(callIntent);
+            Log.d("PhoneCallOnClickListen", "Właśnie dzwonię pod numer: " + number);
+        } else {
+            Toast.makeText(activity, activity.getString(R.string.app_no_calling_permission), Toast.LENGTH_SHORT).show();
         }
     }
 }

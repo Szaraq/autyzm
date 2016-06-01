@@ -106,7 +106,8 @@ public class LoadTestData {
             put(Dziecko.COLUMN_NOTATKI, "Notsy");
             put(Dziecko.COLUMN_OJCIECIMIE, "Janusz");
             put(Dziecko.COLUMN_OJCIECNAZWISKO, "Kowalski");
-            put(Dziecko.COLUMN_OJCIECTELEFON, "500111222");
+            //put(Dziecko.COLUMN_OJCIECTELEFON, "500111222");
+            put(Dziecko.COLUMN_OJCIECTELEFON, "502299667");
             put(Dziecko.COLUMN_MATKAIMIE, "Janina");
             put(Dziecko.COLUMN_MATKANAZWISKO, "Kowalska");
             put(Dziecko.COLUMN_MATKATELEFON, "500222333");

@@ -54,6 +54,11 @@ public class ModulORM {
         return name;
     }
 
+    public String getShortName() {
+        if(name.length() <= PlikORM.SHORT_NAME_MAX_LENGTH) return name;
+        return name.substring(0, PlikORM.SHORT_NAME_MAX_LENGTH - 3) + "...";
+    }
+
     public void setName(String name) {
         this.name = name;
     }

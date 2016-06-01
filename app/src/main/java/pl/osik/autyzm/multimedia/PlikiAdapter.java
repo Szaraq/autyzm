@@ -96,7 +96,7 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
 
     public void setPlik(PlikORM plik) {
         this.plik = plik;
-        plikName.setText(plik.getName());
+        plikName.setText(plik.getShortName());
         Bitmap thumbnail = Plik.getThumbnail(plik.getPath());
         if(thumbnail == null) {
             Glide.with(plikImage.getContext())

@@ -141,7 +141,7 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         TextView nextTextView;
         for (ModulORM modul : moduly) {
             nextTextView = nextLewy ? modulyLewy : modulyPrawy;
-            nextTextView.setText(modul.getName());
+            nextTextView.setText(modul.getShortName());
             nextLewy = !nextLewy;
         }
     }

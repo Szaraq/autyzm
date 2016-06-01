@@ -49,7 +49,6 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     //TODO RecyclerView wspólny dla folderów i plików - subheader
     //TODO Nawigacja i dodawanie plików w trakcie wybierania pliku
     //TODO Przenoszenie plików do folderów
-    //TODO Skrócone nazwy plików
 
     int folderId;
     String folderName;
@@ -204,7 +203,6 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
 
     private void addNewPlik(String path) {
         ValidateExistsInDatabase validateExistsInDatabase = new ValidateExistsInDatabase(new Plik(), Plik.COLUMN_PATH);
-        boolean aa = validateExistsInDatabase.validate(path);
         if(validateExistsInDatabase.validate(path)) {
             Plik p = new Plik();
             ContentValues data = new ContentValues();

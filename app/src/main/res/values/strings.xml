@@ -119,4 +119,5 @@
     <string name="multi_change_name_for">"Zmień nazwę folderu: "</string>
     <string name="muti_edit_folder_placeholder">Podaj nową nazwę dla folderu</string>
     <string name="filepicker_no_data">Brak plików i katalogów</string>
+    <string name="app_no_calling_permission">Nie nadałeś aplikacji odpowiednich uprawnień do dzwonienia</string>
 </resources>

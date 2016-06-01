@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -50,6 +51,7 @@ public class AppHelper {
 
     private final static String SALT = "A%2LmD47";
     private static String today = "";
+    private static Context context = MyApp.getContext();
 
     public static void setForceIconInPopupMenu(PopupMenu popupMenu) {
         try {
@@ -147,6 +149,17 @@ public class AppHelper {
         out[0] = size.x;
         out[1] = size.y;
         return out;
+    }
+
+    public static boolean canDeviceMakeCall() {
+        TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if(manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE){
+            Log.d("canDeviceMakeCall", "To urządzenie nie jest telefonem");
+            return false;
+        } else {
+            Log.d("canDeviceMakeCall", "To urządzenie jest telefonem");
+            return true;
+        }
     }
 
     public static class FileManager {

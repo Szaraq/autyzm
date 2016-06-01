@@ -170,6 +170,18 @@
                         android:ems="10"
                         android:hint="@string/dzieci_details_telefon_ojca"
                         android:inputType="phone"
+                        android:visibility="gone"
+                        android:singleLine="true" />
+
+                    <TextView
+                        android:id="@+id/telefon_ojca_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:ems="10"
+                        android:hint="@string/dzieci_details_telefon_ojca"
+                        android:inputType="phone"
                         android:singleLine="true" />
 
                 </LinearLayout>
@@ -213,7 +225,22 @@
                         android:ems="10"
                         android:hint="@string/dzieci_details_telefon_matki"
                         android:inputType="phone"
+                        android:visibility="gone"
                         android:singleLine="true" />
+
+                    <!-- TODO formatowanie TextView -->
+
+                    <TextView
+                        android:id="@+id/telefon_matki_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:ems="10"
+                        android:hint="@string/dzieci_details_telefon_matki"
+                        android:inputType="phone"
+                        android:singleLine="true" />
+
                 </LinearLayout>
             </LinearLayout>
 

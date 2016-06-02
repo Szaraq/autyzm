@@ -32,6 +32,8 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
             //AppHelper.FileManager.placePhoto(activity, photo, path, finalHeight);
             Bitmap thumbnail = Plik.getThumbnail(path);
             if(thumbnail != null) photo.setImageBitmap(thumbnail);
+        } else {
+            photo.setImageResource(DzieciDetailsActivity.RESOURCE_NO_PHOTO);
         }
         return true;
     }

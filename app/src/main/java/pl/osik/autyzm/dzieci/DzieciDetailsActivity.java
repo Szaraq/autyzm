@@ -1,6 +1,7 @@
 package pl.osik.autyzm.dzieci;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -16,13 +17,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -54,9 +58,8 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class DzieciDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //TODO Usuwanie zdjęć dzieci - X w prawym górnym rogu przy edycji
-
     private static final int DATE_PICKER_CODE = 1178;
+    public static final int RESOURCE_NO_PHOTO = R.drawable.ic_no_photo;
 
     HashMap<String, EditText> all;
     int id;
@@ -103,7 +106,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     @Bind(R.id.button)
     Button button;
     @Bind(R.id.photoContainer)
-    LinearLayout photoContainer;
+    FrameLayout photoContainer;
     @Bind(R.id.photo)
     ImageView photo;
     @Bind(R.id.scrollView)
@@ -160,7 +163,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 
         /* Pojedyncze operacje */
         if(operacja == OperationsEnum.EDYCJA) {
-            //nic nowego?
+            addDeletePhotoButton();
         } else if(operacja == OperationsEnum.SHOW) {
             button.setText(R.string.dzieci_details_button_statystyki);
             blockEditTexts();
@@ -180,6 +183,38 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
         /** END **/
         button.setOnClickListener(this);
+    }
+
+    private void addDeletePhotoButton() {
+        if(dziecko.get(Dziecko.COLUMN_PHOTO) == null) return;
+
+        final ImageView image = new ImageView(this);
+        image.setImageResource(R.drawable.ic_delete_photo);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.TOP|Gravity.RIGHT;
+        image.setLayoutParams(params);
+        photoContainer.addView(image);
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(DzieciDetailsActivity.this);
+                dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
+                        .setTitle(R.string.popup_uwaga)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Dziecko d = new Dziecko();
+                                d.changePhoto(id, null);
+                                photo.setImageResource(RESOURCE_NO_PHOTO);
+                                image.setVisibility(View.GONE);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.ic_uwaga);
+                dialog.show();
+            }
+        });
     }
 
     private void addValidations() {
@@ -260,6 +295,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
                 Dziecko.changePhoto(id, path);
                 AppHelper.FileManager.placePhoto(this, photo, path);
+                addDeletePhotoButton();
             }
         }
     }

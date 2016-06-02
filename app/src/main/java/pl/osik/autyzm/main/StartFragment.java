@@ -73,7 +73,7 @@ public class StartFragment extends Fragment {
     }
 
 
-    //TODO we wszystkich fragmentach onDestroyView() { ButterKnife.unbind(this); } ?
+    //TODO FINALLY we wszystkich fragmentach onDestroyView() { ButterKnife.unbind(this); } ?
     @Override
     public void onDestroyView() {
         super.onDestroyView();

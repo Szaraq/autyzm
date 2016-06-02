@@ -120,4 +120,5 @@
     <string name="muti_edit_folder_placeholder">Podaj nową nazwę dla folderu</string>
     <string name="filepicker_no_data">Brak plików i katalogów</string>
     <string name="app_no_calling_permission">Nie nadałeś aplikacji odpowiednich uprawnień do dzwonienia</string>
+    <string name="message_photo_do_usunięcia">Czy na pewno chcesz usunąć zdjęcie?</string>
 </resources>

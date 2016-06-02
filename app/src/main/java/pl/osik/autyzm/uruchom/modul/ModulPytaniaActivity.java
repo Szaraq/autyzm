@@ -68,6 +68,7 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
         }
         createButtonNext();
         addValidations();
+        if(liczbaPytan == 0) buttonNext.callOnClick();
     }
 
     private void addValidations() {

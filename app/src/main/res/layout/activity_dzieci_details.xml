@@ -30,7 +30,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/photoContainer"
                     android:layout_width="match_parent"
                     android:layout_height="0dip"
@@ -39,10 +39,9 @@
                     <ImageView
                         android:id="@+id/photo"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_no_photo" />
+                        android:layout_height="match_parent" />
 
-                </LinearLayout>
+                </FrameLayout>
 
                 <EditText
                     android:id="@+id/data_urodzenia"
@@ -170,19 +169,20 @@
                         android:ems="10"
                         android:hint="@string/dzieci_details_telefon_ojca"
                         android:inputType="phone"
-                        android:visibility="gone"
                         android:singleLine="true" />
 
                     <TextView
                         android:id="@+id/telefon_ojca_view"
+                        android:visibility="gone"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:layout_width="match_parent"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="3dp"
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:ems="10"
-                        android:hint="@string/dzieci_details_telefon_ojca"
-                        android:inputType="phone"
-                        android:singleLine="true" />
+                        android:hint="@string/dzieci_details_telefon_ojca" />
 
                 </LinearLayout>
 
@@ -225,21 +225,20 @@
                         android:ems="10"
                         android:hint="@string/dzieci_details_telefon_matki"
                         android:inputType="phone"
-                        android:visibility="gone"
                         android:singleLine="true" />
-
-                    <!-- TODO formatowanie TextView -->
 
                     <TextView
                         android:id="@+id/telefon_matki_view"
+                        android:visibility="gone"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:layout_width="match_parent"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="3dp"
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:ems="10"
-                        android:hint="@string/dzieci_details_telefon_matki"
-                        android:inputType="phone"
-                        android:singleLine="true" />
+                        android:hint="@string/dzieci_details_telefon_matki" />
 
                 </LinearLayout>
             </LinearLayout>

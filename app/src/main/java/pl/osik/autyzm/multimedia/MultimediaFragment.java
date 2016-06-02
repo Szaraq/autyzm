@@ -47,13 +47,13 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 public class MultimediaFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
     //TODO RecyclerView wspólny dla folderów i plików - subheader
-    //TODO Nawigacja i dodawanie plików w trakcie wybierania pliku
     //TODO Przenoszenie plików do folderów
 
     int folderId;
     String folderName;
     ValidateCommand validate = new ValidateCommand();
     boolean chooser = false;
+    Bundle savedInstanceState;
 
     public final static String CHOOSER = "chooser";
 
@@ -98,19 +98,23 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         Bundle bundle = getArguments();
 
-        if(bundle == null) {
-            folderId = Folder.ROOT_ID;
-            folderName = Folder.ROOT_NAME;
-            chooser = false;
-        } else {
-            folderId = bundle.getInt(Folder.COLUMN_ID, Folder.ROOT_ID);
-            folderName = bundle.getString(Folder.COLUMN_NAZWA, Folder.ROOT_NAME);
+        if(bundle != null)
             chooser = bundle.getBoolean(CHOOSER, chooser);
-        }
+
+        folderId = Folder.ROOT_ID;
+        folderName = Folder.ROOT_NAME;
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(isRoot() ? getString(R.string.multimedia_title) : folderName);
+        setAdapters();
+        fabPlik.setOnClickListener(this);
+        fabFolder.setOnClickListener(this);
+        fabPlik.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+    }
+
+    private void setAdapters() {
         folderyAdapter = new FolderyAdapter(getLayoutInflater(savedInstanceState), this, folderId);
         folderyList.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
         folderyList.setAdapter(folderyAdapter);
@@ -118,10 +122,12 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         plikiAdapter = new PlikiAdapter(getLayoutInflater(savedInstanceState), this, folderId, chooser);
         plikiList.setLayoutManager(new GridLayoutManager(this.getActivity(), 2));
         plikiList.setAdapter(plikiAdapter);
+        removeRecyclerWhenNoFolders();
+    }
 
-        fabPlik.setOnClickListener(this);
-        fabFolder.setOnClickListener(this);
-        fabPlik.setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+    private void removeRecyclerWhenNoFolders() {
+        if(folderyAdapter.getItemCount() > 0) folderyList.setVisibility(View.VISIBLE);
+            else folderyList.setVisibility(View.GONE);
     }
 
     private boolean isRoot() {
@@ -135,14 +141,9 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     }
 
     protected void gotoNextFolder(int id, String name) {
-        Fragment newFragment = new MultimediaFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(Folder.COLUMN_ID, id);
-        bundle.putString(Folder.COLUMN_NAZWA, name);
-        newFragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.containerLayout, newFragment);
-        fragmentTransaction.commit();
+        folderId = id;
+        folderName = name;
+        setAdapters();
     }
 
     /* FAB OnClick */
@@ -199,6 +200,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         data.put(Folder.COLUMN_FOLDER, folderId);
         f.insert(data);
         folderyAdapter.refresh();
+        folderyList.setVisibility(View.VISIBLE);
     }
 
     private void addNewPlik(String path) {

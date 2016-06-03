@@ -1,15 +1,21 @@
 package pl.osik.autyzm.login;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.HashMap;
@@ -19,10 +25,14 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FilePlacingInterface;
+import pl.osik.autyzm.helpers.MyApp;
+import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.main.MainActivity;
+import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateExistsInDatabase;
@@ -30,7 +40,10 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class UserDetailsFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
+    //TODO Naprawić photo
+
     public static final String NEW_ACCOUNT = "newAccount";
+    private static final int RESOURCE_NO_PHOTO = R.drawable.ic_user;
     private LinkedHashMap<String, EditText> editTextHashMap;
     private String photoPath = null;
     private ValidateCommand validate = new ValidateCommand();
@@ -38,6 +51,8 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
 
     private static boolean newAccount;
 
+    @Bind(R.id.photoContainer)
+    FrameLayout photoContainer;
     @Bind(R.id.userPhoto)
     ImageView userPhoto;
     @Bind(R.id.imie)
@@ -88,6 +103,41 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
+    private void addDeletePhotoButton() {
+        if(userData.get(User.COLUMN_PHOTO) == null) return;
+
+        final ImageView image = new ImageView(getContext());
+        image.setImageResource(R.drawable.ic_delete_photo);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.TOP|Gravity.RIGHT;
+        image.setLayoutParams(params);
+        photoContainer.addView(image);
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(UserDetailsFragment.this.getContext());
+                dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
+                        .setTitle(R.string.popup_uwaga)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                photoPath = null;
+                                setNoPhoto();
+                                image.setVisibility(View.GONE);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.ic_uwaga);
+                dialog.show();
+            }
+        });
+    }
+
+    private void setNoPhoto() {
+        userPhoto.setImageResource(UserDetailsFragment.RESOURCE_NO_PHOTO);
+    }
+
     private void setEditTextsEnterOrder() {
         imie.setOnKeyListener(new MyOnKeyEnterListener(nazwisko));
         nazwisko.setOnKeyListener(new MyOnKeyEnterListener(user));
@@ -107,8 +157,13 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
 
     private void populate() {
         userData = User.getCurrentData();
-        if(userData.get(User.COLUMN_PHOTO) != null)
-            AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, userData.get(User.COLUMN_PHOTO));
+        if(userData.get(User.COLUMN_PHOTO) != null) {
+            //AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, userData.get(User.COLUMN_PHOTO));
+            ViewTreeObserver vto = userPhoto.getViewTreeObserver();
+            vto.addOnPreDrawListener(new MyPreDrawListener(userPhoto, userData.get(User.COLUMN_PHOTO), this.getActivity(), 100, 100));
+            addDeletePhotoButton();
+        } else setNoPhoto();
+
         for (Map.Entry<String, EditText> entry : editTextHashMap.entrySet()) {
             entry.getValue().setText(userData.get(entry.getKey()));
         }
@@ -149,9 +204,16 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    //TODO Naprawić User photo
+
     @Override
     public void placeFile(String path) {
         photoPath = path;
-        AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, photoPath);
+        //AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, photoPath);
+        userPhoto.postInvalidate();
+        ViewTreeObserver vto = userPhoto.getViewTreeObserver();
+        vto.addOnPreDrawListener(new MyPreDrawListener(userPhoto, userData.get(User.COLUMN_PHOTO), this.getActivity(), 100, 100));
+        userPhoto.postInvalidate();
+        addDeletePhotoButton();
     }
 }

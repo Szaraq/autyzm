@@ -27,6 +27,9 @@ public class Plik extends AbstractDBTable {
     public static final String COLUMN_PATH = "path";
     public static final String COLUMN_FOLDER = "folder";
 
+    public static final int THUMB_WIDTH = 48;
+    public static final int THUMB_HEIGHT = 66;
+
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_PATH, "TEXT");
@@ -55,7 +58,7 @@ public class Plik extends AbstractDBTable {
     }
 
     public static Bitmap getThumbnail(String path) {
-        return rescaleBitmap(path, 48, 66);
+        return rescaleBitmap(path, THUMB_WIDTH, THUMB_HEIGHT);
     }
 
     public final static int RESCALE_PROPORTIONALLY = -1;

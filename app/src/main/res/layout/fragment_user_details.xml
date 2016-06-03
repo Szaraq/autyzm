@@ -13,15 +13,19 @@
         android:padding="20dp"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/userPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <FrameLayout
+            android:id="@+id/photoContainer"
             android:layout_gravity="center_horizontal"
-            android:minHeight="100dp"
-            android:minWidth="100dp"
+            android:layout_width="wrap_content"
             android:layout_marginTop="10dp"
-            android:src="@drawable/ic_user"/>
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/userPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </FrameLayout>
 
         <TableLayout
             android:layout_width="match_parent"

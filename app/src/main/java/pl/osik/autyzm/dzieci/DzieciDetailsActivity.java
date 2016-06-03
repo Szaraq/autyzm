@@ -168,7 +168,6 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             button.setText(R.string.dzieci_details_button_statystyki);
             blockEditTexts();
             if(AppHelper.canDeviceMakeCall()) {
-                Log.d("DzieciDetails", "Ustawiam listener");
                 PhoneCallOnClickListener phoneCallOnClickListener = new PhoneCallOnClickListener(this);
                 telefonOjcaView.setOnClickListener(phoneCallOnClickListener);
                 telefonMatkiView.setOnClickListener(phoneCallOnClickListener);

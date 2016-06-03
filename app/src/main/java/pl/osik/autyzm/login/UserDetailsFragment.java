@@ -38,8 +38,6 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class UserDetailsFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
-    //TODO Naprawić photo
-
     public static final String NEW_ACCOUNT = "newAccount";
     private static final int RESOURCE_NO_PHOTO = R.drawable.ic_user;
     private LinkedHashMap<String, EditText> editTextHashMap;

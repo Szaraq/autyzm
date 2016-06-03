@@ -30,6 +30,7 @@ import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.Lekcja;
+import pl.osik.autyzm.uruchom.UruchomController;
 
 /**
  * Created by m.osik2 on 2016-05-16.
@@ -97,8 +98,7 @@ class LekcjeViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         lekcjaName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //gotoDetails(OperationsEnum.SHOW);
-                //TODO Zapytać dziewczyn co jak się po prostu kliknie na lekcje?
+                UruchomController.runLekcja(fragment, lekcja);
             }
         });
     }

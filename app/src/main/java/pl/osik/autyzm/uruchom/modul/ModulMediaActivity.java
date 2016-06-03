@@ -22,6 +22,8 @@ import pl.osik.autyzm.uruchom.UruchomController;
 
 public class ModulMediaActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //TODO Filmy Player
+
     @Bind(R.id.player)
     ImageView player;
     @Bind(R.id.buttonNext)

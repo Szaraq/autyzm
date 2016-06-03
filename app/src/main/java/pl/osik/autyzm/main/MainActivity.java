@@ -39,7 +39,6 @@ import pl.osik.autyzm.uruchom.UruchomFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //TODO walidacja, przede wszystkim NotNull i ExistsInDatabase
     //TODO FINALLY dodać final tam gdzie można
     //TODO FINALLY wyrzucić debuggable z manifest i build.gradle
 

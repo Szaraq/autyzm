@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +25,12 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FilePlacingInterface;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.main.MainActivity;
-import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateExistsInDatabase;
@@ -40,7 +38,6 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class UserDetailsFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
-    //TEst
     //TODO Naprawić photo
 
     public static final String NEW_ACCOUNT = "newAccount";
@@ -136,6 +133,7 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     }
 
     private void setNoPhoto() {
+        userPhoto.setLayoutParams(new FrameLayout.LayoutParams((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getActivity().getResources().getDisplayMetrics()), (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getActivity().getResources().getDisplayMetrics())));
         userPhoto.setImageResource(UserDetailsFragment.RESOURCE_NO_PHOTO);
     }
 
@@ -205,16 +203,10 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    //TODO Naprawić User photo
-
     @Override
     public void placeFile(String path) {
         photoPath = path;
-        //AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, photoPath);
-        userPhoto.postInvalidate();
-        ViewTreeObserver vto = userPhoto.getViewTreeObserver();
-        vto.addOnPreDrawListener(new MyPreDrawListener(userPhoto, userData.get(User.COLUMN_PHOTO), this.getActivity(), 100, 100));
-        userPhoto.postInvalidate();
+        AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, photoPath, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getActivity().getResources().getDisplayMetrics()));
         addDeletePhotoButton();
     }
 }

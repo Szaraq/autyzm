@@ -9,13 +9,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -28,24 +24,20 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.security.Permission;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
@@ -155,7 +147,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             photo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AppHelper.FileManager.pickPhoto(DzieciDetailsActivity.this, AppHelper.FileManager.EXTENSION_ARRAY_PHOTO);
+                    FileHelper.FileManager.pickPhoto(DzieciDetailsActivity.this, FileHelper.FileManager.EXTENSION_ARRAY_PHOTO);
                 }
             });
             addValidations();
@@ -290,10 +282,10 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == AppHelper.FileManager.PICK_IMAGE) {
+            if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
                 Dziecko.changePhoto(id, path);
-                AppHelper.FileManager.placePhoto(this, photo, path);
+                FileHelper.FileManager.placePhoto(this, photo, path);
                 addDeletePhotoButton();
             }
         }

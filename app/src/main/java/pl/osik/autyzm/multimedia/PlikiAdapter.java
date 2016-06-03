@@ -1,6 +1,5 @@
 package pl.osik.autyzm.multimedia;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,10 +19,10 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.orm.PlikORM;
 import pl.osik.autyzm.sql.Folder;
-import pl.osik.autyzm.sql.Plik;
 
 /**
  * Created by m.osik2 on 2016-05-05.
@@ -97,7 +96,7 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
     public void setPlik(PlikORM plik) {
         this.plik = plik;
         plikName.setText(plik.getShortName());
-        Bitmap thumbnail = Plik.getThumbnail(plik.getPath());
+        Bitmap thumbnail = FileHelper.getThumbnail(plik.getPath());
         if(thumbnail == null) {
             Glide.with(plikImage.getContext())
                     .load("")

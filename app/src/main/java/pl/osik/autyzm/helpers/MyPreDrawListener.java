@@ -6,8 +6,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
-import pl.osik.autyzm.sql.Dziecko;
-import pl.osik.autyzm.sql.Plik;
 
 /**
  * Created by m.osik2 on 2016-05-11.
@@ -23,8 +21,8 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
         this.photo = photo;
         this.path = path;
         this.activity = activity;
-        height = Plik.THUMB_HEIGHT;
-        width = Plik.THUMB_WIDTH;
+        height = FileHelper.THUMB_HEIGHT;
+        width = FileHelper.THUMB_WIDTH;
     }
 
     public MyPreDrawListener(ImageView photo, String path, Activity activity, int height, int width) {
@@ -41,7 +39,7 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
         //int finalHeight = photo.getMeasuredHeight();
         if (path != null) {
             //AppHelper.FileManager.placePhoto(activity, photo, path, finalHeight);
-            Bitmap thumbnail = Plik.rescaleBitmap(path, width, height);
+            Bitmap thumbnail = FileHelper.rescaleBitmap(path, width, height);
             if(thumbnail != null) photo.setImageBitmap(thumbnail);
         } else {
             photo.setImageResource(DzieciDetailsActivity.RESOURCE_NO_PHOTO);

@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +21,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.sql.Plik;
 
 /**
  * http://sampleprogramz.com/android/browse.php
@@ -181,7 +179,7 @@ public class FilePickerActivity extends ListActivity {
             textView.setText(object.getName());
 
             if(object.isFile()) {
-                Bitmap thumbnail = Plik.getThumbnail(object.getPath());
+                Bitmap thumbnail = FileHelper.getThumbnail(object.getPath());
                 if(thumbnail == null)
                     imageView.setImageResource(R.drawable.ic_test_plik);
                 else

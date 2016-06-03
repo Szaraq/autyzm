@@ -4,10 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="pl.osik.autyzm.multimedia.ShowMediaActivity">
-    
-    <ImageView
-        android:id="@+id/player"
+
+    <FrameLayout
+        android:id="@+id/videoPlayerContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
 </RelativeLayout>

@@ -27,9 +27,6 @@ public class Plik extends AbstractDBTable {
     public static final String COLUMN_PATH = "path";
     public static final String COLUMN_FOLDER = "folder";
 
-    public static final int THUMB_WIDTH = 48;
-    public static final int THUMB_HEIGHT = 66;
-
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_PATH, "TEXT");
@@ -55,64 +52,6 @@ public class Plik extends AbstractDBTable {
     public static String getName(String path) {
         File f = new File(path);
         return f.getName();
-    }
-
-    public static Bitmap getThumbnail(String path) {
-        return rescaleBitmap(path, THUMB_WIDTH, THUMB_HEIGHT);
-    }
-
-    public final static int RESCALE_PROPORTIONALLY = -1;
-
-    public static Bitmap rescaleBitmap(String path, int reqWidth, int reqHeight) {
-        try {
-            /*ExifInterface exif = new ExifInterface(path);
-            byte[] imageData = exif.getThumbnail();
-            return BitmapFactory.decodeByteArray(imageData, 0, imageData.length);*/
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, options);
-            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-            options.inJustDecodeBounds = false;
-            Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-            return bitmap;
-        /*} catch (IOException e) {
-            Log.d("getThumbnail", e.getMessage());
-            return null;*/
-        } catch (NullPointerException e) {
-            Log.d("getThumbnail", e.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * https://developer.android.com/training/displaying-bitmaps/load-bitmap.html
-     *
-     * @param options
-     * @param reqWidth
-     * @param reqHeight
-     * @return
-     */
-    private static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
     }
 
     public static void cleanDeletedFiles() {

@@ -25,7 +25,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePlacingInterface;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
@@ -176,7 +176,7 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     }
 
     private void editPhoto() {
-        AppHelper.FileManager.pickPhoto(this.getActivity(), AppHelper.FileManager.EXTENSION_ARRAY_PHOTO);
+        FileHelper.FileManager.pickPhoto(this.getActivity(), FileHelper.FileManager.EXTENSION_ARRAY_PHOTO);
     }
 
     private void saveData() {
@@ -204,7 +204,7 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     @Override
     public void placeFile(String path) {
         photoPath = path;
-        AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, photoPath, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getActivity().getResources().getDisplayMetrics()));
+        FileHelper.FileManager.placePhoto(this.getActivity(), userPhoto, photoPath, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getActivity().getResources().getDisplayMetrics()));
         addDeletePhotoButton();
     }
 }

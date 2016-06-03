@@ -204,6 +204,10 @@ public class LoadTestData {
         params.put(Plik.COLUMN_FOLDER, "1");
         p.insert(params);
 
+        params.put(Plik.COLUMN_PATH, "/storage/sdcard/SampleVideo_1280x720_1mb.mp4");
+        params.put(Plik.COLUMN_FOLDER, "1");
+        p.insert(params);
+
         /*for (int i = 0; i < 10; i++) {
             params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
             params.put(Plik.COLUMN_FOLDER, Folder.ROOT_ID);

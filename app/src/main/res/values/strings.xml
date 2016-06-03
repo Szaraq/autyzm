@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
     <string name="app_name">autyzm</string>
     <string name="title_activity_main">Start</string>
 

@@ -1,44 +1,27 @@
 package pl.osik.autyzm.uruchom;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
-import pl.osik.autyzm.helpers.AppHelper;
-import pl.osik.autyzm.helpers.MyApp;
-import pl.osik.autyzm.helpers.OperationsEnum;
+import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.helpers.orm.ModulORM;
 import pl.osik.autyzm.helpers.orm.PlikORM;
-import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.sql.Modul;
 import pl.osik.autyzm.sql.Plik;
-import pl.osik.autyzm.uruchom.UruchomFragment;
 
 /**
  * Created by m.osik2 on 2016-05-16.
@@ -154,7 +137,7 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     protected void createThumbnails() {
         for (ModulORM modul : moduly) {
             PlikORM plik = Plik.getById(modul.getPlik());
-            Bitmap bitmap = Plik.rescaleBitmap(plik.getPath(), Plik.RESCALE_PROPORTIONALLY, thumbnailsContainer.getLayoutParams().height);
+            Bitmap bitmap = FileHelper.rescaleBitmap(plik.getPath(), FileHelper.RESCALE_PROPORTIONALLY, thumbnailsContainer.getLayoutParams().height);
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() * thumbnailsContainer.getLayoutParams().height / bitmap.getHeight(), thumbnailsContainer.getLayoutParams().height, false);
             ImageView thumb = new ImageView(fragment.getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(bitmap.getWidth(), ViewGroup.LayoutParams.MATCH_PARENT);

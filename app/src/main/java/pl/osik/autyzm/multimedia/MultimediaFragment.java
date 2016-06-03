@@ -8,12 +8,10 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +28,7 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePlacingInterface;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.sql.Folder;
@@ -152,7 +150,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         if(v.getId() == fabFolder.getId()) {
             askForFolderName();
         } else if(v.getId() == fabPlik.getId()) {
-            AppHelper.FileManager.pickPhoto(this.getActivity(), ArrayUtils.addAll(AppHelper.FileManager.EXTENSION_ARRAY_PHOTO, AppHelper.FileManager.EXTENSION_ARRAY_VIDEO));
+            FileHelper.FileManager.pickPhoto(this.getActivity(), ArrayUtils.addAll(FileHelper.FileManager.EXTENSION_ARRAY_PHOTO, FileHelper.FileManager.EXTENSION_ARRAY_VIDEO));
         }
         fabMenu.close(true);
     }

@@ -10,29 +10,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciFragment;
 import pl.osik.autyzm.help.HelpFragment;
-import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.FilePlacingInterface;
-import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.lekcje.LekcjeFragment;
 import pl.osik.autyzm.login.LoginActivity;
 import pl.osik.autyzm.login.UserDetailsFragment;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
-import pl.osik.autyzm.sql.Dziecko;
-import pl.osik.autyzm.sql.LoadTestData;
-import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.uruchom.UruchomFragment;
 
@@ -166,13 +159,13 @@ public class MainActivity extends AppCompatActivity
 
         ViewTreeObserver vto = userPhoto.getViewTreeObserver();
         //vto.addOnPreDrawListener(new MyPreDrawListener(userPhoto, photoPath, this));
-        if(photoPath != null) AppHelper.FileManager.placePhoto(this, userPhoto, photoPath, 400);
+        if(photoPath != null) FileHelper.FileManager.placePhoto(this, userPhoto, photoPath, 400);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == AppHelper.FileManager.PICK_IMAGE) {
+            if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
                 ((FilePlacingInterface) currFragment).placeFile(path);
             }

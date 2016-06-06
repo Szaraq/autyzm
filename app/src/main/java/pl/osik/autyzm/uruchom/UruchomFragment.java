@@ -1,7 +1,9 @@
 package pl.osik.autyzm.uruchom;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,9 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.OperationsEnum;
+import pl.osik.autyzm.lekcje.LekcjeHelper;
+import pl.osik.autyzm.lekcje.LekcjeTytulActivity;
 import pl.osik.autyzm.main.StartFavouritesAdapter;
 import pl.osik.autyzm.main.StartLastAdapter;
 
@@ -21,7 +26,7 @@ import pl.osik.autyzm.main.StartLastAdapter;
  * Use the {@link UruchomFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UruchomFragment extends Fragment {
+public class UruchomFragment extends Fragment implements View.OnClickListener {
 
     //TODO co jeżeli nie ma modułu/pliku/pytań?
 
@@ -29,6 +34,8 @@ public class UruchomFragment extends Fragment {
 
     @Bind(R.id.lekcje_list)
     RecyclerView lekcjeList;
+    @Bind(R.id.lekcje_fab)
+    FloatingActionButton fab;
 
     public UruchomFragment() {
         // Required empty public constructor
@@ -61,12 +68,21 @@ public class UruchomFragment extends Fragment {
         uruchomAdapter = new UruchomAdapter(getLayoutInflater(savedInstanceState), this);
         lekcjeList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         lekcjeList.setAdapter(uruchomAdapter);
+        fab.setOnClickListener(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         UruchomController.clearAll();
+        uruchomAdapter.refresh();
     }
 
+    /* FAB Onclick */
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(v.getContext(), LekcjeTytulActivity.class);
+        LekcjeHelper.setOperacja(OperationsEnum.DODAWANIE);
+        startActivity(intent);
+    }
 }

@@ -84,16 +84,30 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/favourite"
                     android:layout_marginLeft="10dp"
+                    android:layout_gravity="center|left"
                     android:src="@drawable/ic_favourite_add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <View
+                    style="@style/EmptySpaceFiller"/>
+
+                <Button
+                    android:id="@+id/buttonEdit"
+                    style="@style/buttonInPanel"
+                    android:text="@string/button_edit" />
+
+                <Button
+                    android:id="@+id/buttonDelete"
+                    style="@style/buttonInPanel"
+                    android:text="@string/delete" />
 
             </LinearLayout>
 

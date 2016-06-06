@@ -17,12 +17,14 @@ public class Modul extends AbstractDBTable {
     public static final String COLUMN_NAZWA = "nazwa";
     public static final String COLUMN_FILM = "film";
     public static final String COLUMN_LEKCJA = "lekcja";
+    public static final String COLUMN_NUMER = "numer";          //który z kolei jest ten moduł w lekcjach
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_NAZWA, "TEXT");
         put(COLUMN_FILM, "INTEGER");
         put(COLUMN_LEKCJA, "INTEGER");
+        put(COLUMN_NUMER, "INTEGER");
     }};
 
     @Override
@@ -49,14 +51,15 @@ public class Modul extends AbstractDBTable {
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + createJoin(new Lekcja(), TABLE_NAME, COLUMN_LEKCJA)
                 + " WHERE " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID) + " = ?"
-                + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_ID);
+                + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_NUMER);
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(lekcjaId) });
         while(cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
             String nazwa = cursor.getString(cursor.getColumnIndex(COLUMN_NAZWA));
             int plik = cursor.getInt(cursor.getColumnIndex(COLUMN_FILM));
             int lekcja = cursor.getInt(cursor.getColumnIndex(COLUMN_LEKCJA));
-            ModulORM modul = new ModulORM(id, nazwa, plik, lekcja);
+            int numer = cursor.getInt(cursor.getColumnIndex(COLUMN_NUMER));
+            ModulORM modul = new ModulORM(id, nazwa, plik, lekcja, numer);
             out.add(modul);
         }
         helper.close();

@@ -51,12 +51,12 @@ public class ShowMediaActivity extends AppCompatActivity {
         if(FileHelper.getType(path) == FileHelper.FileTypes.PHOTO) {
             FileHelper.FileManager.placePhoto(this, player, path, 200);
         } else {
-            SimpleVideoPlayer videoPlayer = new SimpleVideoPlayer(this, videoPlayerContainer, new Video(path, Video.VideoType.MP4), plik.getName(), false);
+            /*SimpleVideoPlayer videoPlayer = new SimpleVideoPlayer(this, videoPlayerContainer, new Video(path, Video.VideoType.MP4), plik.getName(), false);
             videoPlayer.play();
-            videoPlayer.release();
+            videoPlayer.release();*/
 
-            /*Intent intent = new Intent(this, PlayerActivity.class);
-            startActivity(intent);*/
+            Intent intent = new Intent(this, PlayerActivity.class);
+            startActivity(intent);
         }
     }
 

@@ -40,6 +40,7 @@
         <activity android:name=".helpers.FilePickerActivity" />
         <activity android:name=".multimedia.PickerActivity" />
         <activity android:name=".multimedia.ShowMediaActivity" />
+        <activity android:name=".multimedia.PlayerActivity"></activity>
     </application>
 
 </manifest>

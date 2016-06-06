@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +47,7 @@ public class ModulyAdapter extends RecyclerView.Adapter<ModulyViewHolder> {
         this.layoutInflater = layoutInflater;
         this.activity = activity;
         this.lekcjaId = lekcjaId;
-        moduly = Modul.getModulyForLekcja(lekcjaId);
+        moduly = LekcjeHelper.getModulyList();
     }
 
     @Override
@@ -70,7 +71,7 @@ public class ModulyAdapter extends RecyclerView.Adapter<ModulyViewHolder> {
     }
 
     public void refresh() {
-        moduly = Modul.getModulyForLekcja(lekcjaId);
+        moduly = LekcjeHelper.getModulyList();
         notifyDataSetChanged();
     }
 }
@@ -83,6 +84,10 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     @Bind(R.id.modul_name)
     TextView modulName;
+    @Bind(R.id.arrow_up)
+    ImageView arrowUp;
+    @Bind(R.id.arrow_down)
+    ImageView arrowDown;
     @Bind(R.id.modul_context_menu)
     ImageView modulContextMenu;
 
@@ -90,6 +95,8 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         super(itemView);
         ButterKnife.bind(this, itemView);
         modulContextMenu.setOnClickListener(this);
+        arrowUp.setOnClickListener(this);
+        arrowDown.setOnClickListener(this);
     }
 
     public void setActivity(LekcjeModulActivity activity) {
@@ -103,17 +110,33 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     public void setModul(ModulORM modul) {
         this.modul = modul;
         modulName.setText(modul.getName());
+        cleanArrows();
+        Log.d("adapter", modul.getName() + " " + modul.getNumer());
+    }
+
+    private void cleanArrows() {
+        arrowUp.setVisibility(View.VISIBLE);
+        arrowDown.setVisibility(View.VISIBLE);
+        if(modul.getNumer() == 1) arrowUp.setVisibility(View.GONE);
+        if(modul.getNumer() == LekcjeHelper.getModulyList().size()) arrowDown.setVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View v) {
-        if(v == modulContextMenu) {
+        if(v.getId() == modulContextMenu.getId()) {
             PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
             AppHelper.setForceIconInPopupMenu(popupMenu);
             popupMenu.inflate(R.menu.dzieci_context_menu);
             popupMenu.setOnMenuItemClickListener(this);
             popupMenu.show();
+            return;
+        } else if(v.getId() == arrowUp.getId()) {
+            LekcjeHelper.swapModul(true, modul.getNumer());
+        } else if(v.getId() == arrowDown.getId()) {
+            LekcjeHelper.swapModul(false, modul.getNumer());
         }
+        cleanArrows();
+        adapter.refresh();
     }
 
     @Override
@@ -131,6 +154,7 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                         public void onClick(DialogInterface dialog, int which) {
                             Modul m = new Modul();
                             m.delete(modul.getId());
+                            LekcjeHelper.removeModul(modul.getNumer() - 1);
                             adapter.refresh();
                             Toast.makeText(modulContextMenu.getContext(), R.string.message_modul_usunięty, Toast.LENGTH_SHORT).show();
                         }

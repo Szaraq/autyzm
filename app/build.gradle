@@ -42,7 +42,8 @@ dependencies {
     compile 'com.github.clans:fab:1.6.3'
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
     compile 'com.github.wangjiegulu:AndroidBucket:1.0.4'
-    compile files('libs/combo-seekbar.jar')
+    compile files('libs/brightcove-player.jar')
+    compile files('libs/brightcove-exoplayer.jar')
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
     compile 'com.google.android.libraries.mediaframework:mediaframework:0.2.1'
 }

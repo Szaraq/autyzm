@@ -27,8 +27,6 @@ import pl.osik.autyzm.lekcje.nowy_modul.PlikActivity;
 
 public class LekcjeModulActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //TODO Zmiana kolejności modułów
-
     @Bind(R.id.buttonAddModule)
     Button buttonAdd;
     @Bind(R.id.buttonNext)
@@ -87,7 +85,8 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void dodajModul() {
-        LekcjeHelper.setModul(new ModulORM());
+        ModulORM modul = new ModulORM();
+        LekcjeHelper.setNewModul(modul);
         Intent intent = new Intent(this, PlikActivity.class);
         startActivity(intent);
     }

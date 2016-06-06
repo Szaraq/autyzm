@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
@@ -42,7 +43,7 @@ public class LekcjeHelper {
 
     public static void setLekcja(LekcjaORM lekcja) {
         LekcjeHelper.lekcja = lekcja;
-        setModulyList(Modul.getModulyForLekcja(lekcja.getId()));
+        setModulyList();
     }
 
     public static ModulORM getModul() {
@@ -54,12 +55,17 @@ public class LekcjeHelper {
         setPytaniaList(Pytanie.getPytaniaForModul(modul.getId()));
     }
 
+    public static void setNewModul(ModulORM modul) {
+        setModul(modul);
+        modul.setNumer(modulyList.size() + 1);
+    }
+
     public static ArrayList<ModulORM> getModulyList() {
         return modulyList;
     }
 
-    public static void setModulyList(ArrayList<ModulORM> modulyList) {
-        LekcjeHelper.modulyList = modulyList;
+    public static void setModulyList() {
+        modulyList = Modul.getModulyForLekcja(lekcja.getId());
     }
 
     public static void clearAll() {
@@ -81,6 +87,10 @@ public class LekcjeHelper {
     public static void removeModul(int position) {
         int id = modulyList.get(position).getId();
         modulyList.remove(position);
+        for(int i = position; i <= modulyList.size(); i++) {        //po usunięciu modułu numery modułów wartość position = numer dla modułów o numer >= position
+            modulyList.get(i).setNumer(i);
+        }
+
         if(id != 0) modulyDoUsuniecia.add(id);
     }
 
@@ -96,6 +106,9 @@ public class LekcjeHelper {
         return modul.getId() == 0;
     }
 
+    /**
+     * Wywoływany po dodaniu nowego modułu
+     */
     public static void commitAll() {
         /* Lekcja */
         ContentValues data = lekcja.getContentValues();
@@ -111,6 +124,7 @@ public class LekcjeHelper {
         /* Moduł */
         Modul m = new Modul();
         modul.setLekcja(lekcja.getId());
+        modul.setNumer(modulyList.size()+1);
         data = modul.getContentValues();
         if(isModulNew()) {
             data.remove(Modul.COLUMN_ID);
@@ -179,5 +193,20 @@ public class LekcjeHelper {
 
     public static void finishLekcjeTytulActivity() {
         lekcjeTytulActivity.finish();
+    }
+
+    public static void swapModul(boolean up, int numer) {
+        Log.d("swap", numer+"");
+        ModulORM modulToSwap = modulyList.get(numer-1);
+        int newNumer = numer + (up ? -1 : 1);
+        ModulORM modulSwapWith = modulyList.get(newNumer-1);
+
+        modulToSwap.setNumer(newNumer);
+        modulSwapWith.setNumer(numer);
+        Collections.swap(modulyList, numer - 1, newNumer - 1);
+
+        Modul m = new Modul();
+        m.edit(modulToSwap.getId(), modulToSwap.getContentValues());
+        m.edit(modulSwapWith.getId(), modulSwapWith.getContentValues());
     }
 }

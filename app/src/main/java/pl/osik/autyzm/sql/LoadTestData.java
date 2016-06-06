@@ -231,11 +231,13 @@ public class LoadTestData {
         params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda.jpg");
         params.put(Modul.COLUMN_FILM, 1);
         params.put(Modul.COLUMN_LEKCJA, 1);
+        params.put(Modul.COLUMN_NUMER, 1);
         m.insert(params);
 
         params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda.jpg");
         params.put(Modul.COLUMN_FILM, 1);
         params.put(Modul.COLUMN_LEKCJA, 2);
+        params.put(Modul.COLUMN_NUMER, 1);
         m.insert(params);
     }
 

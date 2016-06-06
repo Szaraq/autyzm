@@ -8,18 +8,20 @@ import pl.osik.autyzm.sql.Modul;
  * Created by m.osik2 on 2016-05-17.
  */
 public class ModulORM {
-    private int id, plik, lekcja;
+
+    private int id, plik, lekcja, numer;
     private String name;
 
-    public ModulORM(int id, String name, int plik, int lekcja) {
-        this(name, plik, lekcja);
+    public ModulORM(int id, String name, int plik, int lekcja, int numer) {
+        this(name, plik, lekcja, numer);
         this.id = id;
     }
 
-    public ModulORM(String name, int plik, int lekcja) {
+    public ModulORM(String name, int plik, int lekcja, int numer) {
         this.plik = plik;
         this.lekcja = lekcja;
         this.name = name;
+        this.numer = numer;
     }
 
     public ModulORM() {
@@ -50,6 +52,14 @@ public class ModulORM {
         this.lekcja = lekcja;
     }
 
+    public int getNumer() {
+        return numer;
+    }
+
+    public void setNumer(int numer) {
+        this.numer = numer;
+    }
+
     public String getName() {
         return name;
     }
@@ -69,6 +79,7 @@ public class ModulORM {
         out.put(Modul.COLUMN_NAZWA, name);
         out.put(Modul.COLUMN_FILM, plik);
         out.put(Modul.COLUMN_LEKCJA, lekcja);
+        out.put(Modul.COLUMN_NUMER, numer);
         return out;
     }
 }

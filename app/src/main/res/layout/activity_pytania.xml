@@ -13,7 +13,6 @@
         android:layout_height="0dip"
         app:layout_heightPercent="30%">
 
-        <!-- TODO co z ProgressBar - do dziewczyn -->
         <!--<ProgressBar
             android:id="@+id/progress_bar"
             style="@style/progressBar"

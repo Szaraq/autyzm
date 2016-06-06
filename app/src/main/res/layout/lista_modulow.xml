@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -28,7 +29,16 @@
 
         <TextView
             android:id="@+id/modul_name"
+            android:layout_height="wrap_content"
             style="@style/itemList" />
+
+        <ImageView
+            android:id="@+id/arrow_up"
+            style="@style/arrow.up" />
+
+        <ImageView
+            android:id="@+id/arrow_down"
+            style="@style/arrow.down" />
 
         <ImageView
             android:id="@+id/modul_context_menu"

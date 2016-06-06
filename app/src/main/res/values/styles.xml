@@ -57,6 +57,11 @@
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
     </style>
+    <style name="EmptySpaceFiller">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
 
     <!-- Button -->
     <style name="buttonStyle">
@@ -151,6 +156,17 @@
         <item name="android:background">@null</item>
         <item name="android:paddingRight">16dp</item>
         <item name="android:src">@drawable/ic_context_menu</item>
+    </style>
+    <style name="arrow">
+        <item name="android:src">@drawable/ic_arrow</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="arrow.up" parent="arrow">
+        <item name="android:rotation">90</item>
+    </style>
+    <style name="arrow.down" parent="arrow">
+        <item name="android:rotation">270</item>
     </style>
 
 </resources>

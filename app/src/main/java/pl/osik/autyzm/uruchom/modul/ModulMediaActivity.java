@@ -36,7 +36,7 @@ public class ModulMediaActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void showMedia() {
-        String path = Plik.getById(UruchomController.getModul().getPlik()).getPath();
+        String path = Plik.getById(UruchomController.getModul().getPlik(), true).getPath();
         if(FileHelper.getType(path) == FileHelper.FileTypes.PHOTO) {
             FileHelper.FileManager.placePhoto(this, player, path, 200);
             //TODO Przetestować na urządzeniu bez rescale:

@@ -40,7 +40,7 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
         if(LekcjeHelper.getModul().getPlik() == 0) {
             changeViewToAdd();
         } else {
-            PlikORM plik = Plik.getById(LekcjeHelper.getModul().getPlik());
+            PlikORM plik = Plik.getById(LekcjeHelper.getModul().getPlik(), true);
             plikView.setImageBitmap(FileHelper.getThumbnail(plik.getPath()));
         }
         buttonAdd.setOnClickListener(this);

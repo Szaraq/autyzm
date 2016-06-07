@@ -22,7 +22,7 @@ import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.orm.PlikORM;
-import pl.osik.autyzm.sql.Folder;
+import pl.osik.autyzm.sql.Plik;
 
 /**
  * Created by m.osik2 on 2016-05-05.
@@ -40,7 +40,7 @@ public class PlikiAdapter extends RecyclerView.Adapter<PlikiViewHolder> {
         this.chooser = chooser;
         this.fragment = (MultimediaFragment) fragment;
         this.idFolder = idFolder;
-        this.plikiList = Folder.getPlikiInFolder(idFolder);
+        this.plikiList = Plik.getPlikiInFolder(idFolder, true);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class PlikiAdapter extends RecyclerView.Adapter<PlikiViewHolder> {
     }
 
     public void refresh() {
-        plikiList = Folder.getPlikiInFolder(idFolder);
+        plikiList = Plik.getPlikiInFolder(idFolder, true);
         notifyDataSetChanged();
     }
 }

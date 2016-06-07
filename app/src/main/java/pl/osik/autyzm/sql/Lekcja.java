@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
@@ -25,6 +26,7 @@ public class Lekcja extends AbstractDBTable {
     public static final String COLUMN_DATA_OSTATNIEGO_UZYCIA = "data_ostatniego_uzycia";
     public static final String COLUMN_FAVOURITE = "is_favourite";
     public static final String COLUMN_USER = "user";
+    public static final String COLUMN_GHOST = "ghost";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
@@ -32,6 +34,7 @@ public class Lekcja extends AbstractDBTable {
         put(COLUMN_DATA_OSTATNIEGO_UZYCIA, "DATE");
         put(COLUMN_FAVOURITE, "BOOLEAN");
         put(COLUMN_USER, "INTEGER");
+        put(COLUMN_GHOST, "BOOLEAN");
     }};
 
     @Override
@@ -48,13 +51,14 @@ public class Lekcja extends AbstractDBTable {
         return TABLE_NAME;
     }
 
-    public static ArrayList<LekcjaORM> getOstatnieLekcje(int liczbaLekcji) {
+    public static ArrayList<LekcjaORM> getOstatnieLekcje(int liczbaLekcji, boolean ghostFilter) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         ArrayList<LekcjaORM> out = new ArrayList<>();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + checkUser()
                 + " AND " + tableAndColumn(TABLE_NAME, COLUMN_DATA_OSTATNIEGO_UZYCIA) + " <> ?"
+                + queryForGhost(ghostFilter, true)
                 + " ORDER BY " + COLUMN_DATA_OSTATNIEGO_UZYCIA + " DESC"
                 + " LIMIT " + liczbaLekcji;
         Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(User.getCurrentId()), LekcjaORM.NEVER_USED_IN_DB});
@@ -73,12 +77,13 @@ public class Lekcja extends AbstractDBTable {
         return " WHERE " + tableAndColumn(TABLE_NAME, COLUMN_USER) + " = ?";
     }
 
-    public static ArrayList<LekcjaORM> getLekcjaList() {
+    public static ArrayList<LekcjaORM> getLekcjaList(boolean ghostFilter) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         ArrayList<LekcjaORM> out = new ArrayList<>();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + checkUser()
+                + queryForGhost(ghostFilter, true)
                 + " ORDER BY " + COLUMN_TYTUL;
         Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(User.getCurrentId())});
         out = fillTheList(cursor);
@@ -88,24 +93,26 @@ public class Lekcja extends AbstractDBTable {
     }
 
     private static ArrayList<LekcjaORM> fillTheList(Cursor cursor) {
-        ArrayList<LekcjaORM> out = new ArrayList<>();
+        ArrayList<LekcjaORM> out = new ArrayList<>(cursor.getCount());
         while(cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
             String name = cursor.getString(cursor.getColumnIndex(COLUMN_TYTUL));
             String lastUsed = cursor.getString(cursor.getColumnIndex(COLUMN_DATA_OSTATNIEGO_UZYCIA));
             boolean favourite = cursor.getInt(cursor.getColumnIndex(COLUMN_FAVOURITE)) == 1;
-            LekcjaORM temp = new LekcjaORM(id, name, lastUsed, favourite);
+            boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
+            LekcjaORM temp = new LekcjaORM(id, name, lastUsed, favourite, ghost);
             out.add(temp);
         }
         return out;
     }
 
-    public static ArrayList<LekcjaORM> getFavourites() {
+    public static ArrayList<LekcjaORM> getFavourites(boolean ghostFilter) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         ArrayList<LekcjaORM> out = new ArrayList<>();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + checkUser()
+                + queryForGhost(ghostFilter, true)
                 + " AND " + COLUMN_FAVOURITE
                 + " ORDER BY " + COLUMN_TYTUL;
         Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(User.getCurrentId())});
@@ -141,5 +148,25 @@ public class Lekcja extends AbstractDBTable {
         String out = sdf.format(Calendar.getInstance().getTime());
         data.put(COLUMN_DATA_OSTATNIEGO_UZYCIA, out);
         l.edit(lekcjaId, data);
+    }
+
+    public static void setGhost(int id, boolean set) {
+        Lekcja l = new Lekcja();
+        ContentValues data = new ContentValues();
+        data.put(COLUMN_GHOST, set);
+        l.edit(id, data);
+    }
+
+    public static void cleanLekcje() {
+        ArrayList<LekcjaORM> list = getLekcjaList(false);
+        for (LekcjaORM lekcja : list) {
+            int listSize = Modul.getModulyForLekcja(lekcja.getId(), true).size();
+            if (listSize == 0 && !lekcja.isGhost()) setGhost(lekcja.getId(), true);
+            if (listSize > 0 && lekcja.isGhost()) setGhost(lekcja.getId(), false);
+        }
+    }
+
+    private static String queryForGhost(boolean addQuery, boolean multipleQuery) {
+        if(addQuery) return (multipleQuery ? " AND " : "") + tableAndColumn(TABLE_NAME, COLUMN_GHOST) + " = 0"; else return "";
     }
 }

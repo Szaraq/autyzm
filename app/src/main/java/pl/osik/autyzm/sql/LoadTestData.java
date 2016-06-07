@@ -136,18 +136,28 @@ public class LoadTestData {
         params.put(Lekcja.COLUMN_USER, 1);
         params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-01");
         params.put(Lekcja.COLUMN_FAVOURITE, false);
+        params.put(Lekcja.COLUMN_GHOST, 0);
         l.insert(params);
 
         params.put(Lekcja.COLUMN_TYTUL, "Testowa ulubiona lekcja");
         params.put(Lekcja.COLUMN_USER, 1);
         params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-02");
         params.put(Lekcja.COLUMN_FAVOURITE, true);
+        params.put(Lekcja.COLUMN_GHOST, 0);
+        l.insert(params);
+
+        params.put(Lekcja.COLUMN_TYTUL, "Nieistniejaca lekcja");
+        params.put(Lekcja.COLUMN_USER, 1);
+        params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-02");
+        params.put(Lekcja.COLUMN_FAVOURITE, true);
+        params.put(Lekcja.COLUMN_GHOST, 0);
         l.insert(params);
 
         params.put(Lekcja.COLUMN_TYTUL, "Lekcja drugiego usera");
         params.put(Lekcja.COLUMN_USER, 2);
         params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-02");
         params.put(Lekcja.COLUMN_FAVOURITE, true);
+        params.put(Lekcja.COLUMN_GHOST, 0);
         l.insert(params);
     }
 
@@ -202,10 +212,17 @@ public class LoadTestData {
 
         params.put(Plik.COLUMN_PATH, "/storage/sdcard/Download/Miranda_de_Miranda.jpg");
         params.put(Plik.COLUMN_FOLDER, "1");
+        params.put(Plik.COLUMN_GHOST, 0);
         p.insert(params);
 
         params.put(Plik.COLUMN_PATH, "/storage/sdcard/SampleVideo_1280x720_1mb.mp4");
         params.put(Plik.COLUMN_FOLDER, "1");
+        params.put(Plik.COLUMN_GHOST, 0);
+        p.insert(params);
+
+        params.put(Plik.COLUMN_PATH, "/jakis/nieistniejacy/plik");
+        params.put(Plik.COLUMN_FOLDER, "1");
+        params.put(Plik.COLUMN_GHOST, 0);
         p.insert(params);
 
         /*for (int i = 0; i < 10; i++) {
@@ -232,12 +249,28 @@ public class LoadTestData {
         params.put(Modul.COLUMN_FILM, 1);
         params.put(Modul.COLUMN_LEKCJA, 1);
         params.put(Modul.COLUMN_NUMER, 1);
+        params.put(Modul.COLUMN_GHOST, 0);
         m.insert(params);
 
         params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda.jpg");
         params.put(Modul.COLUMN_FILM, 1);
         params.put(Modul.COLUMN_LEKCJA, 2);
         params.put(Modul.COLUMN_NUMER, 1);
+        params.put(Modul.COLUMN_GHOST, 0);
+        m.insert(params);
+
+        params.put(Modul.COLUMN_NAZWA, "Nieistniejacy modul");
+        params.put(Modul.COLUMN_FILM, 3);
+        params.put(Modul.COLUMN_LEKCJA, 3);
+        params.put(Modul.COLUMN_NUMER, 1);
+        params.put(Modul.COLUMN_GHOST, 0);
+        m.insert(params);
+
+        params.put(Modul.COLUMN_NAZWA, "Nieistniejacy modul2");
+        params.put(Modul.COLUMN_FILM, 3);
+        params.put(Modul.COLUMN_LEKCJA, 2);
+        params.put(Modul.COLUMN_NUMER, 2);
+        params.put(Modul.COLUMN_GHOST, 0);
         m.insert(params);
     }
 

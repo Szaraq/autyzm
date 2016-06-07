@@ -11,17 +11,19 @@ public class ModulORM {
 
     private int id, plik, lekcja, numer;
     private String name;
+    private boolean ghost;
 
-    public ModulORM(int id, String name, int plik, int lekcja, int numer) {
-        this(name, plik, lekcja, numer);
+    public ModulORM(int id, String name, int plik, int lekcja, int numer, boolean ghost) {
+        this(name, plik, lekcja, numer, ghost);
         this.id = id;
     }
 
-    public ModulORM(String name, int plik, int lekcja, int numer) {
+    public ModulORM(String name, int plik, int lekcja, int numer, boolean ghost) {
         this.plik = plik;
         this.lekcja = lekcja;
         this.name = name;
         this.numer = numer;
+        this.ghost = ghost;
     }
 
     public ModulORM() {
@@ -81,5 +83,13 @@ public class ModulORM {
         out.put(Modul.COLUMN_LEKCJA, lekcja);
         out.put(Modul.COLUMN_NUMER, numer);
         return out;
+    }
+
+    public boolean isGhost() {
+        return ghost;
+    }
+
+    public void setGhost(boolean ghost) {
+        this.ghost = ghost;
     }
 }

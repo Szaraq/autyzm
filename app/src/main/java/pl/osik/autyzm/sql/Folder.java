@@ -3,10 +3,8 @@ package pl.osik.autyzm.sql;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -45,26 +43,6 @@ public class Folder extends AbstractDBTable {
     @Override
     public String getTableName() {
         return TABLE_NAME;
-    }
-
-    public static ArrayList<PlikORM> getPlikiInFolder(int idFolderu) {
-        ArrayList<PlikORM> out = new ArrayList<>();
-        DBHelper helper = DBHelper.getInstance();
-        SQLiteDatabase db = helper.getDBRead();
-        String query = "SELECT * FROM " + Plik.TABLE_NAME + " WHERE " + Plik.COLUMN_FOLDER + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idFolderu) });
-        while(cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex(Plik.COLUMN_ID));
-            int folder  = cursor.getInt(cursor.getColumnIndex(Plik.COLUMN_FOLDER));
-            String path = cursor.getString(cursor.getColumnIndex(Plik.COLUMN_PATH));
-            PlikORM temp = new PlikORM(id, folder, path);
-            out.add(temp);
-        }
-        Collections.sort(out);
-        helper.close();
-        cursor.close();
-
-        return out;
     }
 
     public static MySortedMap getFolderyInFolder(int idFolderu) {
@@ -136,7 +114,7 @@ public class Folder extends AbstractDBTable {
         db.delete(getTableName(), COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
 
         /* Usuwanie plików */
-        ArrayList<PlikORM> plikList = getPlikiInFolder(id);
+        ArrayList<PlikORM> plikList = Plik.getPlikiInFolder(id, false);
         Plik p = new Plik();
         for (PlikORM plik : plikList) {
             p.delete(plik.getId());

@@ -39,7 +39,7 @@ public class LekcjeAdapter extends RecyclerView.Adapter<LekcjeViewHolder> {
 
     public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
 
-    private ArrayList<LekcjaORM> lekcje = Lekcja.getLekcjaList();
+    private ArrayList<LekcjaORM> lekcje = Lekcja.getLekcjaList(true);
     private LekcjeFragment fragment;
     private final LayoutInflater layoutInflater;
 
@@ -69,7 +69,7 @@ public class LekcjeAdapter extends RecyclerView.Adapter<LekcjeViewHolder> {
     }
 
     public void refresh() {
-        lekcje = Lekcja.getLekcjaList();
+        lekcje = Lekcja.getLekcjaList(true);
         notifyDataSetChanged();
     }
 

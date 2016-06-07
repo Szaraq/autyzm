@@ -24,7 +24,7 @@ public class StartLastAdapter extends RecyclerView.Adapter<StartLastViewHolder> 
     private final int HOW_MANY = 5;
     private final LayoutInflater layoutInflater;
     private final StartFragment fragment;
-    private ArrayList<LekcjaORM> lekcjaList = Lekcja.getOstatnieLekcje(HOW_MANY);
+    private ArrayList<LekcjaORM> lekcjaList = Lekcja.getOstatnieLekcje(HOW_MANY, true);
 
     public StartLastAdapter(LayoutInflater layoutInflater, Fragment fragment) {
         this.layoutInflater = layoutInflater;
@@ -52,7 +52,7 @@ public class StartLastAdapter extends RecyclerView.Adapter<StartLastViewHolder> 
     }
 
     public void refresh() {
-        lekcjaList = Lekcja.getOstatnieLekcje(HOW_MANY);
+        lekcjaList = Lekcja.getOstatnieLekcje(HOW_MANY, true);
         notifyDataSetChanged();
     }
 }

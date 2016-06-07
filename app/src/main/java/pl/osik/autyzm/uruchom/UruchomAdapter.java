@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class UruchomAdapter extends RecyclerView.Adapter<UruchomViewHolder> {
 
     public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
 
-    private ArrayList<LekcjaORM> lekcje = Lekcja.getLekcjaList();
+    private ArrayList<LekcjaORM> lekcje = Lekcja.getLekcjaList(true);
     private UruchomFragment fragment;
     private final LayoutInflater layoutInflater;
 
@@ -73,7 +74,7 @@ public class UruchomAdapter extends RecyclerView.Adapter<UruchomViewHolder> {
     }
 
     public void refresh() {
-        lekcje = Lekcja.getLekcjaList();
+        lekcje = Lekcja.getLekcjaList(true);
         UruchomViewHolder.clearThumbnails();
         notifyDataSetChanged();
     }
@@ -126,7 +127,7 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     public void setLekcja(final LekcjaORM lekcja) {
         this.lekcja = lekcja;
         lekcjaName.setText(lekcja.getTytul());
-        setModuly(Modul.getModulyForLekcja(lekcja.getId()));
+        setModuly(Modul.getModulyForLekcja(lekcja.getId(), true));
 
         favourite.setOnClickListener(this);
         buttonDelete.setOnClickListener(this);
@@ -176,7 +177,8 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     protected void createThumbnails() {
         for (ModulORM modul : moduly) {
-            PlikORM plik = Plik.getById(modul.getPlik());
+            Log.d("Thumb", modul.getId()+"");
+            PlikORM plik = Plik.getById(modul.getPlik(), true);
             Bitmap bitmap = FileHelper.rescaleBitmap(plik.getPath(), FileHelper.RESCALE_PROPORTIONALLY, thumbnailsContainer.getLayoutParams().height);
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() * thumbnailsContainer.getLayoutParams().height / bitmap.getHeight(), thumbnailsContainer.getLayoutParams().height, false);
 

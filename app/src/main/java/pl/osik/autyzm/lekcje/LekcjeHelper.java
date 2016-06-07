@@ -65,7 +65,7 @@ public class LekcjeHelper {
     }
 
     public static void setModulyList() {
-        modulyList = Modul.getModulyForLekcja(lekcja.getId());
+        modulyList = Modul.getModulyForLekcja(lekcja.getId(), true);
     }
 
     public static void clearAll() {
@@ -111,6 +111,7 @@ public class LekcjeHelper {
      */
     public static void commitAll() {
         /* Lekcja */
+        lekcja.setGhost(false);
         ContentValues data = lekcja.getContentValues();
         Lekcja l = new Lekcja();
         if(isLekcjaNew()) {
@@ -125,6 +126,7 @@ public class LekcjeHelper {
         Modul m = new Modul();
         modul.setLekcja(lekcja.getId());
         modul.setNumer(modulyList.size()+1);
+        modul.setGhost(false);
         data = modul.getContentValues();
         if(isModulNew()) {
             data.remove(Modul.COLUMN_ID);

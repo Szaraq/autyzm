@@ -28,8 +28,6 @@ import pl.osik.autyzm.main.StartLastAdapter;
  */
 public class UruchomFragment extends Fragment implements View.OnClickListener {
 
-    //TODO co jeżeli nie ma modułu/pliku/pytań?
-
     UruchomAdapter uruchomAdapter;
 
     @Bind(R.id.lekcje_list)

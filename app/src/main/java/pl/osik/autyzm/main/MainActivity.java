@@ -26,6 +26,7 @@ import pl.osik.autyzm.lekcje.LekcjeFragment;
 import pl.osik.autyzm.login.LoginActivity;
 import pl.osik.autyzm.login.UserDetailsFragment;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
+import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.uruchom.UruchomFragment;
 
@@ -64,8 +65,7 @@ public class MainActivity extends AppCompatActivity
 
         gotoFragment(new StartFragment());
 
-        //TODO FINALLY Uncomment
-        //Plik.cleanDeletedFiles();
+        Plik.cleanDeletedFiles();
     }
 
     @Override

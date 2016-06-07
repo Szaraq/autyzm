@@ -208,6 +208,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
             ContentValues data = new ContentValues();
             data.put(Plik.COLUMN_PATH, path);
             data.put(Plik.COLUMN_FOLDER, folderId);
+            data.put(Plik.COLUMN_GHOST, 0);
             p.insert(data);
             plikiAdapter.refresh();
         } else {

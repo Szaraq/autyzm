@@ -51,7 +51,7 @@ public class UruchomController {
     public static void runLekcja(Fragment fragment, LekcjaORM lekcjaToRun) {
         lekcja = lekcjaToRun;
         Lekcja.todayUsed(lekcja.getId());
-        for (ModulORM m : Modul.getModulyForLekcja(lekcja.getId())) {
+        for (ModulORM m : Modul.getModulyForLekcja(lekcja.getId(), true)) {
             moduly.add(m);
         }
         gotoNextActivity(fragment.getActivity());

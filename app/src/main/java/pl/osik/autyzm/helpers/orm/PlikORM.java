@@ -13,8 +13,9 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
 
     private int id, folder;
     private String path, name;
+    private boolean ghost;
 
-    public PlikORM(int id, int folder, String path) {
+    public PlikORM(int id, int folder, String path, boolean ghost) {
         setId(id);
         setFolder(folder);
         setPath(path);

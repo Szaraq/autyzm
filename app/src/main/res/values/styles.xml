@@ -7,6 +7,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:popupMenuStyle">@style/popupMenuStyle</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -34,6 +41,15 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_marginTop">20dp</item>
     </style>
+    <style name="TextDesignLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/colorAppBackground</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorAppBackground</item>
+        <item name="colorControlNormal">@color/colorAppBackground</item>
+        <item name="colorControlActivated">@color/colorAppBackground</item>
+    </style>
 
     <!-- EditText -->
     <style name="EditTextGrid">
@@ -43,6 +59,13 @@
     </style>
     <style name="EditTextGrid.Left" parent="EditTextGrid">
         <item name="android:layout_marginRight">15dp</item>
+    </style>
+    <style name="EditTextLogin">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/edit_text_bottom_border</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/colorAppBackground</item>
     </style>
 
     <!-- View -->
@@ -72,6 +95,10 @@
         <item name="android:radius">2dp</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">5dp</item>
+    </style>
+    <style name="buttonStyle.bottomButton">
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:layout_height">50dp</item>
     </style>
     <style name="buttonStyle.buttonNext" parent="buttonStyle">
         <item name="android:layout_width">wrap_content</item>

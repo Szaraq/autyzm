@@ -165,6 +165,18 @@ public class User extends AbstractDBTable {
         helper.close();
         return out;
     }
+
+    public static String getPhotoPathByLogin(String login) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_LOGIN + " = ?", new String[] { login });
+        if(cursor.getCount() == 0) return null;
+        cursor.moveToNext();
+        String out = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO));
+        cursor.close();
+        helper.close();
+        return out;
+    }
     
     public static HashMap<String, String> getCurrentData() {
         DBHelper helper = DBHelper.getInstance();

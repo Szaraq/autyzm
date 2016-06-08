@@ -1,5 +1,5 @@
 <resources xmlns:xliff="http://schemas.android.com/tools">
-    <string name="app_name">autyzm</string>
+    <string name="app_name">Autyzm</string>
     <string name="title_activity_main">Start</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -46,7 +46,7 @@
     <string name="login_zaloguj">Zaloguj</string>
     <string name="login_login">Login</string>
     <string name="login_haslo">Hasło</string>
-    <string name="login_error">Błędny login lub hasło</string>
+    <string name="login_error">Błędne dane logowania</string>
     <string name="dzieci_details_wybierz_zdjecie">Wybierz zdjęcie</string>
     <string name="media_foldery">Foldery</string>
     <string name="media_pliki">Pliki</string>

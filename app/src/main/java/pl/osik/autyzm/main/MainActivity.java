@@ -159,10 +159,6 @@ public class MainActivity extends AppCompatActivity
 
         user.setText(User.getCurrentName());
         String photoPath = User.getCurrentPhotoPath();
-
-        //ViewTreeObserver vto = userPhoto.getViewTreeObserver();
-        //vto.addOnPreDrawListener(new MyPreDrawListener(userPhoto, photoPath, this));
-        //if(photoPath != null) FileHelper.FileManager.placePhoto(this, userPhoto, photoPath, 400);
         if(photoPath != null)
             Glide.with(this)
                 .load(photoPath)

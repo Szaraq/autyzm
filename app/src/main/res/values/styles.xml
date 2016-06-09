@@ -88,6 +88,13 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="HelpKontakt">
+        <item name="android:layout_marginLeft">@dimen/contact_margin</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
 
     <!-- EditText -->
     <style name="EditTextGrid">
@@ -110,7 +117,7 @@
         <item name="android:textColor">@color/colorAppBackground</item>
     </style>
     <style name="EditTextMaterial.EditTextDzieciDetailsLayer" parent="EditTextMaterial">
-        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginLeft">@dimen/contact_margin</item>
         <item name="android:theme">@style/TextDesignLabel.Primary</item>
     </style>
     <style name="EditTextMaterial.EditTextDzieciDetails" parent="EditTextMaterial">

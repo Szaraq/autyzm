@@ -48,8 +48,10 @@ import pl.osik.autyzm.validate.ValidateAuthenticate;
 import pl.osik.autyzm.validate.ValidateCommand;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener, View.OnFocusChangeListener {
+    private static final String BACKGROUND_PATH = "file:///android_asset/login_tlo.jpg";
 
     //TODO co jeżeli photo nie istnieje?
+    //TODO FINALLY prawa autorskie do tła: http://wallpapercave.com/w/tTuFP5q
 
     private final String UserDetailsFragmentTag = "UserDetailsFragment";
     private String path;
@@ -101,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void setBackground() {
         Glide.with(this)
-                .load("file:///android_asset/login_tlo.jpg")
+                .load(BACKGROUND_PATH)
                 .into(backgroundImage);
         //backgroundImage.setColorFilter(Color.rgb(123, 123, 123), PorterDuff.Mode.MULTIPLY);
         backgroundImage.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);

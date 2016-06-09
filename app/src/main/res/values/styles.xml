@@ -41,7 +41,7 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_marginTop">20dp</item>
     </style>
-    <style name="TextDesignLabel" parent="TextAppearance.AppCompat">
+    <style name="TextDesignLabel" parent="Theme.AppCompat">
         <!-- Hint color and label color in FALSE state -->
         <item name="android:textColorHint">@color/colorAppBackground</item>
         <item name="android:textSize">20sp</item>

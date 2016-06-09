@@ -1,5 +1,7 @@
 package pl.osik.autyzm.validate;
 
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -79,7 +81,11 @@ public class ValidateCommand {
 
     public void putErrors() {
         for (Map.Entry<View, String> entry : errorMsg.entrySet()){
-            ((TextView) entry.getKey()).setError(entry.getValue());
+            View view = entry.getKey();
+            if(view instanceof TextView)
+                ((TextView) entry.getKey()).setError(entry.getValue());
+            else if(view instanceof TextInputLayout)
+                ((TextInputLayout) entry.getKey()).setError(entry.getValue());
         }
     }
 }

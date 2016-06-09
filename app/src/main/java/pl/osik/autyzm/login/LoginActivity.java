@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.inputmethodservice.Keyboard;
+import android.support.design.widget.TextInputLayout;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -42,20 +43,29 @@ import pl.osik.autyzm.sql.DBHelper;
 import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.sql.LoadTestData;
 import pl.osik.autyzm.sql.User;
+import pl.osik.autyzm.validate.Validate;
+import pl.osik.autyzm.validate.ValidateAuthenticate;
+import pl.osik.autyzm.validate.ValidateCommand;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener, View.OnFocusChangeListener {
 
-    //TODO Zaimplementować ValidateAuthenticate zamiast obecnego systemu logowania (tak żeby error pojawiał się jako walidacja)
+    //TODO co jeżeli photo nie istnieje?
 
     private final String UserDetailsFragmentTag = "UserDetailsFragment";
     private String path;
+    private ValidateCommand validate;
+    private ValidateAuthenticate authenticate;
 
     @Bind(R.id.backgroundImage)
     ImageView backgroundImage;
     @Bind(R.id.userPhoto)
     CircleImageView userPhoto;
+    @Bind(R.id.loginLayout)
+    TextInputLayout loginLayout;
     @Bind(R.id.login)
     EditText loginControl;
+    @Bind(R.id.passLayout)
+    TextInputLayout passLayout;
     @Bind(R.id.password)
     EditText passControl;
     @Bind(R.id.button)
@@ -70,6 +80,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        validate = new ValidateCommand();
+        authenticate = new ValidateAuthenticate();
+        validate.addValidate(passLayout, authenticate);
 
         LoadTestData.load();
 
@@ -114,12 +127,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void logowanie() {
         String login = loginControl.getText().toString();
         String pass = passControl.getText().toString();
-        if(User.authenticate(login, pass)) {
+        authenticate.setCredentials(login, pass);
+        if(validate.doValidateAll()) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
-        } else {
-            error.setVisibility(View.VISIBLE);
         }
     }
 

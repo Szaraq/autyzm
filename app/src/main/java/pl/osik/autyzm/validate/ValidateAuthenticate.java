@@ -14,7 +14,7 @@ public class ValidateAuthenticate implements Validate {
 
     String login, pass;
 
-    public ValidateAuthenticate(String login, String pass) {
+    public void setCredentials(String login, String pass) {
         this.login = login;
         this.pass = pass;
     }

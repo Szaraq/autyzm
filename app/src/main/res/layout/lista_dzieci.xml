@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/lista_dzieci"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,16 +17,15 @@
         android:outlineProvider="bounds"
         -->
 
-
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/dzieci_photo"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
             android:layout_marginBottom="2dp"
-            android:layout_marginLeft="2dp"
-            android:src="@drawable/ic_test_child_photo" />
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            app:civ_border_width="0dp"
+            android:src="@drawable/ic_no_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/dzieci_name"

@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 
 /**
@@ -40,19 +42,14 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
     @Override
     public boolean onPreDraw() {
         photo.getViewTreeObserver().removeOnPreDrawListener(this);
-        //int finalHeight = photo.getMeasuredHeight();
         if (path != null) {
-            //AppHelper.FileManager.placePhoto(activity, photo, path, finalHeight);
-            setThumbnail();
-            if(thumbnail != null) photo.setImageBitmap(thumbnail);
+            Glide.with(activity)
+                    .load(path)
+                    .dontAnimate()
+                    .into(photo);
         } else {
             photo.setImageResource(DzieciDetailsActivity.RESOURCE_NO_PHOTO);
         }
         return true;
-    }
-
-    private void setThumbnail() {
-        if(thumbnail != null) return;
-        thumbnail = FileHelper.rescaleBitmap(path, width, height);
     }
 }

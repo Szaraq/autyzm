@@ -16,6 +16,9 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.dzieci.DzieciFragment;
 import pl.osik.autyzm.help.HelpFragment;
@@ -55,7 +58,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -158,9 +160,14 @@ public class MainActivity extends AppCompatActivity
         user.setText(User.getCurrentName());
         String photoPath = User.getCurrentPhotoPath();
 
-        ViewTreeObserver vto = userPhoto.getViewTreeObserver();
+        //ViewTreeObserver vto = userPhoto.getViewTreeObserver();
         //vto.addOnPreDrawListener(new MyPreDrawListener(userPhoto, photoPath, this));
-        if(photoPath != null) FileHelper.FileManager.placePhoto(this, userPhoto, photoPath, 400);
+        //if(photoPath != null) FileHelper.FileManager.placePhoto(this, userPhoto, photoPath, 400);
+        if(photoPath != null)
+            Glide.with(this)
+                .load(photoPath)
+                .dontAnimate()
+                .into(userPhoto);
     }
 
     @Override

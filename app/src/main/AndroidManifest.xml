@@ -18,7 +18,8 @@
             android:name=".main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".dzieci.DzieciDetailsActivity" />
+        <activity android:name=".dzieci.DzieciDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".dzieci.DzieciStatisticsActivity" />
         <activity android:name=".login.LoginActivity">
             <intent-filter>
@@ -40,7 +41,7 @@
         <activity android:name=".helpers.FilePickerActivity" />
         <activity android:name=".multimedia.PickerActivity" />
         <activity android:name=".multimedia.ShowMediaActivity" />
-        <activity android:name=".multimedia.PlayerActivity"></activity>
+        <activity android:name=".multimedia.PlayerActivity" />
     </application>
 
 </manifest>

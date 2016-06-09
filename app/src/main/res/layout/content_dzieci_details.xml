@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAppBackground"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="pl.osik.autyzm.ScrollingActivity"
+    tools:showIn="@layout/activity_dzieci_details">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".dzieci.DzieciDetailsActivity">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_children"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                style="@style/DzieciDetailsSubheader"
+                android:text="@string/dzieci_details_dane_dziecka" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/imieLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/imie"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:capitalize="words"
+                android:hint="@string/dzieci_details_imie"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nazwiskoLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/nazwisko"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:capitalize="words"
+                android:hint="@string/dzieci_details_nazwisko"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/data_urodzeniaLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/data_urodzenia"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:focusable="false"
+                android:hint="@string/dzieci_details_data_urodzenia"
+                android:onClick="setDate" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/rozpoczecieLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/rozpoczecie"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:focusable="false"
+                android:hint="@string/dzieci_details_rozpoczecie"
+                android:onClick="setDate" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/notatkiLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/notatki"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:capitalize="sentences"
+                android:gravity="top"
+                android:hint="@string/dzieci_details_notatki"
+                android:inputType="textMultiLine" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <View style="@style/DividerLine" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_rodzice"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                style="@style/DzieciDetailsSubheader"
+                android:text="@string/dzieci_details_dane_rodzicow" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/imie_ojcaLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/imie_ojca"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:capitalize="words"
+                android:hint="@string/dzieci_details_imie_ojca"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nazwisko_ojcaLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/nazwisko_ojca"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:capitalize="words"
+                android:ems="10"
+                android:hint="@string/dzieci_details_nazwisko_ojca"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/telefon_ojcaLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/telefon_ojca"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:hint="@string/dzieci_details_telefon_ojca"
+                android:inputType="phone" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/telefon_ojca_label"
+            style="@style/DzieciDetailsTelefonyRodzicowHeader"
+            android:text="@string/dzieci_details_telefon_ojca" />
+
+        <TextView
+            android:id="@+id/telefon_ojca_view"
+            style="@style/DzieciDetailsTelefonyRodzicow"
+            android:hint="@string/dzieci_details_telefon_ojca" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/imie_matkiLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/imie_matki"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:capitalize="words"
+                android:hint="@string/dzieci_details_imie_matki"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nazwisko_matkiLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/nazwisko_matki"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:capitalize="words"
+                android:hint="@string/dzieci_details_nazwisko_matki"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/telefon_matkiLayout"
+            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/telefon_matki"
+                style="@style/EditTextMaterial.EditTextDzieciDetails"
+                android:hint="@string/dzieci_details_telefon_matki"
+                android:inputType="phone" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/telefon_matki_label"
+            style="@style/DzieciDetailsTelefonyRodzicowHeader"
+            android:text="@string/dzieci_details_telefon_matki" />
+
+        <TextView
+            android:id="@+id/telefon_matki_view"
+            style="@style/DzieciDetailsTelefonyRodzicow"
+            android:hint="@string/dzieci_details_telefon_matki" />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

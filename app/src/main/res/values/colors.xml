@@ -11,4 +11,5 @@
     <color name="colorPrimaryDisabled">#d9ddf2</color>
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="colorCardBackground">#CCC</color>
+    <color name="colorGreen">#00cc00</color>
 </resources>

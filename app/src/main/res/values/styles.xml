@@ -16,7 +16,7 @@
 
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -25,10 +25,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <!-- Text -->
+    <!-- TextView -->
     <style name="TextMenu" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">#000</item>
     </style>
+
     <style name="TextListHeader" parent="Base.TextAppearance.AppCompat.Medium">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingTop">16dp</item>
@@ -37,10 +38,12 @@
         <item name="android:textColor">@color/colorHeader</item>
         <item name="android:layout_marginBottom">16dp</item>
     </style>
+
     <style name="TextHint" parent="Base.TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_marginTop">20dp</item>
     </style>
+
     <style name="TextDesignLabel" parent="Theme.AppCompat">
         <!-- Hint color and label color in FALSE state -->
         <item name="android:textColorHint">@color/colorAppBackground</item>
@@ -50,6 +53,41 @@
         <item name="colorControlNormal">@color/colorAppBackground</item>
         <item name="colorControlActivated">@color/colorAppBackground</item>
     </style>
+    <style name="TextDesignLabel.Dark" parent="Theme.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@android:color/black</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@android:color/black</item>
+        <item name="colorControlNormal">@android:color/black</item>
+        <item name="colorControlActivated">@android:color/black</item>
+    </style>
+    <style name="TextDesignLabel.Primary" parent="Theme.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+    <style name="DzieciDetailsSubheader">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="DzieciDetailsTelefonyRodzicow" parent="EditTextMaterial.EditTextDzieciDetailsLayer">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:layout_marginLeft">55dp</item>
+        <item name="android:layout_marginBottom">7dp</item>
+        <item name="android:visibility">gone</item>
+    </style>
+    <style name="DzieciDetailsTelefonyRodzicowHeader" parent="DzieciDetailsTelefonyRodzicow">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 
     <!-- EditText -->
     <style name="EditTextGrid">
@@ -57,15 +95,26 @@
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:singleLine">true</item>
     </style>
+
     <style name="EditTextGrid.Left" parent="EditTextGrid">
         <item name="android:layout_marginRight">15dp</item>
     </style>
-    <style name="EditTextLogin">
+
+    <style name="EditTextMaterial">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/edit_text_bottom_border</item>
         <item name="android:singleLine">true</item>
+    </style>
+    <style name="EditTextMaterial.EditTextLogin" parent="EditTextMaterial">
+        <item name="android:background">@drawable/edit_text_bottom_border</item>
         <item name="android:textColor">@color/colorAppBackground</item>
+    </style>
+    <style name="EditTextMaterial.EditTextDzieciDetailsLayer" parent="EditTextMaterial">
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:theme">@style/TextDesignLabel.Primary</item>
+    </style>
+    <style name="EditTextMaterial.EditTextDzieciDetails" parent="EditTextMaterial">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <!-- View -->
@@ -75,11 +124,13 @@
         <item name="android:background">@color/colorDividerLine</item>
         <item name="android:layout_marginBottom">20dp</item>
     </style>
+
     <style name="DividerLine.RecyclerView" parent="DividerLine">
         <item name="android:layout_marginBottom">0dp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
     </style>
+
     <style name="EmptySpaceFiller">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
@@ -96,10 +147,12 @@
         <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">5dp</item>
     </style>
+
     <style name="buttonStyle.bottomButton">
         <item name="android:layout_gravity">bottom</item>
         <item name="android:layout_height">50dp</item>
     </style>
+
     <style name="buttonStyle.buttonNext" parent="buttonStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
@@ -107,12 +160,14 @@
         <item name="android:text">@string/button_next</item>
         <item name="android:layout_height">36dp</item>
     </style>
+
     <style name="buttonInPanel" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:elevation">0dp</item>
     </style>
+
     <style name="myFAB">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -122,6 +177,7 @@
         <item name="android:tint">@color/colorAppBackground</item>
         <item name="backgroundTint">@color/colorPrimary</item>
     </style>
+
     <style name="innerFAB">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -136,6 +192,7 @@
         <item name="android:paddingBottom">100dp</item>
         <item name="android:clipToPadding">false</item>
     </style>
+
     <style name="multimediaItem">
         <item name="android:gravity">center|left</item>
         <item name="android:textColor">@color/colorAppBackground</item>
@@ -143,6 +200,7 @@
         <item name="android:paddingLeft">2dp</item>
         <item name="android:tint">@color/colorAppBackground</item>
     </style>
+
     <style name="itemList">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -176,6 +234,7 @@
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
     <style name="contextMenu">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
@@ -184,14 +243,17 @@
         <item name="android:paddingRight">16dp</item>
         <item name="android:src">@drawable/ic_context_menu</item>
     </style>
+
     <style name="arrow">
         <item name="android:src">@drawable/ic_arrow</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="arrow.up" parent="arrow">
         <item name="android:rotation">90</item>
     </style>
+
     <style name="arrow.down" parent="arrow">
         <item name="android:rotation">270</item>
     </style>

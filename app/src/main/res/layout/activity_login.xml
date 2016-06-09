@@ -73,7 +73,7 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/login"
                 android:layout_marginBottom="40dp"
-                style="@style/EditTextLogin"
+                style="@style/EditTextMaterial.EditTextLogin"
                 android:hint="@string/login_login" />
 
         </android.support.design.widget.TextInputLayout>
@@ -86,7 +86,7 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/password"
-                style="@style/EditTextLogin"
+                style="@style/EditTextMaterial.EditTextLogin"
                 android:layout_marginBottom="10dp"
                 android:hint="@string/login_haslo"
                 android:inputType="textPassword" />

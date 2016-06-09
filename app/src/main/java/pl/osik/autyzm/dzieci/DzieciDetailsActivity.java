@@ -9,11 +9,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.opengl.Visibility;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +35,8 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,6 +79,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
     };
 
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Bind(R.id.imie)
     EditText imie;
     @Bind(R.id.nazwisko)
@@ -85,6 +97,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     EditText nazwiskoOjca;
     @Bind(R.id.telefon_ojca)
     EditText telefonOjca;
+    @Bind(R.id.telefon_ojca_label)
+    TextView telefonOjcaLabel;
     @Bind(R.id.telefon_ojca_view)
     TextView telefonOjcaView;
     @Bind(R.id.imie_matki)
@@ -93,16 +107,16 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     EditText nazwiskoMatki;
     @Bind(R.id.telefon_matki)
     EditText telefonMatki;
+    @Bind(R.id.telefon_matki_label)
+    TextView telefonMatkiLabel;
     @Bind(R.id.telefon_matki_view)
     TextView telefonMatkiView;
-    @Bind(R.id.button)
-    Button button;
-    @Bind(R.id.photoContainer)
-    FrameLayout photoContainer;
+    @Bind(R.id.fab)
+    FloatingActionButton button;
     @Bind(R.id.photo)
     ImageView photo;
-    @Bind(R.id.scrollView)
-    ScrollView scrollView;
+
+    Menu menu;
 
     private HashMap<String, String> dziecko;
 
@@ -116,7 +130,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             put(Dziecko.COLUMN_NAZWISKO, nazwisko);
             put(Dziecko.COLUMN_DATAURODZENIA, dataUrodzenia);
             put(Dziecko.COLUMN_DATAWPROWADZENIA, rozpoczecie);
-            put(Dziecko.COLUMN_NOTATKI,notatki);
+            put(Dziecko.COLUMN_NOTATKI, notatki);
             put(Dziecko.COLUMN_OJCIECIMIE, imieOjca);
             put(Dziecko.COLUMN_OJCIECNAZWISKO, nazwiskoOjca);
             put(Dziecko.COLUMN_OJCIECTELEFON, telefonOjca);
@@ -125,6 +139,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             put(Dziecko.COLUMN_MATKATELEFON, telefonMatki);
         }};
 
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle bundle = getIntent().getExtras();
 
@@ -138,26 +153,17 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             dziecko = Dziecko.getDzieckoById(id);
             getSupportActionBar().setTitle(dziecko.get(Dziecko.COLUMN_IMIE) + " " + dziecko.get(Dziecko.COLUMN_NAZWISKO));
             populate();
-            ViewTreeObserver vto = photo.getViewTreeObserver();
-            vto.addOnPreDrawListener(new MyPreDrawListener(photo, dziecko.get(Dziecko.COLUMN_PHOTO), this));
         }
 
         /* Dodawanie + Edycja */
         if(operacja != OperationsEnum.SHOW) {
-            photo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FileHelper.FileManager.pickPhoto(DzieciDetailsActivity.this, FileHelper.FileManager.EXTENSION_ARRAY_PHOTO);
-                }
-            });
             addValidations();
         }
 
         /* Pojedyncze operacje */
         if(operacja == OperationsEnum.EDYCJA) {
-            addDeletePhotoButton();
+            //nic?
         } else if(operacja == OperationsEnum.SHOW) {
-            button.setText(R.string.dzieci_details_button_statystyki);
             blockEditTexts();
             if(AppHelper.canDeviceMakeCall()) {
                 PhoneCallOnClickListener phoneCallOnClickListener = new PhoneCallOnClickListener(this);
@@ -171,45 +177,29 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             rozpoczecie.setText(sdf.format(cal.getTime()));
+            button.setVisibility(View.GONE);
         }
         /** END **/
         button.setOnClickListener(this);
     }
 
-    private void addDeletePhotoButton() {
-        if(dziecko.get(Dziecko.COLUMN_PHOTO) == null) return;
-
-        final ImageView image = new ImageView(this);
-        image.setImageResource(R.drawable.ic_delete_photo);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.TOP|Gravity.RIGHT;
-        image.setLayoutParams(params);
-        photoContainer.addView(image);
-
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(DzieciDetailsActivity.this);
-                dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
-                        .setTitle(R.string.popup_uwaga)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Dziecko d = new Dziecko();
-                                d.changePhoto(id, null);
-                                photo.setImageResource(RESOURCE_NO_PHOTO);
-                                image.setVisibility(View.GONE);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, null)
-                        .setIcon(R.drawable.ic_uwaga);
-                dialog.show();
-            }
-        });
+    private void setPhoto(@Nullable String path) {
+        if(path == null) {
+            photo.setImageResource(RESOURCE_NO_PHOTO);
+            menu.findItem(R.id.deletePhoto).setVisible(false);
+            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);
+        } else {
+            Glide.with(this)
+                    .load(path)
+                    .centerCrop()
+                    .into(photo);
+            menu.findItem(R.id.deletePhoto).setVisible(true);
+            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_zmien_zdjecie);
+        }
     }
 
     private void addValidations() {
-        validate.addValidate(new View[] { imie, nazwisko }, new ValidateNotNull());
+        validate.addValidate(new View[]{imie, nazwisko}, new ValidateNotNull());
     }
 
     private void populate() {
@@ -223,18 +213,40 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     private void blockEditTexts() {
         for(Map.Entry<String, EditText> entry : all.entrySet()) {
             entry.getValue().setEnabled(false);
+            entry.getValue().setBackground(null);
         }
         hideKeyboard();
         telefonMatki.setVisibility(View.GONE);
         telefonMatkiView.setVisibility(View.VISIBLE);
+        telefonMatkiLabel.setVisibility(View.VISIBLE);
         telefonOjca.setVisibility(View.GONE);
         telefonOjcaView.setVisibility(View.VISIBLE);
+        telefonOjcaLabel.setVisibility(View.VISIBLE);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
+            case R.id.changePhoto:
+                FileHelper.FileManager.pickPhoto(DzieciDetailsActivity.this, FileHelper.FileManager.EXTENSION_ARRAY_PHOTO);
+                return true;
+            case R.id.deletePhoto:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(DzieciDetailsActivity.this);
+                dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
+                        .setTitle(R.string.popup_uwaga)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Dziecko d = new Dziecko();
+                                d.changePhoto(id, null);
+                                setPhoto(null);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.ic_uwaga);
+                dialog.show();
+                return true;
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -246,7 +258,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     /* Zapisz lub Statystyki */
     @Override
     public void onClick(View v) {
-        Button button = (Button) v;
+        FloatingActionButton button = (FloatingActionButton) v;
         Dziecko d = new Dziecko();
         if(operacja == OperationsEnum.SHOW) {
             Intent intent = new Intent(this, DzieciStatisticsActivity.class);
@@ -285,8 +297,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
                 Dziecko.changePhoto(id, path);
-                FileHelper.FileManager.placePhoto(this, photo, path);
-                addDeletePhotoButton();
+                setPhoto(path);
             }
         }
     }
@@ -326,6 +337,15 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 Log.d("keyboardHide", "Klawiatura się nie pojawiła");
             }       //Jeżeli klawiatura się nie pojawi to idziemy dalej
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.dzieci_details_menu, menu);
+        setPhoto(dziecko.get(Dziecko.COLUMN_PHOTO));
+        return true;
     }
 }
 

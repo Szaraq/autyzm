@@ -1,255 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAppBackground">
+    android:fitsSystemWindows="true"
+    tools:context="pl.osik.autyzm.ScrollingActivity">
 
-
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context=".dzieci.DzieciDetailsActivity">
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <LinearLayout
-            android:id="@+id/layout1"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:id="@+id/photoContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:id="@+id/photo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </FrameLayout>
-
-                <EditText
-                    android:id="@+id/data_urodzenia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="@string/dzieci_details_data_urodzenia"
-                    android:onClick="setDate" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/imie"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:capitalize="words"
-                    android:ems="10"
-                    android:hint="@string/dzieci_details_imie"
-                    android:inputType="textPersonName"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/nazwisko"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:capitalize="words"
-                    android:ems="10"
-                    android:hint="@string/dzieci_details_nazwisko"
-                    android:inputType="textPersonName"
-                    android:paddingTop="15dp"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/rozpoczecie"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="@string/dzieci_details_rozpoczecie"
-                    android:onClick="setDate"
-                    android:paddingTop="15dp" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/notatki"
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:capitalize="sentences"
-            android:gravity="top"
-            android:hint="@string/dzieci_details_notatki"
-            android:inputType="textMultiLine"
-            android:lines="10" />
-
-        <RelativeLayout
-            android:id="@+id/layout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/dane_rodzicow_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:paddingBottom="7dp"
-                android:paddingTop="15dp"
-                android:text="@string/dzieci_details_dane_rodzicow"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <View
-                android:id="@+id/divider"
-                style="@style/DividerLine"
-                android:layout_below="@id/dane_rodzicow_text" />
-
-            <LinearLayout
-                android:id="@+id/dane_rodzicow"
+            <ImageView
+                android:id="@+id/photo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/divider"
-                android:orientation="horizontal">
+                android:layout_height="match_parent" />
 
-                <LinearLayout
-                    android:id="@+id/dane_ojca"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:orientation="vertical">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-                    <EditText
-                        android:id="@+id/imie_ojca"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:capitalize="words"
-                        android:ems="10"
-                        android:hint="@string/dzieci_details_imie_ojca"
-                        android:inputType="textPersonName"
-                        android:singleLine="true" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
-                    <EditText
-                        android:id="@+id/nazwisko_ojca"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:capitalize="words"
-                        android:ems="10"
-                        android:hint="@string/dzieci_details_nazwisko_ojca"
-                        android:inputType="textPersonName"
-                        android:singleLine="true" />
+    <include layout="@layout/content_dzieci_details" />
 
-                    <EditText
-                        android:id="@+id/telefon_ojca"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/dzieci_details_telefon_ojca"
-                        android:inputType="phone"
-                        android:singleLine="true" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:tint="@color/colorAppBackground"
+        android:src="@drawable/ic_statistics"
+        app:backgroundTint="@color/colorGreen"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end" />
 
-                    <TextView
-                        android:id="@+id/telefon_ojca_view"
-                        android:visibility="gone"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:hint="@string/dzieci_details_telefon_ojca" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"></LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/dane_matki"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/imie_matki"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:capitalize="words"
-                        android:ems="10"
-                        android:hint="@string/dzieci_details_imie_matki"
-                        android:inputType="textPersonName"
-                        android:singleLine="true" />
-
-                    <EditText
-                        android:id="@+id/nazwisko_matki"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:capitalize="words"
-                        android:ems="10"
-                        android:hint="@string/dzieci_details_nazwisko_matki"
-                        android:inputType="textPersonName"
-                        android:singleLine="true" />
-
-                    <EditText
-                        android:id="@+id/telefon_matki"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/dzieci_details_telefon_matki"
-                        android:inputType="phone"
-                        android:singleLine="true" />
-
-                    <TextView
-                        android:id="@+id/telefon_matki_view"
-                        android:visibility="gone"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:hint="@string/dzieci_details_telefon_matki" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button"
-                style="@style/buttonStyle"
-                android:layout_below="@id/dane_rodzicow"
-                android:text="@string/button_zapisz" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-</ScrollView>
+</android.support.design.widget.CoordinatorLayout>

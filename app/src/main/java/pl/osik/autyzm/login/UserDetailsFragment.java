@@ -5,11 +5,13 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -17,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -31,6 +35,7 @@ import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.main.MainActivity;
+import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateExistsInDatabase;
@@ -47,8 +52,6 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
 
     private static boolean newAccount;
 
-    @Bind(R.id.photoContainer)
-    FrameLayout photoContainer;
     @Bind(R.id.userPhoto)
     ImageView userPhoto;
     @Bind(R.id.imie)
@@ -99,42 +102,6 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
-    private void addDeletePhotoButton() {
-        if(userData.get(User.COLUMN_PHOTO) == null) return;
-
-        final ImageView image = new ImageView(getContext());
-        image.setImageResource(R.drawable.ic_delete_photo);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.TOP|Gravity.RIGHT;
-        image.setLayoutParams(params);
-        photoContainer.addView(image);
-
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(UserDetailsFragment.this.getContext());
-                dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
-                        .setTitle(R.string.popup_uwaga)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                photoPath = null;
-                                setNoPhoto();
-                                image.setVisibility(View.GONE);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, null)
-                        .setIcon(R.drawable.ic_uwaga);
-                dialog.show();
-            }
-        });
-    }
-
-    private void setNoPhoto() {
-        userPhoto.setLayoutParams(new FrameLayout.LayoutParams((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getActivity().getResources().getDisplayMetrics()), (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getActivity().getResources().getDisplayMetrics())));
-        userPhoto.setImageResource(UserDetailsFragment.RESOURCE_NO_PHOTO);
-    }
-
     private void setEditTextsEnterOrder() {
         imie.setOnKeyListener(new MyOnKeyEnterListener(nazwisko));
         nazwisko.setOnKeyListener(new MyOnKeyEnterListener(user));
@@ -155,14 +122,26 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     private void populate() {
         userData = User.getCurrentData();
         if(userData.get(User.COLUMN_PHOTO) != null) {
-            //AppHelper.FileManager.placePhoto(this.getActivity(), userPhoto, userData.get(User.COLUMN_PHOTO));
-            ViewTreeObserver vto = userPhoto.getViewTreeObserver();
-            vto.addOnPreDrawListener(new MyPreDrawListener(userPhoto, userData.get(User.COLUMN_PHOTO), this.getActivity(), 100, 100));
-            addDeletePhotoButton();
-        } else setNoPhoto();
+            setPhoto(userData.get(User.COLUMN_PHOTO));
+        } else setPhoto(null);
 
         for (Map.Entry<String, EditText> entry : editTextHashMap.entrySet()) {
             entry.getValue().setText(userData.get(entry.getKey()));
+        }
+    }
+
+    private void setPhoto(@Nullable String path) {
+        if(path == null) {
+            userPhoto.setImageResource(RESOURCE_NO_PHOTO);
+            /*menu.findItem(R.id.deletePhoto).setVisible(false);
+            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);*/
+        } else {
+            Glide.with(this)
+                    .load(path)
+                    .centerCrop()
+                    .into(userPhoto);
+            /*menu.findItem(R.id.deletePhoto).setVisible(true);
+            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_zmien_zdjecie);*/
         }
     }
 
@@ -204,7 +183,33 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     @Override
     public void placeFile(String path) {
         photoPath = path;
-        FileHelper.FileManager.placePhoto(this.getActivity(), userPhoto, photoPath, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getActivity().getResources().getDisplayMetrics()));
-        addDeletePhotoButton();
+        setPhoto(photoPath);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.changePhoto:
+                editPhoto();
+                return true;
+            case R.id.deletePhoto:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
+                        .setTitle(R.string.popup_uwaga)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                photoPath = null;
+                                setPhoto(null);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.ic_uwaga);
+                dialog.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

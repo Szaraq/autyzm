@@ -239,7 +239,6 @@
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_gravity">center</item>
     </style>
-
     <style name="contextMenu">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
@@ -248,19 +247,23 @@
         <item name="android:paddingRight">16dp</item>
         <item name="android:src">@drawable/ic_context_menu</item>
     </style>
-
     <style name="arrow">
         <item name="android:src">@drawable/ic_arrow</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
     <style name="arrow.up" parent="arrow">
         <item name="android:rotation">90</item>
     </style>
-
     <style name="arrow.down" parent="arrow">
         <item name="android:rotation">270</item>
+    </style>
+    <style name="telefon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_call</item>
+        <item name="android:tint">@color/colorGreen</item>
+        <item name="android:visibility">gone</item>
     </style>
 
 </resources>

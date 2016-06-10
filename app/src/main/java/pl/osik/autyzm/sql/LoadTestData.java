@@ -122,6 +122,9 @@ public class LoadTestData {
         params.put(Dziecko.COLUMN_IMIE, "Mateusz");
         params.put(Dziecko.COLUMN_NAZWISKO, "Azdjęciowy");
         params.put(Dziecko.COLUMN_USER, 1);
+        params.put(Dziecko.COLUMN_OJCIECNAZWISKO, null);
+        params.put(Dziecko.COLUMN_MATKATELEFON, null);
+        params.put(Dziecko.COLUMN_OJCIECTELEFON, null);
         params.put(Dziecko.COLUMN_PHOTO, "/storage/sdcard/Download/Miranda_de_Miranda.jpg");
         d.insert(params);
 

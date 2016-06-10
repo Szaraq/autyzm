@@ -101,6 +101,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     TextView telefonOjcaLabel;
     @Bind(R.id.telefon_ojca_view)
     TextView telefonOjcaView;
+    @Bind(R.id.telefon_ojca_icon)
+    ImageView telefonOjcaIcon;
     @Bind(R.id.imie_matki)
     EditText imieMatki;
     @Bind(R.id.nazwisko_matki)
@@ -111,6 +113,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     TextView telefonMatkiLabel;
     @Bind(R.id.telefon_matki_view)
     TextView telefonMatkiView;
+    @Bind(R.id.telefon_matki_icon)
+    ImageView telefonMatkiIcon;
     @Bind(R.id.fab)
     FloatingActionButton button;
     @Bind(R.id.photo)
@@ -166,9 +170,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         } else if(operacja == OperationsEnum.SHOW) {
             blockEditTexts();
             if(AppHelper.canDeviceMakeCall()) {
-                PhoneCallOnClickListener phoneCallOnClickListener = new PhoneCallOnClickListener(this);
-                telefonOjcaView.setOnClickListener(phoneCallOnClickListener);
-                telefonMatkiView.setOnClickListener(phoneCallOnClickListener);
+                enableCalling(telefonMatkiIcon, telefonMatkiView, telefonMatkiLabel);
+                enableCalling(telefonOjcaIcon, telefonOjcaView, telefonOjcaLabel);
             }
         } else if(operacja == OperationsEnum.DODAWANIE) {
             getSupportActionBar().setTitle(R.string.dziecko_dodaj_title);
@@ -181,6 +184,17 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
         /** END **/
         button.setOnClickListener(this);
+    }
+
+    private void enableCalling(ImageView icon, TextView text, TextView label) {
+        if(text.length() > 0) {
+            PhoneCallOnClickListener phoneCallOnClickListenerMatki = new PhoneCallOnClickListener(this, text.getText().toString().trim());
+            text.setOnClickListener(phoneCallOnClickListenerMatki);
+            icon.setOnClickListener(phoneCallOnClickListenerMatki);
+        } else {
+            label.setVisibility(View.GONE);
+            icon.setColorFilter(getResources().getColor(R.color.colorGreyDisabled));
+        }
     }
 
     private void setPhoto(@Nullable String path) {
@@ -219,9 +233,11 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         telefonMatki.setVisibility(View.GONE);
         telefonMatkiView.setVisibility(View.VISIBLE);
         telefonMatkiLabel.setVisibility(View.VISIBLE);
+        telefonMatkiIcon.setVisibility(View.VISIBLE);
         telefonOjca.setVisibility(View.GONE);
         telefonOjcaView.setVisibility(View.VISIBLE);
         telefonOjcaLabel.setVisibility(View.VISIBLE);
+        telefonOjcaIcon.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -351,15 +367,17 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 class PhoneCallOnClickListener implements View.OnClickListener {
 
     Activity activity;
+    String phoneNumber;
 
-    public PhoneCallOnClickListener(Activity activity) {
+    public PhoneCallOnClickListener(Activity activity, String phoneNumber) {
         this.activity = activity;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
     public void onClick(View v) {
         if(activity.checkCallingOrSelfPermission(android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-            String number = "tel:" + ((TextView) v).getText().toString().trim();
+            String number = "tel:" + phoneNumber;
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
             activity.startActivity(callIntent);
             Log.d("PhoneCallOnClickListen", "Właśnie dzwonię pod numer: " + number);

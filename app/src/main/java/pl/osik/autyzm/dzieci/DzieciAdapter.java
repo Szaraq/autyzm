@@ -108,7 +108,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                 gotoDetails(OperationsEnum.SHOW);
             }
         });
-        AppHelper.changeListItemHeight(listaDzieci);
+        //AppHelper.changeListItemHeight(listaDzieci);
     }
 
     protected void gotoDetails(OperationsEnum operacja) {

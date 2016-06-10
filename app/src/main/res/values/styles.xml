@@ -145,17 +145,17 @@
     </style>
 
     <!-- Button -->
-    <style name="buttonStyle">
+    <style name="buttonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/button</item>
+        <item name="android:colorButtonNormal">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorAppBackground</item>
-        <item name="android:radius">2dp</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:elevation">5dp</item>
+        <item name="android:elevation">4dp</item>
+        <!--<item name="android:stateListAnimator">@null</item>-->
     </style>
 
-    <style name="buttonStyle.bottomButton">
+    <style name="buttonStyle.bottomButton" parent="buttonStyle">
         <item name="android:layout_gravity">bottom</item>
         <item name="android:layout_height">50dp</item>
     </style>
@@ -213,9 +213,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">5</item>
         <item name="android:gravity">center_vertical|left</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingLeft">@dimen/item_text_margin</item>
         <item name="android:text">Small Text</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>

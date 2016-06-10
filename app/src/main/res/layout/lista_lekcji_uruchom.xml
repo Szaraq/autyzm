@@ -43,59 +43,58 @@
 
                 <TextView
                     android:id="@+id/lekcja_name"
-                    android:textColor="@color/colorAppBackground"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_gravity="bottom"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/colorAppBackground" />
 
             </FrameLayout>
-<!--
-            <View
-                style="@style/DividerLine"
-                android:layout_marginBottom="10dp" />-->
+            <!--
+                        <View
+                            style="@style/DividerLine"
+                            android:layout_marginBottom="10dp" />-->
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
-                    android:text="Moduły:"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_marginTop="20dp"
+                    android:text="Moduły:" />
 
                 <TextView
                     android:id="@+id/moduly_lewy"
-                    android:textColor="@android:color/black"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/favourite"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center|left"
-                    android:src="@drawable/ic_favourite_add"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_favourite_add" />
 
-                <View
-                    style="@style/EmptySpaceFiller"/>
+                <View style="@style/EmptySpaceFiller" />
 
                 <Button
                     android:id="@+id/buttonEdit"

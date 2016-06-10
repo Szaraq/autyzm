@@ -99,7 +99,7 @@ class WyborDzieckaViewHolder extends RecyclerView.ViewHolder implements View.OnC
         super(itemView);
         ButterKnife.bind(this, itemView);
         dzieciName.setOnClickListener(this);
-        AppHelper.changeListItemHeight(listaDzieci);
+        //AppHelper.changeListItemHeight(listaDzieci);
     }
 
     public void setPhoto(String photo) {

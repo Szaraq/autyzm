@@ -101,7 +101,7 @@ class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     public FolderyViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        AppHelper.changeListItemHeight(listaFolderow);
+        //AppHelper.changeListItemHeight(listaFolderow);
         folderyContextMenu.setOnClickListener(this);
         listaFolderow.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -125,16 +125,16 @@ public class LekcjeHelper {
         /* Moduł */
         Modul m = new Modul();
         modul.setLekcja(lekcja.getId());
-        modul.setNumer(modulyList.size()+1);
+        if(modul.getNumer() == 0) modul.setNumer(modulyList.size()+1);
         modul.setGhost(false);
         data = modul.getContentValues();
         if(isModulNew()) {
             data.remove(Modul.COLUMN_ID);
             modul.setId((int) m.insert(data));
+            modulyList.add(modul);
         } else {
             m.edit(modul.getId(), data);
         }
-        modulyList.add(modul);
         data.clear();
 
         for(int i : modulyDoUsuniecia) m.delete(i);

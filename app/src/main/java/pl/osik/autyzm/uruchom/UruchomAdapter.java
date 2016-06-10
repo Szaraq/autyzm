@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,10 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +80,6 @@ public class UruchomAdapter extends RecyclerView.Adapter<UruchomViewHolder> {
 
     public void refresh() {
         lekcje = Lekcja.getLekcjaList(true);
-        UruchomViewHolder.clearThumbnails();
         notifyDataSetChanged();
     }
 
@@ -86,8 +90,6 @@ public class UruchomAdapter extends RecyclerView.Adapter<UruchomViewHolder> {
 
 class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private static ArrayList<ImageView> thumbnails = new ArrayList<>();
-
     private UruchomFragment fragment;
     private UruchomAdapter adapter;
     private LekcjaORM lekcja;
@@ -95,14 +97,12 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     @Bind(R.id.containerLayout)
     CardView containerLayout;
-    @Bind(R.id.thumbnailsContainer)
-    LinearLayout thumbnailsContainer;
+    @Bind(R.id.thumbnail)
+    ImageView thumbnail;
     @Bind(R.id.lekcja_name)
     TextView lekcjaName;
     @Bind(R.id.moduly_lewy)
     TextView modulyLewy;
-    @Bind(R.id.moduly_prawy)
-    TextView modulyPrawy;
     @Bind(R.id.favourite)
     ImageView favourite;
     @Bind(R.id.buttonDelete)
@@ -133,19 +133,16 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         buttonDelete.setOnClickListener(this);
         buttonEdit.setOnClickListener(this);
         Lekcja.changeFavouriteIcon(favourite, lekcja.isFavourite());
-
-        //thumbnailList.put(lekcja, new ArrayList<ImageView>());
     }
 
     private void setModuly(ArrayList<ModulORM> moduly) {
         this.moduly = moduly;
-        boolean nextLewy = true;
-        TextView nextTextView;
+        StringBuilder txt = new StringBuilder();
         for (ModulORM modul : moduly) {
-            nextTextView = nextLewy ? modulyLewy : modulyPrawy;
-            nextTextView.setText(modul.getShortName());
-            nextLewy = !nextLewy;
+            txt.append(modul.getName());
+            txt.append("\n");
         }
+        modulyLewy.setText(txt);
     }
 
     @Override
@@ -176,7 +173,12 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     }
 
     protected void createThumbnails() {
-        for (ModulORM modul : moduly) {
+        String path = Plik.getById(moduly.get(0).getPlik(), true).getPath();
+        ViewTreeObserver vto = thumbnail.getViewTreeObserver();
+        vto.addOnPreDrawListener(new MyPreDrawListener(thumbnail, path, fragment.getActivity()));
+        thumbnail.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
+
+        /*for (ModulORM modul : moduly) {
             Log.d("Thumb", modul.getId()+"");
             PlikORM plik = Plik.getById(modul.getPlik(), true);
             Bitmap bitmap = FileHelper.rescaleBitmap(plik.getPath(), FileHelper.RESCALE_PROPORTIONALLY, thumbnailsContainer.getLayoutParams().height);
@@ -191,7 +193,7 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
             vto.addOnPreDrawListener(new MyPreDrawListener(thumb, bitmap, fragment.getActivity()));
             thumbnails.add(thumb);
             //thumb.setImageBitmap(bitmap);
-        }
+        }*/
     }
 
     protected void gotoDetails(OperationsEnum operacja) {
@@ -199,12 +201,5 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         LekcjeHelper.setLekcja(lekcja);
         LekcjeHelper.setOperacja(operacja);
         fragment.startActivity(intent);
-    }
-
-    protected static void clearThumbnails() {
-        for (ImageView thumb : thumbnails) {
-            thumb.setVisibility(View.GONE);
-        }
-        thumbnails.clear();
     }
 }

@@ -51,8 +51,12 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
     }
 
     public String getShortName() {
-        if(name.length() <= SHORT_NAME_MAX_LENGTH) return name;
-        return name.substring(0, SHORT_NAME_MAX_LENGTH - 3) + "...";
+        return getShortName(SHORT_NAME_MAX_LENGTH);
+    }
+
+    public String getShortName(int maxLength) {
+        if(name.length() <= maxLength) return name;
+        return name.substring(0, maxLength - 3) + "...";
     }
 
     @Override

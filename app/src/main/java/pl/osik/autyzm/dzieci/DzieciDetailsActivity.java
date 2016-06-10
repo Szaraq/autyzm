@@ -258,7 +258,6 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     /* Zapisz lub Statystyki */
     @Override
     public void onClick(View v) {
-        FloatingActionButton button = (FloatingActionButton) v;
         Dziecko d = new Dziecko();
         if(operacja == OperationsEnum.SHOW) {
             Intent intent = new Intent(this, DzieciStatisticsActivity.class);

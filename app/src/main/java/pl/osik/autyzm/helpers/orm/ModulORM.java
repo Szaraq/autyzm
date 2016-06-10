@@ -67,8 +67,12 @@ public class ModulORM {
     }
 
     public String getShortName() {
-        if(name.length() <= PlikORM.SHORT_NAME_MAX_LENGTH) return name;
-        return name.substring(0, PlikORM.SHORT_NAME_MAX_LENGTH - 3) + "...";
+        return getShortName(PlikORM.SHORT_NAME_MAX_LENGTH);
+    }
+
+    public String getShortName(int maxLength) {
+        if(name.length() <= maxLength) return name;
+        return name.substring(0, maxLength - 3) + "...";
     }
 
     public void setName(String name) {
@@ -82,6 +86,7 @@ public class ModulORM {
         out.put(Modul.COLUMN_FILM, plik);
         out.put(Modul.COLUMN_LEKCJA, lekcja);
         out.put(Modul.COLUMN_NUMER, numer);
+        out.put(Modul.COLUMN_GHOST, ghost);
         return out;
     }
 

@@ -105,6 +105,7 @@ public class LekcjaORM implements Serializable {
         out.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, getLastUsedAsString());
         out.put(Lekcja.COLUMN_FAVOURITE, false);
         out.put(Lekcja.COLUMN_USER, user);
+        out.put(Lekcja.COLUMN_GHOST, ghost);
         return out;
     }
 

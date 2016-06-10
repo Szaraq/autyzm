@@ -46,6 +46,7 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
             Glide.with(activity)
                     .load(path)
                     .dontAnimate()
+                    .centerCrop()
                     .into(photo);
         } else {
             photo.setImageResource(DzieciDetailsActivity.RESOURCE_NO_PHOTO);

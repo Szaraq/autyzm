@@ -50,7 +50,6 @@ import pl.osik.autyzm.validate.ValidateCommand;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener, View.OnFocusChangeListener {
     private static final String BACKGROUND_PATH = "file:///android_asset/login_tlo.jpg";
 
-    //TODO co jeżeli photo nie istnieje?
     //TODO FINALLY prawa autorskie do tła: http://wallpapercave.com/w/tTuFP5q
 
     private final String UserDetailsFragmentTag = "UserDetailsFragment";

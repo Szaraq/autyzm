@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity
 
     //TODO FINALLY dodać final tam gdzie można
     //TODO FINALLY wyrzucić debuggable z manifest i build.gradle
-    //TODO Zmienić walidacje na zgodne z MD: http://www.androidhive.info/2015/09/android-material-design-floating-labels-for-edittext/
 
     public static MainActivity instance;
     private TextView user;

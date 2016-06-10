@@ -107,8 +107,8 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
     public void onResume() {
         super.onResume();
         if(LekcjeHelper.hasModules()) {
-            createList();
-            modulyAdapter.refresh();
+            if(modulyAdapter == null) createList();
+                else modulyAdapter.refresh();
             brakModulow.setVisibility(View.INVISIBLE);
             listaModulow.setVisibility(View.VISIBLE);
             buttonNext.setClickable(true);

@@ -192,8 +192,9 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             text.setOnClickListener(phoneCallOnClickListenerMatki);
             icon.setOnClickListener(phoneCallOnClickListenerMatki);
         } else {
+            text.setVisibility(View.GONE);
             label.setVisibility(View.GONE);
-            icon.setColorFilter(getResources().getColor(R.color.colorGreyDisabled));
+            icon.setVisibility(View.GONE);
         }
     }
 
@@ -225,11 +226,6 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void blockEditTexts() {
-        for(Map.Entry<String, EditText> entry : all.entrySet()) {
-            entry.getValue().setEnabled(false);
-            entry.getValue().setBackground(null);
-        }
-        hideKeyboard();
         telefonMatki.setVisibility(View.GONE);
         telefonMatkiView.setVisibility(View.VISIBLE);
         telefonMatkiLabel.setVisibility(View.VISIBLE);
@@ -238,6 +234,16 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         telefonOjcaView.setVisibility(View.VISIBLE);
         telefonOjcaLabel.setVisibility(View.VISIBLE);
         telefonOjcaIcon.setVisibility(View.VISIBLE);
+
+        for(Map.Entry<String, EditText> entry : all.entrySet()) {
+            if(entry.getValue().getText().length() == 0) {
+                entry.getValue().setVisibility(View.GONE);
+            } else {
+                entry.getValue().setEnabled(false);
+                entry.getValue().setBackground(null);
+            }
+        }
+        hideKeyboard();
     }
 
     @Override

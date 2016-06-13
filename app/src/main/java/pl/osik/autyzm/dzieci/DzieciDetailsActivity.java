@@ -9,30 +9,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.opengl.Visibility;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +41,6 @@ import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.MyApp;
-import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.sql.Dziecko;
@@ -59,6 +49,8 @@ import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class DzieciDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+
+    //TODO https://material.google.com/layout/metrics-keylines.html#metrics-keylines-keylines-spacing
 
     private static final int DATE_PICKER_CODE = 1178;
     public static final int RESOURCE_NO_PHOTO = R.drawable.ic_no_photo;

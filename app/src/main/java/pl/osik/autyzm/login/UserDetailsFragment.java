@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,8 +100,15 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
         userPhoto.setOnClickListener(this);
         addValidations();
         setEditTextsEnterOrder();
+        setHasOptionsMenu(true);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.dzieci_details_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void setEditTextsEnterOrder() {

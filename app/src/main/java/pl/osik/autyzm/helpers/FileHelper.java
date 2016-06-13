@@ -1,10 +1,13 @@
 package pl.osik.autyzm.helpers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,8 +16,17 @@ import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.utils.FileUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+
+import pl.osik.autyzm.helpers.orm.PlikORM;
+import pl.osik.autyzm.sql.Plik;
+import wseemann.media.FFmpegMediaMetadataRetriever;
 
 /**
  * Created by m.osik2 on 2016-06-03.
@@ -26,14 +38,63 @@ public class FileHelper {
     public final static int RESCALE_PROPORTIONALLY = -1;
 
     public static Bitmap getThumbnail(String path) {
-        return rescaleBitmap(path, THUMB_WIDTH, THUMB_HEIGHT);
+        FileTypes type = getType(path);
+        if(type == FileTypes.PHOTO) {
+            return rescaleBitmap(path, THUMB_WIDTH, THUMB_HEIGHT);
+        } else if(type == FileTypes.VIDEO) {
+            FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
+            retriever.setDataSource(path);
+            Bitmap bitmap = retriever.getFrameAtTime(10);
+            retriever.release();
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.outWidth = bitmap.getWidth();
+            options.outHeight = bitmap.getHeight();
+            int scale = calculateInSampleSize(options, THUMB_WIDTH, THUMB_HEIGHT);
+            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale, bitmap.getHeight() / scale, false);
+            return bitmap;
+        } else {
+            return null;
+        }
+    }
+
+    public static Bitmap getThumbnailFromStorage(int id) {
+        PlikORM plik = Plik.getById(id, false);
+        Bitmap out = null;
+        String thumbPath = plik.getThumb();
+        if(thumbPath == null || thumbPath.length() == 0) {
+            out = createThumbnail(plik);
+        } else {
+            String path = Plik.THUMB_DIR + thumbPath;
+            out = BitmapFactory.decodeFile(path);
+        }
+        return out;
+    }
+
+    public static Bitmap createThumbnail(PlikORM plik) {
+        Bitmap out;
+        out = getThumbnail(plik.getPath());
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+        String fileName = "thumb_" + plik.getShortName(10, false) + "_" + sdf.format(cal.getTime()) + ".jpeg";
+        try {
+            File file = new File(Plik.THUMB_DIR);
+            file.mkdirs();
+            FileOutputStream writer = new FileOutputStream(Plik.THUMB_DIR + fileName);
+            out.compress(Bitmap.CompressFormat.JPEG, 100, writer);
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Plik.saveThumb(plik.getId(), fileName);
+        plik.setThumb(fileName);
+        return out;
     }
 
     public static Bitmap rescaleBitmap(String path, int reqWidth, int reqHeight) {
         try {
-            /*ExifInterface exif = new ExifInterface(path);
-            byte[] imageData = exif.getThumbnail();
-            return BitmapFactory.decodeByteArray(imageData, 0, imageData.length);*/
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(path, options);
@@ -41,9 +102,6 @@ public class FileHelper {
             options.inJustDecodeBounds = false;
             Bitmap bitmap = BitmapFactory.decodeFile(path, options);
             return bitmap;
-        /*} catch (IOException e) {
-            Log.d("getThumbnail", e.getMessage());
-            return null;*/
         } catch (NullPointerException e) {
             Log.d("getThumbnail", e.getMessage());
             return null;
@@ -86,10 +144,24 @@ public class FileHelper {
     }
 
     public static FileTypes getType(String path) {
-        String ext = android.webkit.MimeTypeMap.getFileExtensionFromUrl(path);
+        String ext = getExtension(path);
         if(Arrays.asList(FileManager.EXTENSION_ARRAY_PHOTO).contains(ext)) return FileTypes.PHOTO;
         if(Arrays.asList(FileManager.EXTENSION_ARRAY_VIDEO).contains(ext)) return FileTypes.VIDEO;
         return FileTypes.UNSUPPORTED_TYPE;
+    }
+
+    public static String getExtension(String fileName) {
+        String extension = "";
+
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) extension = fileName.substring(i+1);
+        return extension;
+    }
+
+    public static String removeExtension(String fileName) {
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) return fileName.substring(0, i);
+        return fileName;
     }
 
     public static class FileManager {

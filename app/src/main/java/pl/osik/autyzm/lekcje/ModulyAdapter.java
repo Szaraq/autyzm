@@ -111,7 +111,6 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         this.modul = modul;
         modulName.setText(modul.getName());
         cleanArrows();
-        Log.d("adapter", modul.getName() + " " + modul.getNumer());
     }
 
     private void cleanArrows() {

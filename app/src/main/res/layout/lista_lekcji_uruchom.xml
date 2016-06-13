@@ -66,22 +66,27 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="24dp"
+                    android:textSize="14sp"
                     android:text="Moduły:" />
 
                 <TextView
                     android:id="@+id/moduly_lewy"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_weight="1"
                     android:textColor="@android:color/black" />
+
+                <!--.TODO android:lineSpacingExtra="5dp" tylko bez tekstów o wielu wierszach -->
 
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

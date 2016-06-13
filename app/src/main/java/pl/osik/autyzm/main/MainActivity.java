@@ -102,13 +102,13 @@ public class MainActivity extends AppCompatActivity
 
             gotoFragment(new StartFragment());
 
-        } else if (id == R.id.nav_run_lesson) {
+        //} else if (id == R.id.nav_run_lesson) {
 
-            gotoFragment(new UruchomFragment());
 
         } else if (id == R.id.nav_lessons) {
 
-            gotoFragment(new LekcjeFragment());
+            gotoFragment(new UruchomFragment());
+            //gotoFragment(new LekcjeFragment());
 
         } else if (id == R.id.nav_children) {
 

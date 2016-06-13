@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import pl.osik.autyzm.helpers.FileHelper;
+import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.orm.ModulORM;
 import pl.osik.autyzm.helpers.orm.PlikORM;
 
@@ -34,13 +36,17 @@ public class Plik extends AbstractDBTable {
     public static final String COLUMN_PATH = "path";
     public static final String COLUMN_FOLDER = "folder";
     public static final String COLUMN_GHOST = "ghost";
+    public static final String COLUMN_THUMB = "thumbnail";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
         put(COLUMN_PATH, "TEXT");
         put(COLUMN_FOLDER, "INTEGER");
         put(COLUMN_GHOST, "BOOLEAN");
+        put(COLUMN_THUMB, "TEXT");
     }};
+
+    public static final String THUMB_DIR = MyApp.getContext().getFilesDir() + "/thumbnails/";
 
     @Override
     protected String create() {
@@ -92,7 +98,8 @@ public class Plik extends AbstractDBTable {
         String path = cursor.getString(cursor.getColumnIndex(COLUMN_PATH));
         int folder = cursor.getInt(cursor.getColumnIndex(COLUMN_FOLDER));
         boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
-        PlikORM plik = new PlikORM(id, folder, path, ghost);
+        String thumb = cursor.getString(cursor.getColumnIndex(COLUMN_THUMB));
+        PlikORM plik = new PlikORM(id, folder, path, ghost, thumb);
         cursor.close();
         helper.close();
         return plik;
@@ -122,13 +129,14 @@ public class Plik extends AbstractDBTable {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_FOLDER + " = ?" + queryForGhost(ghostFilter, true);
-        Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idFolderu) });
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idFolderu)});
         while(cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(Plik.COLUMN_ID));
             int folder  = cursor.getInt(cursor.getColumnIndex(COLUMN_FOLDER));
             String path = cursor.getString(cursor.getColumnIndex(COLUMN_PATH));
             boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
-            PlikORM temp = new PlikORM(id, folder, path, ghost);
+            String thumb = cursor.getString(cursor.getColumnIndex(COLUMN_THUMB));
+            PlikORM temp = new PlikORM(id, folder, path, ghost, thumb);
             out.add(temp);
         }
         Collections.sort(out);
@@ -136,5 +144,18 @@ public class Plik extends AbstractDBTable {
         cursor.close();
 
         return out;
+    }
+
+    public static void saveThumb(int id, String fileName) {
+        Plik p = new Plik();
+        ContentValues data = new ContentValues();
+        data.put(COLUMN_THUMB, fileName);
+        p.edit(id, data);
+    }
+
+    public static String getThumbAbsolutePath(int id) {
+        PlikORM plik = getById(id, false);
+        if(plik.getThumb() == null || plik.getThumb().length() == 0) FileHelper.createThumbnail(plik);
+        return THUMB_DIR + plik.getThumb();
     }
 }

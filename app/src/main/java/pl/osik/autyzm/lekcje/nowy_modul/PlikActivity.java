@@ -77,7 +77,7 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
             if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
                 File file = new File(data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH));
                 plikView.setImageBitmap(FileHelper.getThumbnail(file.getPath()));
-                LekcjeHelper.getModul().setName(file.getName());
+                LekcjeHelper.getModul().setName(FileHelper.removeExtension(file.getName()));
                 LekcjeHelper.getModul().setPlik(data.getIntExtra(PlikORM.EXTRA_PLIK_ID, NO_FILE));
                 changeViewToEdit();
             }

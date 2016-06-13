@@ -47,4 +47,5 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
     compile 'com.google.android.libraries.mediaframework:mediaframework:0.2.1'
     compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.10'
 }

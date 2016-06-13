@@ -39,7 +39,7 @@ public class ShowMediaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_media);
         ButterKnife.bind(this);
         plik = (PlikORM) getIntent().getSerializableExtra(EXTRA_PLIK);
-        getSupportActionBar().setTitle(plik.getName());
+        getSupportActionBar().setTitle(plik.getName(true));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white);
         showMedia();

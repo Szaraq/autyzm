@@ -95,8 +95,8 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
 
     public void setPlik(PlikORM plik) {
         this.plik = plik;
-        plikName.setText(plik.getShortName());
-        Bitmap thumbnail = FileHelper.getThumbnail(plik.getPath());
+        plikName.setText(plik.getShortName(true));
+        String thumbnail = Plik.getThumbAbsolutePath(plik.getId());
         if(thumbnail == null) {
             Glide.with(plikImage.getContext())
                     .load("")
@@ -104,8 +104,7 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
                     .into(plikImage);
         } else {
             Glide.with(plikImage.getContext())
-                    .load("")
-                    .placeholder(new BitmapDrawable(thumbnail))
+                    .load(thumbnail)
                     .into(plikImage);
         }
     }

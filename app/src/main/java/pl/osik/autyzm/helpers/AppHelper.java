@@ -76,17 +76,6 @@ public class AppHelper {
         }
     }
 
-    public static void changeListItemHeight(LinearLayout listItem) {
-        final int NUMBER_OF_ON_THE_SCREEN = 15;
-        final int MIN_SIZE = 50;
-
-        DisplayMetrics displayMetrics = listItem.getContext().getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        int newDpHeight = (int) dpHeight / NUMBER_OF_ON_THE_SCREEN;
-        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newDpHeight < MIN_SIZE ? MIN_SIZE : newDpHeight, listItem.getResources().getDisplayMetrics());
-        listItem.getLayoutParams().height = height;
-    }
-
     public static void addShadow(Context context, View view, float dy) {
         ShadowProperty shadowProperty = new ShadowProperty();
         shadowProperty.setShadowColor(0x77000000)

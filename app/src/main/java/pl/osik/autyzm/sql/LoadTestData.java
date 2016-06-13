@@ -249,14 +249,14 @@ public class LoadTestData {
     private static void loadModul() {
         Modul m = new Modul();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda.jpg");
+        params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda");
         params.put(Modul.COLUMN_FILM, 1);
         params.put(Modul.COLUMN_LEKCJA, 1);
         params.put(Modul.COLUMN_NUMER, 1);
         params.put(Modul.COLUMN_GHOST, 0);
         m.insert(params);
 
-        params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda.jpg");
+        params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda");
         params.put(Modul.COLUMN_FILM, 1);
         params.put(Modul.COLUMN_LEKCJA, 2);
         params.put(Modul.COLUMN_NUMER, 1);

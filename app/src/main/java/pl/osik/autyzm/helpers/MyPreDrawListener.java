@@ -45,7 +45,6 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
         if (path != null) {
             Glide.with(activity)
                     .load(path)
-                    .dontAnimate()
                     .centerCrop()
                     .into(photo);
         } else {

@@ -7,6 +7,8 @@
     android:fitsSystemWindows="true"
     tools:context="pl.osik.autyzm.ScrollingActivity">
 
+    <!-- TODO Przycisk zapisywania dziecka -->
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,9 +24,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,8 +95,12 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     EditText imieOjca;
     @Bind(R.id.nazwisko_ojca)
     EditText nazwiskoOjca;
+    @Bind(R.id.telefon_ojcaLayout)
+    TextInputLayout telefonOjcaLayout;
     @Bind(R.id.telefon_ojca)
     EditText telefonOjca;
+    @Bind(R.id.telefon_ojca_view_container)
+    LinearLayout telefonOjcaViewContainer;
     @Bind(R.id.telefon_ojca_label)
     TextView telefonOjcaLabel;
     @Bind(R.id.telefon_ojca_view)
@@ -104,8 +111,12 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     EditText imieMatki;
     @Bind(R.id.nazwisko_matki)
     EditText nazwiskoMatki;
+    @Bind(R.id.telefon_matkiLayout)
+    TextInputLayout telefonMatkiLayout;
     @Bind(R.id.telefon_matki)
     EditText telefonMatki;
+    @Bind(R.id.telefon_matki_view_container)
+    LinearLayout telefonMatkiViewContainer;
     @Bind(R.id.telefon_matki_label)
     TextView telefonMatkiLabel;
     @Bind(R.id.telefon_matki_view)
@@ -113,9 +124,11 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     @Bind(R.id.telefon_matki_icon)
     ImageView telefonMatkiIcon;
     @Bind(R.id.fab)
-    FloatingActionButton button;
+    FloatingActionButton fab;
     @Bind(R.id.photo)
     ImageView photo;
+    @Bind(R.id.zapiszButton)
+    Button button;
 
     Menu menu;
 
@@ -167,9 +180,10 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         } else if(operacja == OperationsEnum.SHOW) {
             blockEditTexts();
             if(AppHelper.canDeviceMakeCall()) {
-                enableCalling(telefonMatkiIcon, telefonMatkiView, telefonMatkiLabel);
-                enableCalling(telefonOjcaIcon, telefonOjcaView, telefonOjcaLabel);
+                enableCalling(telefonMatkiIcon, telefonMatkiView, telefonMatkiLabel, telefonMatkiViewContainer);
+                enableCalling(telefonOjcaIcon, telefonOjcaView, telefonOjcaLabel, telefonOjcaViewContainer);
             }
+            button.setVisibility(View.GONE);
         } else if(operacja == OperationsEnum.DODAWANIE) {
             getSupportActionBar().setTitle(R.string.dziecko_dodaj_title);
             imie.requestFocus();
@@ -177,13 +191,14 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             rozpoczecie.setText(sdf.format(cal.getTime()));
-            button.setVisibility(View.GONE);
+            fab.setVisibility(View.GONE);
         }
         /** END **/
         button.setOnClickListener(this);
+        fab.setOnClickListener(this);
     }
 
-    private void enableCalling(ImageView icon, TextView text, TextView label) {
+    private void enableCalling(ImageView icon, TextView text, TextView label, LinearLayout container) {
         if(text.length() > 0) {
             PhoneCallOnClickListener phoneCallOnClickListenerMatki = new PhoneCallOnClickListener(this, text.getText().toString().trim());
             text.setOnClickListener(phoneCallOnClickListenerMatki);
@@ -192,6 +207,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             text.setVisibility(View.GONE);
             label.setVisibility(View.GONE);
             icon.setVisibility(View.GONE);
+            container.setVisibility(View.GONE);
         }
     }
 
@@ -224,16 +240,19 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 
     private void blockEditTexts() {
         telefonMatki.setVisibility(View.GONE);
+        telefonMatkiLayout.setVisibility(View.GONE);
         telefonMatkiView.setVisibility(View.VISIBLE);
         telefonMatkiLabel.setVisibility(View.VISIBLE);
         telefonMatkiIcon.setVisibility(View.VISIBLE);
         telefonOjca.setVisibility(View.GONE);
+        telefonOjcaLayout.setVisibility(View.GONE);
         telefonOjcaView.setVisibility(View.VISIBLE);
         telefonOjcaLabel.setVisibility(View.VISIBLE);
         telefonOjcaIcon.setVisibility(View.VISIBLE);
 
         for(Map.Entry<String, EditText> entry : all.entrySet()) {
             if(entry.getValue().getText().length() == 0) {
+                ((View) entry.getValue().getParent()).setVisibility(View.GONE);
                 entry.getValue().setVisibility(View.GONE);
             } else {
                 entry.getValue().setEnabled(false);
@@ -278,13 +297,15 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         Dziecko d = new Dziecko();
-        if(operacja == OperationsEnum.SHOW) {
+        if(operacja == OperationsEnum.SHOW || (operacja == OperationsEnum.EDYCJA && v.getId() == fab.getId())) {            //jeżeli jest show (wtedy button nie ma) LUB jeżeli jest edycja i przyciśnięty fab
+            //Idź do statystyk
             Intent intent = new Intent(this, DzieciStatisticsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(Dziecko.TABLE_NAME, dziecko);
             intent.putExtras(bundle);
             startActivity(intent);
-        } else if(operacja == OperationsEnum.EDYCJA) {
+        } else if(operacja == OperationsEnum.EDYCJA) {                                                          //jeżeli jest edycja i przyciśnięty button (fab obsłużony już w poprzednim if)
+            //Edytuj wpis
             if(validate.doValidateAll()) {
                 ContentValues data = new ContentValues();
                 for(Map.Entry<String, EditText> entry : all.entrySet()) {
@@ -295,7 +316,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                     onBackPressed();
                 }
             }
-        } else if(operacja == OperationsEnum.DODAWANIE) {
+        } else if(operacja == OperationsEnum.DODAWANIE) {                                                   //jeżeli jest dodawanie (wtedy fab nie ma)
+            //Dodaj wpis
             if(validate.doValidateAll()) {
                 ContentValues data = new ContentValues();
                 for(Map.Entry<String, EditText> entry : all.entrySet()) {

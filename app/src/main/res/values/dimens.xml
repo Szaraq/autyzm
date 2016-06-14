@@ -11,4 +11,5 @@
     <dimen name="contact_margin">50dp</dimen>
     <dimen name="contact_hint_margin">55dp</dimen>
     <dimen name="item_text_margin">32dp</dimen>
+    <dimen name="contact_row_height">72dp</dimen>
 </resources>

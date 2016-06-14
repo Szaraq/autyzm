@@ -110,8 +110,8 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     }
 
     private void adjustImageToRatio() {
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) userPhoto.getLayoutParams();
-        params.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 3, 2);
+        ViewGroup.LayoutParams params = userPhoto.getLayoutParams();
+        params.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 16, 9);
         userPhoto.setLayoutParams(params);
     }
 

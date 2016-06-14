@@ -163,25 +163,33 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/telefon_ojca_label"
-            style="@style/DzieciDetailsTelefonyRodzicowHeader"
-            android:text="@string/dzieci_details_telefon_ojca" />
-
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/telefon_ojca_view_container"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/telefon_ojca_icon"
-                style="@style/telefon" />
+            android:layout_height="@dimen/contact_row_height">
 
             <TextView
-                android:id="@+id/telefon_ojca_view"
-                style="@style/DzieciDetailsTelefonyRodzicow"
-                android:hint="@string/dzieci_details_telefon_ojca" />
+                android:id="@+id/telefon_ojca_label"
+                style="@style/DzieciDetailsTelefonyRodzicowHeader"
+                android:text="@string/dzieci_details_telefon_ojca" />
 
-        </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/telefon_ojca_icon"
+                    style="@style/telefon" />
+
+                <TextView
+                    android:id="@+id/telefon_ojca_view"
+                    style="@style/DzieciDetailsTelefonyRodzicow"
+                    android:hint="@string/dzieci_details_telefon_ojca" />
+
+            </FrameLayout>
+
+        </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/imie_matkiLayout"
@@ -221,25 +229,38 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/telefon_matki_label"
-            style="@style/DzieciDetailsTelefonyRodzicowHeader"
-            android:text="@string/dzieci_details_telefon_matki" />
-
-        <FrameLayout
+        <LinearLayout
+            android:id="@+id/telefon_matki_view_container"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/telefon_matki_icon"
-                style="@style/telefon" />
+            android:layout_height="@dimen/contact_row_height">
 
             <TextView
-                android:id="@+id/telefon_matki_view"
-                style="@style/DzieciDetailsTelefonyRodzicow"
-                android:hint="@string/dzieci_details_telefon_matki" />
+                android:id="@+id/telefon_matki_label"
+                style="@style/DzieciDetailsTelefonyRodzicowHeader"
+                android:text="@string/dzieci_details_telefon_matki" />
 
-        </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/telefon_matki_icon"
+                    style="@style/telefon" />
+
+                <TextView
+                    android:id="@+id/telefon_matki_view"
+                    style="@style/DzieciDetailsTelefonyRodzicow"
+                    android:hint="@string/dzieci_details_telefon_matki" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/zapiszButton"
+            android:text="@string/button_zapisz"
+            style="@style/buttonStyle.bottomButton" />
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

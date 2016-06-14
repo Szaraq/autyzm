@@ -1,111 +1,124 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorAppBackground"
-    tools:context="pl.osik.autyzm.login.UserDetailsFragment">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/userPhoto"
-        android:src="@drawable/ic_no_photo"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="120dp" />
-
-    <LinearLayout
-        android:id="@+id/dataContainer"
-        android:layout_below="@id/userPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="@color/colorAppBackground"
-        android:padding="16dp"
-        android:orientation="vertical">
+        tools:context="pl.osik.autyzm.login.UserDetailsFragment">
+
+        <ImageView
+            android:id="@+id/userPhoto"
+            android:src="@drawable/ic_no_photo"
+            android:layout_width="match_parent"
+            android:elevation="4dp"
+            android:layout_height="120dp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/dataContainer"
+            android:layout_below="@id/userPhoto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
+            android:background="@color/colorAppBackground"
+            android:padding="16dp"
+            android:orientation="vertical">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_user"
-                android:tint="@color/colorPrimary" />
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
 
-            <TextView
-                style="@style/DzieciDetailsSubheader"
-                android:text="@string/user_dane_header" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_user"
+                    android:tint="@color/colorPrimary" />
+
+                <TextView
+                    style="@style/DzieciDetailsSubheader"
+                    android:text="@string/user_dane_header" />
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/imieLayout"
+                style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/imie"
+                    style="@style/EditTextMaterial.EditTextDzieciDetails"
+                    android:capitalize="words"
+                    android:hint="@string/user_details_imie"
+                    android:inputType="textPersonName" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/nazwiskoLayout"
+                style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/nazwisko"
+                    style="@style/EditTextMaterial.EditTextDzieciDetails"
+                    android:capitalize="words"
+                    android:hint="@string/user_details_nazwisko"
+                    android:inputType="textPersonName" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/userLayout"
+                style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/user"
+                    style="@style/EditTextMaterial.EditTextDzieciDetails"
+                    android:hint="@string/user_details_login" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/hasloLayout"
+                    style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/haslo"
+                        style="@style/EditTextMaterial.EditTextDzieciDetails"
+                        android:hint="@string/user_details_haslo"
+                        android:inputType="textPassword" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextHint"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="@dimen/contact_hint_margin"
+                    android:layout_gravity="bottom"
+                    android:text="@string/user_details_hint"/>
+
+            </FrameLayout>
+
 
         </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/imieLayout"
-            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
+        <Button
+            android:id="@+id/button"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
+            style="@style/buttonStyle.bottomButton"
+            android:text="@string/button_zapisz" />
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/imie"
-                style="@style/EditTextMaterial.EditTextDzieciDetails"
-                android:capitalize="words"
-                android:hint="@string/user_details_imie"
-                android:inputType="textPersonName" />
-
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/nazwiskoLayout"
-            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/nazwisko"
-                style="@style/EditTextMaterial.EditTextDzieciDetails"
-                android:capitalize="words"
-                android:hint="@string/user_details_nazwisko"
-                android:inputType="textPersonName" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/userLayout"
-            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/user"
-                style="@style/EditTextMaterial.EditTextDzieciDetails"
-                android:hint="@string/user_details_login" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/hasloLayout"
-            style="@style/EditTextMaterial.EditTextDzieciDetailsLayer">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/haslo"
-                style="@style/EditTextMaterial.EditTextDzieciDetails"
-                android:hint="@string/user_details_haslo"
-                android:inputType="textPassword" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:id="@+id/passwordHint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/TextHint"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="@dimen/contact_hint_margin"
-            android:text="@string/user_details_hint"/>
-
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
-        style="@style/buttonStyle.bottomButton"
-        android:text="@string/button_zapisz" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

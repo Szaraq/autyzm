@@ -78,6 +78,7 @@
         <item name="android:layout_gravity">center_vertical</item>
     </style>
     <style name="DzieciDetailsTelefonyRodzicow" parent="EditTextMaterial.EditTextDzieciDetailsLayer">
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:layout_marginLeft">55dp</item>
@@ -117,6 +118,7 @@
         <item name="android:textColor">@color/colorAppBackground</item>
     </style>
     <style name="EditTextMaterial.EditTextDzieciDetailsLayer" parent="EditTextMaterial">
+        <item name="android:layout_height">@dimen/contact_row_height</item>
         <item name="android:layout_marginLeft">@dimen/contact_margin</item>
         <item name="android:theme">@style/TextDesignLabel.Primary</item>
     </style>

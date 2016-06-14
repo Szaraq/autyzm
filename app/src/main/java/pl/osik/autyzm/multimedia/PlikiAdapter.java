@@ -105,6 +105,7 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
         } else {
             Glide.with(plikImage.getContext())
                     .load(thumbnail)
+                    .centerCrop()
                     .into(plikImage);
         }
     }

@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,10 +21,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +74,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
     };
 
+    @Bind(R.id.app_bar)
+    AppBarLayout appBar;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.imie)
@@ -249,7 +254,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 AlertDialog.Builder dialog = new AlertDialog.Builder(DzieciDetailsActivity.this);
                 dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
                         .setTitle(R.string.popup_uwaga)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Dziecko d = new Dziecko();
@@ -257,7 +262,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                                 setPhoto(null);
                             }
                         })
-                        .setNegativeButton(android.R.string.no, null)
+                        .setNegativeButton(R.string.button_anuluj, null)
                         .setIcon(R.drawable.ic_uwaga);
                 dialog.show();
                 return true;
@@ -358,7 +363,18 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dzieci_details_menu, menu);
         setPhoto(dziecko.get(Dziecko.COLUMN_PHOTO));
+        adjustImageToRatio();
         return true;
+    }
+
+    private void adjustImageToRatio() {
+        ViewGroup.LayoutParams params = photo.getLayoutParams();
+        params.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 3, 2);
+        photo.setLayoutParams(params);
+
+        ViewGroup.LayoutParams appBarParams = appBar.getLayoutParams();
+        appBarParams.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 3, 2);
+        appBar.setLayoutParams(appBarParams);
     }
 }
 

@@ -149,14 +149,14 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
             AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
             dialog.setMessage(MyApp.getContext().getString(R.string.message_pytanie_do_usunięcia) + " " + pytanieHeader.getText() + "?")
                     .setTitle(R.string.popup_uwaga)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             LekcjeHelper.removePytanie(position);
                             adapter.refresh();
                         }
                     })
-                    .setNegativeButton(android.R.string.no, null)
+                    .setNegativeButton(R.string.button_anuluj, null)
                     .setIcon(R.drawable.ic_uwaga);
             dialog.show();
         }

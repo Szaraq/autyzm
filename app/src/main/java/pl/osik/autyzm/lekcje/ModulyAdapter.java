@@ -108,7 +108,6 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     }
 
     public void setModul(ModulORM modul) {
-        Log.d("aaa", modul.getNumer()+"");
         this.modul = modul;
         modulName.setText(modul.getName());
         cleanArrows();
@@ -149,7 +148,7 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
             AlertDialog.Builder dialog = new AlertDialog.Builder(modulContextMenu.getContext());
             dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + modul.getName() + "?")
                     .setTitle(R.string.popup_uwaga)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Modul m = new Modul();
@@ -159,7 +158,7 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                             Toast.makeText(modulContextMenu.getContext(), R.string.message_modul_usunięty, Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .setNegativeButton(android.R.string.no, null)
+                    .setNegativeButton(R.string.button_anuluj, null)
                     .setIcon(R.drawable.ic_uwaga);
             dialog.show();
         }

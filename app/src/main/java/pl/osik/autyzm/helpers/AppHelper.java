@@ -143,5 +143,18 @@ public class AppHelper {
         }
     }
 
+    /**
+     * Zwraca wysokość dla podanej szerokości dostosowaną do podanych proporcji
+     * (np. dla proporcji 16:9, ratioWidth = 16; ratioHeight = 9)
+     *
+     * @param width szerokość, do jakiej dostosować zwracaną wysokość
+     * @param ratioWidth proporcja szerokości
+     * @param ratioHeight proporcja wysokości
+     * @return wysokość dla podanej szerokości dostosowana do podanych proporcji
+     */
+    public static int getHeightForRatio(int width, int ratioWidth, int ratioHeight) {
+        return ratioHeight * width / ratioWidth;
+    }
+
 }
 

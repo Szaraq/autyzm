@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -31,6 +33,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePlacingInterface;
 import pl.osik.autyzm.helpers.MyApp;
@@ -94,15 +97,22 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
             put(User.COLUMN_NAZWISKO, nazwisko);
             put(User.COLUMN_LOGIN, user);
         }};
-
+        adjustImageToRatio();
         if(!newAccount) populate();
         button.setOnClickListener(this);
         userPhoto.setOnClickListener(this);
+
         addValidations();
         setEditTextsEnterOrder();
         setHasOptionsMenu(true);
 
         return view;
+    }
+
+    private void adjustImageToRatio() {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) userPhoto.getLayoutParams();
+        params.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 3, 2);
+        userPhoto.setLayoutParams(params);
     }
 
     @Override
@@ -206,14 +216,14 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
                         .setTitle(R.string.popup_uwaga)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 photoPath = null;
                                 setPhoto(null);
                             }
                         })
-                        .setNegativeButton(android.R.string.no, null)
+                        .setNegativeButton(R.string.button_anuluj, null)
                         .setIcon(R.drawable.ic_uwaga);
                 dialog.show();
                 return true;

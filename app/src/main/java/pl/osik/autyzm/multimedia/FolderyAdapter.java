@@ -148,7 +148,7 @@ class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
             AlertDialog.Builder dialog = new AlertDialog.Builder(folderyContextMenu.getContext());
             dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + name + "?")
                     .setTitle(R.string.popup_uwaga)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Folder f = new Folder();
@@ -157,7 +157,7 @@ class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
                             Toast.makeText(folderyContextMenu.getContext(), R.string.folder_usuniety, Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .setNegativeButton(android.R.string.no, null)
+                    .setNegativeButton(R.string.button_anuluj, null)
                     .setIcon(R.drawable.ic_uwaga);
             dialog.show();
         }

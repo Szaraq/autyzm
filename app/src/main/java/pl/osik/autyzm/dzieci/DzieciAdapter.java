@@ -163,7 +163,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
             AlertDialog.Builder dialog = new AlertDialog.Builder(dzieciContextMenu.getContext());
             dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + name + "?")
                     .setTitle(R.string.popup_uwaga)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Dziecko d = new Dziecko();
@@ -172,7 +172,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                             Toast.makeText(dzieciContextMenu.getContext(), R.string.message_dziecko_usunięte, Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .setNegativeButton(android.R.string.no, null)
+                    .setNegativeButton(R.string.button_anuluj, null)
                     .setIcon(R.drawable.ic_uwaga);
             dialog.show();
         }

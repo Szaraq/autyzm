@@ -141,7 +141,7 @@ class LekcjeViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
             AlertDialog.Builder dialog = new AlertDialog.Builder(lekcjaContextMenu.getContext());
             dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + lekcja.getTytul() + "?")
                     .setTitle(R.string.popup_uwaga)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Lekcja l = new Lekcja();
@@ -150,7 +150,7 @@ class LekcjeViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                             Toast.makeText(lekcjaContextMenu.getContext(), R.string.message_lekcja_usunięta, Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .setNegativeButton(android.R.string.no, null)
+                    .setNegativeButton(R.string.button_anuluj, null)
                     .setIcon(R.drawable.ic_uwaga);
             dialog.show();
         } else if(item.getItemId() == R.id.lekcje_favourite) {

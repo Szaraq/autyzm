@@ -90,11 +90,12 @@
         </android.support.design.widget.TextInputLayout>
 
         <TextView
+            android:id="@+id/passwordHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/TextHint"
             android:layout_marginTop="0dp"
-            android:layout_marginLeft="@dimen/contact_margin"
+            android:layout_marginLeft="@dimen/contact_hint_margin"
             android:text="@string/user_details_hint"/>
 
 

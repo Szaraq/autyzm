@@ -128,7 +128,7 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
 
     private void createButtonNext() {
         buttonNext = (Button) getLayoutInflater().inflate(R.layout.button_next, null);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, getResources().getDisplayMetrics()));
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, AppHelper.dip2px(36));
         params.addRule(RelativeLayout.BELOW, currViewId);
         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
         params.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, SPACING_NEXT_BUTTON, getResources().getDisplayMetrics());

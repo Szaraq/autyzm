@@ -93,6 +93,10 @@ public class AppHelper {
         return today;
     }
 
+    public static int dip2px(int dip) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, MyApp.getContext().getResources().getDisplayMetrics());
+    }
+
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
     /**
      * This value will not collide with ID values generated at build time by aapt for R.id.

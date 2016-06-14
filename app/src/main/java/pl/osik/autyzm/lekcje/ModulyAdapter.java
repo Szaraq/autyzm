@@ -108,6 +108,7 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     }
 
     public void setModul(ModulORM modul) {
+        Log.d("aaa", modul.getNumer()+"");
         this.modul = modul;
         modulName.setText(modul.getName());
         cleanArrows();

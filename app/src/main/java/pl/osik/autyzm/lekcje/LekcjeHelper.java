@@ -87,8 +87,15 @@ public class LekcjeHelper {
     public static void removeModul(int position) {
         int id = modulyList.get(position).getId();
         modulyList.remove(position);
-        for(int i = position; i <= modulyList.size(); i++) {        //po usunięciu modułu numery modułów wartość position = numer dla modułów o numer >= position
-            modulyList.get(i).setNumer(i);
+        Modul m = new Modul();
+        for(int i = position; i < modulyList.size(); i++) {
+            ModulORM modul = modulyList.get(i);
+            int newNumer = i + 1;
+            modul.setNumer(newNumer);
+
+            ContentValues data = new ContentValues();
+            data.put(Modul.COLUMN_NUMER, newNumer);
+            m.edit(modul.getId(), data);
         }
 
         if(id != 0) modulyDoUsuniecia.add(id);
@@ -198,7 +205,6 @@ public class LekcjeHelper {
     }
 
     public static void swapModul(boolean up, int numer) {
-        Log.d("swap", numer+"");
         ModulORM modulToSwap = modulyList.get(numer-1);
         int newNumer = numer + (up ? -1 : 1);
         ModulORM modulSwapWith = modulyList.get(newNumer-1);

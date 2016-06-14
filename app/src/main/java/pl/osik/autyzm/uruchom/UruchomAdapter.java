@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +25,12 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
@@ -97,12 +100,14 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     @Bind(R.id.containerLayout)
     CardView containerLayout;
+    @Bind(R.id.thumbnailsContainer)
+    FrameLayout thumbnailsContainer;
     @Bind(R.id.thumbnail)
     ImageView thumbnail;
     @Bind(R.id.lekcja_name)
     TextView lekcjaName;
-    @Bind(R.id.moduly_lewy)
-    TextView modulyLewy;
+    @Bind(R.id.moduly_container)
+    LinearLayout modulyContainer;
     @Bind(R.id.favourite)
     ImageView favourite;
     @Bind(R.id.buttonDelete)
@@ -114,6 +119,16 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         super(itemView);
         ButterKnife.bind(this, itemView);
         containerLayout.setOnClickListener(this);
+        adjustImageTo16x9();
+    }
+
+    private void adjustImageTo16x9() {
+        LinearLayout.LayoutParams cardParams = (LinearLayout.LayoutParams) containerLayout.getLayoutParams();
+        int width = AppHelper.getScreenSize()[0] - cardParams.leftMargin - cardParams.rightMargin; //px
+        int height = 9 * width / 16;
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) thumbnailsContainer.getLayoutParams();
+        params.height = height;
+        thumbnailsContainer.setLayoutParams(params);
     }
 
     public void setFragment(UruchomFragment fragment) {
@@ -136,13 +151,20 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     }
 
     private void setModuly(ArrayList<ModulORM> moduly) {
+        if(modulyContainer.getChildCount() > 1) modulyContainer.removeViews(1, modulyContainer.getChildCount()-1);
         this.moduly = moduly;
-        StringBuilder txt = new StringBuilder();
         for (ModulORM modul : moduly) {
-            txt.append(modul.getName());
-            txt.append("\n");
+            TextView modulView = new TextView(fragment.getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(AppHelper.dip2px(16), 0, AppHelper.dip2px(16), 0);
+            modulView.setTextColor(fragment.getContext().getResources().getColor(android.R.color.black));
+            modulView.setText(modul.getName());
+            modulView.setSingleLine(true);
+            modulView.setEllipsize(TextUtils.TruncateAt.END);
+
+            modulView.setLayoutParams(params);
+            modulyContainer.addView(modulView);
         }
-        modulyLewy.setText(txt);
     }
 
     @Override

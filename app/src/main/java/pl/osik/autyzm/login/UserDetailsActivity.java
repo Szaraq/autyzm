@@ -6,22 +6,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,9 +34,8 @@ import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FileHelper;
-import pl.osik.autyzm.helpers.FilePlacingInterface;
+import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.MyApp;
-import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.main.MainActivity;
 import pl.osik.autyzm.sql.Dziecko;
@@ -46,7 +44,7 @@ import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateExistsInDatabase;
 import pl.osik.autyzm.validate.ValidateNotNull;
 
-public class UserDetailsFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
+public class UserDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String NEW_ACCOUNT = "newAccount";
     private static final int RESOURCE_NO_PHOTO = R.drawable.ic_user;
@@ -57,6 +55,12 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
 
     private static boolean newAccount;
 
+    private Menu menu;
+
+    @Bind(R.id.app_bar)
+    AppBarLayout appBar;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     @Bind(R.id.userPhoto)
     ImageView userPhoto;
     @Bind(R.id.imie)
@@ -67,58 +71,57 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     EditText user;
     @Bind(R.id.haslo)
     EditText haslo;
+    @Bind(R.id.haslo_hint)
+    TextView hasloHint;
     @Bind(R.id.button)
     Button button;
-
-    public UserDetailsFragment() {
-        // Required empty public constructor
-    }
-
-    public static UserDetailsFragment newInstance() {
-        UserDetailsFragment fragment = new UserDetailsFragment();
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.activity_user_details);
+        ButterKnife.bind(this);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_details, container, false);
-        ButterKnife.bind(this, view);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.userDetails_title);
-        Bundle args = getArguments();
-        newAccount = args.getBoolean(NEW_ACCOUNT);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(R.string.userDetails_title);
+
+        newAccount = getIntent().getBooleanExtra(NEW_ACCOUNT, true);
         editTextHashMap = new LinkedHashMap<String, EditText>() {{
             put(User.COLUMN_IMIE, imie);
             put(User.COLUMN_NAZWISKO, nazwisko);
             put(User.COLUMN_LOGIN, user);
         }};
-        adjustImageToRatio();
-        if(!newAccount) populate();
+        if(newAccount) {
+            hasloHint.setVisibility(View.GONE);
+        } else {
+            populate();
+        }
         button.setOnClickListener(this);
         userPhoto.setOnClickListener(this);
 
         addValidations();
         setEditTextsEnterOrder();
-        setHasOptionsMenu(true);
-
-        return view;
     }
 
     private void adjustImageToRatio() {
         ViewGroup.LayoutParams params = userPhoto.getLayoutParams();
-        params.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 16, 9);
+        params.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 3, 2);
         userPhoto.setLayoutParams(params);
+
+        ViewGroup.LayoutParams appBarParams = appBar.getLayoutParams();
+        appBarParams.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 3, 2);
+        appBar.setLayoutParams(appBarParams);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dzieci_details_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+        adjustImageToRatio();
+        setPhoto(User.getCurrentPhotoPath());
+        return true;
     }
 
     private void setEditTextsEnterOrder() {
@@ -140,9 +143,6 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
 
     private void populate() {
         userData = User.getCurrentData();
-        if(userData.get(User.COLUMN_PHOTO) != null) {
-            setPhoto(userData.get(User.COLUMN_PHOTO));
-        } else setPhoto(null);
 
         for (Map.Entry<String, EditText> entry : editTextHashMap.entrySet()) {
             entry.getValue().setText(userData.get(entry.getKey()));
@@ -152,15 +152,15 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     private void setPhoto(@Nullable String path) {
         if(path == null) {
             userPhoto.setImageResource(RESOURCE_NO_PHOTO);
-            /*menu.findItem(R.id.deletePhoto).setVisible(false);
-            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);*/
+            menu.findItem(R.id.deletePhoto).setVisible(false);
+            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);
         } else {
             Glide.with(this)
                     .load(path)
                     .centerCrop()
                     .into(userPhoto);
-            /*menu.findItem(R.id.deletePhoto).setVisible(true);
-            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_zmien_zdjecie);*/
+            menu.findItem(R.id.deletePhoto).setVisible(true);
+            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_zmien_zdjecie);
         }
     }
 
@@ -174,7 +174,7 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     }
 
     private void editPhoto() {
-        FileHelper.FileManager.pickPhoto(this.getActivity(), FileHelper.FileManager.EXTENSION_ARRAY_PHOTO);
+        FileHelper.FileManager.pickPhoto(this, FileHelper.FileManager.EXTENSION_ARRAY_PHOTO);
     }
 
     private void saveData() {
@@ -190,19 +190,24 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
             if(newAccount) {
                 u.insert(data);
                 User.authenticate(data.getAsString(User.COLUMN_LOGIN), haslo.getText().toString());
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
             } else {
                 u.edit(User.getCurrentId(), data);
-                //((MainActivity) getActivity()).setUserInDrawerMenu();
+                MainActivity.instance.setUserInDrawerMenu();
             }
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
+            finish();
         }
     }
 
     @Override
-    public void placeFile(String path) {
-        photoPath = path;
-        setPhoto(photoPath);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
+                photoPath = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                setPhoto(photoPath);
+            }
+        }
     }
 
     @Override
@@ -213,7 +218,7 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
                 editPhoto();
                 return true;
             case R.id.deletePhoto:
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                 dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
                         .setTitle(R.string.popup_uwaga)
                         .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
@@ -226,6 +231,9 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
                         .setNegativeButton(R.string.button_anuluj, null)
                         .setIcon(R.drawable.ic_uwaga);
                 dialog.show();
+                return true;
+            case R.id.home:
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

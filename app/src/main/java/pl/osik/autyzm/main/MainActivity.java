@@ -12,22 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.login.UserDetailsActivity;
 import pl.osik.autyzm.dzieci.DzieciFragment;
 import pl.osik.autyzm.help.HelpFragment;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.FilePlacingInterface;
-import pl.osik.autyzm.lekcje.LekcjeFragment;
 import pl.osik.autyzm.login.LoginActivity;
-import pl.osik.autyzm.login.UserDetailsFragment;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
 import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.sql.User;
@@ -38,6 +35,8 @@ public class MainActivity extends AppCompatActivity
 
     //TODO FINALLY dodać final tam gdzie można
     //TODO FINALLY wyrzucić debuggable z manifest i build.gradle
+
+    public static final int NO_PHOTO = R.drawable.ic_user;
 
     public static MainActivity instance;
     private TextView user;
@@ -120,11 +119,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_user) {
 
-            Fragment fragment = new UserDetailsFragment();
-            Bundle bundle = new Bundle();
-            bundle.putBoolean(UserDetailsFragment.NEW_ACCOUNT, false);
-            fragment.setArguments(bundle);
-            gotoFragment(fragment);
+            Intent intent = new Intent(this, UserDetailsActivity.class);
+            intent.putExtra(UserDetailsActivity.NEW_ACCOUNT, false);
+            startActivity(intent);
 
         } else if (id == R.id.nav_help) {
 
@@ -136,6 +133,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.zoom_enter, R.anim.hold);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -158,11 +156,14 @@ public class MainActivity extends AppCompatActivity
 
         user.setText(User.getCurrentName());
         String photoPath = User.getCurrentPhotoPath();
-        if(photoPath != null)
+        if(photoPath == null) {
+            userPhoto.setImageResource(NO_PHOTO);
+        } else {
             Glide.with(this)
                 .load(photoPath)
                 .dontAnimate()
                 .into(userPhoto);
+        }
     }
 
     @Override

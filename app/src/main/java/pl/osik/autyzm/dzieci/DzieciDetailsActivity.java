@@ -130,7 +130,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     @Bind(R.id.zapiszButton)
     Button button;
 
-    Menu menu;
+    private Menu menu;
 
     private HashMap<String, String> dziecko;
 
@@ -259,7 +259,6 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 entry.getValue().setBackground(null);
             }
         }
-        hideKeyboard();
     }
 
     @Override
@@ -367,25 +366,13 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         dateChosenFor.setText(put);
     }
 
-    private void hideKeyboard() {
-        if(operacja == OperationsEnum.SHOW) {
-            //scrollView.requestFocus();
-            try {
-                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-            } catch (NullPointerException exc) {
-                Log.d("keyboardHide", "Klawiatura się nie pojawiła");
-            }       //Jeżeli klawiatura się nie pojawi to idziemy dalej
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dzieci_details_menu, menu);
-        setPhoto(dziecko.get(Dziecko.COLUMN_PHOTO));
         adjustImageToRatio();
+        setPhoto(dziecko.get(Dziecko.COLUMN_PHOTO));
         return true;
     }
 

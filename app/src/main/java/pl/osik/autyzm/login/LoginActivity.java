@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //TODO FINALLY prawa autorskie do tła: http://wallpapercave.com/w/tTuFP5q
 
-    private final String UserDetailsFragmentTag = "UserDetailsFragment";
     private String path;
     private ValidateCommand validate;
     private ValidateAuthenticate authenticate;
@@ -105,7 +104,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .load(BACKGROUND_PATH)
                 .dontAnimate()
                 .into(backgroundImage);
-        //backgroundImage.setColorFilter(Color.rgb(123, 123, 123), PorterDuff.Mode.MULTIPLY);
         backgroundImage.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
     }
 
@@ -138,27 +136,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void zalozKonto() {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(UserDetailsFragment.NEW_ACCOUNT, true);
-        android.support.v4.app.Fragment fragment = new UserDetailsFragment();
-        fragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.containerLayout, fragment, UserDetailsFragmentTag);
-        fragmentTransaction.commit();
+        Intent intent = new Intent(this, UserDetailsActivity.class);
+        intent.putExtra(UserDetailsActivity.NEW_ACCOUNT, true);
+        startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
-        FragmentManager manager = getSupportFragmentManager();
-        android.support.v4.app.Fragment fragment = (UserDetailsFragment) manager.findFragmentByTag(UserDetailsFragmentTag);
-        if(fragment != null && fragment.isVisible()) {
-            manager.beginTransaction()
-                    .remove(fragment)
-                    .commit();
-        } else {
-            finish();
-            System.exit(0);
-        }
+        finish();
+        System.exit(0);
     }
 
     @Override

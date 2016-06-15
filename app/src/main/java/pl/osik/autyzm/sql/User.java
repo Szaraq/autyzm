@@ -145,6 +145,7 @@ public class User extends AbstractDBTable {
     }
 
     public static String getCurrentName() {
+        if(!isAuthenticated()) return null;
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[] { String.valueOf(getCurrentId()) });
@@ -156,6 +157,7 @@ public class User extends AbstractDBTable {
     }
 
     public static String getCurrentPhotoPath() {
+        if(!isAuthenticated()) return null;
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[] { String.valueOf(getCurrentId()) });
@@ -179,6 +181,7 @@ public class User extends AbstractDBTable {
     }
     
     public static HashMap<String, String> getCurrentData() {
+        if(!isAuthenticated()) return null;
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         HashMap<String, String> out = new HashMap<>();
@@ -190,5 +193,9 @@ public class User extends AbstractDBTable {
         cursor.close();
         helper.close();
         return out;
+    }
+
+    public static boolean isAuthenticated() {
+        return getCurrentId() != NO_USER;
     }
 }

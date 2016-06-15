@@ -23,7 +23,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/photo"
+                android:id="@+id/userPhoto"
                 android:src="@drawable/ic_no_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -38,17 +38,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_dzieci_details" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:tint="@color/colorAppBackground"
-        android:src="@drawable/ic_statistics"
-        app:backgroundTint="@color/colorGreen"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end" />
+    <include layout="@layout/content_user_details" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -129,13 +129,16 @@
     <string name="help_dane_autorow">Dane kontaktowe autorów aplikacji</string>
     <string name="help_kontakt_michal"><b>Michał Osik</b>\n
         Tel.: 0 700 888 888\n
-        michal.osik@gmail.com</string>
+        </string>
+    <string name="help_email_michal">michal.osik@gmail.com</string>
     <string name="help_kontakt_iza"><b>Izabela Konarzewska</b>\n
         Tel.: 0 700 888 888\n
-        izabela.konarzewska@gmail.com</string>
+        </string>
+    <string name="help_email_iza">izabela.konarzewska@gmail.com</string>
     <string name="help_kontakt_klaudia"><b>Klaudia Kucharuk</b>\n
         Tel.: 0 700 888 888\n
-        klaudia.kucharuk@gmail.com</string>
+        </string>
+    <string name="help_email_klaudia">klaudia.kucharuk@gmail.com</string>
     <string name="user_dane_header">Dane użytkownika</string>
     <string name="title_activity_user_details">UserDetailsActivity</string>
     <string name="large_text">

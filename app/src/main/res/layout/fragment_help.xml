@@ -38,14 +38,17 @@
         </LinearLayout>
 
     <TextView
+        android:id="@+id/kontakt_Michal"
         android:text="@string/help_kontakt_michal"
         style="@style/HelpKontakt" />
 
     <TextView
+        android:id="@+id/kontakt_Iza"
         android:text="@string/help_kontakt_iza"
         style="@style/HelpKontakt" />
 
     <TextView
+        android:id="@+id/kontakt_Klaudia"
         android:text="@string/help_kontakt_klaudia"
         style="@style/HelpKontakt" />
 

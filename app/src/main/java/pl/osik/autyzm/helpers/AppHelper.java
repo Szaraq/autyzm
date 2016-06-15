@@ -156,5 +156,15 @@ public class AppHelper {
         return ratioHeight * width / ratioWidth;
     }
 
+    /**
+     * Ustawia minimalną wysokość dla LinearLayoutu, pełniącego funkcję wypełniacza przestrzeni dla klawiatury ekranowej.
+     * Bez tego klawiatura przesłania dolne kontrolki formularza. Zakłada się, że klawiatura zajmuje połowę ekranu.
+     *
+     * @param spaceFiller LinearLayout, pełniący funkcję wypełniacza przestrzeni
+     */
+    public static void setHeightForSpaceFiller(LinearLayout spaceFiller) {
+        spaceFiller.setMinimumHeight(getScreenSize()[1] / 2);
+    }
+
 }
 

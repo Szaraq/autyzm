@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAppBackground"
+    android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="pl.osik.autyzm.ScrollingActivity"
     tools:showIn="@layout/activity_dzieci_details">
@@ -166,6 +167,7 @@
         <LinearLayout
             android:id="@+id/telefon_ojca_view_container"
             android:orientation="vertical"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/contact_row_height">
 
@@ -232,6 +234,7 @@
         <LinearLayout
             android:id="@+id/telefon_matki_view_container"
             android:orientation="vertical"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/contact_row_height">
 
@@ -257,10 +260,11 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/zapiszButton"
-            android:text="@string/button_zapisz"
-            style="@style/buttonStyle.bottomButton" />
+        <LinearLayout
+            android:id="@+id/spaceFiller"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></LinearLayout>
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

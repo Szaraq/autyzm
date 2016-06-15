@@ -165,6 +165,7 @@
     </style>
 
     <style name="buttonStyle.bottomButton" parent="buttonStyle">
+        <item name="android:elevation">4dp</item>
         <item name="android:layout_gravity">bottom</item>
         <item name="android:layout_height">50dp</item>
     </style>

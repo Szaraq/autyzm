@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -73,6 +74,8 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
     EditText haslo;
     @Bind(R.id.haslo_hint)
     TextView hasloHint;
+    @Bind(R.id.spaceFiller)
+    LinearLayout spaceFiller;
     @Bind(R.id.button)
     Button button;
 
@@ -102,6 +105,7 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
 
         addValidations();
         setEditTextsEnterOrder();
+        AppHelper.setHeightForSpaceFiller(spaceFiller);
     }
 
     private void adjustImageToRatio() {

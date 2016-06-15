@@ -127,6 +127,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     FloatingActionButton fab;
     @Bind(R.id.photo)
     ImageView photo;
+    @Bind(R.id.spaceFiller)
+    LinearLayout spaceFiller;
     @Bind(R.id.zapiszButton)
     Button button;
 
@@ -172,6 +174,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         /* Dodawanie + Edycja */
         if(operacja != OperationsEnum.SHOW) {
             addValidations();
+            AppHelper.setHeightForSpaceFiller(spaceFiller);
         }
 
         /* Pojedyncze operacje */
@@ -196,6 +199,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         /** END **/
         button.setOnClickListener(this);
         fab.setOnClickListener(this);
+        dataUrodzenia.setOnClickListener(this);
+        rozpoczecie.setOnClickListener(this);
     }
 
     private void enableCalling(ImageView icon, TextView text, TextView label, LinearLayout container) {
@@ -241,11 +246,13 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     private void blockEditTexts() {
         telefonMatki.setVisibility(View.GONE);
         telefonMatkiLayout.setVisibility(View.GONE);
+        telefonMatkiViewContainer.setVisibility(View.VISIBLE);
         telefonMatkiView.setVisibility(View.VISIBLE);
         telefonMatkiLabel.setVisibility(View.VISIBLE);
         telefonMatkiIcon.setVisibility(View.VISIBLE);
         telefonOjca.setVisibility(View.GONE);
         telefonOjcaLayout.setVisibility(View.GONE);
+        telefonOjcaViewContainer.setVisibility(View.VISIBLE);
         telefonOjcaView.setVisibility(View.VISIBLE);
         telefonOjcaLabel.setVisibility(View.VISIBLE);
         telefonOjcaIcon.setVisibility(View.VISIBLE);
@@ -292,9 +299,13 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    /* Zapisz lub Statystyki */
+    /* Zapisz lub Statystyki oraz przekierowanie do setDate dla daty urodzenia i rozpoczecia */
     @Override
     public void onClick(View v) {
+        if(v.getId() == dataUrodzenia.getId() || v.getId() == rozpoczecie.getId()) {
+            setDate(v);
+            return;
+        }
         Dziecko d = new Dziecko();
         if(operacja == OperationsEnum.SHOW || (operacja == OperationsEnum.EDYCJA && v.getId() == fab.getId())) {            //jeżeli jest show (wtedy button nie ma) LUB jeżeli jest edycja i przyciśnięty fab
             //Idź do statystyk

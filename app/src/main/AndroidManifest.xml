@@ -22,7 +22,7 @@
         <activity
             android:name=".dzieci.DzieciDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".dzieci.DzieciStatisticsActivity" />
         <activity
             android:name=".login.LoginActivity"
@@ -50,7 +50,7 @@
             android:name=".login.UserDetailsActivity"
             android:parentActivityName=".main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.osik.autyzm.main.MainActivity" />

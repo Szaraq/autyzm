@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     //TODO FINALLY dodać final tam gdzie można
     //TODO FINALLY wyrzucić debuggable z manifest i build.gradle
+    //TODO FINALLY Uporządkować importy
 
     public static final int NO_PHOTO = R.drawable.ic_user;
 

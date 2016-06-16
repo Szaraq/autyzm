@@ -166,17 +166,20 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         builder.setTitle(R.string.multi_nowy_folder);
         input.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         final ValidateNotNull validateNotNull = new ValidateNotNull();
+        final ValidateExistsInDatabase validateExistsInDatabase = new ValidateExistsInDatabase(new Folder(), Folder.COLUMN_NAZWA);
         validate.addValidate(input, validateNotNull);
+        validate.addValidate(input, validateExistsInDatabase);
         builder.setView(input)
                 .setPositiveButton(getActivity().getString(R.string.button_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String error = validateNotNull.getErrorMsg();
                         if (validate.doValidateAll()) {
                             inputTxt = input.getText().toString();
                             addNewFolder();
+                        } else if (input.getText().length() == 0) {
+                            AppHelper.showMessage(getView(), validateNotNull.getErrorMsg());
                         } else {
-                            AppHelper.showMessage(getView(), error);
+                            AppHelper.showMessage(getView(), validateExistsInDatabase.getErrorMsg());
                         }
                     }
                 })

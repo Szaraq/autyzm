@@ -6,21 +6,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/item_row_height"
         android:orientation="horizontal">
 
-        <ImageView
-            style="@style/listItemIcon"
-            android:src="@drawable/ic_favourite_remove" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            style="@style/listItemIcon.drawable"
+            android:src="@drawable/ic_favourite_remove_white" />
 
         <TextView
             android:id="@+id/tytul"
             style="@style/itemList" />
 
     </LinearLayout>
-
-    <View
-        style="@style/DividerLine.RecyclerView"
-        android:layout_width="match_parent" />
 
 </LinearLayout>

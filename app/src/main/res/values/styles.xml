@@ -28,13 +28,14 @@
         <item name="android:textColor">#000</item>
     </style>
 
-    <style name="TextListHeader" parent="Base.TextAppearance.AppCompat.Medium">
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="TextListHeader">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorHeader</item>
-        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:gravity">center_vertical|left</item>
     </style>
 
     <style name="TextHint" parent="Base.TextAppearance.AppCompat.Small">
@@ -146,6 +147,16 @@
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
     </style>
+    <style name="DividerLine.Subheader" parent="DividerLine">
+        <item name="android:background">@color/colorDividerLineLight</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+    </style>
+    <style name="DividerLine.Contact" parent="DividerLine">
+        <item name="android:layout_marginLeft">@dimen/contact_margin</item>
+        <item name="android:background">@color/colorDividerLineLight</item>
+    </style>
 
     <style name="EmptySpaceFiller">
         <item name="android:layout_width">0dp</item>
@@ -221,12 +232,12 @@
     <style name="itemList">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">5</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:gravity">center_vertical|left</item>
         <item name="android:paddingLeft">@dimen/item_text_margin</item>
         <item name="android:text">Small Text</item>
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <!-- Popup menu -->
@@ -244,10 +255,17 @@
 
     <!-- ImageView -->
     <style name="listItemIcon">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_width">@dimen/avatar_diameter</item>
+        <item name="android:layout_height">@dimen/avatar_diameter</item>
+        <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_gravity">center</item>
+        <item name="civ_border_width">0dp</item>
+    </style>
+    <style name="listItemIcon.drawable" parent="listItemIcon">
+        <item name="civ_border_width">7dp</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="civ_border_color">@color/colorPrimary</item>
+        <item name="civ_fill_color">@color/colorPrimary</item>
     </style>
 
     <style name="contextMenu">

@@ -12,6 +12,9 @@
     <dimen name="contact_margin_from_photo">24dp</dimen>
     <dimen name="contact_margin">50dp</dimen>
     <dimen name="contact_hint_margin">55dp</dimen>
-    <dimen name="item_text_margin">32dp</dimen>
+    <dimen name="item_text_margin">16dp</dimen>
+    <dimen name="item_row_height">56dp</dimen>
+    <dimen name="item_row_height_2lines">60dp</dimen>
     <dimen name="contact_row_height">72dp</dimen>
+    <dimen name="avatar_diameter">40dp</dimen>
 </resources>

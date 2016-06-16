@@ -11,24 +11,20 @@
         android:text="@string/start_last_used"
         style="@style/TextListHeader" />
 
-    <View
-        android:layout_width="match_parent"
-        style="@style/DividerLine.RecyclerView"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/start_lastUsedList"
+        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        style="@style/DividerLine.Subheader"/>
 
     <TextView
         android:id="@+id/textView2"
         android:text="@string/start_favourites"
         style="@style/TextListHeader" />
-
-    <View
-        android:layout_width="match_parent"
-        style="@style/DividerLine.RecyclerView"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/start_favouritesList"

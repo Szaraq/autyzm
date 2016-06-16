@@ -1,17 +1,24 @@
 package pl.osik.autyzm.main;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.uruchom.UruchomController;
@@ -80,6 +87,7 @@ class StartLastViewHolder extends RecyclerView.ViewHolder implements View.OnClic
 
     public void setFragment(StartFragment fragment) {
         this.fragment = fragment;
+        //setIcon();
     }
 
     public void setData(String dataToSet) {

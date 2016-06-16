@@ -87,27 +87,26 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     private Fragment fragment;
     private DzieciAdapter adapter;
 
+    @Bind(R.id.containerLayout)
+    LinearLayout containerLayout;
     @Bind(R.id.dzieci_name)
     TextView dzieciName;
     @Bind(R.id.dzieci_photo)
     ImageView dzieciPhoto;
     @Bind(R.id.dzieci_context_menu)
     ImageView dzieciContextMenu;
-    @Bind(R.id.lista_dzieci)
-    LinearLayout listaDzieci;
 
     public DzieciViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         itemView.setOnClickListener(this);
         dzieciContextMenu.setOnClickListener(this);
-        dzieciName.setOnClickListener(new View.OnClickListener() {
+        containerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoDetails(OperationsEnum.SHOW);
             }
         });
-        //AppHelper.changeListItemHeight(listaDzieci);
     }
 
     protected void gotoDetails(OperationsEnum operacja) {
@@ -121,7 +120,6 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     public void setPhoto(String photo) {
         this.photo = photo;
-        //if(photo != null) AppHelper.placePhoto(fragment.getActivity(), dzieciPhoto, photo);
         if(photo == null) {
             dzieciPhoto.setImageResource(R.drawable.ic_test_child_photo);
         } else {

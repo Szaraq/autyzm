@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -70,6 +71,8 @@ class StartLastViewHolder extends RecyclerView.ViewHolder implements View.OnClic
     private StartFragment fragment;
     private LekcjaORM lekcja;
 
+    @Bind(R.id.containerLayout)
+    LinearLayout containerLayout;
     @Bind(R.id.tytul)
     TextView tytul;
     @Bind(R.id.data)
@@ -78,7 +81,7 @@ class StartLastViewHolder extends RecyclerView.ViewHolder implements View.OnClic
     public StartLastViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        tytul.setOnClickListener(this);
+        containerLayout.setOnClickListener(this);
     }
 
     public void setAdapter(StartLastAdapter adapter) {

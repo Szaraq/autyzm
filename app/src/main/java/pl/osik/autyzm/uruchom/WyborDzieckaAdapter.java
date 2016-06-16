@@ -87,6 +87,8 @@ class WyborDzieckaViewHolder extends RecyclerView.ViewHolder implements View.OnC
     private Activity activity;
     private WyborDzieckaAdapter adapter;
 
+    @Bind(R.id.containerLayout)
+    LinearLayout containerLayout;
     @Bind(R.id.dzieci_name)
     TextView dzieciName;
     @Bind(R.id.dzieci_photo)
@@ -97,7 +99,7 @@ class WyborDzieckaViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public WyborDzieckaViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        dzieciName.setOnClickListener(this);
+        containerLayout.setOnClickListener(this);
         //AppHelper.changeListItemHeight(listaDzieci);
     }
 

@@ -8,28 +8,17 @@
     <LinearLayout
         android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:orientation="horizontal">
 
-        <!--
-        android:elevation="2dp"
-        android:clipToPadding="false"
-        android:outlineProvider="bounds"
-        -->
-
-
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/modul_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginBottom="2dp"
-            android:paddingLeft="5dp"
-            android:src="@drawable/ic_module" />
+            android:src="@drawable/ic_module_white"
+            style="@style/listItemIcon.drawable.small" />
 
         <TextView
             android:id="@+id/modul_name"
-            android:layout_height="wrap_content"
+            android:textSize="13sp"
             style="@style/itemList" />
 
         <ImageView
@@ -45,9 +34,5 @@
             style="@style/contextMenu" />
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        style="@style/DividerLine.RecyclerView"/>
 
 </LinearLayout>

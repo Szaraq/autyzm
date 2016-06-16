@@ -11,12 +11,6 @@
         android:layout_height="@dimen/item_row_height"
         android:orientation="horizontal">
 
-        <!--
-        android:elevation="2dp"
-        android:clipToPadding="false"
-        android:outlineProvider="bounds"
-        -->
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/dzieci_photo"
             style="@style/listItemIcon"
@@ -31,12 +25,5 @@
             style="@style/contextMenu" />
 
     </LinearLayout>
-
-    <!--
-    <View
-        android:layout_width="match_parent"
-        android:layout_marginLeft="72dp"
-        style="@style/DividerLine.RecyclerView"/>
-        -->
 
 </LinearLayout>

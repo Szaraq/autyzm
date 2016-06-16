@@ -66,12 +66,12 @@ public class StartFragment extends Fragment {
         startLastAdapter = new StartLastAdapter(getLayoutInflater(savedInstanceState), this);
         startLastUsedList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         startLastUsedList.setAdapter(startLastAdapter);
+        if(startLastAdapter.lekcjaList.size() == 0) startLastUsedList.setVisibility(View.GONE);
 
         startFavouritesAdapter = new StartFavouritesAdapter(getLayoutInflater(savedInstanceState), this);
         startFavouritesList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         startFavouritesList.setAdapter(startFavouritesAdapter);
     }
-
 
     //TODO FINALLY we wszystkich fragmentach onDestroyView() { ButterKnife.unbind(this); } ?
     @Override

@@ -12,7 +12,7 @@ import pl.osik.autyzm.uruchom.UruchomController;
 
 public class PodsumowanieActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //TODO Wzmocnienie
+    //TODO FINALLY Usunąć jak będzie pewność, że niepotrzebne
 
     @Bind(R.id.buttonNext)
     Button buttonNext;

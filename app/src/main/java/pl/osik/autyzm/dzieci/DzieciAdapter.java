@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -169,7 +168,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                             Dziecko d = new Dziecko();
                             d.delete(id);
                             adapter.refresh();
-                            Toast.makeText(dzieciContextMenu.getContext(), R.string.message_dziecko_usunięte, Toast.LENGTH_SHORT).show();
+                            AppHelper.showMessage(fragment.getView(), R.string.message_dziecko_usunięte);
                         }
                     })
                     .setNegativeButton(R.string.button_anuluj, null)

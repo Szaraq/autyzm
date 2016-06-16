@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -56,8 +56,6 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class DzieciDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //TODO https://material.google.com/layout/metrics-keylines.html#metrics-keylines-keylines-spacing
-
     private static final int DATE_PICKER_CODE = 1178;
     public static final int RESOURCE_NO_PHOTO = R.drawable.ic_no_photo;
 
@@ -77,6 +75,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
     };
 
+    @Bind(R.id.containerLayout)
+    CoordinatorLayout containerLayout;
     @Bind(R.id.app_bar)
     AppBarLayout appBar;
     @Bind(R.id.toolbar)
@@ -322,7 +322,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                     data.put(entry.getKey(), entry.getValue().getText().toString());
                 }
                 if(d.edit(id, data)) {
-                    Toast.makeText(this, R.string.message_dziecko_edytowane, Toast.LENGTH_SHORT).show();
+                    AppHelper.showMessage(containerLayout, R.string.message_dziecko_edytowane);
                     onBackPressed();
                 }
             }
@@ -335,7 +335,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 }
                 data.put(Dziecko.COLUMN_USER, User.getCurrentId());
                 d.insert(data);
-                Toast.makeText(this, R.string.message_dziecko_dodane, Toast.LENGTH_SHORT).show();
+                AppHelper.showMessage(containerLayout, R.string.message_dziecko_dodane);
                 onBackPressed();
             }
         }
@@ -400,10 +400,10 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 
 class PhoneCallOnClickListener implements View.OnClickListener {
 
-    Activity activity;
+    DzieciDetailsActivity activity;
     String phoneNumber;
 
-    public PhoneCallOnClickListener(Activity activity, String phoneNumber) {
+    public PhoneCallOnClickListener(DzieciDetailsActivity activity, String phoneNumber) {
         this.activity = activity;
         this.phoneNumber = phoneNumber;
     }
@@ -416,7 +416,7 @@ class PhoneCallOnClickListener implements View.OnClickListener {
             activity.startActivity(callIntent);
             Log.d("PhoneCallOnClickListen", "Właśnie dzwonię pod numer: " + number);
         } else {
-            Toast.makeText(activity, activity.getString(R.string.app_no_calling_permission), Toast.LENGTH_SHORT).show();
+            AppHelper.showMessage(activity.containerLayout, R.string.app_no_calling_permission);
         }
     }
 }

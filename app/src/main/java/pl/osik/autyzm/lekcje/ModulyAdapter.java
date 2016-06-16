@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -155,7 +154,7 @@ class ModulyViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                             m.delete(modul.getId());
                             LekcjeHelper.removeModul(modul.getNumer() - 1);
                             adapter.refresh();
-                            Toast.makeText(modulContextMenu.getContext(), R.string.message_modul_usunięty, Toast.LENGTH_SHORT).show();
+                            AppHelper.showMessage(activity.containerLayout, R.string.message_modul_usunięty);
                         }
                     })
                     .setNegativeButton(R.string.button_anuluj, null)

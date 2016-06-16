@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -28,6 +27,7 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePlacingInterface;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
@@ -176,7 +176,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
                             inputTxt = input.getText().toString();
                             addNewFolder();
                         } else {
-                            Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                            AppHelper.showMessage(getView(), error);
                         }
                     }
                 })
@@ -212,7 +212,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
             p.insert(data);
             plikiAdapter.refresh();
         } else {
-            Toast.makeText(getContext(), R.string.validate_error_existsInDB_plik, Toast.LENGTH_SHORT).show();
+            AppHelper.showMessage(getView(), R.string.validate_error_existsInDB_plik);
         }
     }
 

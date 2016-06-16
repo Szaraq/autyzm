@@ -19,7 +19,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -181,7 +180,7 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
                             Lekcja l = new Lekcja();
                             l.delete(lekcja.getId());
                             adapter.refresh();
-                            Toast.makeText(fragment.getContext(), R.string.message_lekcja_usunięta, Toast.LENGTH_SHORT).show();
+                            AppHelper.showMessage(fragment.getView(), R.string.message_lekcja_usunięta);
                         }
                     })
                     .setNegativeButton(R.string.button_anuluj, null)

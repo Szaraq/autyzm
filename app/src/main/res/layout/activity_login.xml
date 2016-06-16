@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- TODO Zobaczyć czy działa scrollowanie przy klawiaturze software'owej (to samo w userDetails), jeżeli nie to http://stackoverflow.com/questions/2417221/adding-view-to-bottom-of-layout-inside-a-scrollview -->
-
 <android.support.percent.PercentRelativeLayout
     android:id="@+id/containerLayout"
     android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.exoplayer.ExoPlayer;
 import com.google.android.exoplayer.util.PlayerControl;
 import com.google.android.libraries.mediaframework.exoplayerextensions.Video;
@@ -49,7 +50,11 @@ public class ShowMediaActivity extends AppCompatActivity {
         String path = plik.getPath();
         PLIK = path;
         if(FileHelper.getType(path) == FileHelper.FileTypes.PHOTO) {
-            FileHelper.FileManager.placePhoto(this, player, path, 200);
+            Glide.with(this)
+                    .load(path)
+                    .fitCenter()
+                    .dontAnimate()
+                    .into(player);
         } else {
             /*SimpleVideoPlayer videoPlayer = new SimpleVideoPlayer(this, videoPlayerContainer, new Video(path, Video.VideoType.MP4), plik.getName(), false);
             videoPlayer.play();

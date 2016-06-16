@@ -17,7 +17,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.util.Util;
 

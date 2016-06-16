@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -154,7 +153,7 @@ class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
                             Folder f = new Folder();
                             f.delete(id);
                             folderyAdapter.refresh();
-                            Toast.makeText(folderyContextMenu.getContext(), R.string.folder_usuniety, Toast.LENGTH_SHORT).show();
+                            AppHelper.showMessage(fragment.getView(), R.string.folder_usuniety);
                         }
                     })
                     .setNegativeButton(R.string.button_anuluj, null)
@@ -184,7 +183,7 @@ class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
                             String inputTxt = input.getText().toString();
                             editFolderName(inputTxt);
                         } else {
-                            Toast.makeText(fragment.getContext(), error, Toast.LENGTH_SHORT).show();
+                            AppHelper.showMessage(fragment.getView(), error);
                         }
                     }
                 })

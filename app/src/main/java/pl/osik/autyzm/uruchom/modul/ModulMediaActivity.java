@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
@@ -38,9 +40,11 @@ public class ModulMediaActivity extends AppCompatActivity implements View.OnClic
     private void showMedia() {
         String path = Plik.getById(UruchomController.getModul().getPlik(), true).getPath();
         if(FileHelper.getType(path) == FileHelper.FileTypes.PHOTO) {
-            FileHelper.FileManager.placePhoto(this, player, path, 200);
-            //TODO Przetestować na urządzeniu bez rescale:
-            //player.setImageBitmap(BitmapFactory.decodeFile(path));
+            Glide.with(this)
+                    .load(path)
+                    .fitCenter()
+                    .dontAnimate()
+                    .into(player);
         } else {
 
         }

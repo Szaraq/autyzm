@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -147,7 +146,7 @@ class LekcjeViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
                             Lekcja l = new Lekcja();
                             l.delete(lekcja.getId());
                             adapter.refresh();
-                            Toast.makeText(lekcjaContextMenu.getContext(), R.string.message_lekcja_usunięta, Toast.LENGTH_SHORT).show();
+                            AppHelper.showMessage(fragment.getView(), R.string.message_lekcja_usunięta);
                         }
                     })
                     .setNegativeButton(R.string.button_anuluj, null)

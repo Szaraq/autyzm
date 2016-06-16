@@ -179,32 +179,6 @@ public class FileHelper {
             }
             activity.startActivityForResult(intent, PICK_IMAGE);
         }
-
-        public static void placePhoto(Activity activity, ImageView imgView, String path) {
-            placePhoto(activity, imgView, path, imgView);
-        }
-
-        public static void placePhoto(Activity activity, ImageView imgView, String path, View resizeTo) {
-            placePhoto(activity, imgView, path, resizeTo.getHeight());
-        }
-
-        public static void placePhoto(Activity activity, ImageView imgView, String path, int resizeHeight) {
-            //Bitmap bitmap = BitmapFactory.decodeFile(path);
-
-            /*int resizeWidth = (int) (((double) resizeHeight / (double) bitmap.getHeight()) * (double) bitmap.getWidth());
-            bitmap = Bitmap.createScaledBitmap(bitmap, resizeWidth, resizeHeight, true);*/
-            Bitmap bitmap;
-            if(resizeHeight == RESIZE_TO_SCREEN) {
-                int[] size = AppHelper.getScreenSize();
-                bitmap = rescaleBitmap(path, size[0], size[1]);
-            } else {
-                bitmap = rescaleBitmap(path, 0, resizeHeight);
-            }
-            Glide.with(imgView.getContext())
-                    .load("")
-                    .placeholder(new BitmapDrawable(bitmap))
-                    .into(imgView);
-        }
     }
 
     public enum FileTypes {

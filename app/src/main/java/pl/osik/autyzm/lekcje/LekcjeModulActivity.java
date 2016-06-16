@@ -2,6 +2,7 @@ package pl.osik.autyzm.lekcje;
 
 import android.content.Intent;
 import android.opengl.Visibility;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -27,6 +27,8 @@ import pl.osik.autyzm.lekcje.nowy_modul.PlikActivity;
 
 public class LekcjeModulActivity extends AppCompatActivity implements View.OnClickListener {
 
+    @Bind(R.id.containerLayout)
+    PercentRelativeLayout containerLayout;
     @Bind(R.id.buttonAddModule)
     Button buttonAdd;
     @Bind(R.id.buttonNext)

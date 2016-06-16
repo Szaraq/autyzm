@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -164,6 +166,14 @@ public class AppHelper {
      */
     public static void setHeightForSpaceFiller(LinearLayout spaceFiller) {
         spaceFiller.setMinimumHeight(getScreenSize()[1] / 2);
+    }
+
+    public static void showMessage(View container, String text) {
+        Snackbar.make(container, text, Snackbar.LENGTH_SHORT).show();
+    }
+
+    public static void showMessage(View container, @StringRes int resString) {
+        showMessage(container, MyApp.getContext().getResources().getString(resString));
     }
 
 }

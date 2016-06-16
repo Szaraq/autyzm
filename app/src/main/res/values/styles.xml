@@ -179,7 +179,7 @@
     </style>
 
     <style name="buttonInPanel" parent="Base.Widget.AppCompat.Button.Borderless">
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:elevation">0dp</item>

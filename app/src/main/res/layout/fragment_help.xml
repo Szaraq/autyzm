@@ -9,6 +9,7 @@
     <ImageView
         android:id="@+id/help_photo"
         app:layout_heightPercent="20%"
+        android:elevation="4dp"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 

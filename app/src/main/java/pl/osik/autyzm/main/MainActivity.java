@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.login.UserDetailsActivity;
 import pl.osik.autyzm.dzieci.DzieciFragment;

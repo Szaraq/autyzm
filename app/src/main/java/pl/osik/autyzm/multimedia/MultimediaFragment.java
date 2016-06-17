@@ -52,7 +52,6 @@ import pl.osik.autyzm.validate.ValidateNotNull;
  */
 public class MultimediaFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
-    //TODO RecyclerView wspólny dla folderów i plików - subheader
     //TODO Przenoszenie plików do folderów
 
     int folderId;

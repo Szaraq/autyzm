@@ -19,10 +19,20 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/text_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/containerLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorError"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/buttonNext"
             style="@style/buttonStyle.buttonNext"
-            android:layout_below="@id/containerLayout"
+            android:layout_below="@id/text_error"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp" />
 

@@ -46,6 +46,8 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
     private int currViewId;
     private ValidateCommand validate;
 
+    @Bind(R.id.text_error)
+    TextView textError;
     @Bind(R.id.buttonNext)
     Button buttonNext;
     @Bind(R.id.containerLayout)
@@ -112,16 +114,8 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
         } else {
             CharSequence errorTxt = buttonNext.getError().toString();
             buttonNext.setError(null);
-            TextView errorMsg = new TextView(this);
-            errorMsg.setText(errorTxt);
-            errorMsg.setTextColor(getResources().getColor(R.color.colorError));
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.addRule(RelativeLayout.BELOW, buttonNext.getId());
-            params.addRule(RelativeLayout.CENTER_HORIZONTAL, 1);
-            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 1);
-            errorMsg.setLayoutParams(params);
-            errorMsg.setPadding(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, SPACING_NEXT_BUTTON, getResources().getDisplayMetrics()), 0, 0);
-            containerLayout.addView(errorMsg);
+            textError.setText(errorTxt);
+            textError.setVisibility(View.VISIBLE);
         }
     }
 

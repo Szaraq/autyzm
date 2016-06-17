@@ -8,39 +8,54 @@
     android:orientation="vertical"
     tools:context=".main.StartFragment">
 
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/foldery_header"
-            android:text="@string/media_foldery"
-            style="@style/TextListHeader" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/foldery_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:text="@string/media_pliki"
-            style="@style/TextListHeader" />
+            <TextView
+                android:id="@+id/foldery_header"
+                android:text="@string/media_foldery"
+                style="@style/TextListHeader" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/pliki_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/PaddingForFAB"/>
+            <GridLayout
+                android:id="@+id/foldery_layout"
+                android:columnCount="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:text="@string/media_pliki"
+                style="@style/TextListHeader" />
+
+            <GridLayout
+                android:id="@+id/pliki_layout"
+                android:columnCount="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </GridLayout>
+
+            <View
+                style="@style/EmptySpaceFiller"
+                android:layout_height="@dimen/padding_for_fab"/>
+
+        </LinearLayout>
 
     <!--
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/multimedia_fab"
         style="@style/myFAB"
         />-->
+
+    </ScrollView>
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab_menu"
@@ -73,3 +88,4 @@
     </com.github.clans.fab.FloatingActionMenu>
 
 </FrameLayout>
+

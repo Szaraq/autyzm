@@ -191,7 +191,7 @@ public class LoadTestData {
         params.put(Folder.COLUMN_USER, 2);
         f.insert(params);
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             params.put(Folder.COLUMN_NAZWA, "Testowy folder " + i);
             params.put(Folder.COLUMN_FOLDER, 1);
             params.put(Folder.COLUMN_USER, 1);

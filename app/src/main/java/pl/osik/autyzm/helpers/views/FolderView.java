@@ -1,130 +1,83 @@
-package pl.osik.autyzm.multimedia;
+package pl.osik.autyzm.helpers.views;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.CardView;
 import android.text.InputType;
-import android.view.LayoutInflater;
+import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.TreeMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.MyApp;
-import pl.osik.autyzm.helpers.MySortedMap;
-import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
-import pl.osik.autyzm.main.StartFragment;
-import pl.osik.autyzm.sql.Dziecko;
+import pl.osik.autyzm.helpers.orm.FolderORM;
+import pl.osik.autyzm.multimedia.MultimediaFragment;
 import pl.osik.autyzm.sql.Folder;
 import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateNotNull;
 
 /**
- * Created by m.osik2 on 2016-05-04.
+ * Created by m.osik2 on 2016-06-17.
  */
-public class FolderyAdapter { // extends RecyclerView.Adapter<FolderyViewHolder> {
+public class FolderView extends CardView implements PopupMenu.OnMenuItemClickListener, View.OnClickListener {
 
-    /*private MultimediaFragment fragment;
-    private final LayoutInflater layoutInflater;
-    private final int idFolder;
-    private MySortedMap foldery;
-
-    public FolderyAdapter(LayoutInflater layoutInflater, Fragment fragment, int idFolder) {
-        this.layoutInflater = layoutInflater;
-        this.fragment = (MultimediaFragment) fragment;
-        this.idFolder = idFolder;
-        this.foldery = Folder.getFolderyInFolder(idFolder);
-    }
-
-    @Override
-    public FolderyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_folderow, parent, false);
-        FolderyViewHolder holder = new FolderyViewHolder(view);
-        holder.setAdapter(this);
-        return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(FolderyViewHolder holder, int position) {
-        holder.setFragment(fragment);
-        String name = foldery.get(position);
-        int id = foldery.get(name);
-        holder.setName(name);
-        holder.setId(id);
-    }
-
-    @Override
-    public int getItemCount() {
-        return foldery.size();
-    }
-
-    public void refresh() {
-        foldery = Folder.getFolderyInFolder(idFolder);
-        notifyDataSetChanged();
-    }
-}
-
-class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
-
-    private FolderyAdapter folderyAdapter;
+    protected static int width = 0;
+    FolderORM folder;
     private MultimediaFragment fragment;
-    private String name;
-    private int id;
-    private ValidateCommand validate;
+    ValidateCommand validate;
 
-    @Bind(R.id.foldery_context_menu)
-    ImageView folderyContextMenu;
-    @Bind(R.id.lista_folderow)
-    LinearLayout listaFolderow;
+    @Bind(R.id.card_layout)
+    CardView cardLayout;
     @Bind(R.id.folder_name)
     TextView folderName;
+    @Bind(R.id.foldery_context_menu)
+    ImageView folderyContextMenu;
 
-    public FolderyViewHolder(View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-        //AppHelper.changeListItemHeight(listaFolderow);
-        folderyContextMenu.setOnClickListener(this);
-        listaFolderow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragment.gotoNextFolder(id, name);
-            }
-        });
-    }
-
-    public void setAdapter(FolderyAdapter folderyAdapter) {
-        this.folderyAdapter = folderyAdapter;
-    }
-
-    public void setFragment(MultimediaFragment fragment) {
+    public FolderView(Context context, MultimediaFragment fragment, FolderORM folder) {
+        super(context);
         this.fragment = fragment;
+        this.folder = folder;
+        init();
     }
 
-    public void setName(String name) {
-        this.name = name;
-        folderName.setText(name);
+    public FolderView(Context context, AttributeSet attrs, MultimediaFragment fragment, FolderORM folder) {
+        super(context, attrs);
+        this.fragment = fragment;
+        this.folder = folder;
+        init();
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public FolderView(Context context, AttributeSet attrs, int defStyleAttr, MultimediaFragment fragment, FolderORM folder) {
+        super(context, attrs, defStyleAttr);
+        this.fragment = fragment;
+        this.folder = folder;
+        init();
+    }
+
+    private void init() {
+        View view = inflate(getContext(), R.layout.lista_folderow, this);
+        ButterKnife.bind(this, view);
+        if(width == 0) width = (AppHelper.getScreenSize()[0] - AppHelper.dip2px(2) * 3) / 2;      //(szerokość ekranu - margines lewy - margines między kartami - margines prawy) / 2 karty w rzędzie
+        ViewGroup.LayoutParams params = cardLayout.getLayoutParams();
+        params.width = width;
+        cardLayout.setLayoutParams(params);
+        folderyContextMenu.setOnClickListener(this);
+        folderName.setText(folder.getNazwa());
+    }
+
+    public FolderORM getFolder() {
+        return folder;
     }
 
     @Override
@@ -145,14 +98,14 @@ class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         } else {
             //Zapytaj czy na pewno chcesz usunąć
             AlertDialog.Builder dialog = new AlertDialog.Builder(folderyContextMenu.getContext());
-            dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + name + "?")
+            dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + folder.getNazwa() + "?")
                     .setTitle(R.string.popup_uwaga)
                     .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Folder f = new Folder();
-                            f.delete(id);
-                            folderyAdapter.refresh();
+                            f.delete(folder.getId());
+                            fragment.refresh();
                             AppHelper.showMessage(fragment.getView(), R.string.folder_usuniety);
                         }
                     })
@@ -169,7 +122,7 @@ class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         input.setPadding(30, 30, 30, 30);
         input.setSingleLine(true);
         input.setHint(R.string.muti_edit_folder_placeholder);
-        builder.setTitle(fragment.getResources().getString(R.string.multi_change_name_for) + " " + name);
+        builder.setTitle(fragment.getResources().getString(R.string.multi_change_name_for) + " " + folder.getNazwa());
         input.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         final ValidateNotNull validateNotNull = new ValidateNotNull();
         validate = new ValidateCommand();
@@ -202,7 +155,7 @@ class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         Folder f = new Folder();
         ContentValues data = new ContentValues();
         data.put(Folder.COLUMN_NAZWA, inputTxt);
-        f.edit(id, data);
-        folderyAdapter.refresh();
-    }*/
+        f.edit(folder.getId(), data);
+        fragment.refresh();
+    }
 }

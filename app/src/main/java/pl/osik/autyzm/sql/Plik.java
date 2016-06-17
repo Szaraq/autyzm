@@ -155,6 +155,10 @@ public class Plik extends AbstractDBTable {
 
     public static String getThumbAbsolutePath(int id) {
         PlikORM plik = getById(id, false);
+        return getThumbAbsolutePath(plik);
+    }
+
+    public static String getThumbAbsolutePath(PlikORM plik) {
         if(plik.getThumb() == null || plik.getThumb().length() == 0) FileHelper.createThumbnail(plik);
         return THUMB_DIR + plik.getThumb();
     }

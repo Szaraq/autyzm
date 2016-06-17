@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import pl.osik.autyzm.helpers.MySortedMap;
+import pl.osik.autyzm.helpers.orm.FolderORM;
 import pl.osik.autyzm.helpers.orm.PlikORM;
 
 /**
@@ -45,14 +46,19 @@ public class Folder extends AbstractDBTable {
         return TABLE_NAME;
     }
 
-    public static MySortedMap getFolderyInFolder(int idFolderu) {
-        MySortedMap out = new MySortedMap();
+    public static ArrayList<FolderORM> getFolderyInFolder(int idFolderu) {
+        ArrayList<FolderORM> out = new ArrayList<>();
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         String query = "SELECT * FROM " + Folder.TABLE_NAME + " WHERE " + Folder.COLUMN_FOLDER + " = ?";        //nie potrzeba order by, bo już jest Comparator
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idFolderu) });
         while(cursor.moveToNext()) {
-            out.put(cursor.getString(cursor.getColumnIndex(Folder.COLUMN_NAZWA)), cursor.getInt(cursor.getColumnIndex(Folder.COLUMN_ID)));
+            int id = cursor.getInt(cursor.getColumnIndex(Folder.COLUMN_ID));
+            String nazwa = cursor.getString(cursor.getColumnIndex(Folder.COLUMN_NAZWA));
+            int folderFK = cursor.getInt(cursor.getColumnIndex(Folder.COLUMN_FOLDER));
+            int user = cursor.getInt(cursor.getColumnIndex(Folder.COLUMN_USER));
+            FolderORM folder = new FolderORM(id, nazwa, folderFK, user);
+            out.add(folder);
         }
         helper.close();
         cursor.close();

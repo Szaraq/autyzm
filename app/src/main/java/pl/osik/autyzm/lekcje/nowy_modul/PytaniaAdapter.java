@@ -2,6 +2,7 @@ package pl.osik.autyzm.lekcje.nowy_modul;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -102,8 +103,6 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
         PytanieORM pytanie;
         public MyCustomEditTextListener myCustomEditTextListener;
 
-        @Bind(R.id.row_header)
-        TextView pytanieHeader;
         @Bind(R.id.row_pytanie)
         EditText pytanieText;
         @Bind(R.id.delete)
@@ -127,7 +126,7 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
 
         public void setPosition(int position) {
             this.position = position;
-            pytanieHeader.setText(activity.getString(R.string.lekcje_modul_pytania_row_header) + " " + (position + 1));
+            pytanieText.setHint(activity.getString(R.string.lekcje_modul_pytania_row_header) + " " + (position + 1));
             if(adapter.pytanieAdded && adapter.pytania.size() == (position + 1)) {
                 adapter.pytanieAdded = false;
                 pytanieText.requestFocus();
@@ -139,20 +138,21 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
             pytanieText.setText(pytanie.getTresc());
         }
 
-        public String getTresc() {
-            return pytanieHeader.getText().toString();
+        public String getHint() {
+            return pytanieText.getHint().toString();
         }
 
         @Override
         public void onClick(View v) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-            dialog.setMessage(MyApp.getContext().getString(R.string.message_pytanie_do_usunięcia) + " " + pytanieHeader.getText() + "?")
+            dialog.setMessage(MyApp.getContext().getString(R.string.message_pytanie_do_usunięcia) + " " + getHint() + "?")
                     .setTitle(R.string.popup_uwaga)
                     .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             LekcjeHelper.removePytanie(position);
                             adapter.refresh();
+                            activity.setAddPytanieVisibility(LekcjeHelper.getPytaniaList().size() == 0);
                         }
                     })
                     .setNegativeButton(R.string.button_anuluj, null)

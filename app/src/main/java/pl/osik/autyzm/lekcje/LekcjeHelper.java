@@ -161,6 +161,7 @@ public class LekcjeHelper {
             data.clear();
         }
 
+        for(int i : pytaniaDoUsuniecia) p.delete(i);
     }
 
     public static void addPytanie(String tresc) {

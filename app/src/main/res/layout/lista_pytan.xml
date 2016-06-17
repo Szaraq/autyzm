@@ -6,33 +6,32 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/row_header"
-            android:textColor="@android:color/black"
-            android:text="Sample text"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/pytanie_photo"
+            style="@style/listItemIcon.drawable.small"
+            android:src="@drawable/ic_pytanie"
+            android:tint="@color/colorGreen" />
 
         <EditText
             android:id="@+id/row_pytanie"
+            style="@style/itemList"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:capitalize="sentences"
-            android:hint="@string/lekcje_modul_pytania_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/delete"
+            style="@style/contextMenu"
+            android:src="@drawable/ic_delete" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/delete"
-        android:src="@drawable/ic_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
 
 
 </LinearLayout>

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import pl.osik.autyzm.helpers.AppHelper;
+
 /**
  * Created by m.osik2 on 2016-05-09.
  */
@@ -83,9 +85,11 @@ public class ValidateCommand {
         for (Map.Entry<View, String> entry : errorMsg.entrySet()){
             View view = entry.getKey();
             if(view instanceof TextView)
-                ((TextView) entry.getKey()).setError(entry.getValue());
+                ((TextView) view).setError(entry.getValue());
             else if(view instanceof TextInputLayout)
-                ((TextInputLayout) entry.getKey()).setError(entry.getValue());
+                ((TextInputLayout) view).setError(entry.getValue());
+            else
+                AppHelper.showMessage(view, entry.getValue());
         }
     }
 }

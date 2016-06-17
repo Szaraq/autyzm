@@ -55,6 +55,34 @@
         android:layout_above="@id/divider2"
         android:layout_below="@id/divider" />
 
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/no_plik_container"
+        android:visibility="gone"
+        android:layout_above="@id/divider2"
+        android:layout_below="@id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/no_plik_view"
+            android:src="@drawable/ic_add"
+            android:tint="@color/colorGreyDisabled"
+            app:layout_heightPercent="70%"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/no_plik_text"
+            android:textColor="@color/colorGreyDisabled"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_below="@id/no_plik_view"
+            android:text="@string/pytania_dodaj_pytanie"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.percent.PercentRelativeLayout>
+
     <View
         android:id="@+id/divider2"
         style="@style/DividerLine"

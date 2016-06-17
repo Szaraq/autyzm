@@ -1,11 +1,13 @@
 package pl.osik.autyzm.lekcje.nowy_modul;
 
 import android.content.Intent;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.Serializable;
@@ -26,6 +28,12 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
 
     @Bind(R.id.plik_view)
     ImageView plikView;
+    @Bind(R.id.no_plik_container)
+    PercentRelativeLayout noPlikContainer;
+    @Bind(R.id.no_plik_view)
+    ImageView noPlikView;
+    @Bind(R.id.no_plik_text)
+    TextView noPlikText;
     @Bind(R.id.buttonAdd)
     Button buttonAdd;
     @Bind(R.id.buttonNext)
@@ -51,17 +59,23 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
         buttonNext.setClickable(false);
         buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryDisabled));
         buttonAdd.setText(getString(R.string.button_add));
+
+        noPlikContainer.setVisibility(View.VISIBLE);
+        noPlikContainer.setOnClickListener(this);
+        plikView.setVisibility(View.GONE);
     }
 
     private void changeViewToEdit() {
         buttonNext.setClickable(true);
         buttonNext.setTextColor(getResources().getColor(R.color.colorPrimary));
         buttonAdd.setText(getString(R.string.button_edit));
+        noPlikContainer.setVisibility(View.GONE);
+        plikView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == buttonAdd.getId()) {
+        if(v.getId() == buttonAdd.getId() || v.getId() == noPlikContainer.getId()) {
             Intent intent = new Intent(this, PickerActivity.class);
             startActivityForResult(intent, FileHelper.FileManager.PICK_IMAGE);
         } else if(v.getId() == buttonNext.getId()) {

@@ -3,6 +3,7 @@ package pl.osik.autyzm.helpers.orm;
 import android.content.ContentValues;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,8 +52,8 @@ public class LekcjaORM implements Serializable {
     }
 
     public String getLastUsedAsString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
-        return sdf.format(getLastUsed().getTime());
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
+        return df.format(getLastUsed().getTime());
     }
 
     public Calendar getLastUsed() {

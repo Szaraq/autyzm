@@ -1,5 +1,6 @@
 package pl.osik.autyzm.lekcje.nowy_modul;
 
+import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,8 @@ public class PytaniaActivity extends AppCompatActivity implements View.OnClickLi
 
     @Bind(R.id.lista_pytan)
     RecyclerView listaPytan;
+    @Bind(R.id.no_plik_container)
+    PercentRelativeLayout noPlikContainer;
     @Bind(R.id.buttonAdd)
     Button buttonAdd;
     @Bind(R.id.buttonNext)
@@ -38,18 +41,29 @@ public class PytaniaActivity extends AppCompatActivity implements View.OnClickLi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         buttonAdd.setOnClickListener(this);
         buttonNext.setOnClickListener(this);
+        noPlikContainer.setOnClickListener(this);
         pytaniaAdapter = new PytaniaAdapter(getLayoutInflater(), this);
         listaPytan.setLayoutManager(new LinearLayoutManager(this));
         listaPytan.setAdapter(pytaniaAdapter);
         LekcjeHelper.setPytaniaList(Pytanie.getPytaniaForModul(LekcjeHelper.getModul().getId()));
+        setAddPytanieVisibility(LekcjeHelper.getPytaniaList().size() == 0);
+    }
+
+    protected void setAddPytanieVisibility(boolean visible) {
+        if(visible) {
+            noPlikContainer.setVisibility(View.VISIBLE);
+        } else {
+            noPlikContainer.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == buttonAdd.getId()) {
+        if(v.getId() == buttonAdd.getId() || v.getId() == noPlikContainer.getId()) {
             LekcjeHelper.addPytanie("");
             pytaniaAdapter.pytanieAdded = true;
             pytaniaAdapter.refresh();
+            setAddPytanieVisibility(false);
         } else if(v.getId() == buttonNext.getId()) {
             LekcjeHelper.commitAll();
             LekcjeHelper.finishPlikActivity();

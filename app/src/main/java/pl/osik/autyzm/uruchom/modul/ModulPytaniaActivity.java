@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -45,9 +46,10 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
     private int currViewId;
     private ValidateCommand validate;
 
+    @Bind(R.id.buttonNext)
     Button buttonNext;
     @Bind(R.id.containerLayout)
-    RelativeLayout containerLayout;
+    LinearLayout containerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +64,9 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
         for(int j = 0; j < liczbaPytan; j++) {
             PytanieORM currPytanie = pytania.get(j);
             pytaniaOdpowiedzi.put(currPytanie, NO_ANSWER);
-            createPytanieText(currPytanie);
-            createOdpowiedzButtons(currPytanie);
+            createPytanie(currPytanie);
         }
-        createButtonNext();
+        buttonNext.setOnClickListener(this);
         addValidations();
         if(liczbaPytan == 0) buttonNext.callOnClick();
     }
@@ -75,66 +76,19 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
         validate.addValidate(buttonNext, new ValidateAllOdpowiedziSelected(pytaniaOdpowiedzi));
     }
 
-    private TextView createPytanieText(PytanieORM currPytanie) {
-        TextView out = new TextView(this);
-        out.setText(currPytanie.getTresc());
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if(currViewId != 0) {
-            params.addRule(RelativeLayout.BELOW, currViewId);
-            params.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, SPACING, getResources().getDisplayMetrics());
+    private void createPytanie(PytanieORM currPytanie) {
+        View v = getLayoutInflater().inflate(R.layout.pytanie, null);
+        containerLayout.addView(v);
+        TextView pytanieText = (TextView) v.findViewById(R.id.pytanie_text);
+        pytanieText.setText(currPytanie.getTresc());
+
+        LinearLayout buttonContainer = (LinearLayout) v.findViewById(R.id.buttonContainer);
+        ArrayList<Button> buttonList = new ArrayList<Button>(buttonContainer.getChildCount());
+        for (int i = 0; i < buttonContainer.getChildCount(); i++) {
+            Button button = (Button) buttonContainer.getChildAt(i);
+            button.setOnClickListener(new OdpowiedzOnClickListener(this, i, buttonList, currPytanie));
+            buttonList.add(button);
         }
-        out.setId(AppHelper.generateViewId());
-        currViewId = out.getId();
-        out.setLayoutParams(params);
-        out.setTextAppearance(this, android.R.style.TextAppearance_Medium);
-        out.setTextColor(getResources().getColor(android.R.color.black));
-        containerLayout.addView(out);
-        return out;
-    }
-
-
-    private ArrayList<Button> createOdpowiedzButtons(PytanieORM currPytanie) {
-        LinearLayout buttonContainer = createLinearLayoutForButtons();
-        ArrayList<Button> out = new ArrayList<Button>(Odpowiedz.MAX_VAL - Odpowiedz.MIN_VAL + 1);
-        for (int i = Odpowiedz.MIN_VAL; i <= Odpowiedz.MAX_VAL; i++) {
-            //Button b = new Button(this);
-            Button b = (Button) getLayoutInflater().inflate(R.layout.button_odpowiedz, null);
-            b.setText(String.valueOf(i));
-            b.setOnClickListener(new OdpowiedzOnClickListener(this, i, out, currPytanie));
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.weight = 1;
-            params.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, SPACING, getResources().getDisplayMetrics());
-            if(i != Odpowiedz.MIN_VAL) params.leftMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 5, getResources().getDisplayMetrics());
-            b.setLayoutParams(params);
-            b.setElevation((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 5, getResources().getDisplayMetrics()));
-            out.add(b);
-            buttonContainer.addView(b);
-        }
-        return out;
-    }
-
-    private LinearLayout createLinearLayoutForButtons() {
-        LinearLayout out = new LinearLayout(this);
-        out.setOrientation(LinearLayout.HORIZONTAL);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, currViewId);
-        out.setLayoutParams(params);
-        out.setId(AppHelper.generateViewId());
-        currViewId = out.getId();
-        containerLayout.addView(out);
-        return out;
-    }
-
-    private void createButtonNext() {
-        buttonNext = (Button) getLayoutInflater().inflate(R.layout.button_next, null);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, AppHelper.dip2px(36));
-        params.addRule(RelativeLayout.BELOW, currViewId);
-        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
-        params.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, SPACING_NEXT_BUTTON, getResources().getDisplayMetrics());
-        buttonNext.setLayoutParams(params);
-        buttonNext.setOnClickListener(this);
-        buttonNext.setId(AppHelper.generateViewId());
-        containerLayout.addView(buttonNext);
     }
 
     @Override

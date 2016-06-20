@@ -31,6 +31,7 @@ import pl.osik.autyzm.sql.Plik;
  * Created by m.osik2 on 2016-06-17.
  */
 public class PlikView extends CardView {
+    //Test
 
     PlikORM plik;
     private MultimediaFragment fragment;
@@ -101,10 +102,10 @@ public class PlikView extends CardView {
         @DrawableRes int icon;
         @ColorRes int iconColor;
         if(FileHelper.getType(plik.getPath()) == FileHelper.FileTypes.PHOTO) {
-            icon = R.drawable.ic_filetype_image;
+            icon = R.drawable.ic_file_image;
             iconColor = R.color.colorMultimediaIconImage;
         } else {
-            icon = R.drawable.ic_filetype_movie;
+            icon = R.drawable.ic_file_movie;
             iconColor = R.color.colorMultimediaIconVideo;
         }
         multimediaIcon.setImageResource(icon);

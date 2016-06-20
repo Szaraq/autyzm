@@ -117,10 +117,10 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
         @DrawableRes int icon;
         @ColorRes int iconColor;
         if(FileHelper.getType(path) == FileHelper.FileTypes.PHOTO) {
-            icon = R.drawable.ic_filetype_image;
+            icon = R.drawable.ic_file_image;
             iconColor = R.color.colorMultimediaIconImage;
         } else {
-            icon = R.drawable.ic_filetype_movie;
+            icon = R.drawable.ic_file_movie;
             iconColor = R.color.colorMultimediaIconVideo;
         }
         multimediaIcon.setImageResource(icon);

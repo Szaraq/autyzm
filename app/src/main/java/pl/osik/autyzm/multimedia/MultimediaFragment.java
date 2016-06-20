@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -161,7 +163,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
             }
         };
         for (final PlikORM plik : pliki) {
-            PlikView view = new PlikView(getContext());
+            PlikView view = new PlikView(getContext(), this);
             view.setPlik(plik);
             plikiLayout.addView(view);
             view.setOnClickListener(plikOnclickListener);

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -120,8 +121,8 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     public void setPhoto(String photo) {
         this.photo = photo;
-        if(photo == null) {
-            dzieciPhoto.setImageResource(R.drawable.ic_test_child_photo);
+        if(photo == null || !(new File(photo)).exists()) {
+            dzieciPhoto.setImageResource(DzieciDetailsActivity.RESOURCE_NO_PHOTO);
         } else {
             ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();
             vto.addOnPreDrawListener(new MyPreDrawListener(dzieciPhoto, photo, fragment.getActivity()));

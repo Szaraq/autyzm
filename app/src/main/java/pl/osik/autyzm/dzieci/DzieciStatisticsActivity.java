@@ -69,6 +69,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.Odpowiedz;
 import pl.osik.autyzm.sql.User;
@@ -109,12 +110,8 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         imieINazwisko = dziecko.get(Dziecko.COLUMN_IMIE) + " " + dziecko.get(Dziecko.COLUMN_NAZWISKO);
         getSupportActionBar().setTitle(imieINazwisko);
 
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-        FILE_NAME = getString(R.string.dzieci_statistics_pdf_title) + ".pdf";
-        //FINALLY Uncomment
-        //OUTPUT_FILE = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/" + FILE_NAME;
-        OUTPUT_FILE = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + ".pdf";
+        FILE_NAME = getString(R.string.dzieci_statistics_pdf_title) + "-" + imieINazwisko + ".pdf";
+        OUTPUT_FILE = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + "/" + FILE_NAME;
         titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.NORMAL, new BaseColor(getResources().getColor(R.color.colorPrimary)));
 
         createChart(chart);
@@ -172,6 +169,10 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
     /* Creating PDF */
     private boolean saveAsPdf() {
         try {
+            File file = new File(OUTPUT_FILE);
+            Log.d("Stats", OUTPUT_FILE);
+            file.getParentFile().mkdirs();
+            file.createNewFile();
             document = new Document(PageSize.A4.rotate());
             PdfWriter.getInstance(document, new FileOutputStream(OUTPUT_FILE));
             document.open();
@@ -182,6 +183,9 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
             e.printStackTrace();
             return false;
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -260,17 +264,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         } else {
             popupText = getString(R.string.dzieci_statistics_pdf_save_error) + FILE_NAME;
         }
-
-        new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.dzieci_statistics_popup_title))
-                .setMessage(popupText)
-                .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
+        AppHelper.showMessage(container, popupText);
     }
 
     private void resizeChart() {

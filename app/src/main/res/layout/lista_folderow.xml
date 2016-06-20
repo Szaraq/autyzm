@@ -4,8 +4,8 @@
     android:id="@+id/card_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="fill"
     android:layout_columnWeight="1"
+    android:layout_gravity="fill"
     android:layout_margin="2dp"
     android:orientation="vertical"
     app:cardCornerRadius="2dp"
@@ -21,21 +21,23 @@
             style="@style/multimediaItem"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:paddingLeft="@dimen/multimedia_left_margin"
             android:src="@drawable/ic_folder" />
 
         <TextView
             android:id="@+id/folder_name"
             style="@style/multimediaItem"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="5"
-            android:paddingLeft="4dp"/>
+            android:lines="2"
+            android:paddingLeft="4dp" />
 
         <ImageView
             android:id="@+id/foldery_context_menu"
             style="@style/contextMenu"
-            android:tint="@color/colorAppBackground"
-            android:background="@color/colorPrimary" />
+            android:background="@color/colorPrimary"
+            android:paddingRight="@dimen/multimedia_left_margin"
+            android:tint="@color/colorAppBackground" />
 
     </LinearLayout>
 

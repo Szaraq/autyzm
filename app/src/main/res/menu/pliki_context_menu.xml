@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:id="@+id/pliki_move"
+        android:icon="@drawable/ic_folder"
+        android:title="@string/move_plik_name"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/pliki_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/delete"
+        app:showAsAction="always"/>
+
+
+</menu>

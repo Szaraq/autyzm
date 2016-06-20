@@ -2,12 +2,16 @@ package pl.osik.autyzm.validate;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Arrays;
 
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.sql.AbstractDBTable;
 import pl.osik.autyzm.sql.DBHelper;
 
@@ -38,8 +42,24 @@ public class ValidateExistsInDatabase implements Validate {
 
     @Override
     public boolean validate(View view) {
-        String textFromView = ((TextView) view).getText().toString();
+        String textFromView = getStringFromView(view);
         return validate(textFromView);
+    }
+
+    private String getStringFromView(View view) {
+        EditText editText = null;
+        if(view instanceof TextInputLayout) {
+            editText = ((TextInputLayout) view).getEditText();
+        } else if(view instanceof EditText) {
+            editText = (EditText) view;
+        } else {
+            try {
+                throw new Exception(MyApp.getContext().getString(R.string.exception_wrong_view));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return editText.getText().toString();
     }
 
     public boolean validate(String text) {

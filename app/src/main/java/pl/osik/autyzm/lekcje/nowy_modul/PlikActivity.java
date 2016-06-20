@@ -58,7 +58,8 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
     private void changeViewToAdd() {
         buttonNext.setClickable(false);
         buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryDisabled));
-        buttonAdd.setText(getString(R.string.button_add));
+        //buttonAdd.setText(getString(R.string.button_add));
+        buttonAdd.setVisibility(View.GONE);
 
         noPlikContainer.setVisibility(View.VISIBLE);
         noPlikContainer.setOnClickListener(this);

@@ -40,9 +40,9 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 /**
  * Created by m.osik2 on 2016-05-04.
  */
-public class FolderyAdapter { // extends RecyclerView.Adapter<FolderyViewHolder> {
+public class FolderyAdapter extends RecyclerView.Adapter<FolderyViewHolder> {
 
-    /*private MultimediaFragment fragment;
+    private MultimediaFragment fragment;
     private final LayoutInflater layoutInflater;
     private final int idFolder;
     private MySortedMap foldery;
@@ -51,7 +51,6 @@ public class FolderyAdapter { // extends RecyclerView.Adapter<FolderyViewHolder>
         this.layoutInflater = layoutInflater;
         this.fragment = (MultimediaFragment) fragment;
         this.idFolder = idFolder;
-        this.foldery = Folder.getFolderyInFolder(idFolder);
     }
 
     @Override
@@ -77,7 +76,6 @@ public class FolderyAdapter { // extends RecyclerView.Adapter<FolderyViewHolder>
     }
 
     public void refresh() {
-        foldery = Folder.getFolderyInFolder(idFolder);
         notifyDataSetChanged();
     }
 }
@@ -204,5 +202,5 @@ class FolderyViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         data.put(Folder.COLUMN_NAZWA, inputTxt);
         f.edit(id, data);
         folderyAdapter.refresh();
-    }*/
+    }
 }

@@ -50,7 +50,7 @@ public class Folder extends AbstractDBTable {
         ArrayList<FolderORM> out = new ArrayList<>();
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
-        String query = "SELECT * FROM " + Folder.TABLE_NAME + " WHERE " + Folder.COLUMN_FOLDER + " = ?";        //nie potrzeba order by, bo już jest Comparator
+        String query = "SELECT * FROM " + Folder.TABLE_NAME + " WHERE " + Folder.COLUMN_FOLDER + " = ? ORDER BY " + COLUMN_NAZWA;
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idFolderu) });
         while(cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(Folder.COLUMN_ID));

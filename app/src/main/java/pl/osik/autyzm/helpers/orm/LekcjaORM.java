@@ -129,4 +129,8 @@ public class LekcjaORM implements Serializable {
     public void setGhost(boolean ghost) {
         this.ghost = ghost;
     }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
 }

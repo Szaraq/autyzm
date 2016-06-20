@@ -63,6 +63,8 @@ public class StartFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.nav_start));
+
         startLastAdapter = new StartLastAdapter(getLayoutInflater(savedInstanceState), this);
         startLastUsedList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         startLastUsedList.setAdapter(startLastAdapter);

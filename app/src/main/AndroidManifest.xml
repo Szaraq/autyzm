@@ -23,7 +23,8 @@
             android:name=".dzieci.DzieciDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".dzieci.DzieciStatisticsActivity" />
+        <activity android:name=".dzieci.DzieciStatisticsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".login.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -34,18 +35,26 @@
         </activity>
         <activity android:name=".lekcje.LekcjeTytulActivity" />
         <activity android:name=".lekcje.LekcjeModulActivity" />
-        <activity android:name=".lekcje.nowy_modul.PlikActivity" />
+        <activity android:name=".lekcje.nowy_modul.PlikActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".lekcje.nowy_modul.PytaniaActivity" />
         <activity
             android:name=".uruchom.modul.ModulMediaActivity"
-            android:parentActivityName=".main.MainActivity" />
-        <activity android:name=".uruchom.modul.ModulPytaniaActivity" />
+            android:parentActivityName=".main.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".uruchom.modul.ModulPytaniaActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".uruchom.modul.PodsumowanieActivity" />
-        <activity android:name=".uruchom.WyborDzieckaActivity" />
-        <activity android:name=".helpers.FilePickerActivity" />
-        <activity android:name=".multimedia.PickerActivity" />
-        <activity android:name=".multimedia.ShowMediaActivity" />
-        <activity android:name=".multimedia.PlayerActivity" />
+        <activity android:name=".uruchom.WyborDzieckaActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".helpers.FilePickerActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".multimedia.PickerActivity"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".multimedia.ShowMediaActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".multimedia.PlayerActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".login.UserDetailsActivity"
             android:parentActivityName=".main.MainActivity"

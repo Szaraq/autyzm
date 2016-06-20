@@ -1,8 +1,8 @@
 package pl.osik.autyzm.multimedia;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -75,6 +75,8 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
     private MultimediaFragment fragment;
     private boolean chooser;
 
+    @Bind(R.id.multimedia_icon)
+    ImageView multimediaIcon;
     @Bind(R.id.plik_name)
     TextView plikName;
     @Bind(R.id.plik_image)
@@ -108,6 +110,21 @@ class PlikiViewHolder extends RecyclerView.ViewHolder implements View.OnClickLis
                     .centerCrop()
                     .into(plikImage);
         }
+        setIcon(plik.getPath());
+    }
+
+    private void setIcon(String path) {
+        @DrawableRes int icon;
+        @ColorRes int iconColor;
+        if(FileHelper.getType(path) == FileHelper.FileTypes.PHOTO) {
+            icon = R.drawable.ic_filetype_image;
+            iconColor = R.color.colorMultimediaIconImage;
+        } else {
+            icon = R.drawable.ic_filetype_movie;
+            iconColor = R.color.colorMultimediaIconVideo;
+        }
+        multimediaIcon.setImageResource(icon);
+        multimediaIcon.setColorFilter(fragment.getResources().getColor(iconColor));
     }
 
     public void setFragment(MultimediaFragment fragment) {

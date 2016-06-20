@@ -165,7 +165,7 @@ public class AppHelper {
      * @param spaceFiller LinearLayout, pełniący funkcję wypełniacza przestrzeni
      */
     public static void setHeightForSpaceFiller(LinearLayout spaceFiller) {
-        spaceFiller.setMinimumHeight(getScreenSize()[1] / 2);
+        spaceFiller.setMinimumHeight((int) (getScreenSize()[1] * 0.4));
     }
 
     public static void showMessage(View container, String text) {

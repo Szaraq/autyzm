@@ -125,7 +125,7 @@
     </style>
 
     <style name="EditTextMaterial.EditTextDzieciDetailsLayer" parent="EditTextMaterial">
-        <item name="android:layout_height">@dimen/contact_row_height</item>
+        <item name="android:layout_height">@dimen/contact_row_height_plus_error</item>
         <item name="android:layout_marginLeft">@dimen/contact_margin</item>
         <item name="android:theme">@style/TextDesignLabel.Primary</item>
     </style>
@@ -232,8 +232,9 @@
         <item name="android:gravity">center|left</item>
         <item name="android:textColor">@color/colorAppBackground</item>
         <item name="android:background">@color/colorPrimary</item>
-        <item name="android:paddingLeft">2dp</item>
         <item name="android:tint">@color/colorAppBackground</item>
+        <item name="android:ellipsize">middle</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <style name="itemList">
@@ -250,8 +251,9 @@
     </style>
 
     <!-- Popup menu -->
-    <style name="popupMenuStyle" parent="@android:style/Widget.PopupMenu">
-        <item name="android:popupBackground">@color/colorAppBackground</item>
+    <style name="popupMenuStyle" parent="@android:style/Widget.Material.PopupMenu.Overflow">
+        <!--<item name="android:popupBackground">@color/colorAppBackground</item>
+        <item name="android:popupElevation">2dp</item>-->
     </style>
 
     <!-- Progress Bar -->

@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -64,12 +66,20 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
     Toolbar toolbar;
     @Bind(R.id.userPhoto)
     ImageView userPhoto;
+    @Bind(R.id.imieLayout)
+    TextInputLayout imieLayout;
     @Bind(R.id.imie)
     EditText imie;
+    @Bind(R.id.nazwiskoLayout)
+    TextInputLayout nazwiskoLayout;
     @Bind(R.id.nazwisko)
     EditText nazwisko;
+    @Bind(R.id.userLayout)
+    TextInputLayout userLayout;
     @Bind(R.id.user)
     EditText user;
+    @Bind(R.id.hasloLayout)
+    TextInputLayout hasloLayout;
     @Bind(R.id.haslo)
     EditText haslo;
     @Bind(R.id.haslo_hint)
@@ -136,12 +146,12 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void addValidations() {
-        validate.addValidate(new EditText[]{imie, nazwisko, user}, new ValidateNotNull());
+        validate.addValidate(new TextInputLayout[]{imieLayout, nazwiskoLayout, userLayout}, new ValidateNotNull());
         if(newAccount) {
-            validate.addValidate(user, new ValidateExistsInDatabase(new User(), User.COLUMN_LOGIN))
-                    .addValidate(haslo, new ValidateNotNull());
+            validate.addValidate(userLayout, new ValidateExistsInDatabase(new User(), User.COLUMN_LOGIN))
+                    .addValidate(hasloLayout, new ValidateNotNull());
         } else {
-            validate.addValidate(user, new ValidateExistsInDatabase(new User(), User.COLUMN_LOGIN, userData.get(User.COLUMN_LOGIN)));
+            validate.addValidate(userLayout, new ValidateExistsInDatabase(new User(), User.COLUMN_LOGIN, userData.get(User.COLUMN_LOGIN)));
         }
     }
 
@@ -154,7 +164,7 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void setPhoto(@Nullable String path) {
-        if(path == null) {
+        if(path == null || !(new File(path)).exists()) {
             userPhoto.setImageResource(RESOURCE_NO_PHOTO);
             menu.findItem(R.id.deletePhoto).setVisible(false);
             menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);

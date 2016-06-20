@@ -169,7 +169,8 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     @Override
     public void onClick(View v) {
         if(v.getId() == favourite.getId()) {
-            Lekcja.setFavourite(lekcja.getId(), !lekcja.isFavourite(), favourite);
+            lekcja.setFavourite(!lekcja.isFavourite());
+            Lekcja.setFavourite(lekcja.getId(), lekcja.isFavourite(), favourite);
         } else if(v.getId() == buttonDelete.getId()) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(fragment.getContext());
             dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + lekcja.getTytul() + "?")

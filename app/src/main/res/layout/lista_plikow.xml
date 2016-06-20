@@ -13,27 +13,51 @@
         android:id="@+id/lista_plikow"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAppBackground"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/plik_image"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_marginTop="1dp"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
             android:layout_weight="1"
             android:background="@color/colorAppBackground"
             android:src="@drawable/ic_test_plik" />
 
-        <TextView
-            android:id="@+id/plik_name"
-            style="@style/multimediaItem"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            />
+            android:layout_height="@dimen/multimedia_plik_title_height"
+            android:background="@color/colorAppBackground"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/multimedia_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/multimedia_left_margin" />
+
+            <TextView
+                android:id="@+id/plik_name"
+                style="@style/multimediaItem"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorAppBackground"
+                android:paddingLeft="16dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/multimedia_context_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingRight="@dimen/multimedia_left_margin"
+                android:src="@drawable/ic_context_menu" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -83,7 +83,7 @@
         klaudia.kucharuk@gmail.com
     </string>
     <string name="help_title">Pomoc</string>
-    <string name="dzieci_statistics_pdf_title">Raport postepu w nauce</string>
+    <string name="dzieci_statistics_pdf_title">Raport </string>
     <string name="dzieci_statistics_pdf_save_ok">"Plik został zachowany w dokumentach jako: "</string>
     <string name="dzieci_statistics_pdf_save_error">Nie udało się zapisać pliku</string>
     <string name="dzieci_statistics_popup_title">Zapisywanie pliku</string>
@@ -91,7 +91,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lekcje_main_header">Wybierz lekcję do edycji\nlub stwórz nową</string>
     <string name="lekcje_title">Lekcje</string>
-    <string name="message_lekcja_usunięta">Lekcja poprawnie usunięta</string>
+    <string name="message_lekcja_usunięta">Lekcja usunięta</string>
     <string name="popup_uwaga">Uwaga!</string>
     <string name="lekcje_title_header">1. Wpisz tytuł lekcji</string>
     <string name="lekcja_hint_tytul">Tytuł lekcji</string>
@@ -109,13 +109,13 @@
     <string name="lekcje_modul_pytania_hint">Tu wpisz pytanie</string>
     <string name="lekcje_modul_pytania_row_header">Pytanie</string>
     <string name="message_pytanie_do_usunięcia">Chcesz usunąć</string>
-    <string name="message_modul_usunięty">Moduł poprawnie usunięty</string>
+    <string name="message_modul_usunięty">Moduł usunięty</string>
     <string name="lekcje_nowy_modul_title">Nowy moduł</string>
     <string name="favourite_add">Dodaj do ulubionych</string>
     <string name="favourite_remove">Usuń z ulubionych</string>
     <string name="uruchom_title">Uruchom lekcję</string>
     <string name="edit_name">Zmień nazwę</string>
-    <string name="folder_usuniety">Folder poprawnie usunięty</string>
+    <string name="folder_usuniety">Folder usunięty</string>
     <string name="multi_change_name_for">"Zmień nazwę folderu: "</string>
     <string name="muti_edit_folder_placeholder">Podaj nową nazwę dla folderu</string>
     <string name="filepicker_no_data">Brak plików i katalogów</string>
@@ -128,15 +128,12 @@
     <string name="dzieci_details_dodaj_zdjecie">Dodaj zdjęcie</string>
     <string name="help_dane_autorow">Dane kontaktowe autorów aplikacji</string>
     <string name="help_kontakt_michal"><b>Michał Osik</b>\n
-        Tel.: 0 700 888 888\n
         </string>
     <string name="help_email_michal">michal.osik@gmail.com</string>
     <string name="help_kontakt_iza"><b>Izabela Konarzewska</b>\n
-        Tel.: 0 700 888 888\n
         </string>
     <string name="help_email_iza">izabela.konarzewska@gmail.com</string>
     <string name="help_kontakt_klaudia"><b>Klaudia Kucharuk</b>\n
-        Tel.: 0 700 888 888\n
         </string>
     <string name="help_email_klaudia">klaudia.kucharuk@gmail.com</string>
     <string name="user_dane_header">Dane użytkownika</string>
@@ -232,4 +229,7 @@
     </string>
     <string name="plik_dodaj_plik">Dodaj plik</string>
     <string name="pytania_dodaj_pytanie">Dodaj pytanie</string>
+    <string name="exception_wrong_view">Nie obsługiwana kontrolka</string>
+    <string name="move_plik_name">Przenieś do folderu</string>
+    <string name="plik_usuniety">Plik usunięty</string>
 </resources>

@@ -16,6 +16,9 @@
     <dimen name="item_row_height">56dp</dimen>
     <dimen name="item_row_height_2lines">60dp</dimen>
     <dimen name="contact_row_height">72dp</dimen>
+    <dimen name="contact_row_height_plus_error">85dp</dimen>
     <dimen name="avatar_diameter">40dp</dimen>
     <dimen name="padding_for_fab">100dp</dimen>
+    <dimen name="multimedia_plik_title_height">36dp</dimen>
+    <dimen name="multimedia_left_margin">4dp</dimen>
 </resources>

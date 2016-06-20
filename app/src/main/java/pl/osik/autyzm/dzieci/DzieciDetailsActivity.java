@@ -35,9 +35,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -64,7 +67,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     OperationsEnum operacja;
     ValidateCommand validate = new ValidateCommand();
 
-    private DatePicker datePicker;
+    private String photoPath;
     private Calendar calendar = Calendar.getInstance();
     private EditText dateChosenFor;
     private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener(){
@@ -81,8 +84,12 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     AppBarLayout appBar;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.imieLayout)
+    TextInputLayout imieLayout;
     @Bind(R.id.imie)
     EditText imie;
+    @Bind(R.id.nazwiskoLayout)
+    TextInputLayout nazwiskoLayout;
     @Bind(R.id.nazwisko)
     EditText nazwisko;
     @Bind(R.id.data_urodzenia)
@@ -192,8 +199,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             imie.requestFocus();
             telefonOjca.setOnKeyListener(new MyOnKeyEnterListener(imieMatki));
             Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            rozpoczecie.setText(sdf.format(cal.getTime()));
+            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
+            rozpoczecie.setText(df.format(cal.getTime()));
             fab.setVisibility(View.GONE);
         }
         /** END **/
@@ -217,7 +224,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void setPhoto(@Nullable String path) {
-        if(path == null) {
+        if(path == null || !(new File(path)).exists()) {
             photo.setImageResource(RESOURCE_NO_PHOTO);
             menu.findItem(R.id.deletePhoto).setVisible(false);
             menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);
@@ -232,7 +239,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void addValidations() {
-        validate.addValidate(new View[]{imie, nazwisko}, new ValidateNotNull());
+        validate.addValidate(new View[]{imieLayout, nazwiskoLayout}, new ValidateNotNull());
     }
 
     private void populate() {
@@ -334,6 +341,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                     data.put(entry.getKey(), entry.getValue().getText().toString());
                 }
                 data.put(Dziecko.COLUMN_USER, User.getCurrentId());
+                data.put(Dziecko.COLUMN_PHOTO, photoPath);
                 d.insert(data);
                 AppHelper.showMessage(containerLayout, R.string.message_dziecko_dodane);
                 onBackPressed();
@@ -346,6 +354,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         if (resultCode == RESULT_OK) {
             if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                photoPath = path;
                 Dziecko.changePhoto(id, path);
                 setPhoto(path);
             }
@@ -372,8 +381,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     private void putDate(int year, int monthOfYear, int dayOfMonth) {
         Calendar cal = Calendar.getInstance();
         cal.set(year, monthOfYear, dayOfMonth);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String put = sdf.format(cal.getTime());
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
+        String put = df.format(cal.getTime());
         dateChosenFor.setText(put);
     }
 
@@ -383,7 +392,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dzieci_details_menu, menu);
         adjustImageToRatio();
-        setPhoto(dziecko.get(Dziecko.COLUMN_PHOTO));
+        if(dziecko != null) setPhoto(dziecko.get(Dziecko.COLUMN_PHOTO)); else setPhoto(null);
         return true;
     }
 

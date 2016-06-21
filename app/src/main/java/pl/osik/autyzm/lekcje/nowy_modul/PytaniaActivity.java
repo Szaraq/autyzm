@@ -50,11 +50,13 @@ public class PytaniaActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     protected void setAddPytanieVisibility(boolean visible) {
+        //TODO FINALLY Na razie komentujemy, bo nie wiadomo co z tym będzie. Finalnie wyrzucić i wywalić z layoutu.
+        /*
         if(visible) {
             noPlikContainer.setVisibility(View.VISIBLE);
         } else {
             noPlikContainer.setVisibility(View.GONE);
-        }
+        }*/
     }
 
     @Override

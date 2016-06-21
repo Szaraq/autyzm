@@ -58,7 +58,6 @@ public class UruchomController {
     }
 
     public static void gotoNextActivity(Activity thisActivity) {
-        //Log.d("UruchomController", thisActivity.getClass().toString());
         Activity nextActivity = null;
         if(!(thisActivity instanceof MainActivity)) listaActivity.add(thisActivity);
 

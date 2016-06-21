@@ -251,9 +251,8 @@
     </style>
 
     <!-- Popup menu -->
-    <style name="popupMenuStyle" parent="@android:style/Widget.Material.PopupMenu.Overflow">
-        <!--<item name="android:popupBackground">@color/colorAppBackground</item>
-        <item name="android:popupElevation">2dp</item>-->
+    <style name="popupMenuStyle" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_popupmenu</item>
     </style>
 
     <!-- Progress Bar -->

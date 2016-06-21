@@ -47,6 +47,32 @@ public class Pytanie extends AbstractDBTable {
                 + " WHERE " + tableAndColumn(Modul.TABLE_NAME, Modul.COLUMN_ID) + " = ?"
                 + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_ID);
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idModul) });
+        out = fillTheList(cursor);
+        helper.close();
+        cursor.close();
+
+        return out;
+    }
+
+    public static ArrayList<PytanieORM> getPytaniaForLekcja(int idLekcja) {
+        ArrayList<PytanieORM> out = new ArrayList<>();
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
+                + createJoin(new Modul(), TABLE_NAME, COLUMN_MODUL)
+                + createJoin(new Lekcja(), Modul.TABLE_NAME, Modul.COLUMN_LEKCJA)
+                + " WHERE " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID) + " = ?"
+                + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_ID);
+        Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idLekcja) });
+        out = fillTheList(cursor);
+        helper.close();
+        cursor.close();
+
+        return out;
+    }
+
+    private static ArrayList<PytanieORM> fillTheList(Cursor cursor) {
+        ArrayList<PytanieORM> out = new ArrayList<>();
         while(cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
             String tresc = cursor.getString(cursor.getColumnIndex(COLUMN_TRESC));
@@ -54,9 +80,6 @@ public class Pytanie extends AbstractDBTable {
             PytanieORM pytanie = new PytanieORM(id, tresc, modul);
             out.add(pytanie);
         }
-        helper.close();
-        cursor.close();
-
         return out;
     }
 }

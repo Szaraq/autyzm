@@ -18,7 +18,7 @@ import pl.osik.autyzm.sql.User;
  */
 public class LekcjaORM implements Serializable {
 
-    public static final long NEVER_USED = Long.MIN_VALUE;
+    public static final long NEVER_USED = 0;
     public static final String NEVER_USED_IN_DB = setNeverUsedConstant();
 
     private static String setNeverUsedConstant() {
@@ -49,6 +49,11 @@ public class LekcjaORM implements Serializable {
     public LekcjaORM() {
         init();
         setLastUsedAsNever();
+    }
+
+    public String getLastUsedAsStringDb() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
+        return sdf.format(getLastUsed().getTime());
     }
 
     public String getLastUsedAsString() {
@@ -103,7 +108,7 @@ public class LekcjaORM implements Serializable {
         ContentValues out = new ContentValues();
         out.put(Lekcja.COLUMN_ID, id);
         out.put(Lekcja.COLUMN_TYTUL, tytul);
-        out.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, getLastUsedAsString());
+        out.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, getLastUsedAsStringDb());
         out.put(Lekcja.COLUMN_FAVOURITE, false);
         out.put(Lekcja.COLUMN_USER, user);
         out.put(Lekcja.COLUMN_GHOST, ghost);

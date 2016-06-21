@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,19 +59,22 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
     private void changeViewToAdd() {
         buttonNext.setClickable(false);
         buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryDisabled));
-        //buttonAdd.setText(getString(R.string.button_add));
-        buttonAdd.setVisibility(View.GONE);
+        buttonAdd.setText(getString(R.string.button_add));
 
-        noPlikContainer.setVisibility(View.VISIBLE);
-        noPlikContainer.setOnClickListener(this);
+        //TODO FINALLY Na razie komentujemy, bo nie wiadomo co z tym będzie. Finalnie wyrzucić i wywalić z layoutu.
+        //buttonAdd.setVisibility(View.GONE);
+        //noPlikContainer.setVisibility(View.VISIBLE);
+        //noPlikContainer.setOnClickListener(this);
         plikView.setVisibility(View.GONE);
     }
 
     private void changeViewToEdit() {
+        //TODO FINALLY j.w.
+        //buttonAdd.setVisibility(View.VISIBLE);
+        //noPlikContainer.setVisibility(View.GONE);
         buttonNext.setClickable(true);
         buttonNext.setTextColor(getResources().getColor(R.color.colorPrimary));
         buttonAdd.setText(getString(R.string.button_edit));
-        noPlikContainer.setVisibility(View.GONE);
         plikView.setVisibility(View.VISIBLE);
     }
 

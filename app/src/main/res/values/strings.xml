@@ -232,4 +232,5 @@
     <string name="exception_wrong_view">Nie obsługiwana kontrolka</string>
     <string name="move_plik_name">Przenieś do folderu</string>
     <string name="plik_usuniety">Plik usunięty</string>
+    <string name="lekcje_modul_brak_pytan">Twoja lekcja nie ma stworzonych pytań. Na pewno chcesz kontynuować?</string>
 </resources>

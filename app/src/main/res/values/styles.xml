@@ -281,6 +281,10 @@
         <item name="android:layout_width">32dp</item>
         <item name="android:layout_height">32dp</item>
     </style>
+    <style name="watermark">
+        <item name="android:tint">@color/colorGreyDisabled</item>
+        <item name="android:textColor">@color/colorGreyDisabled</item>
+    </style>
 
     <style name="contextMenu">
         <item name="android:layout_width">wrap_content</item>

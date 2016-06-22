@@ -1,7 +1,7 @@
 package pl.osik.autyzm.main;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,14 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciAdapter;
-import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
-import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.uruchom.UruchomController;
 
 
@@ -27,8 +22,14 @@ public class StartFragment extends Fragment {
     private StartLastAdapter startLastAdapter;
     private StartFavouritesAdapter startFavouritesAdapter;
 
+    @Bind(R.id.no_lessons_container)
+    PercentRelativeLayout noLessonsContainer;
+    @Bind(R.id.last_used_header)
+    TextView lastUsedHeader;
     @Bind(R.id.start_lastUsedList)
     RecyclerView startLastUsedList;
+    @Bind(R.id.favourites_header)
+    TextView favouritesHeader;
     @Bind(R.id.start_favouritesList)
     RecyclerView startFavouritesList;
 
@@ -73,6 +74,16 @@ public class StartFragment extends Fragment {
         startFavouritesAdapter = new StartFavouritesAdapter(getLayoutInflater(savedInstanceState), this);
         startFavouritesList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         startFavouritesList.setAdapter(startFavouritesAdapter);
+        if(startLastAdapter.lekcjaList.size() == 0 && startFavouritesAdapter.lekcjaList.size() == 0) setNoLessonsStart();
+    }
+
+    private void setNoLessonsStart() {
+        lastUsedHeader.setVisibility(View.GONE);
+        startLastUsedList.setVisibility(View.GONE);
+        favouritesHeader.setVisibility(View.GONE);
+        startFavouritesList.setVisibility(View.GONE);
+
+        noLessonsContainer.setVisibility(View.VISIBLE);
     }
 
     //TODO FINALLY we wszystkich fragmentach onDestroyView() { ButterKnife.unbind(this); } ?

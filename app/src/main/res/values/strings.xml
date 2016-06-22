@@ -1,4 +1,4 @@
-<resources xmlns:xliff="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Autyzm</string>
     <string name="title_activity_main">Start</string>
 
@@ -233,4 +233,5 @@
     <string name="move_plik_name">Przenieś do folderu</string>
     <string name="plik_usuniety">Plik usunięty</string>
     <string name="lekcje_modul_brak_pytan">Twoja lekcja nie ma stworzonych pytań. Na pewno chcesz kontynuować?</string>
+    <string name="start_welcome">Wygląda na to, że jeszcze nie uruchomiłeś lekcji, ani nie masz żadnych ulubionych</string>
 </resources>

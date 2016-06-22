@@ -24,7 +24,7 @@ public class StartFavouritesAdapter extends RecyclerView.Adapter<StartFavourites
 
     private final LayoutInflater layoutInflater;
     private final StartFragment fragment;
-    private ArrayList<LekcjaORM> lekcjaList = Lekcja.getFavourites(true);
+    public ArrayList<LekcjaORM> lekcjaList = Lekcja.getFavourites(true);
 
     public StartFavouritesAdapter(LayoutInflater layoutInflater, Fragment fragment) {
         this.layoutInflater = layoutInflater;

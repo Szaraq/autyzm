@@ -20,7 +20,9 @@ public class DBHelper extends SQLiteOpenHelper {
             new Pytanie(),
             new Odpowiedz(),
             new User(),
-            new Dziecko()
+            new Dziecko(),
+            new Activity(),
+            new FirstUse()
             //,new LekcjaDziecko()
     };
     private static DBHelper instance = null;
@@ -48,6 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
         for (AbstractDBTable table : tables) {
             db.execSQL(table.create());
         }
+        Activity.createRows();
     }
 
     @Override

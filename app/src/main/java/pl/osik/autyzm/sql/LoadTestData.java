@@ -24,28 +24,28 @@ import pl.osik.autyzm.helpers.MyApp;
  * Created by m.osik2 on 2016-04-21.
  */
 public class LoadTestData {
+
     private static boolean added = false;
 
     public static void load() {
-        if(!added) {
-            DBHelper helper = DBHelper.getInstance();
-            SQLiteDatabase db = helper.getDBWrite();
-            for (AbstractDBTable table : DBHelper.tables) {
-                db.execSQL("DROP TABLE IF EXISTS " + table.getTableName());
-            }
-            helper.onCreate(db);
-            loadUser();
-            loadDziecko();
-            loadLekcja();
-            //loadLekcjaDziecko();
-            loadFolder();
-            loadPlik();
-            loadModul();
-            loadPytanie();
-            loadOdpowiedz();
-            added = true;
-            helper.close();
+        if(added) return;
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBWrite();
+        for (AbstractDBTable table : DBHelper.tables) {
+            db.execSQL("DROP TABLE IF EXISTS " + table.getTableName());
         }
+        helper.onCreate(db);
+        loadUser();
+        loadDziecko();
+        loadLekcja();
+        //loadLekcjaDziecko();
+        loadFolder();
+        loadPlik();
+        loadModul();
+        loadPytanie();
+        loadOdpowiedz();
+        added = true;
+        helper.close();
 
         //saveTestFile();
     }

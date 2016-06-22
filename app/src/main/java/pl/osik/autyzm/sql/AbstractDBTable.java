@@ -20,10 +20,7 @@ public abstract class AbstractDBTable {
     protected String createArgumentQuery() {
         StringBuilder out = new StringBuilder();
         for(Map.Entry<String, String> entry : getMap().entrySet()) {
-            out.append(entry.getKey());
-            out.append(" ");
-            out.append(entry.getValue());
-            out.append(",");
+            out.append(entry.getKey() + " " + entry.getValue() + ",");
         }
         out.setLength(out.length() - 1);
         return out.toString();
@@ -83,12 +80,11 @@ public abstract class AbstractDBTable {
         return out;
     }
 
-    private String addCommas(String[] in) {
+    protected String addCommas(String[] in) {
         StringBuilder out = new StringBuilder();
         for(String col : in) {
             if(col.equals(COLUMN_ID)) continue;         //autoinkrementacja kolumny ID
-            out.append(col);
-            out.append(",");
+            out.append(col + ",");
         }
         out.setLength(out.length() - 1);
         return out.toString();

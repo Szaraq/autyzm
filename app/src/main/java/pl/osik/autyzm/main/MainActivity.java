@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.FilePlacingInterface;
 import pl.osik.autyzm.login.LoginActivity;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
+import pl.osik.autyzm.sql.FirstUse;
 import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.uruchom.UruchomFragment;
@@ -69,6 +71,10 @@ public class MainActivity extends AppCompatActivity
         gotoFragment(new StartFragment());
 
         Plik.cleanDeletedFiles();
+
+        Log.d("Main", FirstUse.isFirstUsed(getClass()) + "");
+        FirstUse.setUsed(getClass());
+        Log.d("Main", FirstUse.isFirstUsed(getClass()) + "");
     }
 
     @Override

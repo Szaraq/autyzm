@@ -81,8 +81,9 @@ public class User extends AbstractDBTable {
         }
         data.put(COLUMN_LOGIN, (String) map.get(COLUMN_LOGIN));
         data.put(COLUMN_PASS, AppHelper.hash((String) map.get(COLUMN_PASS)));
-        db.insert(getTableName(), null, data);
+        long id = db.insert(getTableName(), null, data);
         helper.close();
+        FirstUse.createRowsForNewUser((int) id);
         return true;
     }
 
@@ -94,6 +95,7 @@ public class User extends AbstractDBTable {
         long out = db.insert(getTableName(), null, data);
         helper.close();
         Folder.insertRoot((int) out);
+        FirstUse.createRowsForNewUser((int) out);
         return out;
     }
 

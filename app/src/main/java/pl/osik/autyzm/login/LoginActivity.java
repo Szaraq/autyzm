@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         authenticate = new ValidateAuthenticate();
         validate.addValidate(passLayout, authenticate);
 
+        //TODO FINALLY Wyrzucić
         LoadTestData.load();
 
         if(User.isFirstLogin()) {

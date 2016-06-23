@@ -7,7 +7,7 @@ import java.util.Map;
  */
 public class MyEntry<K, V> implements Map.Entry<K, V> {
 
-    K key;
+    final K key;
     V value;
 
     public MyEntry(K key, V value) {

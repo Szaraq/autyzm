@@ -77,4 +77,12 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
     public int compareTo(PlikORM another) {
         return getName(true).compareTo(another.getName(true));
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof PlikORM)
+            return getId() == ((PlikORM) object).getId();
+        else
+            return super.equals(object);
+    }
 }

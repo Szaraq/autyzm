@@ -8,12 +8,12 @@ public class FolderORM {
     String nazwa;
     int id, folder, user;
 
-    public FolderORM(int id, String nazwa, int folder, int user) {
+    public FolderORM(final int id, final String nazwa, final int folder, final int user) {
         this(nazwa, folder, user);
         this.id = id;
     }
 
-    public FolderORM(String nazwa, int folder, int user) {
+    public FolderORM(final String nazwa, final int folder, final int user) {
         this.nazwa = nazwa;
         this.folder = folder;
         this.user = user;
@@ -23,7 +23,7 @@ public class FolderORM {
         return nazwa;
     }
 
-    public void setNazwa(String nazwa) {
+    public void setNazwa(final String nazwa) {
         this.nazwa = nazwa;
     }
 
@@ -31,7 +31,7 @@ public class FolderORM {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -39,7 +39,7 @@ public class FolderORM {
         return folder;
     }
 
-    public void setFolder(int folder) {
+    public void setFolder(final int folder) {
         this.folder = folder;
     }
 
@@ -47,7 +47,7 @@ public class FolderORM {
         return user;
     }
 
-    public void setUser(int user) {
+    public void setUser(final int user) {
         this.user = user;
     }
 }

@@ -1,24 +1,8 @@
 package pl.osik.autyzm.sql;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Environment;
-import android.util.Log;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.util.LinkedHashMap;
-
-import pl.osik.autyzm.helpers.MyApp;
 
 /**
  * Created by m.osik2 on 2016-04-21.
@@ -46,37 +30,6 @@ public class LoadTestData {
         loadOdpowiedz();
         added = true;
         helper.close();
-
-        //saveTestFile();
-    }
-
-    private static void saveTestFile() {
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "Testowa nazwa");
-        File file2 = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS) + "/Miranda_de_Miranda.jpg");
-        try {
-            PrintWriter writer = new PrintWriter("/storage/sdcard/Download/text.txt");
-            writer.println("aaa");
-            writer.close();
-
-            BufferedReader reader = new BufferedReader(new FileReader(file2));
-            Log.d("Load reader", reader.readLine());
-            Bitmap bm = BitmapFactory.decodeFile(file2.getPath());
-            Log.d("Load reader", bm.toString());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (!file.mkdirs()) {
-            Log.e("Load", "Directory not created");
-        }
-        Log.d("Load", file2.getAbsolutePath());
-        Log.d("Load", file2.exists() ? "tak" : "nie");
-
-        //return file;
-
     }
 
     private static void loadUser() {
@@ -162,18 +115,6 @@ public class LoadTestData {
         params.put(Lekcja.COLUMN_DATA_OSTATNIEGO_UZYCIA, "2016-04-02");
         params.put(Lekcja.COLUMN_FAVOURITE, true);
         params.put(Lekcja.COLUMN_GHOST, 0);
-        l.insert(params);
-    }
-
-    private static void loadLekcjaDziecko() {
-        LekcjaDziecko l = new LekcjaDziecko();
-        LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
-        params.put(LekcjaDziecko.COLUMN_DZIECKO, 1);
-        params.put(LekcjaDziecko.COLUMN_LEKCJA, 1);
-        l.insert(params);
-
-        params.put(LekcjaDziecko.COLUMN_DZIECKO, 1);
-        params.put(LekcjaDziecko.COLUMN_LEKCJA, 2);
         l.insert(params);
     }
 

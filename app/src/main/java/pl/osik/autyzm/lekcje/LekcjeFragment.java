@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -23,8 +22,6 @@ public class LekcjeFragment extends Fragment {
 
     LekcjeAdapter lekcjeAdapter;
 
-    @Bind(R.id.lista_lekcji_container)
-    FrameLayout listaLekcjiContainer;
     @Bind(R.id.brak_lekcji)
     TextView brakLekcji;
     @Bind(R.id.lekcje_list)

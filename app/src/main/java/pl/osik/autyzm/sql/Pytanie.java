@@ -4,10 +4,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import pl.osik.autyzm.helpers.orm.ModulORM;
 import pl.osik.autyzm.helpers.orm.PytanieORM;
 
 /**
@@ -39,7 +37,6 @@ public class Pytanie extends AbstractDBTable {
     }
 
     public static ArrayList<PytanieORM> getPytaniaForModul(int idModul) {
-        ArrayList<PytanieORM> out = new ArrayList<>();
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
@@ -47,7 +44,7 @@ public class Pytanie extends AbstractDBTable {
                 + " WHERE " + tableAndColumn(Modul.TABLE_NAME, Modul.COLUMN_ID) + " = ?"
                 + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_ID);
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idModul) });
-        out = fillTheList(cursor);
+        ArrayList<PytanieORM> out = fillTheList(cursor);
         helper.close();
         cursor.close();
 
@@ -55,7 +52,6 @@ public class Pytanie extends AbstractDBTable {
     }
 
     public static ArrayList<PytanieORM> getPytaniaForLekcja(int idLekcja) {
-        ArrayList<PytanieORM> out = new ArrayList<>();
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
@@ -64,7 +60,7 @@ public class Pytanie extends AbstractDBTable {
                 + " WHERE " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID) + " = ?"
                 + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_ID);
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(idLekcja) });
-        out = fillTheList(cursor);
+        ArrayList<PytanieORM> out = fillTheList(cursor);
         helper.close();
         cursor.close();
 

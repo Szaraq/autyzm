@@ -3,10 +3,8 @@ package pl.osik.autyzm.validate;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.TextInputLayout;
-import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.Arrays;
 
@@ -20,8 +18,9 @@ import pl.osik.autyzm.sql.DBHelper;
  */
 public class ValidateExistsInDatabase implements Validate {
 
-    private AbstractDBTable table;
-    private String column, exceptMe;
+    private final AbstractDBTable table;
+    private final String column;
+    private final String exceptMe;
 
     public ValidateExistsInDatabase(AbstractDBTable table, String column) {
         this(table, column, null);
@@ -71,8 +70,7 @@ public class ValidateExistsInDatabase implements Validate {
         int countRows = cursor.getCount();
         cursor.close();
         helper.close();
-        if(countRows == 0) return true;
-        return false;
+        return countRows == 0;
     }
 
     @Override

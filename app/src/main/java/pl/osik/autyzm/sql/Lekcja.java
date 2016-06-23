@@ -3,16 +3,13 @@ package pl.osik.autyzm.sql;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
@@ -54,7 +51,6 @@ public class Lekcja extends AbstractDBTable {
     public static ArrayList<LekcjaORM> getOstatnieLekcje(int liczbaLekcji, boolean ghostFilter) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
-        ArrayList<LekcjaORM> out = new ArrayList<>();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + checkUser()
                 + " AND " + tableAndColumn(TABLE_NAME, COLUMN_DATA_OSTATNIEGO_UZYCIA) + " <> ?"
@@ -62,31 +58,25 @@ public class Lekcja extends AbstractDBTable {
                 + " ORDER BY " + COLUMN_DATA_OSTATNIEGO_UZYCIA + " DESC"
                 + " LIMIT " + liczbaLekcji;
         Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(User.getCurrentId()), LekcjaORM.NEVER_USED_IN_DB});
-        out = fillTheList(cursor);
+        ArrayList<LekcjaORM> out = fillTheList(cursor);
         cursor.close();
         helper.close();
         return out;
     }
 
     private static String checkUser() {
-        /*return " JOIN " + LekcjaDziecko.TABLE_NAME + " ON " + tableAndColumn(LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_LEKCJA) + " = " + tableAndColumn(Lekcja.TABLE_NAME, Lekcja.COLUMN_ID)
-                + createJoin(new Dziecko(), LekcjaDziecko.TABLE_NAME, LekcjaDziecko.COLUMN_DZIECKO)
-                + createJoin(new User(), Dziecko.TABLE_NAME, Dziecko.COLUMN_USER)
-                + " WHERE " + tableAndColumn(User.TABLE_NAME, COLUMN_ID) + " = ?";*/
-
         return " WHERE " + tableAndColumn(TABLE_NAME, COLUMN_USER) + " = ?";
     }
 
     public static ArrayList<LekcjaORM> getLekcjaList(boolean ghostFilter) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
-        ArrayList<LekcjaORM> out = new ArrayList<>();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + checkUser()
                 + queryForGhost(ghostFilter, true)
                 + " ORDER BY " + COLUMN_TYTUL;
         Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(User.getCurrentId())});
-        out = fillTheList(cursor);
+        ArrayList<LekcjaORM> out = fillTheList(cursor);
         cursor.close();
         helper.close();
         return out;
@@ -109,14 +99,13 @@ public class Lekcja extends AbstractDBTable {
     public static ArrayList<LekcjaORM> getFavourites(boolean ghostFilter) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
-        ArrayList<LekcjaORM> out = new ArrayList<>();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
                 + checkUser()
                 + queryForGhost(ghostFilter, true)
                 + " AND " + COLUMN_FAVOURITE
                 + " ORDER BY " + COLUMN_TYTUL;
         Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(User.getCurrentId())});
-        out = fillTheList(cursor);
+        ArrayList<LekcjaORM> out = fillTheList(cursor);
         cursor.close();
         helper.close();
         return out;

@@ -1,11 +1,9 @@
 package pl.osik.autyzm.dzieci;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,20 +22,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -65,12 +60,12 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     HashMap<String, EditText> all;
     int id;
     OperationsEnum operacja;
-    ValidateCommand validate = new ValidateCommand();
+    final ValidateCommand validate = new ValidateCommand();
 
     private String photoPath;
-    private Calendar calendar = Calendar.getInstance();
+    final private Calendar calendar = Calendar.getInstance();
     private EditText dateChosenFor;
-    private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener(){
+    final private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener(){
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -164,7 +159,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
 
         operacja = (OperationsEnum) bundle.getSerializable(DzieciAdapter.BUNDLE_SWITCH_OPERACJA);
 
@@ -198,8 +193,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             getSupportActionBar().setTitle(R.string.dziecko_dodaj_title);
             imie.requestFocus();
             telefonOjca.setOnKeyListener(new MyOnKeyEnterListener(imieMatki));
-            Calendar cal = Calendar.getInstance();
-            DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
+            final Calendar cal = Calendar.getInstance();
+            final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
             rozpoczecie.setText(df.format(cal.getTime()));
             fab.setVisibility(View.GONE);
         }
@@ -210,9 +205,9 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         rozpoczecie.setOnClickListener(this);
     }
 
-    private void enableCalling(ImageView icon, TextView text, TextView label, LinearLayout container) {
+    private void enableCalling(final ImageView icon, final TextView text, final TextView label, final LinearLayout container) {
         if(text.length() > 0) {
-            PhoneCallOnClickListener phoneCallOnClickListenerMatki = new PhoneCallOnClickListener(this, text.getText().toString().trim());
+            final PhoneCallOnClickListener phoneCallOnClickListenerMatki = new PhoneCallOnClickListener(this, text.getText().toString().trim());
             text.setOnClickListener(phoneCallOnClickListenerMatki);
             icon.setOnClickListener(phoneCallOnClickListenerMatki);
         } else {
@@ -223,7 +218,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    private void setPhoto(@Nullable String path) {
+    private void setPhoto(@Nullable final String path) {
         if(path == null || !(new File(path)).exists()) {
             photo.setImageResource(RESOURCE_NO_PHOTO);
             menu.findItem(R.id.deletePhoto).setVisible(false);
@@ -283,14 +278,14 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 FileHelper.FileManager.pickPhoto(DzieciDetailsActivity.this, FileHelper.FileManager.EXTENSION_ARRAY_PHOTO);
                 return true;
             case R.id.deletePhoto:
-                AlertDialog.Builder dialog = new AlertDialog.Builder(DzieciDetailsActivity.this);
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(DzieciDetailsActivity.this);
                 dialog.setMessage(MyApp.getContext().getString(R.string.message_photo_do_usunięcia))
                         .setTitle(R.string.popup_uwaga)
                         .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Dziecko d = new Dziecko();
-                                d.changePhoto(id, null);
+                                Dziecko.changePhoto(id, null);
                                 setPhoto(null);
                             }
                         })
@@ -310,21 +305,21 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         if(v.getId() == dataUrodzenia.getId() || v.getId() == rozpoczecie.getId()) {
-            setDate(v);
+            setDate((EditText) v);
             return;
         }
-        Dziecko d = new Dziecko();
+        final Dziecko d = new Dziecko();
         if(operacja == OperationsEnum.SHOW || (operacja == OperationsEnum.EDYCJA && v.getId() == fab.getId())) {            //jeżeli jest show (wtedy button nie ma) LUB jeżeli jest edycja i przyciśnięty fab
             //Idź do statystyk
-            Intent intent = new Intent(this, DzieciStatisticsActivity.class);
-            Bundle bundle = new Bundle();
+            final Intent intent = new Intent(this, DzieciStatisticsActivity.class);
+            final Bundle bundle = new Bundle();
             bundle.putSerializable(Dziecko.TABLE_NAME, dziecko);
             intent.putExtras(bundle);
             startActivity(intent);
         } else if(operacja == OperationsEnum.EDYCJA) {                                                          //jeżeli jest edycja i przyciśnięty button (fab obsłużony już w poprzednim if)
             //Edytuj wpis
             if(validate.doValidateAll()) {
-                ContentValues data = new ContentValues();
+                final ContentValues data = new ContentValues();
                 for(Map.Entry<String, EditText> entry : all.entrySet()) {
                     data.put(entry.getKey(), entry.getValue().getText().toString());
                 }
@@ -336,7 +331,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         } else if(operacja == OperationsEnum.DODAWANIE) {                                                   //jeżeli jest dodawanie (wtedy fab nie ma)
             //Dodaj wpis
             if(validate.doValidateAll()) {
-                ContentValues data = new ContentValues();
+                final ContentValues data = new ContentValues();
                 for(Map.Entry<String, EditText> entry : all.entrySet()) {
                     data.put(entry.getKey(), entry.getValue().getText().toString());
                 }
@@ -353,7 +348,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
-                String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                final String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
                 photoPath = path;
                 Dziecko.changePhoto(id, path);
                 setPhoto(path);
@@ -361,35 +356,35 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    public void setDate(View view) {
-        dateChosenFor = (EditText) view;
+    public void setDate(EditText view) {
+        dateChosenFor = view;
         showDialog(DATE_PICKER_CODE);
     }
 
     @Override
     protected Dialog onCreateDialog(int id) {
         if(id == DATE_PICKER_CODE) {
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH) + 1;
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            final int year = calendar.get(Calendar.YEAR);
+            final int month = calendar.get(Calendar.MONTH) + 1;
+            final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
             return new DatePickerDialog(this, dateListener, year, month, day);
         }
         return null;
     }
 
-    private void putDate(int year, int monthOfYear, int dayOfMonth) {
-        Calendar cal = Calendar.getInstance();
+    private void putDate(final int year, final int monthOfYear, final int dayOfMonth) {
+        final Calendar cal = Calendar.getInstance();
         cal.set(year, monthOfYear, dayOfMonth);
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
-        String put = df.format(cal.getTime());
+        final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
+        final String put = df.format(cal.getTime());
         dateChosenFor.setText(put);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
-        MenuInflater inflater = getMenuInflater();
+        final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dzieci_details_menu, menu);
         adjustImageToRatio();
         if(dziecko != null) setPhoto(dziecko.get(Dziecko.COLUMN_PHOTO)); else setPhoto(null);
@@ -397,11 +392,11 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void adjustImageToRatio() {
-        ViewGroup.LayoutParams params = photo.getLayoutParams();
+        final ViewGroup.LayoutParams params = photo.getLayoutParams();
         params.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 3, 2);
         photo.setLayoutParams(params);
 
-        ViewGroup.LayoutParams appBarParams = appBar.getLayoutParams();
+        final ViewGroup.LayoutParams appBarParams = appBar.getLayoutParams();
         appBarParams.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 3, 2);
         appBar.setLayoutParams(appBarParams);
     }
@@ -409,10 +404,10 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 
 class PhoneCallOnClickListener implements View.OnClickListener {
 
-    DzieciDetailsActivity activity;
-    String phoneNumber;
+    final DzieciDetailsActivity activity;
+    final String phoneNumber;
 
-    public PhoneCallOnClickListener(DzieciDetailsActivity activity, String phoneNumber) {
+    public PhoneCallOnClickListener(final DzieciDetailsActivity activity, final String phoneNumber) {
         this.activity = activity;
         this.phoneNumber = phoneNumber;
     }
@@ -420,8 +415,8 @@ class PhoneCallOnClickListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(activity.checkCallingOrSelfPermission(android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-            String number = "tel:" + phoneNumber;
-            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+            final String number = "tel:" + phoneNumber;
+            final Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
             activity.startActivity(callIntent);
             Log.d("PhoneCallOnClickListen", "Właśnie dzwonię pod numer: " + number);
         } else {

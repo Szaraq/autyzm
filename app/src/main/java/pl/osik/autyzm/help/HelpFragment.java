@@ -52,8 +52,8 @@ public class HelpFragment extends Fragment {
     }
 
     public static HelpFragment newInstance(String param1, String param2) {
-        HelpFragment fragment = new HelpFragment();
-        Bundle args = new Bundle();
+        final HelpFragment fragment = new HelpFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,7 +66,7 @@ public class HelpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_help, container, false);
+        final View view = inflater.inflate(R.layout.fragment_help, container, false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.help_title);
         ButterKnife.bind(this, view);
         createKontakty();
@@ -77,7 +77,7 @@ public class HelpFragment extends Fragment {
                 .centerCrop()
                 .into(helpPhoto);
 
-        EmailSenderOnClickListener emailSenderOnClickListener = new EmailSenderOnClickListener(this);
+        final EmailSenderOnClickListener emailSenderOnClickListener = new EmailSenderOnClickListener(this);
         for (Map.Entry<TextView, String> entry : kontakty.entrySet()){
             entry.getKey().setOnClickListener(emailSenderOnClickListener);
         }
@@ -100,19 +100,19 @@ public class HelpFragment extends Fragment {
 
 class EmailSenderOnClickListener implements View.OnClickListener {
 
-    HelpFragment fragment;
+    final HelpFragment fragment;
 
-    public EmailSenderOnClickListener(HelpFragment fragment) {
+    public EmailSenderOnClickListener(final HelpFragment fragment) {
         this.fragment = fragment;
     }
 
     @Override
     public void onClick(View v) {
-        TextView textView = (TextView) v;
-        String email = fragment.kontakty.get(textView);
+        final TextView textView = (TextView) v;
+        final String email = fragment.kontakty.get(textView);
         final String subject = "Aplikacja " + fragment.getResources().getString(R.string.app_name);
 
-        Intent intent = new Intent(Intent.ACTION_SEND);
+        final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);

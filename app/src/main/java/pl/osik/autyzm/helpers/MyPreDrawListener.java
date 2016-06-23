@@ -16,10 +16,9 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
 
     private static final String NO_PATH = "no_path";
 
-    ImageView photo;
-    String path;
-    Activity activity;
-    int height, width;
+    final ImageView photo;
+    final String path;
+    final Activity activity;
     Bitmap thumbnail;
 
     public MyPreDrawListener(ImageView photo, String path, Activity activity) {
@@ -30,13 +29,6 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
         this.photo = photo;
         this.path = path;
         this.activity = activity;
-        this.height = height;
-        this.width = width;
-    }
-
-    public MyPreDrawListener(ImageView photo, Bitmap bitmap, Activity activity) {
-        this(photo, NO_PATH, activity, bitmap.getHeight(), bitmap.getWidth());
-        thumbnail = bitmap;
     }
 
     @Override

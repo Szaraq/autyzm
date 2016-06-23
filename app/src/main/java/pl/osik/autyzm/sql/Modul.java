@@ -6,9 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
-import pl.osik.autyzm.helpers.MySortedMap;
 import pl.osik.autyzm.helpers.orm.ModulORM;
 
 /**
@@ -51,7 +49,6 @@ public class Modul extends AbstractDBTable {
     }
 
     public static ArrayList<ModulORM> getModulyForLekcja(int lekcjaId, boolean ghostFilter) {
-        ArrayList<ModulORM> out = new ArrayList<>();
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
@@ -60,7 +57,7 @@ public class Modul extends AbstractDBTable {
                 + queryForGhost(ghostFilter, true)
                 + " ORDER BY " + tableAndColumn(TABLE_NAME, COLUMN_NUMER);
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(lekcjaId)});
-        out = fillTheList(cursor);
+        ArrayList<ModulORM> out = fillTheList(cursor);
         helper.close();
         cursor.close();
 

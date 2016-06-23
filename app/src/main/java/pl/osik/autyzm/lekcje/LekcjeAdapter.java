@@ -3,31 +3,24 @@ package pl.osik.autyzm.lekcje;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
-import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.uruchom.UruchomController;
 
@@ -39,7 +32,7 @@ public class LekcjeAdapter extends RecyclerView.Adapter<LekcjeViewHolder> {
     public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
 
     private ArrayList<LekcjaORM> lekcje = Lekcja.getLekcjaList(true);
-    private LekcjeFragment fragment;
+    private final LekcjeFragment fragment;
     private final LayoutInflater layoutInflater;
 
     public LekcjeAdapter(LayoutInflater layoutInflater, LekcjeFragment fragment) {
@@ -87,8 +80,6 @@ class LekcjeViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     TextView lekcjaName;
     @Bind(R.id.lekcja_context_menu)
     ImageView lekcjaContextMenu;
-    @Bind(R.id.lista_lekcji)
-    LinearLayout listaLekcji;
 
     public LekcjeViewHolder(View itemView) {
         super(itemView);

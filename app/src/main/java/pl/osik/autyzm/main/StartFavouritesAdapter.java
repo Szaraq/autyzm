@@ -1,6 +1,5 @@
 package pl.osik.autyzm.main;
 
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,16 +25,15 @@ public class StartFavouritesAdapter extends RecyclerView.Adapter<StartFavourites
     private final StartFragment fragment;
     public ArrayList<LekcjaORM> lekcjaList = Lekcja.getFavourites(true);
 
-    public StartFavouritesAdapter(LayoutInflater layoutInflater, Fragment fragment) {
+    public StartFavouritesAdapter(LayoutInflater layoutInflater, StartFragment fragment) {
         this.layoutInflater = layoutInflater;
-        this.fragment = (StartFragment) fragment;
+        this.fragment = fragment;
     }
 
     @Override
     public StartFavouritesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_lekcje_favourites, parent, false);
         StartFavouritesViewHolder holder = new StartFavouritesViewHolder(view);
-        holder.setAdapter(this);
         return holder;
     }
 
@@ -58,7 +56,6 @@ public class StartFavouritesAdapter extends RecyclerView.Adapter<StartFavourites
 
 class StartFavouritesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private StartFavouritesAdapter adapter;
     private StartFragment fragment;
     private LekcjaORM lekcja;
 
@@ -71,10 +68,6 @@ class StartFavouritesViewHolder extends RecyclerView.ViewHolder implements View.
         super(itemView);
         ButterKnife.bind(this, itemView);
         containerLayout.setOnClickListener(this);
-    }
-
-    public void setAdapter(StartFavouritesAdapter adapter) {
-        this.adapter = adapter;
     }
 
     public void setFragment(StartFragment fragment) {

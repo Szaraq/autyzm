@@ -1,9 +1,7 @@
 package pl.osik.autyzm.validate;
 
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,8 +14,8 @@ import pl.osik.autyzm.helpers.AppHelper;
  * Created by m.osik2 on 2016-05-09.
  */
 public class ValidateCommand {
-    private HashMap<View, ArrayList<Validate>> listaWalidacji = new HashMap<View, ArrayList<Validate>>();
-    private HashMap<View, String> errorMsg = new HashMap<>();
+    private final HashMap<View, ArrayList<Validate>> listaWalidacji = new HashMap<View, ArrayList<Validate>>();
+    private final HashMap<View, String> errorMsg = new HashMap<>();
 
     private boolean doValidate(View view) {
         ArrayList<Validate> lista = listaWalidacji.get(view);

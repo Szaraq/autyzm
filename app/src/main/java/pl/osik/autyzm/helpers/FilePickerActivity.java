@@ -1,12 +1,5 @@
 package pl.osik.autyzm.helpers;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import pl.osik.autyzm.R;
 
@@ -75,8 +75,7 @@ public class FilePickerActivity extends ListActivity {
             ArrayList<String> collection =
                     getIntent().getStringArrayListExtra(EXTRA_ACCEPTED_FILE_EXTENSIONS);
 
-            acceptedFileExtensions = (String[])
-                    collection.toArray(new String[collection.size()]);
+            acceptedFileExtensions = collection.toArray(new String[collection.size()]);
         }
     }
 
@@ -146,12 +145,11 @@ public class FilePickerActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
     }
 
-    private class FilePickerListAdapter extends ArrayAdapter<File> {
+    private static class FilePickerListAdapter extends ArrayAdapter<File> {
 
-        private List<File> mObjects;
+        private final List<File> mObjects;
 
         public FilePickerListAdapter(Context context, List<File> objects) {
-
             super(context, R.layout.list_item, android.R.id.text1, objects);
             mObjects = objects;
         }
@@ -192,7 +190,7 @@ public class FilePickerActivity extends ListActivity {
         }
     }
 
-    private class FileComparator implements Comparator<File> {
+    private static class FileComparator implements Comparator<File> {
 
         public int compare(File f1, File f2) {
 
@@ -212,9 +210,9 @@ public class FilePickerActivity extends ListActivity {
         }
     }
 
-    private class ExtensionFilenameFilter implements FilenameFilter {
+    private static class ExtensionFilenameFilter implements FilenameFilter {
 
-        private String[] Extensions;
+        private final String[] Extensions;
 
         public ExtensionFilenameFilter(String[] extensions) {
 

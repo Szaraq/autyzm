@@ -1,7 +1,6 @@
 package pl.osik.autyzm.lekcje;
 
 import android.content.ContentValues;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,8 +25,8 @@ public class LekcjeHelper {
     private static ModulORM modul;
     private static ArrayList<ModulORM> modulyList = new ArrayList<>();
     private static ArrayList<PytanieORM> pytaniaList = new ArrayList<>();
-    private static ArrayList<Integer> pytaniaDoUsuniecia = new ArrayList<>();
-    private static ArrayList<Integer> modulyDoUsuniecia = new ArrayList<>();
+    private static final ArrayList<Integer> pytaniaDoUsuniecia = new ArrayList<>();
+    private static final ArrayList<Integer> modulyDoUsuniecia = new ArrayList<>();
 
     public static OperationsEnum getOperacja() {
         return operacja;

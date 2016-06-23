@@ -54,14 +54,13 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
 
     int folderId;
     String folderName;
-    ValidateCommand validate = new ValidateCommand();
+    final ValidateCommand validate = new ValidateCommand();
     boolean chooser = false;
-    Bundle savedInstanceState;
     ArrayList<FolderORM> foldery;
     ArrayList<PlikORM> pliki;
 
-    ArrayList<FolderView> folderyViews = new ArrayList<>();
-    ArrayList<PlikView> plikiViews = new ArrayList<>();
+    final ArrayList<FolderView> folderyViews = new ArrayList<>();
+    final ArrayList<PlikView> plikiViews = new ArrayList<>();
 
     public final static String CHOOSER = "chooser";
 
@@ -105,7 +104,6 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.savedInstanceState = savedInstanceState;
         Bundle bundle = getArguments();
 
         if(bundle != null)
@@ -278,8 +276,8 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         changeToMoveFile(false, null);
     }
 

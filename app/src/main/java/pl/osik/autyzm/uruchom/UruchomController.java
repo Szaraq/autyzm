@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -32,13 +31,13 @@ public class UruchomController {
     private static boolean currentIsPytania;
 
     private static LekcjaORM lekcja;
-    private static HashMap<PytanieORM, Integer> punkty = new HashMap<>();
-    private static LinkedList<ModulORM> moduly = new LinkedList<>();
+    private static final HashMap<PytanieORM, Integer> punkty = new HashMap<>();
+    private static final LinkedList<ModulORM> moduly = new LinkedList<>();
 
     private static ModulORM modul;                                          //OBECNY moduł
-    private static LinkedList<PytanieORM> pytania = new LinkedList<>();     //pytania w ramach OBECNEGO modułu
+    private static final LinkedList<PytanieORM> pytania = new LinkedList<>();     //pytania w ramach OBECNEGO modułu
 
-    private static LinkedList<Activity> listaActivity = new LinkedList<>();     //wszystkie Activity w OBECNYM module
+    private static final LinkedList<Activity> listaActivity = new LinkedList<>();     //wszystkie Activity w OBECNYM module
 
     public static LekcjaORM getLekcja() {
         return lekcja;

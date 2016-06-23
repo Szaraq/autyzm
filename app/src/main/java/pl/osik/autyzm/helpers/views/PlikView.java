@@ -35,7 +35,7 @@ public class PlikView extends CardView {
 
     PlikORM plik;
     public static boolean faded;
-    private MultimediaFragment fragment;
+    private final MultimediaFragment fragment;
     private static int notFadedPlikId;
 
     @Bind(R.id.fader)
@@ -136,8 +136,8 @@ public class PlikView extends CardView {
 }
 
 class ContextMenuListener implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
-    PlikView plikView;
-    PlikORM plik;
+    final PlikView plikView;
+    final PlikORM plik;
 
     public ContextMenuListener(PlikView plikView) {
         this.plikView = plikView;

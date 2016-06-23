@@ -22,8 +22,8 @@ public class LekcjaORM implements Serializable {
     public static final String NEVER_USED_IN_DB = setNeverUsedConstant();
 
     private static String setNeverUsedConstant() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
-        Calendar cal = Calendar.getInstance();
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN);
+        final Calendar cal = Calendar.getInstance();
         cal.setTime(new Date(NEVER_USED));
         return sdf.format(cal.getTime());
     }

@@ -31,8 +31,8 @@ public class DzieciFragment extends Fragment {
     }
 
     public static DzieciFragment newInstance() {
-        DzieciFragment fragment = new DzieciFragment();
-        Bundle args = new Bundle();
+        final DzieciFragment fragment = new DzieciFragment();
+        final Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,7 +45,7 @@ public class DzieciFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dzieci, container, false);
+        final View view = inflater.inflate(R.layout.fragment_dzieci, container, false);
         ButterKnife.bind(this, view);
         return view;
     }

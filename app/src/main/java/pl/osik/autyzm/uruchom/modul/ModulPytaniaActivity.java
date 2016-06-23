@@ -1,38 +1,22 @@
 package pl.osik.autyzm.uruchom.modul;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.TypedValue;
-import android.view.ContextThemeWrapper;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.bumptech.glide.util.Util;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.orm.PytanieORM;
-import pl.osik.autyzm.sql.Odpowiedz;
 import pl.osik.autyzm.uruchom.UruchomController;
 import pl.osik.autyzm.validate.ValidateAllOdpowiedziSelected;
 import pl.osik.autyzm.validate.ValidateCommand;
@@ -40,10 +24,7 @@ import pl.osik.autyzm.validate.ValidateCommand;
 public class ModulPytaniaActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int NO_ANSWER = -1;
-    private final int SPACING = 30;
-    private final int SPACING_NEXT_BUTTON = 100;
-    private LinkedHashMap<PytanieORM, Integer> pytaniaOdpowiedzi = new LinkedHashMap<>();
-    private int currViewId;
+    private final LinkedHashMap<PytanieORM, Integer> pytaniaOdpowiedzi = new LinkedHashMap<>();
     private ValidateCommand validate;
 
     @Bind(R.id.text_error)
@@ -120,10 +101,10 @@ public class ModulPytaniaActivity extends AppCompatActivity implements View.OnCl
     }
 
     private static class OdpowiedzOnClickListener implements View.OnClickListener {
-        private ModulPytaniaActivity activity;
-        private int punkty;
-        private List<Button> listaOpcji;
-        private PytanieORM currPytanie;
+        private final ModulPytaniaActivity activity;
+        private final int punkty;
+        private final List<Button> listaOpcji;
+        private final PytanieORM currPytanie;
 
         public OdpowiedzOnClickListener(ModulPytaniaActivity activity, int punkty, List<Button> listaOpcji, PytanieORM currPytanie) {
             this.activity = activity;

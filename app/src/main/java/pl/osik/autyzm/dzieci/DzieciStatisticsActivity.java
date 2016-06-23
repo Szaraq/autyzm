@@ -1,44 +1,30 @@
 package pl.osik.autyzm.dzieci;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Environment;
-import android.print.pdf.PrintedPdfDocument;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.AttributeSet;
+import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnDrawListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
@@ -48,10 +34,6 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfName;
-import com.itextpdf.text.pdf.PdfPage;
-import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
@@ -59,7 +41,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,7 +85,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dzieci_statistics);
         ButterKnife.bind(this);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         dziecko = (HashMap) intent.getSerializableExtra(Dziecko.TABLE_NAME);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         imieINazwisko = dziecko.get(Dziecko.COLUMN_IMIE) + " " + dziecko.get(Dziecko.COLUMN_NAZWISKO);
@@ -121,9 +102,9 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
     }
 
     private void createChart(LineChart chart) {
-        YAxis yaxis = chart.getAxisLeft();
-        YAxis yaxis2 = chart.getAxisRight();
-        XAxis xaxis = chart.getXAxis();
+        final YAxis yaxis = chart.getAxisLeft();
+        final YAxis yaxis2 = chart.getAxisRight();
+        final XAxis xaxis = chart.getXAxis();
 
         yaxis2.setEnabled(false);
         yaxis.setAxisMinValue(0);
@@ -134,9 +115,9 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis.setDrawGridLines(false);
         chart.setDescription(getString(R.string.dzieci_statistics_postep_w_nauce));
-        ArrayList<Entry> linia = new ArrayList<>();
-        ArrayList<String> xVals = new ArrayList<String>();
-        LinkedHashMap<String, Float> statistics = Dziecko.getStatistics(Integer.parseInt(dziecko.get(Dziecko.COLUMN_ID)));
+        final ArrayList<Entry> linia = new ArrayList<>();
+        final ArrayList<String> xVals = new ArrayList<String>();
+        final LinkedHashMap<String, Float> statistics = Dziecko.getStatistics(Integer.parseInt(dziecko.get(Dziecko.COLUMN_ID)));
         if(statistics.size() > 0) {
             xVals.add("");
             int count = 1;
@@ -146,11 +127,11 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
                 linia.add(e);
             }
             xVals.add("");
-            LineDataSet set1 = new LineDataSet(linia, getString(R.string.dzieci_statistics_liczba_punktow));
+            final LineDataSet set1 = new LineDataSet(linia, getString(R.string.dzieci_statistics_liczba_punktow));
             set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            final ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1);
-            LineData data = new LineData(xVals, dataSets);
+            final LineData data = new LineData(xVals, dataSets);
             data.setValueFormatter(this);
             chart.setData(data);
             chart.setPinchZoom(true);
@@ -169,7 +150,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
     /* Creating PDF */
     private boolean saveAsPdf() {
         try {
-            File file = new File(OUTPUT_FILE);
+            final File file = new File(OUTPUT_FILE);
             Log.d("Stats", OUTPUT_FILE);
             file.getParentFile().mkdirs();
             file.createNewFile();
@@ -201,17 +182,17 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
     }
 
     private void addContent() throws DocumentException {
-        Paragraph main = new Paragraph();
+        final Paragraph main = new Paragraph();
         main.add(new Paragraph(getString(R.string.dzieci_statistics_pdf_title) + " (" + imieINazwisko + ")", titleFont));
         addEmptyLine(main, 1);
 
         /* Add chart */
-        Bitmap bitmap = chart.getChartBitmap();
-        ByteArrayOutputStream bitmapStream = new ByteArrayOutputStream();
+        final Bitmap bitmap = chart.getChartBitmap();
+        final ByteArrayOutputStream bitmapStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bitmapStream);
-        byte[] chartByteArray = bitmapStream.toByteArray();
+        final byte[] chartByteArray = bitmapStream.toByteArray();
         try {
-            Image image = Image.getInstance(chartByteArray);
+            final Image image = Image.getInstance(chartByteArray);
             image.scaleToFit(PageSize.A4.getHeight() - RESIZE_WIDTH, PageSize.A4.getWidth() - RESIZE_HEIGHT);
             image.setAbsolutePosition(0, MARGIN_TOP);
             main.add(image);
@@ -245,7 +226,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
 
     @Override
     public String getFormattedValue(float value, YAxis yAxis) {
-        NumberFormat format = NumberFormat.getPercentInstance();
+        final NumberFormat format = NumberFormat.getPercentInstance();
         return format.format(value);
     }
 
@@ -270,9 +251,9 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
     private void resizeChart() {
         final int MARGIN_WIDTH = 150;
         final int MARGIN_HEIGHT = 300;
-        Point size = new Point();
+        final Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
-        ViewGroup.LayoutParams params = chartContainer.getLayoutParams();
+        final ViewGroup.LayoutParams params = chartContainer.getLayoutParams();
 
         if(getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
             params.height = size.y - MARGIN_HEIGHT;

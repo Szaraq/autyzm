@@ -1,21 +1,19 @@
 package pl.osik.autyzm.helpers;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 /**
  * Created by m.osik2 on 2016-05-04.
  */
 public class MySortedMap {
-    private TreeMap<String, Integer> map;
-    private ArrayList<String> keys;
-    private Comparator<String> comparator = new Comparator<String>() {
+    private final TreeMap<String, Integer> map;
+    private final ArrayList<String> keys;
+    private final Comparator<String> comparator = new Comparator<String>() {
         @Override
         public int compare(String lhs, String rhs) {
             return lhs.compareTo(rhs);

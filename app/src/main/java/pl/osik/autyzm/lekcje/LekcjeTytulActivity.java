@@ -1,8 +1,8 @@
 package pl.osik.autyzm.lekcje;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,17 +11,15 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciAdapter;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
-import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateNotNull;
 
 public class LekcjeTytulActivity extends AppCompatActivity implements View.OnClickListener {
 
     LekcjaORM lekcja;
-    private ValidateCommand validate = new ValidateCommand();
+    private final ValidateCommand validate = new ValidateCommand();
 
     @Bind(R.id.tytul)
     EditText tytul;

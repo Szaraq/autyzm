@@ -34,8 +34,8 @@ import pl.osik.autyzm.validate.ValidateNotNull;
 public class FolderView extends CardView implements PopupMenu.OnMenuItemClickListener, View.OnClickListener {
 
     protected static int width = 0;
-    FolderORM folder;
-    private MultimediaFragment fragment;
+    final FolderORM folder;
+    private final MultimediaFragment fragment;
     ValidateCommand validate;
     public static boolean hoover;
 
@@ -182,7 +182,7 @@ public class FolderView extends CardView implements PopupMenu.OnMenuItemClickLis
 }
 
 class ChangeFolderOnClickListener implements View.OnClickListener {
-    MultimediaFragment fragment;
+    final MultimediaFragment fragment;
 
     public ChangeFolderOnClickListener(MultimediaFragment fragment) {
         this.fragment = fragment;
@@ -196,7 +196,7 @@ class ChangeFolderOnClickListener implements View.OnClickListener {
 }
 
 class MoveToFolderOnClickListener implements View.OnClickListener {
-    MultimediaFragment fragment;
+    final MultimediaFragment fragment;
 
     public MoveToFolderOnClickListener(MultimediaFragment fragment) {
         this.fragment = fragment;

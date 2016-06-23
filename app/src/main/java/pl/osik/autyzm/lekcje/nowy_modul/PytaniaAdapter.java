@@ -2,32 +2,23 @@ package pl.osik.autyzm.lekcje.nowy_modul;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.MyApp;
-import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.helpers.orm.PytanieORM;
-import pl.osik.autyzm.lekcje.LekcjeFragment;
 import pl.osik.autyzm.lekcje.LekcjeHelper;
-import pl.osik.autyzm.sql.Lekcja;
-import pl.osik.autyzm.sql.Pytanie;
 
 /**
  * Created by m.osik2 on 2016-05-18.
@@ -35,7 +26,7 @@ import pl.osik.autyzm.sql.Pytanie;
 public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaViewHolder> {
 
     public ArrayList<PytanieORM> pytania = LekcjeHelper.getPytaniaList();
-    private PytaniaActivity activity;
+    private final PytaniaActivity activity;
     private final LayoutInflater layoutInflater;
     protected boolean pytanieAdded = false;
 
@@ -100,8 +91,7 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
         PytaniaAdapter adapter;
         PytaniaActivity activity;
         int position;
-        PytanieORM pytanie;
-        public MyCustomEditTextListener myCustomEditTextListener;
+        public final MyCustomEditTextListener myCustomEditTextListener;
 
         @Bind(R.id.row_pytanie)
         EditText pytanieText;
@@ -134,7 +124,6 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
         }
 
         public void setPytanie(PytanieORM pytanie) {
-            this.pytanie = pytanie;
             pytanieText.setText(pytanie.getTresc());
         }
 

@@ -4,7 +4,6 @@ import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.MyApp;
@@ -16,11 +15,7 @@ public class ValidateNotNull implements Validate {
 
     @Override
     public boolean validate(View view) {
-        if(getStringFromView(view).length() == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return getStringFromView(view).length() != 0;
     }
 
     private Editable getStringFromView(View view) {

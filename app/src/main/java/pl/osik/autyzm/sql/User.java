@@ -3,10 +3,7 @@ package pl.osik.autyzm.sql;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -142,8 +139,7 @@ public class User extends AbstractDBTable {
         int count = cursor.getCount();
         cursor.close();
         helper.close();
-        if(count == 0) return true;
-        return false;
+        return count == 0;
     }
 
     public static String getCurrentName() {

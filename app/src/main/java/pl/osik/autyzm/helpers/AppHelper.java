@@ -1,25 +1,18 @@
 package pl.osik.autyzm.helpers;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 
-import com.bumptech.glide.Glide;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.shadowviewhelper.ShadowProperty;
 import com.wangjie.shadowviewhelper.ShadowViewHelper;
@@ -29,8 +22,6 @@ import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -41,7 +32,7 @@ public class AppHelper {
 
     private final static String SALT = "A%2LmD47";
     private static String today = "";
-    private static Context context = MyApp.getContext();
+    private static final Context context = MyApp.getContext();
 
     public static void setForceIconInPopupMenu(PopupMenu popupMenu) {
         try {

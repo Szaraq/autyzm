@@ -3,8 +3,8 @@ package pl.osik.autyzm.dzieci;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -36,34 +36,34 @@ public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
 
     public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
 
-    private Fragment fragment;
+    private final Fragment fragment;
     private final LayoutInflater layoutInflater;
     ArrayList<HashMap<String, Object>> dzieciList = Dziecko.getDzieciList();
 
     @Bind(R.id.lista_dzieci)
     LinearLayout listaDzieci;
 
-    public DzieciAdapter(LayoutInflater layoutInflater, Fragment fragment) {
+    public DzieciAdapter(final LayoutInflater layoutInflater, final Fragment fragment) {
         this.layoutInflater = layoutInflater;
         this.fragment = fragment;
     }
 
     @Override
-    public DzieciViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_dzieci, parent, false);
+    public DzieciViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_dzieci, parent, false);
         ButterKnife.bind(this, view);
-        DzieciViewHolder holder = new DzieciViewHolder(view);
+        final DzieciViewHolder holder = new DzieciViewHolder(view);
         holder.setAdapter(this);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(DzieciViewHolder holder, int position) {
+    public void onBindViewHolder(final DzieciViewHolder holder, final int position) {
         holder.setFragment(fragment);
-        HashMap<String, Object> map = dzieciList.get(position);
-        String photo = (String) map.get(Dziecko.COLUMN_PHOTO);
-        String name = map.get(Dziecko.COLUMN_NAZWISKO) + " " + map.get(Dziecko.COLUMN_IMIE);
-        int id = (int) map.get(Dziecko.COLUMN_ID);
+        final HashMap<String, Object> map = dzieciList.get(position);
+        final String photo = (String) map.get(Dziecko.COLUMN_PHOTO);
+        final String name = map.get(Dziecko.COLUMN_NAZWISKO) + " " + map.get(Dziecko.COLUMN_IMIE);
+        final int id = (int) map.get(Dziecko.COLUMN_ID);
         holder.setPhoto(photo);
         holder.setName(name);
         holder.setId(id);
@@ -111,8 +111,8 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     }
 
     protected void gotoDetails(OperationsEnum operacja) {
-        Intent intent = new Intent(fragment.getActivity(), DzieciDetailsActivity.class);
-        Bundle bundle = new Bundle();
+        final Intent intent = new Intent(fragment.getActivity(), DzieciDetailsActivity.class);
+        final Bundle bundle = new Bundle();
         bundle.putInt(Dziecko.COLUMN_ID, id);
         bundle.putSerializable(DzieciAdapter.BUNDLE_SWITCH_OPERACJA, operacja);
         intent.putExtras(bundle);
@@ -124,7 +124,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         if(photo == null || !(new File(photo)).exists()) {
             dzieciPhoto.setImageResource(DzieciDetailsActivity.RESOURCE_NO_PHOTO);
         } else {
-            ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();
+            final ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();
             vto.addOnPreDrawListener(new MyPreDrawListener(dzieciPhoto, photo, fragment.getActivity()));
         }
     }
@@ -145,7 +145,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if(v == dzieciContextMenu) {
-            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+            final PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
             AppHelper.setForceIconInPopupMenu(popupMenu);
             popupMenu.inflate(R.menu.dzieci_context_menu);
             popupMenu.setOnMenuItemClickListener(this);
@@ -158,7 +158,7 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         if(item.getItemId() == R.id.dzieci_edit) {
             gotoDetails(OperationsEnum.EDYCJA);
         } else {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(dzieciContextMenu.getContext());
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(dzieciContextMenu.getContext());
             dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + name + "?")
                     .setTitle(R.string.popup_uwaga)
                     .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {

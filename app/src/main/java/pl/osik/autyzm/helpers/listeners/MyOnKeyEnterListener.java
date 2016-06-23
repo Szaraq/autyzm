@@ -9,9 +9,9 @@ import android.widget.EditText;
  * Created by m.osik2 on 2016-05-16.
  */
 public class MyOnKeyEnterListener implements View.OnKeyListener {
-    private View view;
+    final private View view;
 
-    public MyOnKeyEnterListener(View view) {
+    public MyOnKeyEnterListener(final View view) {
         this.view = view;
     }
 

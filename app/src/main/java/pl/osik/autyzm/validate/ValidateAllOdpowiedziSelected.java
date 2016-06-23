@@ -13,7 +13,7 @@ import pl.osik.autyzm.uruchom.modul.ModulPytaniaActivity;
  * Created by m.osik2 on 2016-05-24.
  */
 public class ValidateAllOdpowiedziSelected implements Validate {
-    LinkedHashMap<PytanieORM, Integer> pytaniaOdpowiedzi;
+    final LinkedHashMap<PytanieORM, Integer> pytaniaOdpowiedzi;
 
     public ValidateAllOdpowiedziSelected(LinkedHashMap<PytanieORM, Integer> pytaniaOdpowiedzi) {
         this.pytaniaOdpowiedzi = pytaniaOdpowiedzi;

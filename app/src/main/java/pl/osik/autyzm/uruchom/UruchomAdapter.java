@@ -3,13 +3,11 @@ package pl.osik.autyzm.uruchom;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,23 +18,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
-import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.helpers.orm.ModulORM;
-import pl.osik.autyzm.helpers.orm.PlikORM;
 import pl.osik.autyzm.lekcje.LekcjeHelper;
 import pl.osik.autyzm.lekcje.LekcjeTytulActivity;
 import pl.osik.autyzm.sql.Lekcja;
@@ -51,7 +43,7 @@ public class UruchomAdapter extends RecyclerView.Adapter<UruchomViewHolder> {
     public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
 
     private ArrayList<LekcjaORM> lekcje = Lekcja.getLekcjaList(true);
-    private UruchomFragment fragment;
+    private final UruchomFragment fragment;
     private final LayoutInflater layoutInflater;
 
     public UruchomAdapter(LayoutInflater layoutInflater, UruchomFragment fragment) {

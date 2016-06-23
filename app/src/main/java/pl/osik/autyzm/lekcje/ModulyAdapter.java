@@ -3,31 +3,24 @@ package pl.osik.autyzm.lekcje;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.MyApp;
-import pl.osik.autyzm.helpers.OperationsEnum;
-import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.helpers.orm.ModulORM;
 import pl.osik.autyzm.lekcje.nowy_modul.PlikActivity;
-import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.sql.Modul;
 
 /**
@@ -37,15 +30,13 @@ public class ModulyAdapter extends RecyclerView.Adapter<ModulyViewHolder> {
 
     public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
 
-    private int lekcjaId;
     private ArrayList<ModulORM> moduly;
-    private LekcjeModulActivity activity;
+    private final LekcjeModulActivity activity;
     private final LayoutInflater layoutInflater;
 
     public ModulyAdapter(LayoutInflater layoutInflater, LekcjeModulActivity activity, int lekcjaId) {
         this.layoutInflater = layoutInflater;
         this.activity = activity;
-        this.lekcjaId = lekcjaId;
         moduly = LekcjeHelper.getModulyList();
     }
 

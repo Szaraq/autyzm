@@ -1,20 +1,13 @@
 package pl.osik.autyzm.uruchom;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,11 +16,7 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
-import pl.osik.autyzm.helpers.AppHelper;
-import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
-import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.sql.Dziecko;
 
 /**
@@ -35,15 +24,10 @@ import pl.osik.autyzm.sql.Dziecko;
  */
 public class WyborDzieckaAdapter extends RecyclerView.Adapter<WyborDzieckaViewHolder> {
 
-    private Activity activity;
-    private final LayoutInflater layoutInflater;
+    private final Activity activity;
     ArrayList<HashMap<String, Object>> dzieciList = Dziecko.getDzieciList();
 
-    @Bind(R.id.lista_dzieci)
-    LinearLayout listaDzieci;
-
     public WyborDzieckaAdapter(LayoutInflater layoutInflater, Activity activity) {
-        this.layoutInflater = layoutInflater;
         this.activity = activity;
     }
 
@@ -52,7 +36,6 @@ public class WyborDzieckaAdapter extends RecyclerView.Adapter<WyborDzieckaViewHo
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_wybor_dzieci, parent, false);
         ButterKnife.bind(this, view);
         WyborDzieckaViewHolder holder = new WyborDzieckaViewHolder(view);
-        holder.setAdapter(this);
         return holder;
     }
 
@@ -85,7 +68,6 @@ class WyborDzieckaViewHolder extends RecyclerView.ViewHolder implements View.OnC
     private String name;
     private String photo;
     private Activity activity;
-    private WyborDzieckaAdapter adapter;
 
     @Bind(R.id.containerLayout)
     LinearLayout containerLayout;
@@ -93,19 +75,15 @@ class WyborDzieckaViewHolder extends RecyclerView.ViewHolder implements View.OnC
     TextView dzieciName;
     @Bind(R.id.dzieci_photo)
     ImageView dzieciPhoto;
-    @Bind(R.id.lista_dzieci)
-    LinearLayout listaDzieci;
 
     public WyborDzieckaViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         containerLayout.setOnClickListener(this);
-        //AppHelper.changeListItemHeight(listaDzieci);
     }
 
     public void setPhoto(String photo) {
         this.photo = photo;
-        //if(photo != null) AppHelper.placePhoto(fragment.getActivity(), dzieciPhoto, photo);
         if(photo == null) {
             dzieciPhoto.setImageResource(R.drawable.ic_test_child_photo);
         } else {
@@ -143,9 +121,5 @@ class WyborDzieckaViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     public void setActivity(Activity activity) {
         this.activity = activity;
-    }
-
-    protected void setAdapter(WyborDzieckaAdapter adapter) {
-        this.adapter = adapter;
     }
 }

@@ -2,9 +2,7 @@ package pl.osik.autyzm.sql;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -111,7 +109,7 @@ public abstract class AbstractDBTable {
     }
 
     protected static String createJoin(AbstractDBTable joinedTableClass, String thisTable, String thisKey) {
-        return " JOIN " + joinedTableClass.getTableName() + " ON " + tableAndColumn(thisTable, thisKey) + " = " + tableAndColumn(joinedTableClass.getTableName(), joinedTableClass.COLUMN_ID);
+        return " JOIN " + joinedTableClass.getTableName() + " ON " + tableAndColumn(thisTable, thisKey) + " = " + tableAndColumn(joinedTableClass.getTableName(), COLUMN_ID);
     }
 
 }

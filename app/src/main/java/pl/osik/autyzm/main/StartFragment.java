@@ -86,9 +86,8 @@ public class StartFragment extends Fragment {
         noLessonsContainer.setVisibility(View.VISIBLE);
     }
 
-    //TODO FINALLY we wszystkich fragmentach onDestroyView() { ButterKnife.unbind(this); } ?
     @Override
-    public void onDestroyView() {
+     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }

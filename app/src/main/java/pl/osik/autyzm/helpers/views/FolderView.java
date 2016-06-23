@@ -24,6 +24,7 @@ import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.helpers.orm.FolderORM;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
 import pl.osik.autyzm.sql.Folder;
+import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateNotNull;
 
@@ -36,6 +37,7 @@ public class FolderView extends CardView implements PopupMenu.OnMenuItemClickLis
     FolderORM folder;
     private MultimediaFragment fragment;
     ValidateCommand validate;
+    public static boolean hoover;
 
     @Bind(R.id.card_layout)
     CardView cardLayout;
@@ -74,6 +76,21 @@ public class FolderView extends CardView implements PopupMenu.OnMenuItemClickLis
         cardLayout.setLayoutParams(params);
         folderyContextMenu.setOnClickListener(this);
         folderName.setText(folder.getNazwa());
+        changeToMoveMode();
+    }
+
+    public void changeToMoveMode() {
+        OnClickListener folderOnClickListener = null;
+        int elevation = 0;
+        if(hoover) {
+            elevation = AppHelper.dip2px(8);
+            folderOnClickListener = new MoveToFolderOnClickListener(fragment);
+        } else {
+            elevation = AppHelper.dip2px(2);
+            folderOnClickListener = new ChangeFolderOnClickListener(fragment);
+        }
+        cardLayout.setCardElevation(elevation);
+        setOnClickListener(folderOnClickListener);
     }
 
     public FolderORM getFolder() {
@@ -157,5 +174,45 @@ public class FolderView extends CardView implements PopupMenu.OnMenuItemClickLis
         data.put(Folder.COLUMN_NAZWA, inputTxt);
         f.edit(folder.getId(), data);
         fragment.refresh();
+    }
+
+    public static void setHoover(boolean hoover) {
+        FolderView.hoover = hoover;
+    }
+}
+
+class ChangeFolderOnClickListener implements View.OnClickListener {
+    MultimediaFragment fragment;
+
+    public ChangeFolderOnClickListener(MultimediaFragment fragment) {
+        this.fragment = fragment;
+    }
+
+    @Override
+    public void onClick(View v) {
+        FolderORM folder = ((FolderView) v).getFolder();
+        fragment.gotoNextFolder(folder.getId(), folder.getNazwa());
+    }
+}
+
+class MoveToFolderOnClickListener implements View.OnClickListener {
+    MultimediaFragment fragment;
+
+    public MoveToFolderOnClickListener(MultimediaFragment fragment) {
+        this.fragment = fragment;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        FolderORM folder = ((FolderView) v).getFolder();
+        int plikId = PlikView.getNotFadedPlikId();
+
+        Plik p = new Plik();
+        ContentValues data = new ContentValues();
+        data.put(Plik.COLUMN_FOLDER, folder.getId());
+        p.edit(plikId, data);
+
+        fragment.changeToMoveFile(false, null);
     }
 }

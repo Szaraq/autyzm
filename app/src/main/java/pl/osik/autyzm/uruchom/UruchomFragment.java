@@ -18,8 +18,6 @@ import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.lekcje.LekcjeHelper;
 import pl.osik.autyzm.lekcje.LekcjeTytulActivity;
-import pl.osik.autyzm.main.StartFavouritesAdapter;
-import pl.osik.autyzm.main.StartLastAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,5 +80,11 @@ public class UruchomFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(v.getContext(), LekcjeTytulActivity.class);
         LekcjeHelper.setOperacja(OperationsEnum.DODAWANIE);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

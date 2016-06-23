@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.MenuItem;
@@ -24,7 +25,6 @@ import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.orm.PlikORM;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
-import pl.osik.autyzm.sql.Folder;
 import pl.osik.autyzm.sql.Plik;
 
 /**
@@ -34,8 +34,12 @@ public class PlikView extends CardView {
     //Test
 
     PlikORM plik;
+    public static boolean faded;
     private MultimediaFragment fragment;
+    private static int notFadedPlikId;
 
+    @Bind(R.id.fader)
+    ImageView fader;
     @Bind(R.id.multimedia_icon)
     ImageView multimediaIcon;
     @Bind(R.id.card_layout)
@@ -96,6 +100,7 @@ public class PlikView extends CardView {
         }
         setIcon();
         setContextMenu();
+        if(faded && plik.getId() != notFadedPlikId) fader.setVisibility(VISIBLE); else fader.setVisibility(GONE);
     }
 
     private void setIcon() {
@@ -120,47 +125,56 @@ public class PlikView extends CardView {
         return fragment;
     }
 
-    public static class ContextMenuListener implements OnClickListener, PopupMenu.OnMenuItemClickListener {
-        PlikView plikView;
-        PlikORM plik;
+    public static void setFaded(boolean faded, @Nullable PlikORM exceptOf) {
+        PlikView.faded = faded;
+        PlikView.notFadedPlikId = (exceptOf == null ? 0 : exceptOf.getId());
+    }
 
-        public ContextMenuListener(PlikView plikView) {
-            this.plikView = plikView;
-            plik = plikView.getPlik();
+    public static int getNotFadedPlikId() {
+        return notFadedPlikId;
+    }
+}
+
+class ContextMenuListener implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+    PlikView plikView;
+    PlikORM plik;
+
+    public ContextMenuListener(PlikView plikView) {
+        this.plikView = plikView;
+        plik = plikView.getPlik();
+    }
+
+    @Override
+    public void onClick(View v) {
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+        AppHelper.setForceIconInPopupMenu(popupMenu);
+        popupMenu.inflate(R.menu.pliki_context_menu);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if(item.getItemId() == R.id.pliki_move) {
+            plikView.getFragment().changeToMoveFile(true, plik);
+        } else if(item.getItemId() == R.id.pliki_delete) {
+            //Zapytaj czy na pewno chcesz usunąć
+            AlertDialog.Builder dialog = new AlertDialog.Builder(plikView.getContext());
+            dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + plik.getName(true) + "?")
+                    .setTitle(R.string.popup_uwaga)
+                    .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Plik p = new Plik();
+                            p.delete(plik.getId());
+                            plikView.getFragment().refresh();
+                            AppHelper.showMessage(plikView, R.string.plik_usuniety);
+                        }
+                    })
+                    .setNegativeButton(R.string.button_anuluj, null)
+                    .setIcon(R.drawable.ic_uwaga);
+            dialog.show();
         }
-
-        @Override
-        public void onClick(View v) {
-            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-            AppHelper.setForceIconInPopupMenu(popupMenu);
-            popupMenu.inflate(R.menu.pliki_context_menu);
-            popupMenu.setOnMenuItemClickListener(this);
-            popupMenu.show();
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            if(item.getItemId() == R.id.pliki_move) {
-
-            } else if(item.getItemId() == R.id.pliki_delete) {
-                //Zapytaj czy na pewno chcesz usunąć
-                AlertDialog.Builder dialog = new AlertDialog.Builder(plikView.getContext());
-                dialog.setMessage(MyApp.getContext().getString(R.string.message_dziecko_do_usunięcia) + " " + plik.getName(true) + "?")
-                        .setTitle(R.string.popup_uwaga)
-                        .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Plik p = new Plik();
-                                p.delete(plik.getId());
-                                plikView.getFragment().refresh();
-                                AppHelper.showMessage(plikView, R.string.plik_usuniety);
-                            }
-                        })
-                        .setNegativeButton(R.string.button_anuluj, null)
-                        .setIcon(R.drawable.ic_uwaga);
-                dialog.show();
-            }
-            return true;
-        }
+        return true;
     }
 }

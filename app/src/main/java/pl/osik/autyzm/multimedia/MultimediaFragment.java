@@ -8,18 +8,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ScrollView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -54,8 +52,6 @@ import pl.osik.autyzm.validate.ValidateNotNull;
  */
 public class MultimediaFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
 
-    //TODO Przenoszenie plików do folderów
-
     int folderId;
     String folderName;
     ValidateCommand validate = new ValidateCommand();
@@ -64,8 +60,13 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     ArrayList<FolderORM> foldery;
     ArrayList<PlikORM> pliki;
 
+    ArrayList<FolderView> folderyViews = new ArrayList<>();
+    ArrayList<PlikView> plikiViews = new ArrayList<>();
+
     public final static String CHOOSER = "chooser";
 
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
     @Bind(R.id.fab_menu)
     FloatingActionMenu fabMenu;
     @Bind(R.id.multimedia_fab_folder)
@@ -126,24 +127,25 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     }
 
     private void createFolders() {
-        if(folderyLayout.getChildCount() > 0) folderyLayout.removeViews(0, folderyLayout.getChildCount());
+        if(folderyLayout.getChildCount() > 0) {
+            folderyLayout.removeViews(0, folderyLayout.getChildCount());
+            folderyViews.clear();
+        }
+
         foldery = Folder.getFolderyInFolder(folderId);
-        ViewGroup.OnClickListener folderOnclickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FolderORM folder = ((FolderView) v).getFolder();
-                gotoNextFolder(folder.getId(), folder.getNazwa());
-            }
-        };
+
         for (final FolderORM folder : foldery) {
             FolderView view = new FolderView(getContext(), this, folder);
             folderyLayout.addView(view);
-            view.setOnClickListener(folderOnclickListener);
+            folderyViews.add(view);
         }
     }
 
     private void createPliki() {
-        if(plikiLayout.getChildCount() > 0) plikiLayout.removeViews(0, plikiLayout.getChildCount());
+        if(plikiLayout.getChildCount() > 0) {
+            plikiLayout.removeViews(0, plikiLayout.getChildCount());
+            plikiViews.clear();
+        }
         pliki = Plik.getPlikiInFolder(folderId, true);
         ViewGroup.OnClickListener plikOnclickListener = new View.OnClickListener() {
             @Override
@@ -167,6 +169,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
             view.setPlik(plik);
             plikiLayout.addView(view);
             view.setOnClickListener(plikOnclickListener);
+            plikiViews.add(view);
         }
     }
 
@@ -180,7 +183,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         gotoNextFolder((int) parent.get(Folder.COLUMN_ID), (String) parent.get(Folder.COLUMN_NAZWA));
     }
 
-    protected void gotoNextFolder(int id, String name) {
+    public void gotoNextFolder(int id, String name) {
         folderId = id;
         folderName = name;
         refresh();
@@ -263,5 +266,26 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     @Override
     public void placeFile(String path) {
         addNewPlik(path);
+    }
+
+    //TODO FINALLY Przetestować na dużej liście czy rzeczywiście przewija do samej góry, a nie 1 ekran
+    public void changeToMoveFile(boolean fade, @Nullable PlikORM plik) {
+        if(fade) AppHelper.showMessage(getView(), R.string.multimedia_choose_folder);
+        PlikView.setFaded(fade, plik);
+        FolderView.setHoover(fade);
+        refresh();
+        scrollView.pageScroll(View.FOCUS_UP);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        changeToMoveFile(false, null);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

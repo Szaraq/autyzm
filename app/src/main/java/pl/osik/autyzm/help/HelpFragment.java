@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +27,6 @@ import pl.osik.autyzm.R;
  */
 public class HelpFragment extends Fragment {
 
-    //TODO FINALLY Poprawić adresy i telefony kontaktowe
     //TODO FINALLY Przetestować wysyłanie e-maili na prawdziwym urządzeniu
 
     private static final String PHOTO_PATH = "file:///android_asset/PJWSTK.jpg";
@@ -94,6 +91,11 @@ public class HelpFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }
 
 class EmailSenderOnClickListener implements View.OnClickListener {

@@ -33,7 +33,7 @@ import pl.osik.autyzm.uruchom.UruchomFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //TODO FINALLY wyrzucić debuggable z manifest i build.gradle
+    //TODO FINALLY wyrzucić debuggable z manifest i build.gradle oraz hardwareAcceleration
 
     public static final int NO_PHOTO = R.drawable.ic_user;
 

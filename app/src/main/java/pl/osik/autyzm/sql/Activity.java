@@ -3,9 +3,7 @@ package pl.osik.autyzm.sql;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -75,25 +73,27 @@ public class Activity extends AbstractDBTable {
         return getCreateStart() + ")";
     }
 
-    public static void createRows() {
-        if(!isEmpty()) return;
+    public static void createRows(SQLiteDatabase db) {
+        if(!isEmpty(db)) return;
         Activity a = new Activity();
         ContentValues data = new ContentValues();
         for (Map.Entry<Class, Map.Entry<Integer, String>> entry : activities.entrySet()) {
             data.put(COLUMN_ID, entry.getValue().getKey());
             data.put(COLUMN_NAME, entry.getValue().getValue());
-            a.insert(data);
+            a.insert(data, db);
         }
     }
 
-    private static boolean isEmpty() {
-        DBHelper helper = DBHelper.getInstance();
-        SQLiteDatabase db = helper.getDBRead();
+    private long insert(ContentValues data, SQLiteDatabase db) {
+        long out = db.insert(getTableName(), null, data);
+        return out;
+    }
+
+    private static boolean isEmpty(SQLiteDatabase db) {
         String query = "SELECT * FROM " + TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
         boolean out = cursor.getCount() == 0;
         cursor.close();
-        helper.close();
         return out;
     }
 

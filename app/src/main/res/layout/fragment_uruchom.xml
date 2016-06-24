@@ -13,8 +13,6 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/lekcje_fab"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         style="@style/myFAB"
         />
 

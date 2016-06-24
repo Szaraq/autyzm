@@ -27,8 +27,7 @@
 
         <View
             android:id="@+id/divider"
-            style="@style/DividerLine"
-            android:layout_below="@id/divider" />
+            style="@style/DividerLine" />
 
         <FrameLayout
             android:id="@+id/chart_container"
@@ -38,8 +37,7 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/wykres"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_height="match_parent" />
 
         </FrameLayout>
 

@@ -60,15 +60,13 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/lista_modulow"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/title_container" />
+                android:layout_height="match_parent" />
 
         </FrameLayout>
 
         <View
             android:id="@+id/divider2"
             style="@style/DividerLine"
-            android:layout_below="@id/lista_modulow"
             android:layout_marginBottom="0dp" />
 
         <RelativeLayout

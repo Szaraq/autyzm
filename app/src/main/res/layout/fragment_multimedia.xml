@@ -61,8 +61,6 @@
         android:id="@+id/fab_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"

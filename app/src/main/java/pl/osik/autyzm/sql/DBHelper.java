@@ -49,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
         for (AbstractDBTable table : tables) {
             db.execSQL(table.create());
         }
-        Activity.createRows();
+        Activity.createRows(db);
     }
 
     @Override

@@ -44,10 +44,9 @@ public class UruchomAdapter extends RecyclerView.Adapter<UruchomViewHolder> {
 
     private ArrayList<LekcjaORM> lekcje = Lekcja.getLekcjaList(true);
     private final UruchomFragment fragment;
-    private final LayoutInflater layoutInflater;
 
     public UruchomAdapter(LayoutInflater layoutInflater, UruchomFragment fragment) {
-        this.layoutInflater = layoutInflater;
+        LayoutInflater layoutInflater1 = layoutInflater;
         this.fragment = fragment;
     }
 

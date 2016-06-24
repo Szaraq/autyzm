@@ -22,12 +22,11 @@ import pl.osik.autyzm.uruchom.UruchomController;
 public class StartLastAdapter extends RecyclerView.Adapter<StartLastViewHolder> {
 
     private final static int HOW_MANY = 5;
-    private final LayoutInflater layoutInflater;
     private final StartFragment fragment;
     protected ArrayList<LekcjaORM> lekcjaList = Lekcja.getOstatnieLekcje(HOW_MANY, true);
 
     public StartLastAdapter(LayoutInflater layoutInflater, StartFragment fragment) {
-        this.layoutInflater = layoutInflater;
+        LayoutInflater layoutInflater1 = layoutInflater;
         this.fragment = fragment;
     }
 

@@ -20,7 +20,6 @@ import pl.osik.autyzm.uruchom.UruchomController;
 public class StartFragment extends Fragment {
 
     private StartLastAdapter startLastAdapter;
-    private StartFavouritesAdapter startFavouritesAdapter;
 
     @Bind(R.id.no_lessons_container)
     PercentRelativeLayout noLessonsContainer;
@@ -71,7 +70,7 @@ public class StartFragment extends Fragment {
         startLastUsedList.setAdapter(startLastAdapter);
         if(startLastAdapter.lekcjaList.size() == 0) startLastUsedList.setVisibility(View.GONE);
 
-        startFavouritesAdapter = new StartFavouritesAdapter(getLayoutInflater(savedInstanceState), this);
+        StartFavouritesAdapter startFavouritesAdapter = new StartFavouritesAdapter(getLayoutInflater(savedInstanceState), this);
         startFavouritesList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         startFavouritesList.setAdapter(startFavouritesAdapter);
         if(startLastAdapter.lekcjaList.size() == 0 && startFavouritesAdapter.lekcjaList.size() == 0) setNoLessonsStart();

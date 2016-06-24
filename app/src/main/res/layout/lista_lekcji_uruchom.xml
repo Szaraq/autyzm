@@ -70,7 +70,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="24dp"
                     android:textSize="14sp"
-                    android:text="Moduły:" />
+                    android:text="@string/uruchom_moduly_header" />
 
             </LinearLayout>
 

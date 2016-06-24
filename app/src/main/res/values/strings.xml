@@ -132,4 +132,6 @@
     <string name="lekcje_modul_brak_pytan">Twoja lekcja nie ma stworzonych pytań. Na pewno chcesz kontynuować?</string>
     <string name="start_welcome">Wygląda na to, że jeszcze nie uruchomiłeś lekcji, ani nie masz żadnych ulubionych</string>
     <string name="multimedia_choose_folder">Wybierz folder</string>
+    <string name="podsumowanie_header">Podsumowanie</string>
+    <string name="uruchom_moduly_header">Moduły:</string>
 </resources>

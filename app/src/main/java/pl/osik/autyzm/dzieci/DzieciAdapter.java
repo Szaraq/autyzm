@@ -37,14 +37,13 @@ public class DzieciAdapter extends RecyclerView.Adapter<DzieciViewHolder> {
     public static final String BUNDLE_SWITCH_OPERACJA = "operacja";
 
     private final Fragment fragment;
-    private final LayoutInflater layoutInflater;
     ArrayList<HashMap<String, Object>> dzieciList = Dziecko.getDzieciList();
 
     @Bind(R.id.lista_dzieci)
     LinearLayout listaDzieci;
 
     public DzieciAdapter(final LayoutInflater layoutInflater, final Fragment fragment) {
-        this.layoutInflater = layoutInflater;
+        LayoutInflater layoutInflater1 = layoutInflater;
         this.fragment = fragment;
     }
 

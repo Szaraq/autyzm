@@ -32,10 +32,9 @@ public class ModulyAdapter extends RecyclerView.Adapter<ModulyViewHolder> {
 
     private ArrayList<ModulORM> moduly;
     private final LekcjeModulActivity activity;
-    private final LayoutInflater layoutInflater;
 
     public ModulyAdapter(LayoutInflater layoutInflater, LekcjeModulActivity activity, int lekcjaId) {
-        this.layoutInflater = layoutInflater;
+        LayoutInflater layoutInflater1 = layoutInflater;
         this.activity = activity;
         moduly = LekcjeHelper.getModulyList();
     }

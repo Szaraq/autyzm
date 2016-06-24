@@ -33,10 +33,9 @@ public class LekcjeAdapter extends RecyclerView.Adapter<LekcjeViewHolder> {
 
     private ArrayList<LekcjaORM> lekcje = Lekcja.getLekcjaList(true);
     private final LekcjeFragment fragment;
-    private final LayoutInflater layoutInflater;
 
     public LekcjeAdapter(LayoutInflater layoutInflater, LekcjeFragment fragment) {
-        this.layoutInflater = layoutInflater;
+        LayoutInflater layoutInflater1 = layoutInflater;
         this.fragment = fragment;
     }
 

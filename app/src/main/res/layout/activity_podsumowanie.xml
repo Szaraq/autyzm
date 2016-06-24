@@ -11,7 +11,7 @@
     tools:context="pl.osik.autyzm.uruchom.modul.PodsumowanieActivity">
 
     <TextView
-        android:text="Podsumowanie"
+        android:text="@string/podsumowanie_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

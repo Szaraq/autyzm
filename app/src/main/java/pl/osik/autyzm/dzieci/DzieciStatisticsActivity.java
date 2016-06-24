@@ -58,7 +58,6 @@ import pl.osik.autyzm.sql.User;
 public class DzieciStatisticsActivity extends AppCompatActivity implements YAxisValueFormatter, ValueFormatter, View.OnClickListener {
 
 
-    private final int X_ANGLE = 315;
     private HashMap<String, String> dziecko;
     private String imieINazwisko;
 
@@ -67,9 +66,6 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
     private String FILE_NAME;
     private String OUTPUT_FILE;
     private Font titleFont;
-    private final int RESIZE_WIDTH = 100;
-    private final int RESIZE_HEIGHT = 100;
-    private final int MARGIN_TOP = 50;
 
     @Bind(R.id.chart_container)
     FrameLayout chartContainer;
@@ -111,7 +107,8 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         yaxis.setAxisMaxValue(1.2f);
         yaxis.setValueFormatter(this);
 
-        xaxis.setLabelRotationAngle(X_ANGLE);
+        int x_ANGLE = 315;
+        xaxis.setLabelRotationAngle(x_ANGLE);
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis.setDrawGridLines(false);
         chart.setDescription(getString(R.string.dzieci_statistics_postep_w_nauce));
@@ -193,7 +190,10 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         final byte[] chartByteArray = bitmapStream.toByteArray();
         try {
             final Image image = Image.getInstance(chartByteArray);
+            int RESIZE_HEIGHT = 100;
+            int RESIZE_WIDTH = 100;
             image.scaleToFit(PageSize.A4.getHeight() - RESIZE_WIDTH, PageSize.A4.getWidth() - RESIZE_HEIGHT);
+            int MARGIN_TOP = 50;
             image.setAbsolutePosition(0, MARGIN_TOP);
             main.add(image);
         } catch (BadElementException e) {

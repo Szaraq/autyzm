@@ -27,11 +27,10 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
 
     public ArrayList<PytanieORM> pytania = LekcjeHelper.getPytaniaList();
     private final PytaniaActivity activity;
-    private final LayoutInflater layoutInflater;
     protected boolean pytanieAdded = false;
 
     public PytaniaAdapter(LayoutInflater layoutInflater, PytaniaActivity activity) {
-        this.layoutInflater = layoutInflater;
+        LayoutInflater layoutInflater1 = layoutInflater;
         this.activity = activity;
     }
 

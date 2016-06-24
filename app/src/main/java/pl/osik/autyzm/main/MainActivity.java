@@ -33,15 +33,11 @@ import pl.osik.autyzm.uruchom.UruchomFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //TODO FINALLY dodać final tam gdzie można
     //TODO FINALLY wyrzucić debuggable z manifest i build.gradle
-    //TODO FINALLY Uporządkować importy
 
     public static final int NO_PHOTO = R.drawable.ic_user;
 
     public static MainActivity instance;
-    private TextView user;
-    private ImageView userPhoto;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private Fragment currFragment;
@@ -150,8 +146,8 @@ public class MainActivity extends AppCompatActivity
     public void setUserInDrawerMenu() {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        user = (TextView) headerView.findViewById(R.id.user);
-        userPhoto = (ImageView) headerView.findViewById(R.id.userPhoto);
+        TextView user = (TextView) headerView.findViewById(R.id.user);
+        ImageView userPhoto = (ImageView) headerView.findViewById(R.id.userPhoto);
 
         user.setText(User.getCurrentName());
         String photoPath = User.getCurrentPhotoPath();

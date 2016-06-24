@@ -21,12 +21,11 @@ import pl.osik.autyzm.uruchom.UruchomController;
  */
 public class StartFavouritesAdapter extends RecyclerView.Adapter<StartFavouritesViewHolder> {
 
-    private final LayoutInflater layoutInflater;
     private final StartFragment fragment;
     public ArrayList<LekcjaORM> lekcjaList = Lekcja.getFavourites(true);
 
     public StartFavouritesAdapter(LayoutInflater layoutInflater, StartFragment fragment) {
-        this.layoutInflater = layoutInflater;
+        LayoutInflater layoutInflater1 = layoutInflater;
         this.fragment = fragment;
     }
 

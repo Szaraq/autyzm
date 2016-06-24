@@ -73,8 +73,7 @@
                 android:id="@+id/data_urodzenia"
                 style="@style/EditTextMaterial.EditTextDzieciDetails"
                 android:focusable="false"
-                android:hint="@string/dzieci_details_data_urodzenia"
-                android:onClick="setDate" />
+                android:hint="@string/dzieci_details_data_urodzenia" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -86,8 +85,7 @@
                 android:id="@+id/rozpoczecie"
                 style="@style/EditTextMaterial.EditTextDzieciDetails"
                 android:focusable="false"
-                android:hint="@string/dzieci_details_rozpoczecie"
-                android:onClick="setDate" />
+                android:hint="@string/dzieci_details_rozpoczecie" />
 
         </android.support.design.widget.TextInputLayout>
 

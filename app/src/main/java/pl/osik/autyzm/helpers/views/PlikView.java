@@ -75,6 +75,7 @@ public class PlikView extends CardView {
         if(FolderView.width == 0) FolderView.width = (AppHelper.getScreenSize()[0] - AppHelper.dip2px(2) * 3) / 2;      //(szerokość ekranu - margines lewy - margines między kartami - margines prawy) / 2 karty w rzędzie
         ViewGroup.LayoutParams params = cardLayout.getLayoutParams();
         params.width = FolderView.width;
+        params.height = params.width;
         cardLayout.setLayoutParams(params);
     }
 

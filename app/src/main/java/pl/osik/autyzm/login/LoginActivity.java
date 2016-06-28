@@ -9,6 +9,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.main.MainActivity;
 import pl.osik.autyzm.sql.LoadTestData;
@@ -40,6 +42,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Bind(R.id.backgroundImage)
     ImageView backgroundImage;
+    @Bind(R.id.logo)
+    TextView logo;
     @Bind(R.id.userPhoto)
     CircleImageView userPhoto;
     @Bind(R.id.login)
@@ -71,6 +75,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             zalozKonto();
         }
 
+        setLogoHeight();
         setBackground();
         getSupportActionBar().hide();
         zaloguj.setOnClickListener(this);
@@ -78,6 +83,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginControl.setOnKeyListener(this);
         loginControl.setOnFocusChangeListener(this);
         passControl.setOnKeyListener(this);
+    }
+
+    private void setLogoHeight() {
+        ViewGroup.LayoutParams params = logo.getLayoutParams();
+        params.height = (int) (AppHelper.getScreenSize()[1] * 0.3);
+        logo.setLayoutParams(params);
     }
 
     private void setBackground() {
@@ -113,6 +124,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+            finish();
         }
     }
 

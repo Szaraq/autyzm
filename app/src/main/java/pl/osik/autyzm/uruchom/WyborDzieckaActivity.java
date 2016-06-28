@@ -1,16 +1,14 @@
 package pl.osik.autyzm.uruchom;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciAdapter;
 
 public class WyborDzieckaActivity extends AppCompatActivity {
 
@@ -24,7 +22,7 @@ public class WyborDzieckaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wybor_dziecka);
         ButterKnife.bind(this);
-        getSupportActionBar().setTitle(UruchomController.getLekcja().getTytul());
+        getSupportActionBar().setTitle(R.string.uruchom_wybor_dziecka_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         wyborAdapter = new WyborDzieckaAdapter(getLayoutInflater(), this);
         dzieciList.setLayoutManager(new LinearLayoutManager(this));

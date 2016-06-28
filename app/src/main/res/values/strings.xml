@@ -134,4 +134,5 @@
     <string name="multimedia_choose_folder">Wybierz folder</string>
     <string name="podsumowanie_header">Podsumowanie</string>
     <string name="uruchom_moduly_header">Moduły:</string>
+    <string name="uruchom_wybor_dziecka_title">Wybierz dziecko</string>
 </resources>

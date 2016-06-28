@@ -159,8 +159,13 @@ public class AppHelper {
         spaceFiller.setMinimumHeight((int) (getScreenSize()[1] * 0.4));
     }
 
+    public static void showMessage(View container, String text, int length) {
+        Snackbar.make(container, text, length).show();
+
+    }
+
     public static void showMessage(View container, String text) {
-        Snackbar.make(container, text, Snackbar.LENGTH_SHORT).show();
+        showMessage(container, text, Snackbar.LENGTH_SHORT);
     }
 
     public static void showMessage(View container, @StringRes int resString) {

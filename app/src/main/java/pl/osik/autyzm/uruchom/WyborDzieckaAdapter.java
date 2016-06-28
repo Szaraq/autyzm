@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -84,7 +85,7 @@ class WyborDzieckaViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     public void setPhoto(String photo) {
         this.photo = photo;
-        if(photo == null) {
+        if(photo == null || !(new File(photo)).exists()) {
             dzieciPhoto.setImageResource(R.drawable.ic_test_child_photo);
         } else {
             ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();

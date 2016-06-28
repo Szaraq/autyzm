@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -245,7 +246,7 @@ public class DzieciStatisticsActivity extends AppCompatActivity implements YAxis
         } else {
             popupText = getString(R.string.dzieci_statistics_pdf_save_error) + FILE_NAME;
         }
-        AppHelper.showMessage(container, popupText);
+        AppHelper.showMessage(container, popupText, Snackbar.LENGTH_LONG);
     }
 
     private void resizeChart() {

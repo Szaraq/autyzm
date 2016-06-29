@@ -21,7 +21,6 @@ import pl.osik.autyzm.sql.Odpowiedz;
 import pl.osik.autyzm.sql.Pytanie;
 import pl.osik.autyzm.uruchom.modul.ModulMediaActivity;
 import pl.osik.autyzm.uruchom.modul.ModulPytaniaActivity;
-import pl.osik.autyzm.uruchom.modul.PodsumowanieActivity;
 
 /**
  * Created by m.osik2 on 2016-05-19.
@@ -67,7 +66,8 @@ public class UruchomController {
             getNextModul();
             if(modul == null) {
                 finishLekcja();
-                nextActivity = new PodsumowanieActivity();
+                thisActivity.finish();
+                return;
             } else nextActivity = new ModulMediaActivity();
         } else {
             nextActivity = new ModulPytaniaActivity();

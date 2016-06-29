@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String BACKGROUND_PATH = "file:///android_asset/login_tlo.jpg";
 
     //TODO FINALLY prawa autorskie do tła: http://wallpapercave.com/w/tTuFP5q
-    //TODO Przetestować czy stary login też tak wolno teraz chodzi.
 
     private String path;
     private ValidateCommand validate;

@@ -45,7 +45,6 @@
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".uruchom.modul.ModulPytaniaActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".uruchom.modul.PodsumowanieActivity" />
         <activity android:name=".uruchom.WyborDzieckaActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".helpers.FilePickerActivity"

@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ValidateCommand validate;
     private ValidateAuthenticate authenticate;
 
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
     @Bind(R.id.backgroundImage)
     ImageView backgroundImage;
     @Bind(R.id.logo)
@@ -80,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         noweKonto.setOnClickListener(this);
         loginControl.setOnKeyListener(this);
         loginControl.setOnFocusChangeListener(this);
+        loginControl.setOnClickListener(this);
         passControl.setOnKeyListener(this);
     }
 
@@ -104,6 +108,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
         } else if(v.getId() == noweKonto.getId()) {
             zalozKonto();
+        } else if(v.getId() == loginControl.getId()) {
+            (new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    scrollView.pageScroll(View.FOCUS_DOWN);
+                }
+            })).start();
         }
     }
 

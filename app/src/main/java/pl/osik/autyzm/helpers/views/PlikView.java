@@ -31,7 +31,6 @@ import pl.osik.autyzm.sql.Plik;
  * Created by m.osik2 on 2016-06-17.
  */
 public class PlikView extends CardView {
-    //Test
 
     PlikORM plik;
     public static boolean faded;

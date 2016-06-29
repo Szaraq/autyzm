@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //TODO FINALLY wyrzucić debuggable z manifest i build.gradle oraz hardwareAcceleration
+    //TODO elevation: http://stackoverflow.com/questions/27477371/android-elevation-not-showing-a-shadow
 
     public static final int NO_PHOTO = R.drawable.ic_user;
 

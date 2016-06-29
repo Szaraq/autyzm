@@ -73,6 +73,10 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
         this.thumb = thumb;
     }
 
+    public FileHelper.FileTypes getType() {
+        return FileHelper.getType(path);
+    }
+
     @Override
     public int compareTo(PlikORM another) {
         return getName(true).compareTo(another.getName(true));

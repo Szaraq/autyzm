@@ -2,6 +2,7 @@ package pl.osik.autyzm.helpers;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
@@ -25,9 +26,17 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
         this(photo, path, activity, FileHelper.THUMB_HEIGHT, FileHelper.THUMB_WIDTH);
     }
 
+    @Deprecated
     public MyPreDrawListener(ImageView photo, String path, Activity activity, int height, int width) {
         this.photo = photo;
         this.path = path;
+        this.activity = activity;
+    }
+
+    public MyPreDrawListener(ImageView photo, Bitmap bitmap, Activity activity) {
+        this.photo = photo;
+        this.path = null;
+        this.thumbnail = bitmap;
         this.activity = activity;
     }
 
@@ -37,6 +46,12 @@ public class MyPreDrawListener implements ViewTreeObserver.OnPreDrawListener {
         if (path != null) {
             Glide.with(activity)
                     .load(path)
+                    .centerCrop()
+                    .into(photo);
+        } else if(thumbnail != null) {
+            Glide.with(activity)
+                    .load("")
+                    .placeholder(new BitmapDrawable(thumbnail))
                     .centerCrop()
                     .into(photo);
         } else {

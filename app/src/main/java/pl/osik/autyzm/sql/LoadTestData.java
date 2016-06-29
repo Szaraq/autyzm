@@ -151,7 +151,6 @@ public class LoadTestData {
     }
 
     private static void loadPlik() {
-        //"content://media/external/images/media/12"
         Plik p = new Plik();
         LinkedHashMap<String, Object> params = new LinkedHashMap<String, Object>();
 
@@ -169,22 +168,6 @@ public class LoadTestData {
         params.put(Plik.COLUMN_FOLDER, "1");
         params.put(Plik.COLUMN_GHOST, 0);
         p.insert(params);
-
-        /*for (int i = 0; i < 10; i++) {
-            params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
-            params.put(Plik.COLUMN_FOLDER, Folder.ROOT_ID);
-            p.insert(params);
-        }
-
-        for (int i = 0; i < 10; i++) {
-            params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
-            params.put(Plik.COLUMN_FOLDER, "1");
-            p.insert(params);
-        }
-
-        params.put(Plik.COLUMN_PATH, "content://media/external/images/media/12");
-        params.put(Plik.COLUMN_FOLDER, "10");
-        p.insert(params);*/
     }
 
     private static void loadModul() {
@@ -197,8 +180,8 @@ public class LoadTestData {
         params.put(Modul.COLUMN_GHOST, 0);
         m.insert(params);
 
-        params.put(Modul.COLUMN_NAZWA, "Miranda_de_Miranda");
-        params.put(Modul.COLUMN_FILM, 1);
+        params.put(Modul.COLUMN_NAZWA, "SampleVideo_1280x720_1mb");
+        params.put(Modul.COLUMN_FILM, 2);
         params.put(Modul.COLUMN_LEKCJA, 2);
         params.put(Modul.COLUMN_NUMER, 1);
         params.put(Modul.COLUMN_GHOST, 0);

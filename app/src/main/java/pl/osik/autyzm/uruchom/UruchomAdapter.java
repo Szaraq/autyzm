@@ -3,6 +3,7 @@ package pl.osik.autyzm.uruchom;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.CardView;
@@ -24,11 +25,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.helpers.orm.ModulORM;
+import pl.osik.autyzm.helpers.orm.PlikORM;
 import pl.osik.autyzm.lekcje.LekcjeHelper;
 import pl.osik.autyzm.lekcje.LekcjeTytulActivity;
 import pl.osik.autyzm.sql.Lekcja;
@@ -186,9 +189,15 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     }
 
     protected void createThumbnails() {
-        String path = Plik.getById(moduly.get(0).getPlik(), true).getPath();
         ViewTreeObserver vto = thumbnail.getViewTreeObserver();
-        vto.addOnPreDrawListener(new MyPreDrawListener(thumbnail, path, fragment.getActivity()));
+        PlikORM plik = Plik.getById(moduly.get(0).getPlik(), true);
+        String path = plik.getPath();
+        if(plik.getType() == FileHelper.FileTypes.PHOTO) {
+            vto.addOnPreDrawListener(new MyPreDrawListener(thumbnail, path, fragment.getActivity()));
+        } else if(plik.getType() == FileHelper.FileTypes.VIDEO) {
+            Bitmap bitmap = FileHelper.getThumbnail(path, 0, AppHelper.dip2px(150));
+            vto.addOnPreDrawListener(new MyPreDrawListener(thumbnail, bitmap, fragment.getActivity()));
+        }
         thumbnail.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
 
         /*for (ModulORM modul : moduly) {

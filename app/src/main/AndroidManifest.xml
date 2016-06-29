@@ -54,8 +54,6 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".multimedia.ShowMediaActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".multimedia.PlayerActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".login.UserDetailsActivity"
             android:parentActivityName=".main.MainActivity"

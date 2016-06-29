@@ -24,7 +24,6 @@ import pl.osik.autyzm.main.MainActivity;
 import pl.osik.autyzm.main.StartFragment;
 import pl.osik.autyzm.multimedia.MultimediaFragment;
 import pl.osik.autyzm.multimedia.PickerActivity;
-import pl.osik.autyzm.multimedia.PlayerActivity;
 import pl.osik.autyzm.multimedia.ShowMediaActivity;
 import pl.osik.autyzm.uruchom.UruchomFragment;
 import pl.osik.autyzm.uruchom.WyborDzieckaActivity;
@@ -60,7 +59,6 @@ public class Activity extends AbstractDBTable {
         put(StartFragment.class, new MyEntry<Integer, String>(14, "StartFragment"));
         put(MultimediaFragment.class, new MyEntry<Integer, String>(15, "MultimediaFragment"));
         put(PickerActivity.class, new MyEntry<Integer, String>(16, "PickerActivity"));
-        put(PlayerActivity.class, new MyEntry<Integer, String>(17, "PlayerActivity"));
         put(ShowMediaActivity.class, new MyEntry<Integer, String>(18, "ShowMediaActivity"));
         put(ModulMediaActivity.class, new MyEntry<Integer, String>(19, "ModulMediaActivity"));
         put(ModulPytaniaActivity.class, new MyEntry<Integer, String>(20, "ModulPytaniaActivity"));

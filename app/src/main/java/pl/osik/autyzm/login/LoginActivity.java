@@ -17,8 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -35,6 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String BACKGROUND_PATH = "file:///android_asset/login_tlo.jpg";
 
     //TODO FINALLY prawa autorskie do tła: http://wallpapercave.com/w/tTuFP5q
+    //TODO Przetestować czy stary login też tak wolno teraz chodzi.
 
     private String path;
     private ValidateCommand validate;
@@ -92,10 +91,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setBackground() {
-        Glide.with(this)
+        /*Glide.with(this)
                 .load(BACKGROUND_PATH)
                 .dontAnimate()
-                .into(backgroundImage);
+                .into(backgroundImage);*/
         backgroundImage.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
     }
 
@@ -103,6 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if(v.getId() == zaloguj.getId()) {
             logowanie();
+            finish();
         } else if(v.getId() == noweKonto.getId()) {
             zalozKonto();
         }

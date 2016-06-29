@@ -7,14 +7,22 @@
 
     <FrameLayout
         android:id="@+id/videoPlayerContainer"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/player"
+        <include
+            layout="@layout/giraffe_player"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/photoPlayer"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

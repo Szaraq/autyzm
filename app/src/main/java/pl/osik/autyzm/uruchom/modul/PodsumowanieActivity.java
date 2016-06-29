@@ -1,7 +1,7 @@
 package pl.osik.autyzm.uruchom.modul;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -12,7 +12,7 @@ import pl.osik.autyzm.uruchom.UruchomController;
 
 public class PodsumowanieActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //TODO FINALLY Usunąć jak będzie pewność, że niepotrzebne
+    //TODO Usunąć
 
     @Bind(R.id.buttonNext)
     Button buttonNext;

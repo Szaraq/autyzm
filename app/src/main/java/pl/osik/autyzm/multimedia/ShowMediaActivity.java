@@ -1,26 +1,20 @@
 package pl.osik.autyzm.multimedia;
 
-import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.exoplayer.ExoPlayer;
-import com.google.android.exoplayer.util.PlayerControl;
-import com.google.android.libraries.mediaframework.exoplayerextensions.Video;
-import com.google.android.libraries.mediaframework.layeredvideo.SimpleVideoPlayer;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.orm.PlikORM;
-import pl.osik.autyzm.lekcje.nowy_modul.PlikActivity;
+import tcking.github.com.giraffeplayer.GiraffePlayer;
 
 public class ShowMediaActivity extends AppCompatActivity {
 
@@ -31,7 +25,7 @@ public class ShowMediaActivity extends AppCompatActivity {
 
     @Bind(R.id.videoPlayerContainer)
     FrameLayout videoPlayerContainer;
-    @Bind(R.id.player)
+    @Bind(R.id.photoPlayer)
     ImageView player;
 
     @Override
@@ -50,18 +44,22 @@ public class ShowMediaActivity extends AppCompatActivity {
         String path = plik.getPath();
         PLIK = path;
         if(FileHelper.getType(path) == FileHelper.FileTypes.PHOTO) {
+            player.setVisibility(View.VISIBLE);
             Glide.with(this)
                     .load(path)
                     .fitCenter()
                     .dontAnimate()
                     .into(player);
         } else {
-            /*SimpleVideoPlayer videoPlayer = new SimpleVideoPlayer(this, videoPlayerContainer, new Video(path, Video.VideoType.MP4), plik.getName(), false);
-            videoPlayer.play();
-            videoPlayer.release();*/
-
-            Intent intent = new Intent(this, PlayerActivity.class);
-            startActivity(intent);
+            videoPlayerContainer.setVisibility(View.VISIBLE);
+            GiraffePlayer player = new GiraffePlayer(this);
+            player.play(path);
+            player.onComplete(new Runnable() {
+                @Override
+                public void run() {
+                    ShowMediaActivity.this.finish();
+                }
+            });
         }
     }
 

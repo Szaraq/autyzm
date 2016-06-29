@@ -28,10 +28,10 @@ public class FileHelper {
     public static final int THUMB_HEIGHT = 66;
     public final static int RESCALE_PROPORTIONALLY = -1;
 
-    public static Bitmap getThumbnail(String path) {
+    public static Bitmap getThumbnail(String path, int width, int height) {
         FileTypes type = getType(path);
         if(type == FileTypes.PHOTO) {
-            return rescaleBitmap(path, THUMB_WIDTH, THUMB_HEIGHT);
+            return rescaleBitmap(path, width, height);
         } else if(type == FileTypes.VIDEO) {
             FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
             retriever.setDataSource(path);
@@ -41,12 +41,16 @@ public class FileHelper {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.outWidth = bitmap.getWidth();
             options.outHeight = bitmap.getHeight();
-            int scale = calculateInSampleSize(options, THUMB_WIDTH, THUMB_HEIGHT);
+            int scale = calculateInSampleSize(options, width, height);
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale, bitmap.getHeight() / scale, false);
             return bitmap;
         } else {
             return null;
         }
+    }
+
+    public static Bitmap getThumbnail(String path) {
+        return getThumbnail(path, THUMB_WIDTH, THUMB_HEIGHT);
     }
 
     public static Bitmap getThumbnailFromStorage(int id) {

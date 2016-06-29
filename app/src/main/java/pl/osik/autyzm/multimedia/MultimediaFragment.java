@@ -51,6 +51,7 @@ import pl.osik.autyzm.validate.ValidateNotNull;
  * create an instance of this fragment.
  */
 public class MultimediaFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
+    //Test
 
     int folderId;
     String folderName;

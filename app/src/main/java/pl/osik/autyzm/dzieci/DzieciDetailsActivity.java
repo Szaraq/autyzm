@@ -203,6 +203,12 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         fab.setOnClickListener(this);
         dataUrodzenia.setOnClickListener(this);
         rozpoczecie.setOnClickListener(this);
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePhoto();
+            }
+        });
     }
 
     private void enableCalling(final ImageView icon, final TextView text, final TextView label, final LinearLayout container) {
@@ -275,7 +281,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         switch (item.getItemId())
         {
             case R.id.changePhoto:
-                FileHelper.FileManager.pickPhoto(DzieciDetailsActivity.this, FileHelper.FileManager.EXTENSION_ARRAY_PHOTO);
+                changePhoto();
                 return true;
             case R.id.deletePhoto:
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(DzieciDetailsActivity.this);
@@ -299,6 +305,10 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void changePhoto() {
+        FileHelper.FileManager.pickPhoto(DzieciDetailsActivity.this, FileHelper.FileManager.EXTENSION_ARRAY_PHOTO);
     }
 
     /* Zapisz lub Statystyki oraz przekierowanie do setDate dla daty urodzenia i rozpoczecia */

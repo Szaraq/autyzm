@@ -32,8 +32,6 @@ public class ModulMediaActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modul_media);
         ButterKnife.bind(this);
-        getSupportActionBar().setTitle(UruchomController.getLekcja().getTytul());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         buttonNext.setOnClickListener(this);
         showMedia();
     }

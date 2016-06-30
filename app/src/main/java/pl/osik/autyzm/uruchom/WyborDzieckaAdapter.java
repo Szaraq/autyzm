@@ -17,6 +17,7 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 import pl.osik.autyzm.helpers.MyPreDrawListener;
 import pl.osik.autyzm.sql.Dziecko;
 
@@ -86,7 +87,7 @@ class WyborDzieckaViewHolder extends RecyclerView.ViewHolder implements View.OnC
     public void setPhoto(String photo) {
         this.photo = photo;
         if(photo == null || !(new File(photo)).exists()) {
-            dzieciPhoto.setImageResource(R.drawable.ic_test_child_photo);
+            dzieciPhoto.setImageResource(DzieciDetailsActivity.RESOURCE_NO_PHOTO);
         } else {
             ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();
             vto.addOnPreDrawListener(new MyPreDrawListener(dzieciPhoto, photo, activity));

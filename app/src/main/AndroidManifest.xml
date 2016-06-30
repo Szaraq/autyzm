@@ -41,6 +41,7 @@
         <activity android:name=".lekcje.nowy_modul.PytaniaActivity" />
         <activity
             android:name=".uruchom.modul.ModulMediaActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".main.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".uruchom.modul.ModulPytaniaActivity"
@@ -52,6 +53,7 @@
         <activity android:name=".multimedia.PickerActivity"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".multimedia.ShowMediaActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".login.UserDetailsActivity"

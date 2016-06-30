@@ -105,7 +105,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if(v.getId() == zaloguj.getId()) {
             logowanie();
-            finish();
         } else if(v.getId() == noweKonto.getId()) {
             zalozKonto();
         } else if(v.getId() == loginControl.getId()) {
@@ -126,8 +125,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         error.setVisibility(View.INVISIBLE);
-        if(v.getId() == passControl.getId() && keyCode == KeyEvent.KEYCODE_ENTER)
-            zaloguj.callOnClick();
+        if(keyCode == KeyEvent.KEYCODE_ENTER) {
+            if(v.getId() == passControl.getId()) zaloguj.callOnClick();
+        }
         return false;
     }
 

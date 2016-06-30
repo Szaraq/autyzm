@@ -18,4 +18,5 @@
     <color name="colorFavoriteBorder">#e1b941</color>
     <color name="colorMultimediaIconImage">#f4b400</color>
     <color name="colorMultimediaIconVideo">#e04a3f</color>
+    <color name="colorMultimediaBackground">#f4f4f4</color>
 </resources>

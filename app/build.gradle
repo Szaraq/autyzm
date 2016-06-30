@@ -24,7 +24,6 @@ android {
 
 repositories {
     maven { url "https://jitpack.io" }
-    maven { url 'http://repo.brightcove.com/releases' }
 }
 
 dependencies {
@@ -46,6 +45,5 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.github.wseemann:FFmpegMediaMetadataRetriever:1.0.10'
     compile 'com.android.support:support-annotations:22.2.0'
-    compile 'com.brightcove.player:exoplayer:4.7.3'
     compile project(':giraffeplayer')
 }

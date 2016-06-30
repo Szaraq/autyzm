@@ -34,10 +34,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //TODO FINALLY wyrzucić debuggable z manifest i build.gradle oraz hardwareAcceleration
-    //TODO elevation: http://stackoverflow.com/questions/27477371/android-elevation-not-showing-a-shadow
-    //TODO button elevation: zmienić button na imagebutton
-    //TODO ripple: https://github.com/balysv/material-ripple
-    //TODO uprawnienia dla Marshmallow
+    //TODO tip dla odrzuconych uprawnień do dzwonienia: http://stackoverflow.com/questions/21031488/android-popupwindow-with-tooltip-arrow
+    //TODO tutorial: https://github.com/amlcurran/ShowcaseView
 
     public static final int NO_PHOTO = R.drawable.ic_user;
 

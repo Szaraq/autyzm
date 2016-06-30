@@ -1,11 +1,17 @@
 package pl.osik.autyzm.login;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,6 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import pl.osik.autyzm.R;
 import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FileHelper;
+import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.main.MainActivity;
 import pl.osik.autyzm.sql.LoadTestData;
 import pl.osik.autyzm.sql.User;
@@ -65,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        askForPermissions();
         validate = new ValidateCommand();
         authenticate = new ValidateAuthenticate();
         validate.addValidate(passLayout, authenticate);
@@ -85,9 +93,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginControl.setOnFocusChangeListener(this);
         loginControl.setOnClickListener(this);
         passControl.setOnKeyListener(this);
+
+        logForTest();
     }
 
-    private void setLogoHeight() {
+    private void askForPermissions() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MyApp.MY_PERMISSIONS_REQUEST_FILES);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch(requestCode) {
+            case MyApp.MY_PERMISSIONS_REQUEST_FILES:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    //NIC
+                } else {
+                    final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                    dialog.setMessage(R.string.permissions_denied)
+                            .setTitle(R.string.popup_uwaga)
+                            .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    System.exit(0);
+                                }
+                            })
+                            .setIcon(R.drawable.ic_uwaga);
+                    dialog.show();
+                }
+        }
+    }
+
+        private void setLogoHeight() {
         ViewGroup.LayoutParams params = logo.getLayoutParams();
         params.height = (int) (AppHelper.getScreenSize()[1] * 0.3);
         logo.setLayoutParams(params);
@@ -185,5 +225,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             userPhoto.setImageBitmap(bitmap);
             userPhoto.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fab_scale_up));
         }
+    }
+
+    //TODO FINALLY usunąć
+    private void logForTest() {
+        loginControl.setText("a");
+        passControl.setText("p");
+        zaloguj.callOnClick();
     }
 }

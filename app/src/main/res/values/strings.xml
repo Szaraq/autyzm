@@ -135,4 +135,5 @@
     <string name="podsumowanie_header">Podsumowanie</string>
     <string name="uruchom_moduly_header">Moduły:</string>
     <string name="uruchom_wybor_dziecka_title">Wybierz dziecko</string>
+    <string name="permissions_denied">Do prawidłowego działania aplikacji potrzebna jest zgoda na uprawnienia zapisu i odczytu plików.</string>
 </resources>

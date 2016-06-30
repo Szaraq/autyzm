@@ -8,6 +8,8 @@ import android.content.Context;
  */
 public class MyApp extends Application {
     private static MyApp instance;
+    public static final int MY_PERMISSIONS_REQUEST_FILES = 220;
+    public static final int MY_PERMISSIONS_REQUEST_CALL = 221;
 
     public static MyApp getInstance() {
         return instance;

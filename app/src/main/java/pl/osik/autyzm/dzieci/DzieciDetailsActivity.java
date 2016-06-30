@@ -1,5 +1,6 @@
 package pl.osik.autyzm.dzieci;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -14,6 +15,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -185,8 +188,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         } else if(operacja == OperationsEnum.SHOW) {
             blockEditTexts();
             if(AppHelper.canDeviceMakeCall()) {
-                enableCalling(telefonMatkiIcon, telefonMatkiView, telefonMatkiLabel, telefonMatkiViewContainer);
-                enableCalling(telefonOjcaIcon, telefonOjcaView, telefonOjcaLabel, telefonOjcaViewContainer);
+                askForPermissions();
             }
             button.setVisibility(View.GONE);
         } else if(operacja == OperationsEnum.DODAWANIE) {
@@ -209,6 +211,35 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 changePhoto();
             }
         });
+    }
+
+    private void askForPermissions() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MyApp.MY_PERMISSIONS_REQUEST_CALL);
+        } else {
+            enableCalling();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch(requestCode) {
+            case MyApp.MY_PERMISSIONS_REQUEST_CALL:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    enableCalling();
+                else
+                    disableCalling();
+        }
+    }
+
+    private void disableCalling() {
+        telefonMatkiIcon.setColorFilter(getResources().getColor(R.color.colorError));
+        telefonOjcaIcon.setColorFilter(getResources().getColor(R.color.colorError));
+    }
+
+    private void enableCalling() {
+        enableCalling(telefonMatkiIcon, telefonMatkiView, telefonMatkiLabel, telefonMatkiViewContainer);
+        enableCalling(telefonOjcaIcon, telefonOjcaView, telefonOjcaLabel, telefonOjcaViewContainer);
     }
 
     private void enableCalling(final ImageView icon, final TextView text, final TextView label, final LinearLayout container) {

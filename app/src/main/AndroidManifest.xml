@@ -8,7 +8,6 @@
 
     <application
         android:name=".helpers.MyApp"
-        android:hardwareAccelerated="false"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,6 +27,7 @@
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".login.LoginActivity"
+            android:hardwareAccelerated="false"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

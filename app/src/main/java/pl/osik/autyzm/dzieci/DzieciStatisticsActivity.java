@@ -58,7 +58,6 @@ import pl.osik.autyzm.sql.User;
 
 public class DzieciStatisticsActivity extends AppCompatActivity implements YAxisValueFormatter, ValueFormatter, View.OnClickListener {
 
-
     private HashMap<String, String> dziecko;
     private String imieINazwisko;
 

@@ -1,9 +1,12 @@
 package pl.osik.autyzm.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -24,6 +27,14 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import pl.osik.autyzm.sql.FirstUse;
+import tourguide.tourguide.ChainTourGuide;
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.Pointer;
+import tourguide.tourguide.Sequence;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
 
 /**
  * Created by m.osik2 on 2016-04-22.
@@ -172,5 +183,57 @@ public class AppHelper {
         showMessage(container, MyApp.getContext().getResources().getString(resString));
     }
 
+    @Nullable
+    public static TourGuide makeTourGuide(Activity activity, @StringRes int descriptionRes, int gravity, @Nullable Fragment fragment) {
+        return makeTourGuide(activity, activity.getString(descriptionRes), gravity, fragment);
+    }
+
+    private static TourGuide tourGuide;
+
+    @Nullable
+    public static TourGuide makeTourGuide(Activity activity, String description, int gravity, @Nullable Fragment fragment) {
+        Class classToCheck = (fragment == null ? activity.getClass() : fragment.getClass());
+        if(!FirstUse.isFirstUsed(classToCheck)) return null;
+        FirstUse.setUsed(classToCheck);
+
+        Overlay overlay = new Overlay();
+        overlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tourGuide.cleanUp();
+            }
+        });
+
+        return tourGuide = TourGuide.init(activity).with(TourGuide.Technique.Click)
+                .setPointer(new Pointer())
+                .setToolTip(new ToolTip().setDescription(description).setGravity(gravity))
+                .setOverlay(overlay);
+    }
+
+    @Nullable
+    public static ChainTourGuide makeTourGuideSequence(Activity activity, MyChainTourGuideConfig[] tourGuides, @Nullable Fragment fragment) {
+        Class classToCheck = (fragment == null ? activity.getClass() : fragment.getClass());
+        if(!FirstUse.isFirstUsed(classToCheck)) return null;
+        FirstUse.setUsed(classToCheck);
+
+        ChainTourGuide[] chainTourGuides = new ChainTourGuide[tourGuides.length];
+        int i = 0;
+
+        for (MyChainTourGuideConfig config : tourGuides) {
+            ChainTourGuide temp = ChainTourGuide.init(activity)
+                    .setToolTip(new ToolTip().setDescription(config.description).setGravity(config.gravity))
+                    .setOverlay(new Overlay())
+                    .playLater(config.view);
+            chainTourGuides[i++] = temp;
+        }
+
+        Sequence sequence = new Sequence.SequenceBuilder()
+                .add(chainTourGuides)
+                .setDefaultPointer(new Pointer())
+                .setContinueMethod(Sequence.ContinueMethod.Overlay)
+                .setDefaultOverlay(new Overlay())
+                .build();
+        return ChainTourGuide.init(activity).playInSequence(sequence);
+    }
 }
 

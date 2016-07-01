@@ -136,4 +136,19 @@
     <string name="uruchom_moduly_header">Moduły:</string>
     <string name="uruchom_wybor_dziecka_title">Wybierz dziecko</string>
     <string name="permissions_denied">Do prawidłowego działania aplikacji potrzebna jest zgoda na uprawnienia zapisu i odczytu plików.</string>
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="tourGuide_ask_for_tourGuide1">Witaj w aplikacji</string>
+    <string name="tourGuide_ask_for_tourGuide2">czy chcesz wyświetlać wskazówki?</string>
+    <string name="tourGuide_ask_for_tourGuide_title">Wskazówki</string>
+    <string name="tourGuide_uruchom_fragment">Aby dodać nową lekcję kliknij tutaj</string>
+    <string name="tourGuide_dodaj_modul">Na moduł składają się zdjęcia lub filmy, do których możesz dodać pytania (nie jest to obowiązkowe). W jednej lekcji może być wiele modułów.
+        Zależy to od ilości zdjęć lub filmów, które chcesz mieć w lekcji. Aby dodać nowy moduł kliknij tutaj</string>
+    <string name="tourGuide_modul_dodaj_plik">Aby dodać nowy plik (film lub zdjęcie) kliknij tutaj</string>
+    <string name="tourGuide_modul_dodaj_pytanie">Aby dodać pytanie, kliknij dodaj lub...</string>
+    <string name="tourGuide_modul_nie_dodawaj_pytania">...jeśli nie chcesz dodawać pytań, kliknij zapisz</string>
+    <string name="tourGuide_dzieci_list">Aby dodać profil dziecka, kliknij tutaj</string>
+    <string name="tourGuide_dzieci_details">Aby dodać dziecko uzupełnij pola obowiązkowe (tj. imię i nazwisko) oraz kliknij "Zapisz"</string>
+    <string name="tourGuide_dzieci_details_statistics">Aby zobaczyć statystyki dziecka w poszczególnych lekcjach kliknij tutaj</string>
+    <string name="tourGuide_multimedia">Aby stworzyć nowy folder lub dodać pliki, kliknij tutaj</string>
 </resources>

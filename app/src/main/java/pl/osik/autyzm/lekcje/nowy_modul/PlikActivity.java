@@ -1,10 +1,10 @@
 package pl.osik.autyzm.lekcje.nowy_modul;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,16 +16,19 @@ import java.io.Serializable;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.orm.PlikORM;
 import pl.osik.autyzm.lekcje.LekcjeHelper;
 import pl.osik.autyzm.multimedia.PickerActivity;
 import pl.osik.autyzm.sql.Plik;
+import tourguide.tourguide.TourGuide;
 
 public class PlikActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
 
     public final static int NO_FILE = -1;
+    TourGuide tourGuide;
 
     @Bind(R.id.plik_view)
     ImageView plikView;
@@ -54,6 +57,7 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
         }
         buttonAdd.setOnClickListener(this);
         buttonNext.setOnClickListener(this);
+        tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_modul_dodaj_plik, Gravity.TOP, null).playOn(buttonAdd);
     }
 
     private void changeViewToAdd() {
@@ -99,6 +103,7 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
                 LekcjeHelper.getModul().setName(FileHelper.removeExtension(file.getName()));
                 LekcjeHelper.getModul().setPlik(data.getIntExtra(PlikORM.EXTRA_PLIK_ID, NO_FILE));
                 changeViewToEdit();
+                if(tourGuide != null) tourGuide.cleanUp();
             }
         }
     }

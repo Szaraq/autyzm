@@ -1,5 +1,7 @@
 package pl.osik.autyzm.main;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.sql.FirstUse;
 import pl.osik.autyzm.uruchom.UruchomController;
 
 
@@ -57,7 +60,25 @@ public class StartFragment extends Fragment {
         startLastUsedList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         startFavouritesList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
+        askForTourGuide();
         return view;
+    }
+
+    private void askForTourGuide() {
+        if(!FirstUse.isFirstUsed(getClass())) return;
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setMessage(getContext().getString(R.string.tourGuide_ask_for_tourGuide1) + " " + getContext().getString(R.string.app_name) + " " + getContext().getString(R.string.tourGuide_ask_for_tourGuide2))
+                .setTitle(R.string.tourGuide_ask_for_tourGuide_title)
+                .setPositiveButton(R.string.yes, null)
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirstUse.setAllUsed();
+                    }
+                })
+                .setIcon(R.drawable.ic_pytanie);
+        dialog.show();
+        FirstUse.setUsed(getClass());
     }
 
     @Override

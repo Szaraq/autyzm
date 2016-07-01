@@ -3,13 +3,11 @@ package pl.osik.autyzm.lekcje;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.opengl.Visibility;
+import android.os.Bundle;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,23 +15,17 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import butterknife.Bind;
-import butterknife.BindDimen;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.dzieci.DzieciAdapter;
 import pl.osik.autyzm.helpers.AppHelper;
-import pl.osik.autyzm.helpers.MyApp;
-import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.ModulORM;
 import pl.osik.autyzm.lekcje.nowy_modul.PlikActivity;
-import pl.osik.autyzm.sql.Folder;
-import pl.osik.autyzm.sql.Lekcja;
 import pl.osik.autyzm.sql.Pytanie;
+import tourguide.tourguide.TourGuide;
 
 public class LekcjeModulActivity extends AppCompatActivity implements View.OnClickListener {
+    TourGuide tourGuide;
 
     @Bind(R.id.containerLayout)
     PercentRelativeLayout containerLayout;
@@ -68,6 +60,7 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
             buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryDisabled));
             dodajBrakModulowInfo();
         }
+        tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_dodaj_modul, Gravity.TOP, null).playOn(buttonAdd);
     }
 
     private void createList() {
@@ -83,8 +76,10 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == buttonAdd.getId())
+        if(v.getId() == buttonAdd.getId()) {
             dodajModul();
+            if(tourGuide != null) tourGuide.cleanUp();
+        }
         else if(v.getId() == buttonNext.getId())
             if(checkPytania())
                 przejdzDalej();

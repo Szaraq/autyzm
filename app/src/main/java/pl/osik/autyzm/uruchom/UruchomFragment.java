@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +19,11 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.lekcje.LekcjeHelper;
 import pl.osik.autyzm.lekcje.LekcjeTytulActivity;
+import tourguide.tourguide.TourGuide;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,8 +31,9 @@ import pl.osik.autyzm.lekcje.LekcjeTytulActivity;
  * create an instance of this fragment.
  */
 public class UruchomFragment extends Fragment implements View.OnClickListener {
-
+    TourGuide tourGuide;
     UruchomAdapter uruchomAdapter;
+    DrawerLayout drawerLayout;
 
     @Bind(R.id.lekcje_list)
     RecyclerView lekcjeList;
@@ -65,6 +72,23 @@ public class UruchomFragment extends Fragment implements View.OnClickListener {
         lekcjeList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         lekcjeList.setAdapter(uruchomAdapter);
         fab.setOnClickListener(this);
+
+        addTourGuide();
+    }
+
+    private void addTourGuide() {
+        drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        final ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
+                getActivity(),  drawerLayout, (Toolbar) getActivity().findViewById(R.id.toolbar), R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                if(UruchomFragment.this.getActivity() == null) return;
+                tourGuide = AppHelper.makeTourGuide(UruchomFragment.this.getActivity(), R.string.tourGuide_uruchom_fragment, Gravity.TOP, UruchomFragment.this).playOn(fab);
+            }
+        };
+        drawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
     }
 
     @Override
@@ -80,6 +104,7 @@ public class UruchomFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(v.getContext(), LekcjeTytulActivity.class);
         LekcjeHelper.setOperacja(OperationsEnum.DODAWANIE);
         startActivity(intent);
+        if(tourGuide != null) tourGuide.cleanUp();
     }
 
     @Override

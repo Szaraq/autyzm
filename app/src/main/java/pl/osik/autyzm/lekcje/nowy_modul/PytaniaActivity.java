@@ -1,26 +1,26 @@
 package pl.osik.autyzm.lekcje.nowy_modul;
 
+import android.os.Bundle;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
-import pl.osik.autyzm.helpers.orm.PytanieORM;
-import pl.osik.autyzm.lekcje.LekcjeAdapter;
+import pl.osik.autyzm.helpers.AppHelper;
+import pl.osik.autyzm.helpers.MyChainTourGuideConfig;
 import pl.osik.autyzm.lekcje.LekcjeHelper;
 import pl.osik.autyzm.sql.Pytanie;
+import tourguide.tourguide.ChainTourGuide;
 
 public class PytaniaActivity extends AppCompatActivity implements View.OnClickListener {
-
+    ChainTourGuide tourGuide;
     PytaniaAdapter pytaniaAdapter;
 
     @Bind(R.id.lista_pytan)
@@ -47,6 +47,11 @@ public class PytaniaActivity extends AppCompatActivity implements View.OnClickLi
         listaPytan.setAdapter(pytaniaAdapter);
         LekcjeHelper.setPytaniaList(Pytanie.getPytaniaForModul(LekcjeHelper.getModul().getId()));
         setAddPytanieVisibility(LekcjeHelper.getPytaniaList().size() == 0);
+        MyChainTourGuideConfig[] tourGuides = new MyChainTourGuideConfig[] {
+                new MyChainTourGuideConfig(R.string.tourGuide_modul_dodaj_pytanie, buttonAdd, Gravity.TOP),
+                new MyChainTourGuideConfig(R.string.tourGuide_modul_nie_dodawaj_pytania, buttonNext, Gravity.TOP)
+        };
+        tourGuide = AppHelper.makeTourGuideSequence(this, tourGuides, null);
     }
 
     protected void setAddPytanieVisibility(boolean visible) {
@@ -66,6 +71,7 @@ public class PytaniaActivity extends AppCompatActivity implements View.OnClickLi
             pytaniaAdapter.pytanieAdded = true;
             pytaniaAdapter.refresh();
             setAddPytanieVisibility(false);
+            if(tourGuide != null) tourGuide.next();
         } else if(v.getId() == buttonNext.getId()) {
             LekcjeHelper.commitAll();
             LekcjeHelper.finishPlikActivity();

@@ -20,6 +20,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -54,9 +55,11 @@ import pl.osik.autyzm.sql.Dziecko;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateNotNull;
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.TourGuide;
 
 public class DzieciDetailsActivity extends AppCompatActivity implements View.OnClickListener {
-
+    TourGuide tourGuide;
     private static final int DATE_PICKER_CODE = 1178;
     public static final int RESOURCE_NO_PHOTO = R.drawable.ic_no_photo;
 
@@ -191,6 +194,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 askForPermissions();
             }
             button.setVisibility(View.GONE);
+            tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_dzieci_details_statistics, Gravity.LEFT, null).playOn(fab);
         } else if(operacja == OperationsEnum.DODAWANIE) {
             getSupportActionBar().setTitle(R.string.dziecko_dodaj_title);
             imie.requestFocus();
@@ -199,6 +203,17 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
             rozpoczecie.setText(df.format(cal.getTime()));
             fab.setVisibility(View.GONE);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    addTourGuideForDodawanie();
+                }
+            }).start();
         }
         /** END **/
         button.setOnClickListener(this);
@@ -209,6 +224,33 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(View v) {
                 changePhoto();
+            }
+        });
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        addTourGuideForDodawanie();
+    }
+
+    private void addTourGuideForDodawanie() {
+        Overlay overlay = new Overlay();
+        overlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tourGuide.cleanUp();
+            }
+        });
+        overlay.setStyle(Overlay.Style.Rectangle);
+        tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_dzieci_details, Gravity.TOP, null);
+        if(tourGuide == null) return;
+        tourGuide.setOverlay(overlay)
+                .playOn(imieLayout);
+        imie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tourGuide != null) tourGuide.cleanUp();
             }
         });
     }
@@ -357,6 +399,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             bundle.putSerializable(Dziecko.TABLE_NAME, dziecko);
             intent.putExtras(bundle);
             startActivity(intent);
+            if(tourGuide != null) tourGuide.cleanUp();
         } else if(operacja == OperationsEnum.EDYCJA) {                                                          //jeżeli jest edycja i przyciśnięty button (fab obsłużony już w poprzednim if)
             //Edytuj wpis
             if(validate.doValidateAll()) {

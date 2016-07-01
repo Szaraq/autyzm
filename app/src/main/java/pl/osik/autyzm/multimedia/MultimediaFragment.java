@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ import pl.osik.autyzm.validate.ValidateNotNull;
  * create an instance of this fragment.
  */
 public class MultimediaFragment extends Fragment implements View.OnClickListener, FilePlacingInterface {
-
+    DrawerLayout drawerLayout;
     int folderId;
     String folderName;
     final ValidateCommand validate = new ValidateCommand();
@@ -176,7 +177,10 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     }
 
     public void onBackPressed() {
-        if(isRoot()) return;
+        if(isRoot()) {
+            if(chooser) getActivity().finish();
+            else return;
+        }
         HashMap<String, Object> parent = Folder.getParentFolder(folderId);
         gotoNextFolder((int) parent.get(Folder.COLUMN_ID), (String) parent.get(Folder.COLUMN_NAZWA));
     }

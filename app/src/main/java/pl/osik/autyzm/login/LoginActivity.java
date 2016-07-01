@@ -229,7 +229,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //TODO FINALLY usunąć
     private void logForTest() {
-        loginControl.setText("a");
+        loginControl.setText("a2");
         passControl.setText("p");
         zaloguj.callOnClick();
     }

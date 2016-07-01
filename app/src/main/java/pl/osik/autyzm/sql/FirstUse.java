@@ -88,4 +88,12 @@ public class FirstUse extends AbstractDBTable {
         helper.close();
         return out;
     }
+
+    public static void setAllUsed() {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_FIRST_USE + " = ?" + " WHERE " + COLUMN_USER + " = ?";
+        db.rawQuery(query, new String[] { "0", String.valueOf(User.getCurrentId())});
+        helper.close();
+    }
 }

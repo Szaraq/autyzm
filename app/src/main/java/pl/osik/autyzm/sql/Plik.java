@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,15 +38,8 @@ public class Plik extends AbstractDBTable {
     }};
 
     public static final String THUMB_DIR = MyApp.getContext().getFilesDir() + "/thumbnails/";
-    public static final String ASSETS_FILMY_DIR = MyApp.getContext().getFilesDir() + "/filmy/";
-
-    public static final ArrayList<String> assetsList = new ArrayList<String>() {{
-        add("obrzydzenie.mp4");
-        add("smutek.mp4");
-        add("strach.mp4");
-        add("strach2.mp4");
-        add("zdziwienie.mp4");
-    }};
+    private static final String ASSETS_FILMY_DIR_NAME = "filmy";
+    public static final String ASSETS_FILMY_DIR_PATH = MyApp.getContext().getFilesDir() + "/" + ASSETS_FILMY_DIR_NAME + "/";
 
     @Override
     protected String create() {
@@ -56,14 +50,19 @@ public class Plik extends AbstractDBTable {
 
     public static void createAssets() {
         Folder.createAssetsFolder();
-        new File(ASSETS_FILMY_DIR).mkdirs();
-        for (String fileName : assetsList) {
-            loadAssetFile(fileName);
+        new File(ASSETS_FILMY_DIR_PATH).mkdirs();
+        try {
+            String[] fileNames = MyApp.getContext().getAssets().list(ASSETS_FILMY_DIR_NAME);
+            for (String fileName : fileNames) {
+                loadAssetFile(fileName);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private static void loadAssetFile(String fileName) {
-        File f = new File(ASSETS_FILMY_DIR+fileName);
+        File f = new File(ASSETS_FILMY_DIR_PATH +fileName);
         if (!f.exists()) try {
             InputStream is = MyApp.getContext().getAssets().open("filmy/" + fileName);
             int size = is.available();
@@ -80,7 +79,7 @@ public class Plik extends AbstractDBTable {
 
     private static void insertAssetToDb(String fileName) {
         ContentValues data = new ContentValues();
-        data.put(COLUMN_PATH, ASSETS_FILMY_DIR+fileName);
+        data.put(COLUMN_PATH, ASSETS_FILMY_DIR_PATH +fileName);
         data.put(COLUMN_FOLDER, Folder.ASSETS_FILMY_FOLDER_ID);
         data.put(COLUMN_GHOST, 0);
         new Plik().insert(data);

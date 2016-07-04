@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.dzieci.DzieciDetailsActivity;
 import pl.osik.autyzm.sql.FirstUse;
 import tourguide.tourguide.ChainTourGuide;
 import tourguide.tourguide.Overlay;
@@ -195,6 +196,8 @@ public class AppHelper {
     @Nullable
     public static TourGuide makeTourGuide(Activity activity, String description, int gravity, @Nullable Fragment fragment) {
         Class classToCheck = (fragment == null ? activity.getClass() : fragment.getClass());
+        //Uwaga, poniższe ma na celu odróżnić sytuację Dodawanie od Show w DzieciDetailsActivity
+        if(classToCheck == DzieciDetailsActivity.class && ((DzieciDetailsActivity) activity).operacja == OperationsEnum.SHOW) classToCheck = DzieciDetailsActivity.classToReplaceShow;
         if(!FirstUse.isFirstUsed(classToCheck)) return null;
         FirstUse.setUsed(classToCheck);
 

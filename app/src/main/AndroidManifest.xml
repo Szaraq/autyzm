@@ -21,6 +21,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".dzieci.DzieciDetailsActivity"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".dzieci.DzieciStatisticsActivity"

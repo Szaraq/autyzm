@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
@@ -60,13 +61,15 @@ import tourguide.tourguide.Overlay;
 import tourguide.tourguide.TourGuide;
 
 public class DzieciDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final Class classToReplaceShow = DzieciStatisticsActivity.class;
+    public static final int DELAY_MILLIS = 500;
     TourGuide tourGuide;
     private static final int DATE_PICKER_CODE = 1178;
     public static final int RESOURCE_NO_PHOTO = R.drawable.ic_no_photo;
 
     HashMap<String, EditText> all;
     int id;
-    OperationsEnum operacja;
+    public OperationsEnum operacja;
     final ValidateCommand validate = new ValidateCommand();
 
     private String photoPath;
@@ -82,6 +85,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
 
     @Bind(R.id.containerLayout)
     CoordinatorLayout containerLayout;
+    @Bind(R.id.toolbar_layout)
+    CollapsingToolbarLayout toolbarLayout;
     @Bind(R.id.app_bar)
     AppBarLayout appBar;
     @Bind(R.id.toolbar)
@@ -196,7 +201,14 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             }
             button.setVisibility(View.GONE);
             tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_dzieci_details_statistics, Gravity.LEFT, null);
-            if(tourGuide != null) tourGuide.playOn(fab);
+            if(tourGuide != null) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        tourGuide.playOn(fab);
+                    }
+                }, DELAY_MILLIS);
+            }
         } else if(operacja == OperationsEnum.DODAWANIE) {
             getSupportActionBar().setTitle(R.string.dziecko_dodaj_title);
             imie.requestFocus();
@@ -205,12 +217,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
             rozpoczecie.setText(df.format(cal.getTime()));
             fab.setVisibility(View.GONE);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    addTourGuideForDodawanie();
-                }
-            }, 5000);
+            addTourGuideForDodawanie();
         }
         /** END **/
         button.setOnClickListener(this);
@@ -225,25 +232,24 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         });
     }
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        addTourGuideForDodawanie();
-    }
-
     private void addTourGuideForDodawanie() {
-        Overlay overlay = new Overlay();
+        final Overlay overlay = new Overlay();
         overlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tourGuide.cleanUp();
+                if(tourGuide != null) tourGuide.cleanUp();
             }
         });
         overlay.setStyle(Overlay.Style.Rectangle);
         tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_dzieci_details, Gravity.TOP, null);
         if(tourGuide == null) return;
-        tourGuide.setOverlay(overlay)
-                .playOn(imieLayout);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tourGuide.setOverlay(overlay)
+                        .playOn(imieLayout);
+            }
+        }, DELAY_MILLIS);
         imie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginControl.setOnClickListener(this);
         passControl.setOnKeyListener(this);
 
-        logForTest();
+//        logForTest();
     }
 
     private void askForPermissions() {
@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-        private void setLogoHeight() {
+    private void setLogoHeight() {
         ViewGroup.LayoutParams params = logo.getLayoutParams();
         params.height = (int) (AppHelper.getScreenSize()[1] * 0.3);
         logo.setLayoutParams(params);

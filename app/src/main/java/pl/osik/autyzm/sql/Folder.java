@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import pl.osik.autyzm.helpers.MySortedMap;
+import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.orm.FolderORM;
 import pl.osik.autyzm.helpers.orm.PlikORM;
 
@@ -31,6 +32,7 @@ public class Folder extends AbstractDBTable {
     public static final String ROOT_NAME = "ROOT";
     public static final int NO_PARENT_FOLDER = -1;
     public static int ROOT_ID;
+    protected static int ASSETS_FILMY_FOLDER_ID;
 
     @Override
     protected String create() {
@@ -128,5 +130,13 @@ public class Folder extends AbstractDBTable {
 
         helper.close();
         return true;
+    }
+
+    protected static void createAssetsFolder() {
+        ContentValues data = new ContentValues();
+        data.put(COLUMN_NAZWA, MyApp.getContext().getString(R.string.sql_assets_folder));
+        data.put(COLUMN_FOLDER, ROOT_ID);
+        data.put(COLUMN_USER, User.getCurrentId());
+        ASSETS_FILMY_FOLDER_ID = (int) new Folder().insert(data);
     }
 }

@@ -37,6 +37,7 @@ import pl.osik.autyzm.helpers.FilePickerActivity;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.helpers.listeners.MyOnKeyEnterListener;
 import pl.osik.autyzm.main.MainActivity;
+import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.validate.ValidateCommand;
 import pl.osik.autyzm.validate.ValidateExistsInDatabase;
@@ -198,6 +199,7 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
             User u = new User();
             if(newAccount) {
                 u.insert(data);
+                Plik.createAssets();
                 User.authenticate(data.getAsString(User.COLUMN_LOGIN), haslo.getText().toString());
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);

@@ -1,25 +1,15 @@
 package pl.osik.autyzm.sql;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Path;
-import android.media.ExifInterface;
-import android.media.ThumbnailUtils;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.MyApp;
@@ -47,12 +37,53 @@ public class Plik extends AbstractDBTable {
     }};
 
     public static final String THUMB_DIR = MyApp.getContext().getFilesDir() + "/thumbnails/";
+    public static final String ASSETS_FILMY_DIR = MyApp.getContext().getFilesDir() + "/filmy/";
+
+    public static final ArrayList<String> assetsList = new ArrayList<String>() {{
+        add("obrzydzenie.mp4");
+        add("smutek.mp4");
+        add("strach.mp4");
+        add("strach2.mp4");
+        add("zdziwienie.mp4");
+    }};
 
     @Override
     protected String create() {
         return getCreateStart()
                 + createForeignKey(COLUMN_FOLDER, Folder.TABLE_NAME)
                 + ")";
+    }
+
+    public static void createAssets() {
+        Folder.createAssetsFolder();
+        new File(ASSETS_FILMY_DIR).mkdirs();
+        for (String fileName : assetsList) {
+            loadAssetFile(fileName);
+        }
+    }
+
+    private static void loadAssetFile(String fileName) {
+        File f = new File(ASSETS_FILMY_DIR+fileName);
+        if (!f.exists()) try {
+            InputStream is = MyApp.getContext().getAssets().open("filmy/" + fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(buffer);
+            fos.close();
+        } catch (Exception e) { throw new RuntimeException(e); }
+        insertAssetToDb(fileName);
+    }
+
+    private static void insertAssetToDb(String fileName) {
+        ContentValues data = new ContentValues();
+        data.put(COLUMN_PATH, ASSETS_FILMY_DIR+fileName);
+        data.put(COLUMN_FOLDER, Folder.ASSETS_FILMY_FOLDER_ID);
+        data.put(COLUMN_GHOST, 0);
+        new Plik().insert(data);
     }
 
     @Override

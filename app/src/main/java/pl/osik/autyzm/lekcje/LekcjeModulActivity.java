@@ -60,7 +60,8 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
             buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryDisabled));
             dodajBrakModulowInfo();
         }
-        tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_dodaj_modul, Gravity.TOP, null).playOn(buttonAdd);
+        tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_dodaj_modul, Gravity.TOP, null);
+        if(tourGuide != null) tourGuide.playOn(buttonAdd);
     }
 
     private void createList() {

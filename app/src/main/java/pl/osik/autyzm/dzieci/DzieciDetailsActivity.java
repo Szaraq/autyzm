@@ -194,7 +194,8 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
                 askForPermissions();
             }
             button.setVisibility(View.GONE);
-            tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_dzieci_details_statistics, Gravity.LEFT, null).playOn(fab);
+            tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_dzieci_details_statistics, Gravity.LEFT, null);
+            if(tourGuide != null) tourGuide.playOn(fab);
         } else if(operacja == OperationsEnum.DODAWANIE) {
             getSupportActionBar().setTitle(R.string.dziecko_dodaj_title);
             imie.requestFocus();

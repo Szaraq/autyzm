@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity
 
     //TODO FINALLY wyrzucić debuggable z manifest i build.gradle oraz hardwareAcceleration
     //TODO tip dla odrzuconych uprawnień do dzwonienia: http://stackoverflow.com/questions/21031488/android-popupwindow-with-tooltip-arrow
-    //TODO tutorial: https://github.com/amlcurran/ShowcaseView
 
     public static final int NO_PHOTO = R.drawable.ic_user;
 

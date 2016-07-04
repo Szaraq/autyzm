@@ -87,7 +87,8 @@ public class DzieciFragment extends Fragment {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 if(DzieciFragment.this.getActivity() == null) return;
-                tourGuide = AppHelper.makeTourGuide(DzieciFragment.this.getActivity(), R.string.tourGuide_dzieci_list, Gravity.TOP, DzieciFragment.this).playOn(fab);
+                tourGuide = AppHelper.makeTourGuide(DzieciFragment.this.getActivity(), R.string.tourGuide_dzieci_list, Gravity.TOP, DzieciFragment.this);
+                if(tourGuide != null) tourGuide.playOn(fab);
             }
         };
         drawerLayout.setDrawerListener(mDrawerToggle);

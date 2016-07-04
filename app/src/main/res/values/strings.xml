@@ -151,4 +151,5 @@
     <string name="tourGuide_dzieci_details">Aby dodać dziecko uzupełnij pola obowiązkowe (tj. imię i nazwisko) oraz kliknij "Zapisz"</string>
     <string name="tourGuide_dzieci_details_statistics">Aby zobaczyć statystyki dziecka w poszczególnych lekcjach kliknij tutaj</string>
     <string name="tourGuide_multimedia">Aby stworzyć nowy folder lub dodać pliki, kliknij tutaj</string>
+    <string name="sql_assets_folder">Domyślne</string>
 </resources>

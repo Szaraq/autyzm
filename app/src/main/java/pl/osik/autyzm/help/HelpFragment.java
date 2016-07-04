@@ -27,8 +27,6 @@ import pl.osik.autyzm.R;
  */
 public class HelpFragment extends Fragment {
 
-    //TODO FINALLY Przetestować wysyłanie e-maili na prawdziwym urządzeniu
-
     private static final String PHOTO_PATH = "file:///android_asset/PJWSTK.jpg";
 
     protected final HashMap<TextView, String> kontakty = new HashMap<TextView, String>();

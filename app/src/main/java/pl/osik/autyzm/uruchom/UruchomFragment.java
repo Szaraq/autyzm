@@ -84,7 +84,8 @@ public class UruchomFragment extends Fragment implements View.OnClickListener {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
                 if(UruchomFragment.this.getActivity() == null) return;
-                tourGuide = AppHelper.makeTourGuide(UruchomFragment.this.getActivity(), R.string.tourGuide_uruchom_fragment, Gravity.TOP, UruchomFragment.this).playOn(fab);
+                tourGuide = AppHelper.makeTourGuide(UruchomFragment.this.getActivity(), R.string.tourGuide_uruchom_fragment, Gravity.TOP, UruchomFragment.this);
+                if(tourGuide != null) tourGuide.playOn(fab);
             }
         };
         drawerLayout.setDrawerListener(mDrawerToggle);

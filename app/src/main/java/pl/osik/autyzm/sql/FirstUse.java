@@ -93,7 +93,7 @@ public class FirstUse extends AbstractDBTable {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         String query = "UPDATE " + TABLE_NAME + " SET " + COLUMN_FIRST_USE + " = ?" + " WHERE " + COLUMN_USER + " = ?";
-        db.rawQuery(query, new String[] { "0", String.valueOf(User.getCurrentId())});
+        db.execSQL(query, new String[]{"0", String.valueOf(User.getCurrentId())});
         helper.close();
     }
 }

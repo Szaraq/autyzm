@@ -57,7 +57,8 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
         }
         buttonAdd.setOnClickListener(this);
         buttonNext.setOnClickListener(this);
-        tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_modul_dodaj_plik, Gravity.TOP, null).playOn(buttonAdd);
+        tourGuide = AppHelper.makeTourGuide(this, R.string.tourGuide_modul_dodaj_plik, Gravity.TOP, null);
+        if(tourGuide != null) tourGuide.playOn(buttonAdd);
     }
 
     private void changeViewToAdd() {

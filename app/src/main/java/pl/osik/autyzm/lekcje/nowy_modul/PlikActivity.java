@@ -62,7 +62,6 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void changeViewToAdd() {
-        buttonNext.setClickable(false);
         buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryDisabled));
         buttonAdd.setText(getString(R.string.button_add));
 
@@ -77,7 +76,6 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
         //TODO FINALLY j.w.
         //buttonAdd.setVisibility(View.VISIBLE);
         //noPlikContainer.setVisibility(View.GONE);
-        buttonNext.setClickable(true);
         buttonNext.setTextColor(getResources().getColor(R.color.colorPrimary));
         buttonAdd.setText(getString(R.string.button_edit));
         plikView.setVisibility(View.VISIBLE);
@@ -89,9 +87,13 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, PickerActivity.class);
             startActivityForResult(intent, FileHelper.FileManager.PICK_IMAGE);
         } else if(v.getId() == buttonNext.getId()) {
-            Intent intent = new Intent(this, PytaniaActivity.class);
-            LekcjeHelper.setPlikActivity(this);
-            startActivity(intent);
+            if(LekcjeHelper.getModul().getPlik() == 0) {
+                AppHelper.makeToolTip(PlikActivity.this, buttonNext, Gravity.TOP, R.string.lekcje_modul_plik_noPlik_tooltip);
+            } else {
+                Intent intent = new Intent(this, PytaniaActivity.class);
+                LekcjeHelper.setPlikActivity(this);
+                startActivity(intent);
+            }
         }
     }
 

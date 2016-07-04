@@ -152,4 +152,7 @@
     <string name="tourGuide_dzieci_details_statistics">Aby zobaczyć statystyki dziecka w poszczególnych lekcjach kliknij tutaj</string>
     <string name="tourGuide_multimedia">Aby stworzyć nowy folder lub dodać pliki, kliknij tutaj</string>
     <string name="sql_assets_folder">Domyślne</string>
+    <string name="dzieci_details_no_permissions_to_call">Aby umożliwić dzwonienie, nadaj aplikacji uprawnienia do wykonywania połączeń</string>
+    <string name="lekcje_modul_noModules_tooltip">Aby przejść dalej dodaj moduł</string>
+    <string name="lekcje_modul_plik_noPlik_tooltip">Aby przejść dalej dodaj plik do modułu</string>
 </resources>

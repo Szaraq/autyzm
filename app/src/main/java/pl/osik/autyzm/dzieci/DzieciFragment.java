@@ -73,7 +73,7 @@ public class DzieciFragment extends Fragment {
                 bundle.putSerializable(DzieciAdapter.BUNDLE_SWITCH_OPERACJA, OperationsEnum.DODAWANIE);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                tourGuide.cleanUp();
+                if(tourGuide != null) tourGuide.cleanUp();
             }
         });
         addTourGuide();

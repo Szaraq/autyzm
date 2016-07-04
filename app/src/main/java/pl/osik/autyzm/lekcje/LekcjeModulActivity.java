@@ -56,7 +56,6 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
         if(LekcjeHelper.hasModules()) {
             createList();
         } else {
-            buttonNext.setClickable(false);
             buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryDisabled));
             dodajBrakModulowInfo();
         }
@@ -80,10 +79,13 @@ public class LekcjeModulActivity extends AppCompatActivity implements View.OnCli
         if(v.getId() == buttonAdd.getId()) {
             dodajModul();
             if(tourGuide != null) tourGuide.cleanUp();
-        }
-        else if(v.getId() == buttonNext.getId())
-            if(checkPytania())
+        } else if(v.getId() == buttonNext.getId()) {
+            if(!LekcjeHelper.hasModules()) {
+                AppHelper.makeToolTip(LekcjeModulActivity.this, buttonNext, Gravity.TOP, R.string.lekcje_modul_noModules_tooltip);
+            } else if(checkPytania()) {
                 przejdzDalej();
+            }
+        }
     }
 
     private boolean checkPytania() {

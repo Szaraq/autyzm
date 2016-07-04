@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -204,17 +205,12 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
             final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.forLanguageTag("pl-PL"));
             rozpoczecie.setText(df.format(cal.getTime()));
             fab.setVisibility(View.GONE);
-            new Thread(new Runnable() {
+            new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                     addTourGuideForDodawanie();
                 }
-            }).start();
+            }, 5000);
         }
         /** END **/
         button.setOnClickListener(this);
@@ -251,7 +247,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         imie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tourGuide != null) tourGuide.cleanUp();
+                if (tourGuide != null) tourGuide.cleanUp();
             }
         });
     }
@@ -276,8 +272,18 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void disableCalling() {
-        telefonMatkiIcon.setColorFilter(getResources().getColor(R.color.colorError));
-        telefonOjcaIcon.setColorFilter(getResources().getColor(R.color.colorError));
+        changeIconToDisableCalling(telefonMatkiIcon);
+        changeIconToDisableCalling(telefonOjcaIcon);
+    }
+
+    private void changeIconToDisableCalling(final ImageView icon) {
+        icon.setColorFilter(getResources().getColor(R.color.colorError));
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppHelper.makeToolTip(DzieciDetailsActivity.this, v, Gravity.END, R.string.dzieci_details_no_permissions_to_call);
+            }
+        });
     }
 
     private void enableCalling() {

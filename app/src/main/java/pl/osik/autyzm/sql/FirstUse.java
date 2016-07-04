@@ -3,6 +3,7 @@ package pl.osik.autyzm.sql;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.LinkedHashMap;
 
@@ -57,6 +58,7 @@ public class FirstUse extends AbstractDBTable {
                 + " AND " + COLUMN_ACTIVITY + " = ?";
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(User.getCurrentId()), String.valueOf(idActivity)});
         cursor.moveToFirst();
+        Log.d("First", query);
         boolean out = cursor.getInt(0) == 1;
         cursor.close();
         helper.close();

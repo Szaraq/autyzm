@@ -162,6 +162,7 @@
 
         </android.support.design.widget.TextInputLayout>
 
+
         <LinearLayout
             android:id="@+id/telefon_ojca_view_container"
             android:orientation="vertical"

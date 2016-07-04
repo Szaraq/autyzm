@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
+import pl.osik.autyzm.R;
 import pl.osik.autyzm.sql.FirstUse;
 import tourguide.tourguide.ChainTourGuide;
 import tourguide.tourguide.Overlay;
@@ -234,6 +236,20 @@ public class AppHelper {
                 .setDefaultOverlay(new Overlay())
                 .build();
         return ChainTourGuide.init(activity).playInSequence(sequence);
+    }
+
+    public static void makeToolTip(Activity activity, View view, int gravity, @StringRes int text) {
+        new SimpleTooltip.Builder(activity)
+                .anchorView(view)
+                .text(activity.getString(text))
+                .gravity(gravity)
+                .animated(false)
+                .backgroundColor(activity.getResources().getColor(R.color.colorPrimary))
+                .textColor(activity.getResources().getColor(R.color.colorAppBackground))
+                .arrowColor(activity.getResources().getColor(R.color.colorPrimary))
+                .transparentOverlay(true)
+                .build()
+                .show();
     }
 }
 

@@ -47,7 +47,7 @@
                 android:id="@+id/imie"
                 style="@style/EditTextMaterial.EditTextDzieciDetails"
                 android:capitalize="words"
-                android:inputType="textCapSentences|textPersonName"
+                android:inputType="textCapSentences|textPersonName|textNoSuggestions"
                 android:hint="@string/dzieci_details_imie" />
 
         </android.support.design.widget.TextInputLayout>
@@ -61,7 +61,7 @@
                 style="@style/EditTextMaterial.EditTextDzieciDetails"
                 android:capitalize="words"
                 android:hint="@string/dzieci_details_nazwisko"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapSentences|textNoSuggestions" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -132,7 +132,7 @@
                 style="@style/EditTextMaterial.EditTextDzieciDetails"
                 android:capitalize="words"
                 android:hint="@string/dzieci_details_imie_ojca"
-                android:inputType="textPersonName|textCapSentences" />
+                android:inputType="textPersonName|textCapSentences|textNoSuggestions" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -146,7 +146,7 @@
                 android:capitalize="words"
                 android:ems="10"
                 android:hint="@string/dzieci_details_nazwisko_ojca"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapSentences|textNoSuggestions" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -201,7 +201,7 @@
                 style="@style/EditTextMaterial.EditTextDzieciDetails"
                 android:capitalize="words"
                 android:hint="@string/dzieci_details_imie_matki"
-                android:inputType="textPersonName|textCapSentences" />
+                android:inputType="textPersonName|textCapSentences|textNoSuggestions" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -214,7 +214,7 @@
                 style="@style/EditTextMaterial.EditTextDzieciDetails"
                 android:capitalize="words"
                 android:hint="@string/dzieci_details_nazwisko_matki"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapSentences|textNoSuggestions" />
 
         </android.support.design.widget.TextInputLayout>
 

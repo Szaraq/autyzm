@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if(User.isFirstLogin()) {
             zalozKonto();
+            finish();
         }
 
         setLogoHeight();

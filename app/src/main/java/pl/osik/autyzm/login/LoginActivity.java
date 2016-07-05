@@ -232,4 +232,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passControl.setText("p");
         zaloguj.callOnClick();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppHelper.hideKeyboard();
+    }
 }

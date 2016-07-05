@@ -11,6 +11,7 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autyzm.R;
+import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.OperationsEnum;
 import pl.osik.autyzm.helpers.orm.LekcjaORM;
 import pl.osik.autyzm.validate.ValidateCommand;
@@ -69,5 +70,11 @@ public class LekcjeTytulActivity extends AppCompatActivity implements View.OnCli
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppHelper.hideKeyboard();
     }
 }

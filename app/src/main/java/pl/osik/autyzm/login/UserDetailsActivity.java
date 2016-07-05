@@ -202,6 +202,7 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
             data.put(User.COLUMN_PHOTO, photoPath);
             final User u = new User();
             if(newAccount) {
+                AppHelper.hideKeyboard();
                 final String pass = haslo.getText().toString();
                 new AsyncTask<Void, Void, Void>() {
 
@@ -287,5 +288,11 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
             default:
                 return null;
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppHelper.hideKeyboard();
     }
 }

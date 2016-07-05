@@ -497,6 +497,12 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
         appBarParams.height = AppHelper.getHeightForRatio(AppHelper.getScreenSize()[0], 3, 2);
         appBar.setLayoutParams(appBarParams);
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppHelper.hideKeyboard();
+    }
 }
 
 class PhoneCallOnClickListener implements View.OnClickListener {

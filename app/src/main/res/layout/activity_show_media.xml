@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.osik.autyzm.multimedia.ShowMediaActivity">
+    tools:context="pl.osik.autismemotion.multimedia.ShowMediaActivity">
 
     <FrameLayout
         android:id="@+id/videoPlayerContainer"

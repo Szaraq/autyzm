@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorAppBackground"
     android:orientation="vertical"
-    tools:context="pl.osik.autyzm.lekcje.LekcjeFragment">
+    tools:context="pl.osik.autismemotion.lekcje.LekcjeFragment">
 
     <RelativeLayout
         android:id="@+id/title_container"

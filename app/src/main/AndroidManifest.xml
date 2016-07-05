@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.osik.autyzm">
+    package="pl.osik.autismemotion">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".helpers.MyApp"
+        android:name="pl.osik.autismemotion.helpers.MyApp"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,19 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".main.MainActivity"
+            android:name="pl.osik.autismemotion.main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".dzieci.DzieciDetailsActivity"
+            android:name="pl.osik.autismemotion.dzieci.DzieciDetailsActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".dzieci.DzieciStatisticsActivity"
+        <activity android:name="pl.osik.autismemotion.dzieci.DzieciStatisticsActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name=".login.LoginActivity"
+            android:name="pl.osik.autismemotion.login.LoginActivity"
             android:hardwareAccelerated="false"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -35,35 +35,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".lekcje.LekcjeTytulActivity" />
-        <activity android:name=".lekcje.LekcjeModulActivity" />
-        <activity android:name=".lekcje.nowy_modul.PlikActivity"
+        <activity android:name="pl.osik.autismemotion.lekcje.LekcjeTytulActivity" />
+        <activity android:name="pl.osik.autismemotion.lekcje.LekcjeModulActivity" />
+        <activity android:name="pl.osik.autismemotion.lekcje.nowy_modul.PlikActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".lekcje.nowy_modul.PytaniaActivity" />
+        <activity android:name="pl.osik.autismemotion.lekcje.nowy_modul.PytaniaActivity" />
         <activity
-            android:name=".uruchom.modul.ModulMediaActivity"
+            android:name="pl.osik.autismemotion.uruchom.modul.ModulMediaActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".main.MainActivity"
+            android:parentActivityName="pl.osik.autismemotion.main.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".uruchom.modul.ModulPytaniaActivity"
+        <activity android:name="pl.osik.autismemotion.uruchom.modul.ModulPytaniaActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".uruchom.WyborDzieckaActivity"
+        <activity android:name="pl.osik.autismemotion.uruchom.WyborDzieckaActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".helpers.FilePickerActivity"
+        <activity android:name="pl.osik.autismemotion.helpers.FilePickerActivity"
             android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".multimedia.PickerActivity"
+        <activity android:name="pl.osik.autismemotion.multimedia.PickerActivity"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".multimedia.ShowMediaActivity"
+        <activity android:name="pl.osik.autismemotion.multimedia.ShowMediaActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name=".login.UserDetailsActivity"
-            android:parentActivityName=".main.MainActivity"
+            android:name="pl.osik.autismemotion.login.UserDetailsActivity"
+            android:parentActivityName="pl.osik.autismemotion.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.osik.autyzm.main.MainActivity" />
+                android:value="pl.osik.autismemotion.main.MainActivity" />
         </activity>
     </application>
 

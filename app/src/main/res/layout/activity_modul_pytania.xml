@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:background="@color/colorAppBackground"
             android:orientation="vertical"
-            tools:context="pl.osik.autyzm.uruchom.modul.ModulPytaniaActivity">
+            tools:context="pl.osik.autismemotion.uruchom.modul.ModulPytaniaActivity">
 
         </LinearLayout>
 

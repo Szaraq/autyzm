@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.osik.autyzm.uruchom.UruchomFragment">
+    tools:context="pl.osik.autismemotion.uruchom.UruchomFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lekcje_list"

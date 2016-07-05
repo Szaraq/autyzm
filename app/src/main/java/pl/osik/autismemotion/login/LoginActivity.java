@@ -21,6 +21,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -45,6 +46,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ValidateCommand validate;
     private ValidateAuthenticate authenticate;
 
+    @Bind(R.id.containerLayout)
+    RelativeLayout containerLayout;
     @Bind(R.id.scrollView)
     ScrollView scrollView;
     @Bind(R.id.backgroundImage)
@@ -236,6 +239,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onPause() {
         super.onPause();
-        AppHelper.hideKeyboard();
+        AppHelper.hideKeyboard(containerLayout);
     }
 }

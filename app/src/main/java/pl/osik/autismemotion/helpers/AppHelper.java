@@ -151,9 +151,9 @@ public class AppHelper {
         }
     }
 
-    public static void hideKeyboard() {
+    public static void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) MyApp.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     /**

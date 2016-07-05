@@ -2,6 +2,7 @@ package pl.osik.autismemotion.lekcje;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,8 @@ public class LekcjeTytulActivity extends AppCompatActivity implements View.OnCli
     LekcjaORM lekcja;
     private final ValidateCommand validate = new ValidateCommand();
 
+    @Bind(R.id.containerLayout)
+    PercentRelativeLayout containerLayout;
     @Bind(R.id.tytul)
     EditText tytul;
     @Bind(R.id.button)
@@ -75,6 +78,6 @@ public class LekcjeTytulActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onPause() {
         super.onPause();
-        AppHelper.hideKeyboard();
+        AppHelper.hideKeyboard(containerLayout);
     }
 }

@@ -501,7 +501,7 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onPause() {
         super.onPause();
-        AppHelper.hideKeyboard();
+        AppHelper.hideKeyboard(containerLayout);
     }
 }
 

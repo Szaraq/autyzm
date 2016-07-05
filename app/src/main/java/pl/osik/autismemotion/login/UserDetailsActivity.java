@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -60,6 +61,8 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
 
     private Menu menu;
 
+    @Bind(R.id.containerLayout)
+    CoordinatorLayout containerLayout;
     @Bind(R.id.app_bar)
     AppBarLayout appBar;
     @Bind(R.id.toolbar)
@@ -202,7 +205,7 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
             data.put(User.COLUMN_PHOTO, photoPath);
             final User u = new User();
             if(newAccount) {
-                AppHelper.hideKeyboard();
+                AppHelper.hideKeyboard(containerLayout);
                 final String pass = haslo.getText().toString();
                 new AsyncTask<Void, Void, Void>() {
 
@@ -293,6 +296,6 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onPause() {
         super.onPause();
-        AppHelper.hideKeyboard();
+        AppHelper.hideKeyboard(containerLayout);
     }
 }

@@ -1,9 +1,12 @@
 package pl.osik.autyzm.login;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -47,6 +50,7 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
 
     public static final String NEW_ACCOUNT = "newAccount";
     private static final int RESOURCE_NO_PHOTO = R.drawable.ic_user;
+    private static final int PLEASE_WAIT_DIALOG = 1;
     private LinkedHashMap<String, EditText> editTextHashMap;
     private String photoPath = null;
     private final ValidateCommand validate = new ValidateCommand();
@@ -189,25 +193,45 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
 
     private void saveData() {
         if(validate.doValidateAll()) {
-            ContentValues data = new ContentValues();
+            final ContentValues data = new ContentValues();
             for (Map.Entry<String, EditText> entry : editTextHashMap.entrySet()) {
                 data.put(entry.getKey(), entry.getValue().getText().toString());
             }
             String newHaslo = haslo.getText().toString();
             if(newHaslo.length() > 0) data.put(User.COLUMN_PASS, newHaslo);
             data.put(User.COLUMN_PHOTO, photoPath);
-            User u = new User();
+            final User u = new User();
             if(newAccount) {
-                u.insert(data);
-                Plik.createAssets();
-                User.authenticate(data.getAsString(User.COLUMN_LOGIN), haslo.getText().toString());
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                final String pass = haslo.getText().toString();
+                new AsyncTask<Void, Void, Void>() {
+
+                    @Override
+                    protected void onPreExecute() {
+                        UserDetailsActivity.this.showDialog(UserDetailsActivity.PLEASE_WAIT_DIALOG);
+                    }
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        u.insert(data);
+                        User.authenticate(data.getAsString(User.COLUMN_LOGIN), pass);
+                        Plik.createAssets();
+                        Intent intent = new Intent(UserDetailsActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        UserDetailsActivity.this.finish();
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        UserDetailsActivity.this.removeDialog(UserDetailsActivity.PLEASE_WAIT_DIALOG);
+                    }
+
+                }.execute();
             } else {
                 u.edit(User.getCurrentId(), data);
                 MainActivity.instance.setUserInDrawerMenu();
+                finish();
             }
-            finish();
         }
     }
 
@@ -248,6 +272,20 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public Dialog onCreateDialog(int dialogId) {
+        switch(dialogId) {
+            case PLEASE_WAIT_DIALOG:
+                ProgressDialog dialog = new ProgressDialog(this);
+                dialog.setTitle(getString(R.string.user_details_dialog_title));
+                dialog.setMessage(getString(R.string.user_details_dialog_text));
+                dialog.setCancelable(false);
+                return dialog;
+            default:
+                return null;
         }
     }
 }

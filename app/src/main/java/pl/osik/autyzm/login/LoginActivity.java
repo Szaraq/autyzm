@@ -32,8 +32,6 @@ import pl.osik.autyzm.helpers.AppHelper;
 import pl.osik.autyzm.helpers.FileHelper;
 import pl.osik.autyzm.helpers.MyApp;
 import pl.osik.autyzm.main.MainActivity;
-import pl.osik.autyzm.sql.LoadTestData;
-import pl.osik.autyzm.sql.Plik;
 import pl.osik.autyzm.sql.User;
 import pl.osik.autyzm.validate.ValidateAuthenticate;
 import pl.osik.autyzm.validate.ValidateCommand;
@@ -79,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         validate.addValidate(passLayout, authenticate);
 
         //TODO FINALLY Wyrzucić
-        LoadTestData.load();
+//        LoadTestData.load();
 
         if(User.isFirstLogin()) {
             zalozKonto();
@@ -177,9 +175,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String pass = passControl.getText().toString();
         authenticate.setCredentials(login, pass);
         if(validate.doValidateAll()) {
-            //TODO FINALLY Usunąć
-            Plik.createAssets();
-
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);

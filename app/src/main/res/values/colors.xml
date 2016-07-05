@@ -8,8 +8,8 @@
     <color name="colorDividerLine">@android:color/darker_gray</color>
     <color name="colorDividerLineLight">#f2f2f2</color>
     <color name="colorError">#e60000</color>
-    <color name="colorPrimaryRipple">#8f9bd6</color>
-    <color name="colorPrimaryDisabled">#d9ddf2</color>
+    <color name="colorPrimaryRipple">#9FA8DA</color>
+    <color name="colorPrimaryDisabled">#E8EAF6</color>
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="colorCardBackground">#CCC</color>
     <color name="colorGreen">#00cc00</color>

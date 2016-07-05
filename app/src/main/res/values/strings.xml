@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Autyzm</string>
+    <string name="app_name">AutismEmotion</string>
     <string name="title_activity_main">Start</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -155,4 +155,6 @@
     <string name="dzieci_details_no_permissions_to_call">Aby umożliwić dzwonienie, nadaj aplikacji uprawnienia do wykonywania połączeń</string>
     <string name="lekcje_modul_noModules_tooltip">Aby przejść dalej dodaj moduł</string>
     <string name="lekcje_modul_plik_noPlik_tooltip">Aby przejść dalej dodaj plik do modułu</string>
+    <string name="user_details_dialog_title">Tworzenie konta użytkownika</string>
+    <string name="user_details_dialog_text">Proszę czekać...</string>
 </resources>

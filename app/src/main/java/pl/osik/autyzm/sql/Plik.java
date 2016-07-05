@@ -74,15 +74,22 @@ public class Plik extends AbstractDBTable {
             fos.write(buffer);
             fos.close();
         } catch (Exception e) { throw new RuntimeException(e); }
-        insertAssetToDb(fileName);
+        PlikORM plik = insertAssetToDb(fileName);
+        FileHelper.createThumbnail(plik);
     }
 
-    private static void insertAssetToDb(String fileName) {
+    private static PlikORM insertAssetToDb(String fileName) {
         ContentValues data = new ContentValues();
-        data.put(COLUMN_PATH, ASSETS_FILMY_DIR_PATH +fileName);
+        data.put(COLUMN_PATH, ASSETS_FILMY_DIR_PATH + fileName);
         data.put(COLUMN_FOLDER, Folder.ASSETS_FILMY_FOLDER_ID);
         data.put(COLUMN_GHOST, 0);
-        new Plik().insert(data);
+        int id = (int) new Plik().insert(data);
+        return new PlikORM(
+                id,
+                data.getAsInteger(COLUMN_FOLDER),
+                data.getAsString(COLUMN_PATH),
+                data.getAsBoolean(COLUMN_GHOST),
+                null);
     }
 
     @Override

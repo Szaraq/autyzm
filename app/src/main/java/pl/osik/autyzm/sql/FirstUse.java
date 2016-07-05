@@ -2,6 +2,7 @@ package pl.osik.autyzm.sql;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.LinkedHashMap;
@@ -57,7 +58,12 @@ public class FirstUse extends AbstractDBTable {
                 + " AND " + COLUMN_ACTIVITY + " = ?";
         Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(User.getCurrentId()), String.valueOf(idActivity)});
         cursor.moveToFirst();
-        boolean out = cursor.getInt(0) == 1;
+        boolean out = false;
+        try {
+            out = cursor.getInt(0) == 1;
+        } catch (CursorIndexOutOfBoundsException exc) {             //kiedy zamykany jest drawerMenu a chcemy się wylogować
+            //kontynuujemy, bo chcemy pozamykać DB i zwrócić false
+        }
         cursor.close();
         helper.close();
         return out;

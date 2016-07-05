@@ -21,7 +21,6 @@ import pl.osik.autismemotion.helpers.orm.PlikORM;
  * Created by m.osik2 on 2016-04-20.
  */
 public class Plik extends AbstractDBTable {
-    //TODO Wytestować clean na unghostowanie
 
     public static final String TABLE_NAME = "Plik";
     public static final String COLUMN_PATH = "path";

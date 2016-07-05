@@ -65,17 +65,10 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
         buttonNext.setTextColor(getResources().getColor(R.color.colorPrimaryDisabled));
         buttonAdd.setText(getString(R.string.button_add));
 
-        //TODO FINALLY Na razie komentujemy, bo nie wiadomo co z tym będzie. Finalnie wyrzucić i wywalić z layoutu.
-        //buttonAdd.setVisibility(View.GONE);
-        //noPlikContainer.setVisibility(View.VISIBLE);
-        //noPlikContainer.setOnClickListener(this);
         plikView.setVisibility(View.GONE);
     }
 
     private void changeViewToEdit() {
-        //TODO FINALLY j.w.
-        //buttonAdd.setVisibility(View.VISIBLE);
-        //noPlikContainer.setVisibility(View.GONE);
         buttonNext.setTextColor(getResources().getColor(R.color.colorPrimary));
         buttonAdd.setText(getString(R.string.button_edit));
         plikView.setVisibility(View.VISIBLE);

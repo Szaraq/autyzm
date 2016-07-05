@@ -270,14 +270,14 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         addNewPlik(path);
     }
 
-    //TODO FINALLY Przetestować na dużej liście czy rzeczywiście przewija do samej góry, a nie 1 ekran
     public void changeToMoveFile(boolean fade, @Nullable PlikORM plik) {
         if(fade) AppHelper.showMessage(getView(), R.string.multimedia_choose_folder);
         PlikView.setFaded(fade, plik);
         FolderView.setHoover(fade);
         refresh();
-        scrollView.pageScroll(View.FOCUS_UP);
+        scrollView.fullScroll(View.FOCUS_UP);
     }
+
 
     @Override
     public void onPause() {

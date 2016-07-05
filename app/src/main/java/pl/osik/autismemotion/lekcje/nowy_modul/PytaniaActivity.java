@@ -46,22 +46,11 @@ public class PytaniaActivity extends AppCompatActivity implements View.OnClickLi
         listaPytan.setLayoutManager(new LinearLayoutManager(this));
         listaPytan.setAdapter(pytaniaAdapter);
         LekcjeHelper.setPytaniaList(Pytanie.getPytaniaForModul(LekcjeHelper.getModul().getId()));
-        setAddPytanieVisibility(LekcjeHelper.getPytaniaList().size() == 0);
         MyChainTourGuideConfig[] tourGuides = new MyChainTourGuideConfig[] {
                 new MyChainTourGuideConfig(R.string.tourGuide_modul_dodaj_pytanie, buttonAdd, Gravity.TOP),
                 new MyChainTourGuideConfig(R.string.tourGuide_modul_nie_dodawaj_pytania, buttonNext, Gravity.TOP)
         };
         tourGuide = AppHelper.makeTourGuideSequence(this, tourGuides, null);
-    }
-
-    protected void setAddPytanieVisibility(boolean visible) {
-        //TODO FINALLY Na razie komentujemy, bo nie wiadomo co z tym będzie. Finalnie wyrzucić i wywalić z layoutu.
-        /*
-        if(visible) {
-            noPlikContainer.setVisibility(View.VISIBLE);
-        } else {
-            noPlikContainer.setVisibility(View.GONE);
-        }*/
     }
 
     @Override
@@ -70,7 +59,6 @@ public class PytaniaActivity extends AppCompatActivity implements View.OnClickLi
             LekcjeHelper.addPytanie("");
             pytaniaAdapter.pytanieAdded = true;
             pytaniaAdapter.refresh();
-            setAddPytanieVisibility(false);
             if(tourGuide != null) tourGuide.next();
         } else if(v.getId() == buttonNext.getId()) {
             LekcjeHelper.commitAll();

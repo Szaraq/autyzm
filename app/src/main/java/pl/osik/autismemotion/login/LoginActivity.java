@@ -136,10 +136,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setBackground() {
-        /*Glide.with(this)
-                .load(BACKGROUND_PATH)
-                .dontAnimate()
-                .into(backgroundImage);*/
         backgroundImage.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
     }
 

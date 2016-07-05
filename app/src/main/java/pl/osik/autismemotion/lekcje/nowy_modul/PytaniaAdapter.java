@@ -140,7 +140,6 @@ public class PytaniaAdapter extends RecyclerView.Adapter<PytaniaAdapter.PytaniaV
                         public void onClick(DialogInterface dialog, int which) {
                             LekcjeHelper.removePytanie(position);
                             adapter.refresh();
-                            activity.setAddPytanieVisibility(LekcjeHelper.getPytaniaList().size() == 0);
                         }
                     })
                     .setNegativeButton(R.string.button_anuluj, null)

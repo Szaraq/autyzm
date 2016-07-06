@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -15,12 +13,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -52,8 +51,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ScrollView scrollView;
     @Bind(R.id.backgroundImage)
     ImageView backgroundImage;
+    @Bind(R.id.logo_layout)
+    FrameLayout logoLayout;
     @Bind(R.id.logo)
-    TextView logo;
+    ImageView logo;
     @Bind(R.id.userPhoto)
     CircleImageView userPhoto;
     @Bind(R.id.login)
@@ -131,13 +132,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setLogoHeight() {
-        ViewGroup.LayoutParams params = logo.getLayoutParams();
-        params.height = (int) (AppHelper.getScreenSize()[1] * 0.3);
-        logo.setLayoutParams(params);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) logoLayout.getLayoutParams();
+        params.height = (int) (AppHelper.getScreenSize()[1] * 0.4);
+        logoLayout.setLayoutParams(params);
     }
 
     private void setBackground() {
-        backgroundImage.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
+//        backgroundImage.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
     }
 
     @Override

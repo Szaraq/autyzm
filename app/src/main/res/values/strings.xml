@@ -82,6 +82,7 @@
     <string name="lekcje_title_header">1. Wpisz tytuł lekcji</string>
     <string name="lekcja_hint_tytul">Tytuł lekcji</string>
     <string name="button_next">Dalej</string>
+    <string name="button_end">Zakończ</string>
     <string name="lekcje_module_header">2. Dodaj moduł</string>
     <string name="lekcje_module_button_addModule">Dodaj moduł</string>
     <string name="lekcje_moduly_title">"Lekcja: "</string>

@@ -107,7 +107,7 @@
             android:id="@+id/buttonNext"
             style="@style/buttonInPanel"
             android:layout_alignParentRight="true"
-            android:text="@string/button_zapisz" />
+            android:text="@string/button_end" />
 
     </RelativeLayout>
 

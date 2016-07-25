@@ -37,8 +37,6 @@ import pl.osik.autismemotion.validate.ValidateAuthenticate;
 import pl.osik.autismemotion.validate.ValidateCommand;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener, View.OnFocusChangeListener {
-    private static final String BACKGROUND_PATH = "file:///android_asset/login_tlo.jpg";
-
     //TODO FINALLY prawa autorskie do tła: http://wallpapercave.com/w/tTuFP5q
 
     private String path;

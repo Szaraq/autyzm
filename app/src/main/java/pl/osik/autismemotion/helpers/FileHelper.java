@@ -2,8 +2,12 @@ package pl.osik.autismemotion.helpers;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.util.Log;
 
 import java.io.File;
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import pl.osik.autismemotion.R;
 import pl.osik.autismemotion.helpers.orm.PlikORM;
 import pl.osik.autismemotion.sql.Plik;
 import wseemann.media.FFmpegMediaMetadataRetriever;
@@ -33,7 +38,7 @@ public class FileHelper {
         if(type == FileTypes.PHOTO) {
             return rescaleBitmap(path, width, height);
         } else if(type == FileTypes.VIDEO) {
-            FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
+            /*FFmpegMediaMetadataRetriever retriever = new FFmpegMediaMetadataRetriever();
             retriever.setDataSource(path);
             Bitmap bitmap = retriever.getFrameAtTime(10);
             retriever.release();
@@ -43,10 +48,23 @@ public class FileHelper {
             options.outHeight = bitmap.getHeight();
             int scale = calculateInSampleSize(options, width, height);
             bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale, bitmap.getHeight() / scale, false);
-            return bitmap;
+            return bitmap;*/
+            Resources res = MyApp.getContext().getResources();
+            int id = R.drawable.ic_file_movie;
+            Bitmap bmp = getBitmap((VectorDrawable) MyApp.getContext().getResources().getDrawable(id));
+            return bmp;
         } else {
             return null;
         }
+    }
+
+    private static Bitmap getBitmap(VectorDrawable vectorDrawable) {
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
+                vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        vectorDrawable.draw(canvas);
+        return bitmap;
     }
 
     public static Bitmap getThumbnail(String path) {

@@ -8,6 +8,8 @@
 
     <ImageView
         android:id="@+id/help_photo"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         app:layout_heightPercent="20%"
         android:elevation="4dp"
         android:layout_width="match_parent"
@@ -52,6 +54,30 @@
         android:id="@+id/kontakt_Klaudia"
         android:text="@string/help_kontakt_klaudia"
         style="@style/HelpKontakt" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_info"
+            android:tint="@color/colorPrimary" />
+
+        <TextView
+            style="@style/DzieciDetailsSubheader"
+            android:text="@string/help_info_title" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginRight="@dimen/contact_margin"
+        android:text="@string/help_info"
+        style="@style/HelpKontakt"/>
 
     </LinearLayout>
 <!--

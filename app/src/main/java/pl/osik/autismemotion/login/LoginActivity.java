@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -24,6 +26,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -37,6 +41,7 @@ import pl.osik.autismemotion.validate.ValidateAuthenticate;
 import pl.osik.autismemotion.validate.ValidateCommand;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener, View.OnFocusChangeListener {
+    private static final String BACKGROUND_PATH = "file:///android_asset/login_tlo.jpg";
     //TODO FINALLY prawa autorskie do tła: http://wallpapercave.com/w/tTuFP5q
 
     private String path;
@@ -136,7 +141,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setBackground() {
-//        backgroundImage.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
+        Glide.with(this)
+                .load(BACKGROUND_PATH)
+                .dontAnimate()
+                .into(backgroundImage);
+        backgroundImage.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
     }
 
     @Override

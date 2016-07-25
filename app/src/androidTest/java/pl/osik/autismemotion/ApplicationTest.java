@@ -1,4 +1,4 @@
-package pl.osik.autyzm;
+package pl.osik.autismemotion;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

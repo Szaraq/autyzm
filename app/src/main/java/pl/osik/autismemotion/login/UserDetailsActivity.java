@@ -207,7 +207,7 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
             if(newAccount) {
                 AppHelper.hideKeyboard(containerLayout);
                 final String pass = haslo.getText().toString();
-                /*new AsyncTask<Void, Void, Void>() {
+                new AsyncTask<Void, Void, Void>() {
 
                     @Override
                     protected void onPreExecute() {
@@ -215,14 +215,14 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
                     }
 
                     @Override
-                    protected Void doInBackground(Void... params) {*/
+                    protected Void doInBackground(Void... params) {
                         u.insert(data);
                         User.authenticate(data.getAsString(User.COLUMN_LOGIN), pass);
                         Plik.createAssets();
                         Intent intent = new Intent(UserDetailsActivity.this, MainActivity.class);
                         startActivity(intent);
                         UserDetailsActivity.this.finish();
-                        /*return null;
+                        return null;
                     }
 
                     @Override
@@ -230,7 +230,7 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
                         UserDetailsActivity.this.removeDialog(UserDetailsActivity.PLEASE_WAIT_DIALOG);
                     }
 
-                }.execute();*/
+                }.execute();
             } else {
                 u.edit(User.getCurrentId(), data);
                 MainActivity.instance.setUserInDrawerMenu();

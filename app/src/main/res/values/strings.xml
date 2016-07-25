@@ -158,4 +158,6 @@
     <string name="lekcje_modul_plik_noPlik_tooltip">Aby przejść dalej dodaj plik do modułu</string>
     <string name="user_details_dialog_title">Tworzenie konta użytkownika</string>
     <string name="user_details_dialog_text">Proszę czekać...</string>
+    <string name="help_info"><i>Projekt zrobiony w ramach pracy dyplomowej na Wydziałach Informatyki oraz Informatyki Społecznej Polsko-Japońskiej Akademii Technik Komputerowych w roku 2016.</i></string>
+    <string name="help_info_title">Informacje o projekcie</string>
 </resources>

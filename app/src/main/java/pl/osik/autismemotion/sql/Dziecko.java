@@ -8,11 +8,14 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+
+import pl.osik.autismemotion.helpers.CipherHelper;
 
 /**
  * Created by m.osik2 on 2016-04-20.
  */
-public class Dziecko extends AbstractDBTable {
+public class Dziecko extends AbstractEncryptedDBTable {
     public static final String TABLE_NAME = "Dziecko";
     public static final String COLUMN_IMIE = "imie";
     public static final String COLUMN_NAZWISKO = "nazwisko";
@@ -44,6 +47,20 @@ public class Dziecko extends AbstractDBTable {
         put(COLUMN_USER, "INTEGER");
         put(COLUMN_PHOTO, "TEXT");
     }};
+    protected static final LinkedList<String> encCols = new LinkedList<String>() {{
+        add(COLUMN_IMIE);
+        add(COLUMN_NAZWISKO);
+        add(COLUMN_DATAURODZENIA);
+        add(COLUMN_DATAWPROWADZENIA);
+        add(COLUMN_NOTATKI);
+        add(COLUMN_OJCIECIMIE);
+        add(COLUMN_OJCIECNAZWISKO);
+        add(COLUMN_OJCIECTELEFON);
+        add(COLUMN_MATKAIMIE);
+        add(COLUMN_MATKANAZWISKO);
+        add(COLUMN_MATKATELEFON);
+        add(COLUMN_PHOTO);
+    }};
 
     @Override
     protected String create() {
@@ -53,6 +70,11 @@ public class Dziecko extends AbstractDBTable {
     @Override
     protected LinkedHashMap<String, String> getMap() {
         return colTypeMap;
+    }
+
+    @Override
+    protected LinkedList<String> getEncryptedColumns() {
+        return encCols;
     }
 
     @Override
@@ -69,12 +91,12 @@ public class Dziecko extends AbstractDBTable {
                 + " WHERE " + tableAndColumn(User.TABLE_NAME, COLUMN_ID) + " = ?"
                 + " ORDER BY " + COLUMN_NAZWISKO;
         Cursor resultSet = db.rawQuery(query, new String[] { String.valueOf(User.getCurrentId()) });
-        int count = 0;
+        Dziecko d = new Dziecko();
         while (resultSet.moveToNext()) {
             HashMap<String, Object> temp = new HashMap<>();
-            temp.put(COLUMN_NAZWISKO, resultSet.getString(resultSet.getColumnIndex(COLUMN_NAZWISKO)));
-            temp.put(COLUMN_IMIE, resultSet.getString(resultSet.getColumnIndex(COLUMN_IMIE)));
-            temp.put(COLUMN_PHOTO, resultSet.getString(resultSet.getColumnIndex(COLUMN_PHOTO)));
+            temp.put(COLUMN_NAZWISKO, d.getFromCursor(resultSet, COLUMN_NAZWISKO));
+            temp.put(COLUMN_IMIE, d.getFromCursor(resultSet, COLUMN_IMIE));
+            temp.put(COLUMN_PHOTO, d.getFromCursor(resultSet, COLUMN_PHOTO));
             temp.put(COLUMN_ID, resultSet.getInt(resultSet.getColumnIndex(COLUMN_ID)));
             out.add(temp);
         }
@@ -94,7 +116,7 @@ public class Dziecko extends AbstractDBTable {
         resultSet.moveToNext();
         String[] cols = d.getColumns();
         for (String c: cols) {
-            String input = resultSet.getString(resultSet.getColumnIndex(c));
+            String input = d.getFromCursor(resultSet, c);
             out.put(c, input);
         }
         resultSet.close();
@@ -110,7 +132,7 @@ public class Dziecko extends AbstractDBTable {
         String out;
         Cursor resultSet = db.rawQuery("SELECT " + COLUMN_NAZWISKO + ", " + COLUMN_IMIE + " FROM " + d.getTableName() + " WHERE id = ?", new String[]{String.valueOf(id)});
         resultSet.moveToNext();
-        out = resultSet.getString(resultSet.getColumnIndex(COLUMN_IMIE)) + " " + resultSet.getString(resultSet.getColumnIndex(COLUMN_NAZWISKO));
+        out = d.getFromCursor(resultSet, COLUMN_IMIE) + " " + d.getFromCursor(resultSet, COLUMN_NAZWISKO);
         resultSet.close();
         helper.close();
         return out;
@@ -160,7 +182,7 @@ public class Dziecko extends AbstractDBTable {
     public static void changePhoto(int id, String path) {
         Dziecko d = new Dziecko();
         ContentValues data = new ContentValues();
-        data.put(COLUMN_PHOTO, path);
+        data.put(COLUMN_PHOTO, cipherHelper.encrypt(path));
         d.edit(id, data);
     }
 }

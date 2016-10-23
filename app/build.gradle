@@ -29,7 +29,6 @@ repositories {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
     compile files('libs/itextpdf-5.5.9.jar')
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
@@ -51,4 +50,32 @@ dependencies {
     compile ('com.github.worker8:tourguide:1.0.17-SNAPSHOT@aar') { transitive=true }
     compile project(':giraffeplayer')
     compile 'com.github.douglasjunior:android-simple-tooltip:0.1.1'
+    androidTestCompile 'junit:junit:4.12'
 }
+
+sourceSets {
+    unitTest {
+        java.srcDir file('test')
+        resources.srcDir file('test/resources')
+    }
+}
+
+dependencies {
+    unitTestCompile files("$project.buildDir/classes/debug")
+    unitTestCompile 'junit:junit:4.11'
+    unitTestCompile 'org.robolectric:robolectric:2.1.1'
+    unitTestCompile 'com.google.android:android:4.0.1.2'
+}
+
+configurations {
+    unitTestCompile.extendsFrom runtime
+    unitTestRuntime.extendsFrom unitTestCompile
+}
+
+task unitTest(type:Test, dependsOn: assemble) {
+    description = "run unit tests"
+    testClassesDir = project.sourceSets.unitTest.output.classesDir
+    classpath = project.sourceSets.unitTest.runtimeClasspath
+}
+
+build.dependsOn unitTest

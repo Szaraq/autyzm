@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import pl.osik.autismemotion.helpers.AppHelper;
@@ -13,7 +14,7 @@ import pl.osik.autismemotion.helpers.AppHelper;
 /**
  * Created by m.osik2 on 2016-04-20.
  */
-public class User extends AbstractDBTable {
+public class User extends AbstractEncryptedDBTable {
     public static final String TABLE_NAME = "User";
     public static final String COLUMN_IMIE = "imie";
     public static final String COLUMN_NAZWISKO = "nazwisko";
@@ -30,6 +31,11 @@ public class User extends AbstractDBTable {
         put(COLUMN_LOGIN, "TEXT");
         put(COLUMN_PASS, "TEXT");
         put(COLUMN_PHOTO, "TEXT");
+    }};
+    protected static final LinkedList<String> encCols = new LinkedList<String>() {{
+        add(COLUMN_IMIE);
+        add(COLUMN_NAZWISKO);
+        add(COLUMN_PHOTO);
     }};
 
     public static int getCurrentId() {
@@ -49,6 +55,12 @@ public class User extends AbstractDBTable {
     protected LinkedHashMap<String, String> getMap() {
         return colTypeMap;
     }
+
+    @Override
+    protected LinkedList<String> getEncryptedColumns() {
+        return encCols;
+    }
+
     @Override
     public String getTableName() {
         return TABLE_NAME;
@@ -61,7 +73,7 @@ public class User extends AbstractDBTable {
         ContentValues data = new ContentValues();
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             if(entry.getValue() instanceof String) {
-                data.put(entry.getKey(), (String) entry.getValue());
+                data.put(entry.getKey(), safeEncrypt(entry.getKey(), (String) entry.getValue()));
             } else if(entry.getValue() instanceof Integer) {
                 data.put(entry.getKey(), (Integer) entry.getValue());
             } else if(entry.getValue() == null) {
@@ -76,7 +88,7 @@ public class User extends AbstractDBTable {
                 }
             }
         }
-        data.put(COLUMN_LOGIN, (String) map.get(COLUMN_LOGIN));
+        data.put(COLUMN_LOGIN, safeEncrypt(COLUMN_LOGIN, (String) map.get(COLUMN_LOGIN)));
         data.put(COLUMN_PASS, AppHelper.hash((String) map.get(COLUMN_PASS)));
         long id = db.insert(getTableName(), null, data);
         helper.close();
@@ -88,6 +100,7 @@ public class User extends AbstractDBTable {
     public long insert(ContentValues data) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
+        data = encrypt(data);
         data.put(COLUMN_PASS, AppHelper.hash((String) data.get(COLUMN_PASS)));
         long out = db.insert(getTableName(), null, data);
         helper.close();
@@ -100,6 +113,7 @@ public class User extends AbstractDBTable {
     public boolean edit(int id, ContentValues data) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
+        data = encrypt(data);
         String newHaslo = (String) data.get(COLUMN_PASS);
         if(newHaslo != null) data.put(COLUMN_PASS, AppHelper.hash(newHaslo));
         db.update(getTableName(), data, COLUMN_ID + "= ?", new String[]{String.valueOf(id)});
@@ -110,6 +124,7 @@ public class User extends AbstractDBTable {
     public static boolean authenticate(String user, String pass) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
+        user = new User().safeEncrypt(COLUMN_LOGIN, user);
         String hash = AppHelper.hash(pass);
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_LOGIN + " = ? AND " + COLUMN_PASS + " = ?", new String[] { user, hash });
 
@@ -148,7 +163,8 @@ public class User extends AbstractDBTable {
         SQLiteDatabase db = helper.getDBRead();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[] { String.valueOf(getCurrentId()) });
         cursor.moveToNext();
-        String out = cursor.getString(cursor.getColumnIndex(COLUMN_IMIE)) + " " + cursor.getString(cursor.getColumnIndex(COLUMN_NAZWISKO));
+        User u = new User();
+        String out = u.getFromCursor(cursor, COLUMN_IMIE) + " " + u.getFromCursor(cursor, COLUMN_NAZWISKO);
         cursor.close();
         helper.close();
         return out;
@@ -160,7 +176,8 @@ public class User extends AbstractDBTable {
         SQLiteDatabase db = helper.getDBRead();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[] { String.valueOf(getCurrentId()) });
         cursor.moveToNext();
-        String out = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO));
+        User u = new User();
+        String out = u.getFromCursor(cursor, COLUMN_PHOTO);
         cursor.close();
         helper.close();
         return out;
@@ -169,10 +186,12 @@ public class User extends AbstractDBTable {
     public static String getPhotoPathByLogin(String login) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
+        User u = new User();
+        login = u.safeEncrypt(COLUMN_LOGIN, login);
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_LOGIN + " = ?", new String[] { login });
         if(cursor.getCount() == 0) return null;
         cursor.moveToNext();
-        String out = cursor.getString(cursor.getColumnIndex(COLUMN_PHOTO));
+        String out = u.getFromCursor(cursor, COLUMN_PHOTO);
         cursor.close();
         helper.close();
         return out;
@@ -183,10 +202,11 @@ public class User extends AbstractDBTable {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
         HashMap<String, String> out = new HashMap<>();
+        User u = new User();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?", new String[]{String.valueOf(getCurrentId())});
         cursor.moveToFirst();
         for (Map.Entry<String, String> entry : colTypeMap.entrySet()) {
-            out.put(entry.getKey(), cursor.getString(cursor.getColumnIndex(entry.getKey())));
+            out.put(entry.getKey(), u.getFromCursor(cursor, entry.getKey()));
         }
         cursor.close();
         helper.close();

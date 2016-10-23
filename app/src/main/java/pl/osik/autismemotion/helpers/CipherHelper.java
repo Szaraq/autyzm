@@ -7,8 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -35,14 +33,13 @@ public class CipherHelper {
             key = new SecretKeySpec(keyBytes, "AES");
             vector = new IvParameterSpec(ivBytes);
             cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            instance = this;
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException ex) {
             Log.d("CipherHelper", ex.getMessage());
         }
     }
 
     public static CipherHelper getInstance() {
-        if(instance == null) return new CipherHelper();
+        if(instance == null) instance = new CipherHelper();
         return instance;
     }
 

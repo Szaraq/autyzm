@@ -194,28 +194,11 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         String path = plik.getPath();
         if(plik.getType() == FileHelper.FileTypes.PHOTO) {
             vto.addOnPreDrawListener(new MyPreDrawListener(thumbnail, path, fragment.getActivity()));
+            thumbnail.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
         } else if(plik.getType() == FileHelper.FileTypes.VIDEO) {
             Bitmap bitmap = FileHelper.getThumbnail(path, 0, AppHelper.dip2px(150));
             vto.addOnPreDrawListener(new MyPreDrawListener(thumbnail, bitmap, fragment.getActivity()));
         }
-        thumbnail.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
-
-        /*for (ModulORM modul : moduly) {
-            Log.d("Thumb", modul.getId()+"");
-            PlikORM plik = Plik.getById(modul.getPlik(), true);
-            Bitmap bitmap = FileHelper.rescaleBitmap(plik.getPath(), FileHelper.RESCALE_PROPORTIONALLY, thumbnailsContainer.getLayoutParams().height);
-            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() * thumbnailsContainer.getLayoutParams().height / bitmap.getHeight(), thumbnailsContainer.getLayoutParams().height, false);
-
-            ImageView thumb = new ImageView(fragment.getContext());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(bitmap.getWidth(), ViewGroup.LayoutParams.MATCH_PARENT);
-            thumb.setLayoutParams(params);
-            thumbnailsContainer.addView(thumb);
-
-            ViewTreeObserver vto = thumb.getViewTreeObserver();
-            vto.addOnPreDrawListener(new MyPreDrawListener(thumb, bitmap, fragment.getActivity()));
-            thumbnails.add(thumb);
-            //thumb.setImageBitmap(bitmap);
-        }*/
     }
 
     protected void gotoDetails(OperationsEnum operacja) {

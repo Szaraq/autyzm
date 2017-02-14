@@ -42,7 +42,6 @@ import pl.osik.autismemotion.validate.ValidateCommand;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener, View.OnFocusChangeListener {
     private static final String BACKGROUND_PATH = "file:///android_asset/login_tlo.jpg";
-    //TODO FINALLY prawa autorskie do tła: http://wallpapercave.com/w/tTuFP5q
 
     private String path;
     private ValidateCommand validate;
@@ -82,9 +81,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         validate = new ValidateCommand();
         authenticate = new ValidateAuthenticate();
         validate.addValidate(passLayout, authenticate);
-
-        //TODO FINALLY Wyrzucić
-//        LoadTestData.load();
 
         if(User.isFirstLogin()) {
             zalozKonto();
@@ -232,13 +228,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             userPhoto.setImageBitmap(bitmap);
             userPhoto.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fab_scale_up));
         }
-    }
-
-    //TODO FINALLY usunąć
-    private void logForTest() {
-        loginControl.setText("a");
-        passControl.setText("p");
-        zaloguj.callOnClick();
     }
 
     @Override

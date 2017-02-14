@@ -75,12 +75,12 @@ public abstract class AbstractEncryptedDBTable extends AbstractDBTable {
     }
 
     protected String safeEncrypt(String column, String text) {
-        if(!isColumnEncrypted(column)) return text;
+        if(!isColumnEncrypted(column) || text == null) return text;
         return cipherHelper.encrypt(text);
     }
 
     protected String safeDecrypt(String column, String text) {
-        if(!isColumnEncrypted(column)) return text;
+        if(!isColumnEncrypted(column) || text == null) return text;
         return cipherHelper.decrypt(text);
     }
 
@@ -102,7 +102,6 @@ public abstract class AbstractEncryptedDBTable extends AbstractDBTable {
 
     protected String getFromCursor(Cursor cursor, String column) {
         String value = cursor.getString(cursor.getColumnIndex(column));
-        if(value == null) return value;
         return safeDecrypt(column, value);
     }
 }

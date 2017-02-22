@@ -55,6 +55,7 @@
     <string name="multi_fab_folder">Folder</string>
     <string name="multi_fab_plik">Plik</string>
     <string name="multi_nowy_folder">Nowy folder</string>
+    <string name="multi_bledne_rozszerzenie">Błąd! Wybrano plik inny niż zdjęcie lub wideo</string>
     <string name="button_ok">OK</string>
     <string name="button_anuluj">Anuluj</string>
     <string name="muti_nowy_folder_placeholder">Podaj nazwę nowego folderu</string>

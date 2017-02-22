@@ -37,7 +37,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -311,18 +311,29 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void setPhoto(@Nullable final String path) {
-        if(path == null || !(new File(path)).exists()) {
-            photo.setImageResource(RESOURCE_NO_PHOTO);
-            menu.findItem(R.id.deletePhoto).setVisible(false);
-            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);
-        } else {
-            Glide.with(this)
-                    .load(path)
-                    .centerCrop()
-                    .into(photo);
-            menu.findItem(R.id.deletePhoto).setVisible(true);
-            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_zmien_zdjecie);
+        try {
+            if(path == null) {
+                setNoPhoto();
+                return;
+            }
+            MyApp.getContext().getContentResolver().openFileDescriptor(Uri.parse(path), "r");
+        } catch (FileNotFoundException e) {
+            setNoPhoto();
+            return;
         }
+
+        Glide.with(this)
+                .load(path)
+                .centerCrop()
+                .into(photo);
+        menu.findItem(R.id.deletePhoto).setVisible(true);
+        menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_zmien_zdjecie);
+    }
+
+    private void setNoPhoto() {
+        photo.setImageResource(RESOURCE_NO_PHOTO);
+        menu.findItem(R.id.deletePhoto).setVisible(false);
+        menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);
     }
 
     private void addValidations() {
@@ -444,8 +455,13 @@ public class DzieciDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
+            if (requestCode == FileHelper.FileManager.PICK_IMAGE_DEFAULT) {
                 final String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                photoPath = path;
+                Dziecko.changePhoto(id, path);
+                setPhoto(path);
+            } else if(requestCode == FileHelper.FileManager.PICK_IMAGE) {
+                final String path = FileHelper.getFilePath(data);
                 photoPath = path;
                 Dziecko.changePhoto(id, path);
                 setPhoto(path);

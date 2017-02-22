@@ -29,7 +29,7 @@ public class PickerActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
+            if (requestCode == FileHelper.FileManager.PICK_IMAGE_DEFAULT) {
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
                 fragment.placeFile(path);
             }

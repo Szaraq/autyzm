@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,7 +28,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -167,18 +168,29 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void setPhoto(@Nullable String path) {
-        if(path == null || !(new File(path)).exists()) {
-            userPhoto.setImageResource(RESOURCE_NO_PHOTO);
-            menu.findItem(R.id.deletePhoto).setVisible(false);
-            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);
-        } else {
-            Glide.with(this)
-                    .load(path)
-                    .centerCrop()
-                    .into(userPhoto);
-            menu.findItem(R.id.deletePhoto).setVisible(true);
-            menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_zmien_zdjecie);
+        try {
+            if(path == null) {
+                setNoPhoto();
+                return;
+            }
+            MyApp.getContext().getContentResolver().openFileDescriptor(Uri.parse(path), "r");
+        } catch (FileNotFoundException e) {
+            setNoPhoto();
+            return;
         }
+
+        Glide.with(this)
+                .load(path)
+                .centerCrop()
+            .into(userPhoto);
+        menu.findItem(R.id.deletePhoto).setVisible(true);
+        menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_zmien_zdjecie);
+    }
+
+    private void setNoPhoto() {
+        userPhoto.setImageResource(RESOURCE_NO_PHOTO);
+        menu.findItem(R.id.deletePhoto).setVisible(false);
+        menu.findItem(R.id.changePhoto).setTitle(R.string.dzieci_details_dodaj_zdjecie);
     }
 
     @Override
@@ -242,8 +254,11 @@ public class UserDetailsActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
+            if (requestCode == FileHelper.FileManager.PICK_IMAGE_DEFAULT) {
                 photoPath = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                setPhoto(photoPath);
+            } else if(requestCode == FileHelper.FileManager.PICK_IMAGE) {
+                photoPath = FileHelper.getFilePath(data);
                 setPhoto(photoPath);
             }
         }

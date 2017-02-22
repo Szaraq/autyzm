@@ -103,6 +103,8 @@ public class PlikView extends CardView {
         if(faded && plik.getId() != notFadedPlikId) fader.setVisibility(VISIBLE); else fader.setVisibility(GONE);
     }
 
+
+
     private void setIcon() {
         @DrawableRes int icon;
         @ColorRes int iconColor;

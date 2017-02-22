@@ -3,6 +3,7 @@ package pl.osik.autismemotion.dzieci;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -120,12 +121,23 @@ class DzieciViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     public void setPhoto(String photo) {
         this.photo = photo;
-        if(photo == null || !(new File(photo)).exists()) {
-            dzieciPhoto.setImageResource(DzieciDetailsActivity.RESOURCE_NO_PHOTO);
-        } else {
-            final ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();
-            vto.addOnPreDrawListener(new MyPreDrawListener(dzieciPhoto, photo, fragment.getActivity()));
+        try {
+            if(photo == null) {
+                setNoPhoto();
+                return;
+            }
+            MyApp.getContext().getContentResolver().openFileDescriptor(Uri.parse(photo), "r");
+        } catch (FileNotFoundException e) {
+            setNoPhoto();
+            return;
         }
+
+        final ViewTreeObserver vto = dzieciPhoto.getViewTreeObserver();
+        vto.addOnPreDrawListener(new MyPreDrawListener(dzieciPhoto, photo, fragment.getActivity()));
+    }
+
+    private void setNoPhoto() {
+        dzieciPhoto.setImageResource(DzieciDetailsActivity.RESOURCE_NO_PHOTO);
     }
 
     public String getPhoto() {

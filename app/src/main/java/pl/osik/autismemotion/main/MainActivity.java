@@ -164,8 +164,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
+            if (requestCode == FileHelper.FileManager.PICK_IMAGE_DEFAULT) {
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                ((FilePlacingInterface) currFragment).placeFile(path);
+            } else if(requestCode == FileHelper.FileManager.PICK_IMAGE) {
+                String path = FileHelper.getFilePath(data);
+//                String extension = FileHelper.getExtension(path);
+//                if(!Arrays.asList(FileHelper.FileManager.EXTENSION_ARRAY_PHOTO).contains(extension)
+//                        && !Arrays.asList(FileHelper.FileManager.EXTENSION_ARRAY_VIDEO).contains(extension)) {
+//                    AppHelper.showMessage(currFragment.getView(), R.string.multi_bledne_rozszerzenie);
+//                    return;
+//                }
                 ((FilePlacingInterface) currFragment).placeFile(path);
             }
         }

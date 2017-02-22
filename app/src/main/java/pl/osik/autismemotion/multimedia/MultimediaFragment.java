@@ -42,6 +42,7 @@ import pl.osik.autismemotion.helpers.views.FolderView;
 import pl.osik.autismemotion.helpers.views.PlikView;
 import pl.osik.autismemotion.sql.Folder;
 import pl.osik.autismemotion.sql.Plik;
+import pl.osik.autismemotion.sql.User;
 import pl.osik.autismemotion.validate.ValidateCommand;
 import pl.osik.autismemotion.validate.ValidateExistsInDatabase;
 import pl.osik.autismemotion.validate.ValidateNotNull;
@@ -252,7 +253,11 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
 
     private void addNewPlik(String path) {
         ValidateExistsInDatabase validateExistsInDatabase = new ValidateExistsInDatabase(new Plik(), Plik.COLUMN_PATH);
-        if(validateExistsInDatabase.validate(path)) {
+        String query = "SELECT * FROM " + validateExistsInDatabase.getTable().getTableName()
+                + " JOIN " + Folder.TABLE_NAME + " ON " + Plik.TABLE_NAME + "." + Plik.COLUMN_FOLDER + "=" + Folder.TABLE_NAME + "." + Folder.COLUMN_ID
+                + " WHERE " + validateExistsInDatabase.getColumn() + " = ?"
+                + " AND " + Folder.TABLE_NAME + "." + Folder.COLUMN_USER + "=" + User.getCurrentId();
+        if(validateExistsInDatabase.validateWithQuery(path, query)) {
             Plik p = new Plik();
             ContentValues data = new ContentValues();
             data.put(Plik.COLUMN_PATH, path);

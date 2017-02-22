@@ -73,8 +73,31 @@ public class ValidateExistsInDatabase implements Validate {
         return countRows == 0;
     }
 
+    public boolean validateWithQuery(String text, String query) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        if(exceptMe != null && text.equals(exceptMe)) return true;
+        Cursor cursor = db.rawQuery(query, new String[]{text});
+        int countRows = cursor.getCount();
+        cursor.close();
+        helper.close();
+        return countRows == 0;
+    }
+
     @Override
     public String getErrorMsg() {
         return context.getString(R.string.validate_error_existsInDB);
+    }
+
+    public AbstractDBTable getTable() {
+        return table;
+    }
+
+    public String getColumn() {
+        return column;
+    }
+
+    public String getExceptMe() {
+        return exceptMe;
     }
 }

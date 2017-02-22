@@ -3,8 +3,10 @@ package pl.osik.autismemotion.sql;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -112,11 +114,19 @@ public class Plik extends AbstractDBTable {
         Cursor cursor = db.rawQuery(query, null);
         while(cursor.moveToNext()) {
             String path = cursor.getString(cursor.getColumnIndex(COLUMN_PATH));
-            File file = new File(path);
+            boolean exists = true;
+            try {
+                if(path == null) {
+                    exists = false;
+                }
+                MyApp.getContext().getContentResolver().openFileDescriptor(Uri.parse(path), "r");
+            } catch (FileNotFoundException e) {
+                exists = false;
+            }
             boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
-            if(!file.exists() && !ghost) {
+            if(!exists && !ghost) {
                 hideFile(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)), true);
-            } else if(file.exists() && ghost) {
+            } else if(exists && ghost) {
                 hideFile(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)), false);
             }
             Lekcja.cleanLekcje();

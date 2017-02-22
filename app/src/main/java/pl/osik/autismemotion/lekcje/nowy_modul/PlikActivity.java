@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
 import java.io.Serializable;
 
 import butterknife.Bind;
@@ -78,7 +77,7 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v.getId() == buttonAdd.getId() || v.getId() == noPlikContainer.getId()) {
             Intent intent = new Intent(this, PickerActivity.class);
-            startActivityForResult(intent, FileHelper.FileManager.PICK_IMAGE);
+            startActivityForResult(intent, FileHelper.FileManager.PICK_IMAGE_DEFAULT);
         } else if(v.getId() == buttonNext.getId()) {
             if(LekcjeHelper.getModul().getPlik() == 0) {
                 AppHelper.makeToolTip(PlikActivity.this, buttonNext, Gravity.TOP, R.string.lekcje_modul_plik_noPlik_tooltip);
@@ -93,10 +92,13 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            if (requestCode == FileHelper.FileManager.PICK_IMAGE) {
-                File file = new File(data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH));
-                plikView.setImageBitmap(FileHelper.getThumbnail(file.getPath()));
-                LekcjeHelper.getModul().setName(FileHelper.removeExtension(file.getName()));
+            if (requestCode == FileHelper.FileManager.PICK_IMAGE_DEFAULT) {
+//                File file = new File(data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH));
+                String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                plikView.setImageBitmap(FileHelper.getThumbnail(path));
+                String[] nameArray = path.split("/");
+                LekcjeHelper.getModul().setName(nameArray[nameArray.length-1]);
+//                LekcjeHelper.getModul().setName(FileHelper.removeExtension(file.getName()));
                 LekcjeHelper.getModul().setPlik(data.getIntExtra(PlikORM.EXTRA_PLIK_ID, NO_FILE));
                 changeViewToEdit();
                 if(tourGuide != null) tourGuide.cleanUp();

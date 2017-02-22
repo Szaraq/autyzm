@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
-import pl.osik.autismemotion.helpers.CipherHelper;
-
 /**
  * Created by m.osik2 on 2016-04-20.
  */
@@ -59,7 +57,7 @@ public class Dziecko extends AbstractEncryptedDBTable {
         add(COLUMN_MATKAIMIE);
         add(COLUMN_MATKANAZWISKO);
         add(COLUMN_MATKATELEFON);
-        add(COLUMN_PHOTO);
+//        add(COLUMN_PHOTO);
     }};
 
     @Override
@@ -182,7 +180,7 @@ public class Dziecko extends AbstractEncryptedDBTable {
     public static void changePhoto(int id, String path) {
         Dziecko d = new Dziecko();
         ContentValues data = new ContentValues();
-        data.put(COLUMN_PHOTO, cipherHelper.encrypt(path));
+        data.put(COLUMN_PHOTO, path);
         d.edit(id, data);
     }
 }

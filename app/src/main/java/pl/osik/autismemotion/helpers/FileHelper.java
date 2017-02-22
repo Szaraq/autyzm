@@ -1,16 +1,19 @@
 package pl.osik.autismemotion.helpers;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.VectorDrawable;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,7 +25,6 @@ import java.util.Calendar;
 import pl.osik.autismemotion.R;
 import pl.osik.autismemotion.helpers.orm.PlikORM;
 import pl.osik.autismemotion.sql.Plik;
-import wseemann.media.FFmpegMediaMetadataRetriever;
 
 /**
  * Created by m.osik2 on 2016-06-03.
@@ -54,7 +56,7 @@ public class FileHelper {
             Bitmap bmp = getBitmap((VectorDrawable) MyApp.getContext().getResources().getDrawable(id));
             return bmp;
         } else {
-            return null;
+            throw new IllegalArgumentException("UNSUPPORTED TYPE is not available here.");
         }
     }
 
@@ -108,17 +110,32 @@ public class FileHelper {
 
     public static Bitmap rescaleBitmap(String path, int reqWidth, int reqHeight) {
         try {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, options);
-            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-            options.inJustDecodeBounds = false;
-            Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-            return bitmap;
-        } catch (NullPointerException e) {
-            Log.d("getThumbnail", e.getMessage());
-            return null;
+            ParcelFileDescriptor parcelFileDescriptor =
+                    MyApp.getContext().getContentResolver().openFileDescriptor(Uri.parse(path), "r");
+            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+            Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+            int width = image.getWidth();
+            int height = image.getHeight();
+            int proportion = calculateInSampleSize(width, height, reqWidth, reqHeight);
+            image = Bitmap.createScaledBitmap(image, width/proportion, height/proportion, false);
+            parcelFileDescriptor.close();
+            return image;
+        } catch(FileNotFoundException e) {
+            try {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(path, options);
+                options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+                options.inJustDecodeBounds = false;
+                Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+                return bitmap;
+            } catch (NullPointerException exc) {
+                Log.d("getThumbnail", exc.getMessage());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     /**
@@ -131,9 +148,13 @@ public class FileHelper {
      */
     private static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
+        return calculateInSampleSize(width, height, reqWidth, reqHeight);
+    }
+
+    private static int calculateInSampleSize(int width, int height, int reqWidth, int reqHeight) {
+        // Raw height and width of image
         int inSampleSize = 1;
 
         if (height > reqHeight || width > reqWidth) {
@@ -160,7 +181,8 @@ public class FileHelper {
         String ext = getExtension(path);
         if(Arrays.asList(FileManager.EXTENSION_ARRAY_PHOTO).contains(ext)) return FileTypes.PHOTO;
         if(Arrays.asList(FileManager.EXTENSION_ARRAY_VIDEO).contains(ext)) return FileTypes.VIDEO;
-        return FileTypes.UNSUPPORTED_TYPE;
+//        return FileTypes.UNSUPPORTED_TYPE;
+        return FileTypes.PHOTO;
     }
 
     public static String getExtension(String fileName) {
@@ -177,20 +199,39 @@ public class FileHelper {
         return fileName;
     }
 
+    public static String getFilePath(Intent data) {
+        final int FLAGS = (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        Uri uri = data.getData();
+        MyApp.getContext().getContentResolver().takePersistableUriPermission(uri, FLAGS);
+        return uri.toString();
+    }
+
     public static class FileManager {
 
-        public static final int PICK_IMAGE = 9351;
+        public static final int PICK_IMAGE_DEFAULT = 9351;
+        public static final int PICK_IMAGE = 9352;
         public static final int RESIZE_TO_SCREEN = -1;
         public static final String[] EXTENSION_ARRAY_PHOTO = new String[] {"bmp", "jpg", "jpeg", "gif", "tif", "tiff", "png"};
         public static final String[] EXTENSION_ARRAY_VIDEO = new String[] {"avi", "mpg", "mpeg", "3gp", "mov", "mp4"};
 
         public static void pickPhoto(Activity activity, String[] extensions) {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.setType("image/*");
+            try{
+                activity.startActivityForResult(intent, PICK_IMAGE);
+            } catch (ActivityNotFoundException e) {
+                defaultPicker(activity, extensions);
+            }
+        }
+
+        private static void defaultPicker(Activity activity, String[] extensions) {
             Intent intent = new Intent(activity, FilePickerActivity.class);
             if(extensions.length > 0) {
                 ArrayList<String> extList = new ArrayList<String>(Arrays.asList(extensions));
                 intent.putExtra(FilePickerActivity.EXTRA_ACCEPTED_FILE_EXTENSIONS, extList);
             }
-            activity.startActivityForResult(intent, PICK_IMAGE);
+            activity.startActivityForResult(intent, PICK_IMAGE_DEFAULT);
         }
     }
 

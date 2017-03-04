@@ -38,7 +38,7 @@ public class ModulMediaActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void showMedia() {
-        PlikORM plikORM = Plik.getById(UruchomController.getModul().getPlik(), true);
+        PlikORM plikORM = Plik.getById(UruchomController.getModul().getPlik(), true, false);
         String path = plikORM.getPath();
         if(FileHelper.getType(path, plikORM.isGotByNative()) == FileHelper.FileTypes.PHOTO) {
             player.setVisibility(View.VISIBLE);

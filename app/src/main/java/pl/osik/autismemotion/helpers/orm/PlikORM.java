@@ -15,14 +15,16 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
 
     private int id, folder;
     private String path, name, thumb;
-    private boolean ghost, gotByNative;
+    private boolean ghost, gotByNative, deleted;
 
-    public PlikORM(int id, int folder, String path, boolean ghost, String thumb, boolean gotByNative) {
+    public PlikORM(int id, int folder, String path, boolean ghost, String thumb, boolean gotByNative, boolean deleted) {
         setId(id);
         setFolder(folder);
+        this.ghost = ghost;
         setGotByNative(gotByNative);
         setPath(path);
         setThumb(thumb);
+        setDeleted(deleted);
     }
 
     public String getPath() {
@@ -81,6 +83,14 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
 
     public void setThumb(String thumb) {
         this.thumb = thumb;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public FileHelper.FileTypes getType() {

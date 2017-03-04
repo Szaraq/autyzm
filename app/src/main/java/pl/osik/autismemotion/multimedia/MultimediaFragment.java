@@ -146,7 +146,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
             plikiLayout.removeViews(0, plikiLayout.getChildCount());
             plikiViews.clear();
         }
-        pliki = Plik.getPlikiInFolder(folderId, true);
+        pliki = Plik.getPlikiInFolder(folderId, true, true);
         ViewGroup.OnClickListener plikOnclickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,13 +257,15 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         String query = "SELECT * FROM " + validateExistsInDatabase.getTable().getTableName()
                 + " JOIN " + Folder.TABLE_NAME + " ON " + Plik.TABLE_NAME + "." + Plik.COLUMN_FOLDER + "=" + Folder.TABLE_NAME + "." + Folder.COLUMN_ID
                 + " WHERE " + validateExistsInDatabase.getColumn() + " = ?"
-                + " AND " + Folder.TABLE_NAME + "." + Folder.COLUMN_USER + "=" + User.getCurrentId();
+                + " AND " + Folder.TABLE_NAME + "." + Folder.COLUMN_USER + "=" + User.getCurrentId()
+                + Plik.queryForDeleted(true, true);
         if(validateExistsInDatabase.validateWithQuery(path, query)) {
             Plik p = new Plik();
             ContentValues data = new ContentValues();
             data.put(Plik.COLUMN_PATH, path);
             data.put(Plik.COLUMN_FOLDER, folderId);
             data.put(Plik.COLUMN_GHOST, 0);
+            data.put(Plik.COLUMN_DELETED, 0);
             data.put(Plik.COLUMN_NATIVE_BROWSER, gotByNative);
             p.insert(data);
             refresh();

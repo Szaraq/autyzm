@@ -122,7 +122,7 @@ public class Folder extends AbstractDBTable {
         db.delete(getTableName(), COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
 
         /* Usuwanie plików */
-        ArrayList<PlikORM> plikList = Plik.getPlikiInFolder(id, false);
+        ArrayList<PlikORM> plikList = Plik.getPlikiInFolder(id, false, false);
         Plik p = new Plik();
         for (PlikORM plik : plikList) {
             p.delete(plik.getId());

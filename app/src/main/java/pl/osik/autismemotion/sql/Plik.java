@@ -30,6 +30,7 @@ public class Plik extends AbstractDBTable {
     public static final String COLUMN_GHOST = "ghost";
     public static final String COLUMN_THUMB = "thumbnail";
     public static final String COLUMN_NATIVE_BROWSER = "got_by_native_browser";
+    public static final String COLUMN_DELETED = "deleted";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
@@ -38,6 +39,7 @@ public class Plik extends AbstractDBTable {
         put(COLUMN_GHOST, "BOOLEAN");
         put(COLUMN_THUMB, "TEXT");
         put(COLUMN_NATIVE_BROWSER, "BOOLEAN");
+        put(COLUMN_DELETED, "BOOLEAN");
     }};
 
     public static final String THUMB_DIR = MyApp.getContext().getFilesDir() + "/thumbnails/";
@@ -86,6 +88,8 @@ public class Plik extends AbstractDBTable {
         data.put(COLUMN_PATH, ASSETS_FILMY_DIR_PATH + fileName);
         data.put(COLUMN_FOLDER, Folder.ASSETS_FILMY_FOLDER_ID);
         data.put(COLUMN_GHOST, 0);
+        data.put(COLUMN_NATIVE_BROWSER, 0);
+        data.put(COLUMN_DELETED, 0);
         int id = (int) new Plik().insert(data);
         return new PlikORM(
                 id,
@@ -93,7 +97,8 @@ public class Plik extends AbstractDBTable {
                 data.getAsString(COLUMN_PATH),
                 data.getAsBoolean(COLUMN_GHOST),
                 null,
-                false);
+                data.getAsBoolean(COLUMN_NATIVE_BROWSER),
+                data.getAsBoolean(COLUMN_DELETED));
     }
 
     @Override
@@ -121,15 +126,8 @@ public class Plik extends AbstractDBTable {
         Cursor cursor = db.rawQuery(query, null);
         while(cursor.moveToNext()) {
             String path = cursor.getString(cursor.getColumnIndex(COLUMN_PATH));
-            boolean exists = true;
-            try {
-                if(path == null) {
-                    exists = false;
-                }
-                MyApp.getContext().getContentResolver().openFileDescriptor(Uri.parse(path), "r");
-            } catch (FileNotFoundException e) {
-                exists = false;
-            }
+            boolean gotByNative = cursor.getInt(cursor.getColumnIndex(COLUMN_NATIVE_BROWSER)) == 1;
+            boolean exists = exists(path, gotByNative);
             boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
             if(!exists && !ghost) {
                 hideFile(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)), true);
@@ -142,18 +140,36 @@ public class Plik extends AbstractDBTable {
         cursor.close();
     }
 
-    public static PlikORM getById(int id, boolean ghostFilter) {
+    private static boolean exists(String path, boolean gotByNative) {
+        boolean exists = true;
+        try {
+            if(path == null) {
+                return false;
+            }
+            if(gotByNative) {
+                MyApp.getContext().getContentResolver().openFileDescriptor(Uri.parse(path), "r");
+            } else {
+                exists = new File(path).exists();
+            }
+        } catch (FileNotFoundException e) {
+            exists = false;
+        }
+        return exists;
+    }
+
+    public static PlikORM getById(int id, boolean ghostFilter, boolean deletedFilter) {
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?" + queryForGhost(ghostFilter, true);
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?" + queryForGhost(ghostFilter, true) + queryForDeleted(deletedFilter, true);
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
         cursor.moveToFirst();
         String path = cursor.getString(cursor.getColumnIndex(COLUMN_PATH));
         int folder = cursor.getInt(cursor.getColumnIndex(COLUMN_FOLDER));
         boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
         boolean gotByNative = cursor.getInt(cursor.getColumnIndex(COLUMN_NATIVE_BROWSER)) == 1;
+        boolean deleted = cursor.getInt(cursor.getColumnIndex(COLUMN_DELETED)) == 1;
         String thumb = cursor.getString(cursor.getColumnIndex(COLUMN_THUMB));
-        PlikORM plik = new PlikORM(id, folder, path, ghost, thumb, gotByNative);
+        PlikORM plik = new PlikORM(id, folder, path, ghost, thumb, gotByNative, deleted);
         cursor.close();
         helper.close();
         return plik;
@@ -174,15 +190,26 @@ public class Plik extends AbstractDBTable {
         p.edit(id, data);
     }
 
+    public static void setDeleted(int id, boolean set) {
+        Plik p = new Plik();
+        ContentValues data = new ContentValues();
+        data.put(COLUMN_DELETED, set);
+        p.edit(id, data);
+    }
+
     private static String queryForGhost(boolean addQuery, boolean multipleQuery) {
         if(addQuery) return (multipleQuery ? " AND " : "") + tableAndColumn(TABLE_NAME, COLUMN_GHOST) + " = 0"; else return "";
     }
 
-    public static ArrayList<PlikORM> getPlikiInFolder(int idFolderu, boolean ghostFilter) {
+    public static String queryForDeleted(boolean addQuery, boolean multipleQuery) {
+        if(addQuery) return (multipleQuery ? " AND " : "") + tableAndColumn(TABLE_NAME, COLUMN_DELETED) + " = 0"; else return "";
+    }
+
+    public static ArrayList<PlikORM> getPlikiInFolder(int idFolderu, boolean ghostFilter, boolean deletedFilter) {
         ArrayList<PlikORM> out = new ArrayList<>();
         DBHelper helper = DBHelper.getInstance();
         SQLiteDatabase db = helper.getDBRead();
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_FOLDER + " = ?" + queryForGhost(ghostFilter, true);
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_FOLDER + " = ?" + queryForGhost(ghostFilter, true) + queryForDeleted(deletedFilter, true);
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(idFolderu)});
         while(cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex(Plik.COLUMN_ID));
@@ -190,8 +217,9 @@ public class Plik extends AbstractDBTable {
             String path = cursor.getString(cursor.getColumnIndex(COLUMN_PATH));
             boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
             boolean gotByNative = cursor.getInt(cursor.getColumnIndex(COLUMN_NATIVE_BROWSER)) == 1;
+            boolean deleted = cursor.getInt(cursor.getColumnIndex(COLUMN_DELETED)) == 1;
             String thumb = cursor.getString(cursor.getColumnIndex(COLUMN_THUMB));
-            PlikORM temp = new PlikORM(id, folder, path, ghost, thumb, gotByNative);
+            PlikORM temp = new PlikORM(id, folder, path, ghost, thumb, gotByNative, deleted);
             out.add(temp);
         }
         Collections.sort(out);
@@ -209,12 +237,55 @@ public class Plik extends AbstractDBTable {
     }
 
     public static String getThumbAbsolutePath(int id) {
-        PlikORM plik = getById(id, false);
+        PlikORM plik = getById(id, false, false);
         return getThumbAbsolutePath(plik);
     }
 
     public static String getThumbAbsolutePath(PlikORM plik) {
         if(plik.getThumb() == null || plik.getThumb().length() == 0) FileHelper.createThumbnail(plik);
         return THUMB_DIR + plik.getThumb();
+    }
+
+    public long insert(ContentValues data) {
+        PlikORM plik = getByPath(data.getAsString(COLUMN_PATH), true, false);
+        long out = 0;
+        if(plik == null) {
+            DBHelper helper = DBHelper.getInstance();
+            SQLiteDatabase db = helper.getDBRead();
+            out = db.insert(getTableName(), null, data);
+            helper.close();
+        } else {
+            setDeleted(plik.getId(), false);
+            out = plik.getId();
+        }
+        return out;
+    }
+
+    public static PlikORM getByPath(String path, boolean ghostFilter, boolean deletedFilter) {
+        DBHelper helper = DBHelper.getInstance();
+        SQLiteDatabase db = helper.getDBRead();
+        String query = "SELECT " + TABLE_NAME + ".* FROM " + TABLE_NAME
+                + createJoin(new Folder(), TABLE_NAME, COLUMN_FOLDER)
+                + " WHERE " + COLUMN_PATH + " = ?"
+                + " AND " + tableAndColumn(Folder.TABLE_NAME, Folder.COLUMN_USER) + " = " + User.getCurrentId()
+                + queryForGhost(ghostFilter, true) + queryForDeleted(deletedFilter, true);
+        Cursor cursor = db.rawQuery(query, new String[]{path});
+        cursor.moveToFirst();
+        int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+        int folder = cursor.getInt(cursor.getColumnIndex(COLUMN_FOLDER));
+        boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
+        boolean gotByNative = cursor.getInt(cursor.getColumnIndex(COLUMN_NATIVE_BROWSER)) == 1;
+        boolean deleted = cursor.getInt(cursor.getColumnIndex(COLUMN_DELETED)) == 1;
+        String thumb = cursor.getString(cursor.getColumnIndex(COLUMN_THUMB));
+        PlikORM plik = new PlikORM(id, folder, path, ghost, thumb, gotByNative, deleted);
+        cursor.close();
+        helper.close();
+        return plik;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        setDeleted(id, true);
+        return true;
     }
 }

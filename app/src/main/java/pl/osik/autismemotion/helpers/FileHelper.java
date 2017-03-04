@@ -85,7 +85,7 @@ public class FileHelper {
     }
 
     public static Bitmap getThumbnailFromStorage(int plikId) {
-        PlikORM plik = Plik.getById(plikId, false);
+        PlikORM plik = Plik.getById(plikId, false, false);
         Bitmap out = null;
         String thumbPath = plik.getThumb();
         if(thumbPath == null || thumbPath.length() == 0) {

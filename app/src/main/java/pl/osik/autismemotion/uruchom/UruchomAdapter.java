@@ -190,7 +190,7 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     protected void createThumbnails() {
         ViewTreeObserver vto = thumbnail.getViewTreeObserver();
-        PlikORM plik = Plik.getById(moduly.get(0).getPlik(), true);
+        PlikORM plik = Plik.getById(moduly.get(0).getPlik(), true, false);
         String path = plik.getPath();
         if(plik.getType() == FileHelper.FileTypes.PHOTO) {
             vto.addOnPreDrawListener(new MyPreDrawListener(thumbnail, path, fragment.getActivity()));

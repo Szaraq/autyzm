@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import pl.osik.autismemotion.R;
 import pl.osik.autismemotion.dzieci.DzieciFragment;
 import pl.osik.autismemotion.help.HelpFragment;
+import pl.osik.autismemotion.helpers.AppHelper;
 import pl.osik.autismemotion.helpers.FileHelper;
 import pl.osik.autismemotion.helpers.FilePickerActivity;
 import pl.osik.autismemotion.helpers.FilePlacingInterface;
@@ -166,16 +167,15 @@ public class MainActivity extends AppCompatActivity
         if (resultCode == RESULT_OK) {
             if (requestCode == FileHelper.FileManager.PICK_IMAGE_DEFAULT) {
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                ((FilePlacingInterface) currFragment).placeFile(path);
+                ((FilePlacingInterface) currFragment).placeFile(path, false);
             } else if(requestCode == FileHelper.FileManager.PICK_IMAGE) {
                 String path = FileHelper.getFilePath(data);
-//                String extension = FileHelper.getExtension(path);
-//                if(!Arrays.asList(FileHelper.FileManager.EXTENSION_ARRAY_PHOTO).contains(extension)
-//                        && !Arrays.asList(FileHelper.FileManager.EXTENSION_ARRAY_VIDEO).contains(extension)) {
-//                    AppHelper.showMessage(currFragment.getView(), R.string.multi_bledne_rozszerzenie);
-//                    return;
-//                }
-                ((FilePlacingInterface) currFragment).placeFile(path);
+                String extension = FileHelper.getExtension(path, true);
+                if(FileHelper.FileManager.isFileType(FileHelper.FileTypes.UNSUPPORTED_TYPE, extension)) {
+                    AppHelper.showMessage(currFragment.getView(), R.string.multi_bledne_rozszerzenie);
+                    return;
+                }
+                ((FilePlacingInterface) currFragment).placeFile(path, true);
             }
         }
     }

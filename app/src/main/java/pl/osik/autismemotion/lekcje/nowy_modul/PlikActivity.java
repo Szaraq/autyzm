@@ -52,7 +52,7 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
             changeViewToAdd();
         } else {
             PlikORM plik = Plik.getById(LekcjeHelper.getModul().getPlik(), true);
-            plikView.setImageBitmap(FileHelper.getThumbnail(plik.getPath()));
+            plikView.setImageBitmap(FileHelper.getThumbnailFromStorage(plik.getThumb()));
         }
         buttonAdd.setOnClickListener(this);
         buttonNext.setOnClickListener(this);
@@ -93,12 +93,9 @@ public class PlikActivity extends AppCompatActivity implements View.OnClickListe
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == FileHelper.FileManager.PICK_IMAGE_DEFAULT) {
-//                File file = new File(data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH));
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                plikView.setImageBitmap(FileHelper.getThumbnail(path));
-                String[] nameArray = path.split("/");
-                LekcjeHelper.getModul().setName(nameArray[nameArray.length-1]);
-//                LekcjeHelper.getModul().setName(FileHelper.removeExtension(file.getName()));
+                plikView.setImageBitmap(FileHelper.getThumbnailFromStorage(data.getIntExtra(PlikORM.EXTRA_PLIK_ID, -1)));
+                LekcjeHelper.getModul().setName(Plik.getName(path, data.getBooleanExtra(PlikORM.EXTRA_NATIVE, true)));
                 LekcjeHelper.getModul().setPlik(data.getIntExtra(PlikORM.EXTRA_PLIK_ID, NO_FILE));
                 changeViewToEdit();
                 if(tourGuide != null) tourGuide.cleanUp();

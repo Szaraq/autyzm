@@ -196,7 +196,7 @@ class UruchomViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
             vto.addOnPreDrawListener(new MyPreDrawListener(thumbnail, path, fragment.getActivity()));
             thumbnail.setColorFilter(Color.argb(50, 0, 0, 0), PorterDuff.Mode.DARKEN);
         } else if(plik.getType() == FileHelper.FileTypes.VIDEO) {
-            Bitmap bitmap = FileHelper.getThumbnail(path, 0, AppHelper.dip2px(150));
+            Bitmap bitmap = FileHelper.getThumbnailFromStorage(plik.getPath());
             vto.addOnPreDrawListener(new MyPreDrawListener(thumbnail, bitmap, fragment.getActivity()));
         }
     }

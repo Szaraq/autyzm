@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.provider.OpenableColumns;
 import android.util.Log;
 
 import java.io.File;
@@ -21,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 
 import pl.osik.autismemotion.R;
 import pl.osik.autismemotion.helpers.orm.PlikORM;
@@ -31,12 +34,24 @@ import pl.osik.autismemotion.sql.Plik;
  */
 
 public class FileHelper {
-    public static final int THUMB_WIDTH = 48;
-    public static final int THUMB_HEIGHT = 66;
+    public static final int THUMB_WIDTH = 96;
+    public static final int THUMB_HEIGHT = 132;
     public final static int RESCALE_PROPORTIONALLY = -1;
 
-    public static Bitmap getThumbnail(String path, int width, int height) {
-        FileTypes type = getType(path);
+    public static Bitmap buildThumbnail(String path) {
+        return buildThumbnail(path, THUMB_WIDTH, THUMB_HEIGHT);
+    }
+
+    public static Bitmap buildThumbnail(String path, boolean gotByNative) {
+        return buildThumbnail(path, THUMB_WIDTH, THUMB_HEIGHT, gotByNative);
+    }
+
+    public static Bitmap buildThumbnail(String path, int width, int height) {
+        return buildThumbnail(path, width, height, false);
+    }
+
+    public static Bitmap buildThumbnail(String path, int width, int height, boolean gotByNative) {
+        FileTypes type = getType(path, gotByNative);
         if(type == FileTypes.PHOTO) {
             return rescaleBitmap(path, width, height);
         } else if(type == FileTypes.VIDEO) {
@@ -69,26 +84,26 @@ public class FileHelper {
         return bitmap;
     }
 
-    public static Bitmap getThumbnail(String path) {
-        return getThumbnail(path, THUMB_WIDTH, THUMB_HEIGHT);
-    }
-
-    public static Bitmap getThumbnailFromStorage(int id) {
-        PlikORM plik = Plik.getById(id, false);
+    public static Bitmap getThumbnailFromStorage(int plikId) {
+        PlikORM plik = Plik.getById(plikId, false);
         Bitmap out = null;
         String thumbPath = plik.getThumb();
         if(thumbPath == null || thumbPath.length() == 0) {
             out = createThumbnail(plik);
         } else {
-            String path = Plik.THUMB_DIR + thumbPath;
-            out = BitmapFactory.decodeFile(path);
+            out = getThumbnailFromStorage(thumbPath);
         }
         return out;
     }
 
+    public static Bitmap getThumbnailFromStorage(String thumbPath) {
+        String path = Plik.THUMB_DIR + thumbPath;
+        return BitmapFactory.decodeFile(path);
+    }
+
     public static Bitmap createThumbnail(PlikORM plik) {
         Bitmap out;
-        out = getThumbnail(plik.getPath());
+        out = buildThumbnail(plik.getPath(), plik.isGotByNative());
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
         String fileName = "thumb_" + plik.getShortName(10, false) + "_" + sdf.format(cal.getTime()) + ".jpeg";
@@ -130,7 +145,7 @@ public class FileHelper {
                 Bitmap bitmap = BitmapFactory.decodeFile(path, options);
                 return bitmap;
             } catch (NullPointerException exc) {
-                Log.d("getThumbnail", exc.getMessage());
+                Log.d("buildThumbnail", exc.getMessage());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -173,23 +188,20 @@ public class FileHelper {
         return inSampleSize;
     }
 
-    public static FileTypes getType(File file) {
-        return getType(file.getPath());
-    }
-
-    public static FileTypes getType(String path) {
-        String ext = getExtension(path);
+    public static FileTypes getType(String path, boolean gotByNative) {
+        String ext = getExtension(path, gotByNative);
         if(Arrays.asList(FileManager.EXTENSION_ARRAY_PHOTO).contains(ext)) return FileTypes.PHOTO;
         if(Arrays.asList(FileManager.EXTENSION_ARRAY_VIDEO).contains(ext)) return FileTypes.VIDEO;
-//        return FileTypes.UNSUPPORTED_TYPE;
-        return FileTypes.PHOTO;
+        return FileTypes.UNSUPPORTED_TYPE;
     }
 
-    public static String getExtension(String fileName) {
+    public static String getExtension(String path, boolean gotByNative) {
         String extension = "";
-
-        int i = fileName.lastIndexOf('.');
-        if (i > 0) extension = fileName.substring(i+1);
+        if(gotByNative) {
+            path = getNativeFileName(path);
+        }
+        int i = path.lastIndexOf('.');
+        if (i > 0) extension = path.substring(i+1);
         return extension;
     }
 
@@ -207,6 +219,16 @@ public class FileHelper {
         return uri.toString();
     }
 
+    public static String getNativeFileName(String path) {
+        Uri uri = Uri.parse(path);
+        Cursor cursor = MyApp.getContext().getContentResolver()
+                .query(uri, null, null, null, null, null);
+        if(cursor != null && cursor.moveToFirst()) {
+            return cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+        }
+        throw new NullPointerException("File Metadata cursor is null");
+    }
+
     public static class FileManager {
 
         public static final int PICK_IMAGE_DEFAULT = 9351;
@@ -217,10 +239,15 @@ public class FileHelper {
 
         public static void pickPhoto(Activity activity, String[] extensions) {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.setType("image/*");
+            if(Collections.disjoint(Arrays.asList(EXTENSION_ARRAY_VIDEO), Arrays.asList(extensions))) {
+                intent.setType("image/*");
+            } else {
+                intent.setType("*/*");
+            }
             try{
                 activity.startActivityForResult(intent, PICK_IMAGE);
             } catch (ActivityNotFoundException e) {
+                e.printStackTrace();
                 defaultPicker(activity, extensions);
             }
         }
@@ -232,6 +259,21 @@ public class FileHelper {
                 intent.putExtra(FilePickerActivity.EXTRA_ACCEPTED_FILE_EXTENSIONS, extList);
             }
             activity.startActivityForResult(intent, PICK_IMAGE_DEFAULT);
+        }
+
+        public static boolean isFileType(FileTypes type, String extension) {
+            String[] extensionsToCompare;
+            if(type.equals(FileTypes.PHOTO)) {
+                extensionsToCompare = EXTENSION_ARRAY_PHOTO;
+            } else if(type.equals(FileTypes.VIDEO)) {
+                extensionsToCompare = EXTENSION_ARRAY_VIDEO;
+            } else if(type.equals(FileTypes.UNSUPPORTED_TYPE)) {
+                return !Arrays.asList(EXTENSION_ARRAY_PHOTO).contains(extension)
+                        && !Arrays.asList(EXTENSION_ARRAY_VIDEO).contains(extension);
+            } else {
+                throw new IllegalArgumentException("There is no implementation for this FileType");
+            }
+            return Arrays.asList(extensionsToCompare).contains(extension);
         }
     }
 

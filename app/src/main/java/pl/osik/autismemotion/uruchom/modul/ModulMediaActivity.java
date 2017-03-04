@@ -14,6 +14,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.osik.autismemotion.R;
 import pl.osik.autismemotion.helpers.FileHelper;
+import pl.osik.autismemotion.helpers.orm.PlikORM;
 import pl.osik.autismemotion.sql.Plik;
 import pl.osik.autismemotion.uruchom.UruchomController;
 import tcking.github.com.giraffeplayer.GiraffePlayer;
@@ -37,8 +38,9 @@ public class ModulMediaActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void showMedia() {
-        String path = Plik.getById(UruchomController.getModul().getPlik(), true).getPath();
-        if(FileHelper.getType(path) == FileHelper.FileTypes.PHOTO) {
+        PlikORM plikORM = Plik.getById(UruchomController.getModul().getPlik(), true);
+        String path = plikORM.getPath();
+        if(FileHelper.getType(path, plikORM.isGotByNative()) == FileHelper.FileTypes.PHOTO) {
             player.setVisibility(View.VISIBLE);
             buttonNext.setVisibility(View.VISIBLE);
             Glide.with(this)

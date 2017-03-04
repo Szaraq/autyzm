@@ -29,6 +29,7 @@ public class Plik extends AbstractDBTable {
     public static final String COLUMN_FOLDER = "folder";
     public static final String COLUMN_GHOST = "ghost";
     public static final String COLUMN_THUMB = "thumbnail";
+    public static final String COLUMN_NATIVE_BROWSER = "got_by_native_browser";
 
     protected static final LinkedHashMap<String, String> colTypeMap = new LinkedHashMap<String, String>() {{
         put(COLUMN_ID, "INTEGER PRIMARY KEY AUTOINCREMENT");
@@ -36,6 +37,7 @@ public class Plik extends AbstractDBTable {
         put(COLUMN_FOLDER, "INTEGER");
         put(COLUMN_GHOST, "BOOLEAN");
         put(COLUMN_THUMB, "TEXT");
+        put(COLUMN_NATIVE_BROWSER, "BOOLEAN");
     }};
 
     public static final String THUMB_DIR = MyApp.getContext().getFilesDir() + "/thumbnails/";
@@ -90,7 +92,8 @@ public class Plik extends AbstractDBTable {
                 data.getAsInteger(COLUMN_FOLDER),
                 data.getAsString(COLUMN_PATH),
                 data.getAsBoolean(COLUMN_GHOST),
-                null);
+                null,
+                false);
     }
 
     @Override
@@ -102,9 +105,13 @@ public class Plik extends AbstractDBTable {
         return TABLE_NAME;
     }
 
-    public static String getName(String path) {
-        File f = new File(path);
-        return f.getName();
+    public static String getName(String path, boolean gotByNative) {
+        if(gotByNative) {
+            return FileHelper.getNativeFileName(path);
+        } else {
+            File f = new File(path);
+            return f.getName();
+        }
     }
 
     public static void cleanDeletedFiles() {
@@ -144,8 +151,9 @@ public class Plik extends AbstractDBTable {
         String path = cursor.getString(cursor.getColumnIndex(COLUMN_PATH));
         int folder = cursor.getInt(cursor.getColumnIndex(COLUMN_FOLDER));
         boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
+        boolean gotByNative = cursor.getInt(cursor.getColumnIndex(COLUMN_NATIVE_BROWSER)) == 1;
         String thumb = cursor.getString(cursor.getColumnIndex(COLUMN_THUMB));
-        PlikORM plik = new PlikORM(id, folder, path, ghost, thumb);
+        PlikORM plik = new PlikORM(id, folder, path, ghost, thumb, gotByNative);
         cursor.close();
         helper.close();
         return plik;
@@ -181,8 +189,9 @@ public class Plik extends AbstractDBTable {
             int folder  = cursor.getInt(cursor.getColumnIndex(COLUMN_FOLDER));
             String path = cursor.getString(cursor.getColumnIndex(COLUMN_PATH));
             boolean ghost = cursor.getInt(cursor.getColumnIndex(COLUMN_GHOST)) == 1;
+            boolean gotByNative = cursor.getInt(cursor.getColumnIndex(COLUMN_NATIVE_BROWSER)) == 1;
             String thumb = cursor.getString(cursor.getColumnIndex(COLUMN_THUMB));
-            PlikORM temp = new PlikORM(id, folder, path, ghost, thumb);
+            PlikORM temp = new PlikORM(id, folder, path, ghost, thumb, gotByNative);
             out.add(temp);
         }
         Collections.sort(out);

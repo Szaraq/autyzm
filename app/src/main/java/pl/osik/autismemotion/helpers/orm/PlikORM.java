@@ -10,15 +10,17 @@ import pl.osik.autismemotion.sql.Plik;
  */
 public class PlikORM implements Comparable<PlikORM>, Serializable {
     public final static String EXTRA_PLIK_ID = "plik_id";
+    public final static String EXTRA_NATIVE = "got_by_native";
     public final static int SHORT_NAME_MAX_LENGTH = 30;
 
     private int id, folder;
     private String path, name, thumb;
-    private boolean ghost;
+    private boolean ghost, gotByNative;
 
-    public PlikORM(int id, int folder, String path, boolean ghost, String thumb) {
+    public PlikORM(int id, int folder, String path, boolean ghost, String thumb, boolean gotByNative) {
         setId(id);
         setFolder(folder);
+        setGotByNative(gotByNative);
         setPath(path);
         setThumb(thumb);
     }
@@ -29,7 +31,7 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
 
     public void setPath(String path) {
         this.path = path;
-        this.name = Plik.getName(path);
+        this.name = Plik.getName(path, gotByNative);
     }
 
     public int getFolder() {
@@ -65,6 +67,14 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
         return newName.substring(0, maxLength - 3) + "...";
     }
 
+    public boolean isGotByNative() {
+        return gotByNative;
+    }
+
+    public void setGotByNative(boolean gotByNative) {
+        this.gotByNative = gotByNative;
+    }
+
     public String getThumb() {
         return thumb;
     }
@@ -74,7 +84,7 @@ public class PlikORM implements Comparable<PlikORM>, Serializable {
     }
 
     public FileHelper.FileTypes getType() {
-        return FileHelper.getType(path);
+        return FileHelper.getType(path, gotByNative);
     }
 
     @Override

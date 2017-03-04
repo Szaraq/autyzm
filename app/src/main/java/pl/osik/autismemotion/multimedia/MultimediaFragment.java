@@ -155,6 +155,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
                     Intent extra = new Intent();
                     extra.putExtra(FilePickerActivity.EXTRA_FILE_PATH, plik.getPath());
                     extra.putExtra(PlikORM.EXTRA_PLIK_ID, plik.getId());
+                    extra.putExtra(PlikORM.EXTRA_NATIVE, plik.isGotByNative());
                     MultimediaFragment.this.getActivity().setResult(FilePickerActivity.RESULT_OK, extra);
                     MultimediaFragment.this.getActivity().finish();
                 } else {
@@ -251,7 +252,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
         refresh();
     }
 
-    private void addNewPlik(String path) {
+    private void addNewPlik(String path, boolean gotByNative) {
         ValidateExistsInDatabase validateExistsInDatabase = new ValidateExistsInDatabase(new Plik(), Plik.COLUMN_PATH);
         String query = "SELECT * FROM " + validateExistsInDatabase.getTable().getTableName()
                 + " JOIN " + Folder.TABLE_NAME + " ON " + Plik.TABLE_NAME + "." + Plik.COLUMN_FOLDER + "=" + Folder.TABLE_NAME + "." + Folder.COLUMN_ID
@@ -263,6 +264,7 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
             data.put(Plik.COLUMN_PATH, path);
             data.put(Plik.COLUMN_FOLDER, folderId);
             data.put(Plik.COLUMN_GHOST, 0);
+            data.put(Plik.COLUMN_NATIVE_BROWSER, gotByNative);
             p.insert(data);
             refresh();
         } else {
@@ -271,8 +273,8 @@ public class MultimediaFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void placeFile(String path) {
-        addNewPlik(path);
+    public void placeFile(String path, boolean gotByNative) {
+        addNewPlik(path, gotByNative);
     }
 
     public void changeToMoveFile(boolean fade, @Nullable PlikORM plik) {

@@ -108,7 +108,7 @@ public class PlikView extends CardView {
     private void setIcon() {
         @DrawableRes int icon;
         @ColorRes int iconColor;
-        if(FileHelper.getType(plik.getPath()) == FileHelper.FileTypes.PHOTO) {
+        if(FileHelper.getType(plik.getPath(), plik.isGotByNative()) == FileHelper.FileTypes.PHOTO) {
             icon = R.drawable.ic_file_image;
             iconColor = R.color.colorMultimediaIconImage;
         } else {

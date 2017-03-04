@@ -40,7 +40,7 @@ public class ShowMediaActivity extends AppCompatActivity {
     private void showMedia() {
         String path = plik.getPath();
         PLIK = path;
-        if(FileHelper.getType(path) == FileHelper.FileTypes.PHOTO) {
+        if(FileHelper.getType(path, plik.isGotByNative()) == FileHelper.FileTypes.PHOTO) {
             player.setVisibility(View.VISIBLE);
             Glide.with(this)
                     .load(path)

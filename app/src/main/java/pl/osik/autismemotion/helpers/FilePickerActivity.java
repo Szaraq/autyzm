@@ -177,7 +177,7 @@ public class FilePickerActivity extends ListActivity {
             textView.setText(object.getName());
 
             if(object.isFile()) {
-                Bitmap thumbnail = FileHelper.getThumbnail(object.getPath());
+                Bitmap thumbnail = FileHelper.buildThumbnail(object.getPath());
                 if(thumbnail == null)
                     imageView.setImageResource(R.drawable.ic_test_plik);
                 else

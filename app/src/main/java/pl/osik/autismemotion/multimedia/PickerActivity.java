@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import pl.osik.autismemotion.R;
+import pl.osik.autismemotion.helpers.AppHelper;
 import pl.osik.autismemotion.helpers.FileHelper;
 import pl.osik.autismemotion.helpers.FilePickerActivity;
 
@@ -31,7 +32,15 @@ public class PickerActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == FileHelper.FileManager.PICK_IMAGE_DEFAULT) {
                 String path = data.getStringExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                fragment.placeFile(path);
+                fragment.placeFile(path, false);
+            } else if(requestCode == FileHelper.FileManager.PICK_IMAGE) {
+                String path = FileHelper.getFilePath(data);
+                String extension = FileHelper.getExtension(path, true);
+                if(FileHelper.FileManager.isFileType(FileHelper.FileTypes.UNSUPPORTED_TYPE, extension)) {
+                    AppHelper.showMessage(fragment.getView(), R.string.multi_bledne_rozszerzenie);
+                    return;
+                }
+                fragment.placeFile(path, true);
             }
         }
     }
